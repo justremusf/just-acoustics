@@ -26,10 +26,10 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 overflow-hidden">
+    <section className="py-28 md:py-36 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-5">
         {/* Heading */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-16 items-start mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-16 items-start mb-20 md:mb-24">
           <h2
             className="text-[var(--color-dark-100)] m-0"
             style={{

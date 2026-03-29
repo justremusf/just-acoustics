@@ -28,11 +28,11 @@ export default function HearTheDifference() {
 
   return (
     <>
-      <section className="py-20">
+      <section className="py-28 md:py-36">
         <div className="max-w-[1280px] mx-auto px-5">
-          <div className="text-center mb-14">
+          <div className="text-center mb-20 md:mb-24">
             <h2
-              className="text-[var(--color-dark-100)] m-0 mb-4"
+              className="text-[var(--color-dark-100)] m-0 mb-5"
               style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: 'clamp(28px, 4vw, var(--fs-h3))',

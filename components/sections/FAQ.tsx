@@ -57,7 +57,7 @@ function AccordionItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQ() {
   return (
-    <section className="py-16 md:py-[120px] bg-[var(--color-white-200)]">
+    <section className="py-28 md:py-36 bg-[var(--color-white-200)]">
       <div className="max-w-[1280px] mx-auto px-5">
         <div className="grid grid-cols-1 md:grid-cols-[0.75fr_1fr] gap-6 items-start">
           {/* Left */}

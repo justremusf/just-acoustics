@@ -30,9 +30,9 @@ const steps = [
 
 export default function ProcessSteps() {
   return (
-    <section className="mx-4 rounded-[20px] bg-[var(--color-white-200)] py-16 md:py-[120px]">
+    <section className="mx-4 rounded-[20px] bg-[var(--color-white-200)] py-28 md:py-36">
       <div className="max-w-[1280px] mx-auto px-5">
-        <div className="text-center mb-14">
+        <div className="text-center mb-20 md:mb-24">
           <h2
             className="text-[var(--color-dark-100)] m-0 mb-4"
             style={{

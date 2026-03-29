@@ -16,9 +16,9 @@ export default function BlogPreview({ posts }: Props) {
   if (!posts || posts.length === 0) return null
 
   return (
-    <section className="py-20">
+    <section className="py-28 md:py-36">
       <div className="max-w-[1280px] mx-auto px-5">
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-16 md:mb-20">
           <h2
             className="text-[var(--color-dark-100)] m-0"
             style={{

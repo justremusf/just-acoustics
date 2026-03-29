@@ -46,11 +46,11 @@ export default function Testimonials({ testimonials }: Props) {
   const items = testimonials && testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS
 
   return (
-    <section className="py-20 bg-[var(--color-white-100)]">
+    <section className="py-28 md:py-36 bg-[var(--color-white-100)]">
       <div className="max-w-[1280px] mx-auto px-5">
-        <div className="text-center mb-14 max-w-[640px] mx-auto">
+        <div className="text-center mb-20 md:mb-24 max-w-[640px] mx-auto">
           <h2
-            className="text-[var(--color-dark-100)] m-0 mb-4"
+            className="text-[var(--color-dark-100)] m-0 mb-5"
             style={{
               fontFamily: 'var(--font-heading)',
               fontSize: 'clamp(28px, 4vw, var(--fs-h3))',

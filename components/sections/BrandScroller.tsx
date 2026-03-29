@@ -30,8 +30,8 @@ export default function BrandScroller({ logos }: Props) {
   const doubled = [...items, ...items]
 
   return (
-    <section className="py-14">
-      <div className="text-center mb-10">
+    <section className="py-20 md:py-28">
+      <div className="text-center mb-14 md:mb-16">
         <h2
           className="text-[var(--color-dark-100)] m-0"
           style={{

@@ -59,9 +59,9 @@ export default function Applications({ services }: Props) {
       : FALLBACK_APPLICATIONS.map((a) => ({ ...a, unoptimized: true }))
 
   return (
-    <section className="py-20 bg-[var(--color-white-100)]">
+    <section className="py-28 md:py-36 bg-[var(--color-white-100)]">
       <div className="max-w-[1280px] mx-auto px-5">
-        <div className="text-center mb-14">
+        <div className="text-center mb-20 md:mb-24">
           <h2
             className="text-[var(--color-dark-100)] m-0 mb-4"
             style={{
@@ -114,7 +114,7 @@ export default function Applications({ services }: Props) {
           ))}
         </div>
 
-        <div className="text-center mt-20">
+        <div className="text-center mt-24 md:mt-28">
           <Link
             href="/services"
             className="inline-block border border-[var(--color-dark-100)] text-[var(--color-dark-100)] rounded-[100px] px-8 py-4 text-base no-underline transition-all duration-300 hover:border-[var(--color-brand-orange)] hover:text-[var(--color-brand-orange)]"
