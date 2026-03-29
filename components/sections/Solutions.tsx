@@ -14,15 +14,15 @@ const solutions = [
   },
   {
     icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc89aa0f23320b10d20_1.svg',
-    title: 'Acoustic Treatment',
-    benefits: ['Quality Recordings', 'Accurate Mixing', 'Studio-Grade Sound'],
+    title: 'AV: Audio Visual Lighting',
+    benefits: ['Speaker Installation', 'Lighting Installation', 'Visuals (such as TV)'],
   },
 ]
 
 export default function Solutions() {
   return (
     <section
-      className="relative rounded-[20px] mx-4 my-11 pt-[10px] pb-16 md:pb-[120px]"
+      className="relative rounded-[20px] mx-4 my-6 pt-[10px] pb-10 md:pb-14"
     >
       {/* Background overlay */}
       <div
@@ -38,18 +38,23 @@ export default function Solutions() {
       <div className="relative z-[999] max-w-[1280px] mx-auto px-5">
         {/* Top row */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_0.5fr] gap-6 md:gap-16 mt-9">
-          <h2
-            className="text-white m-0"
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(32px, 4vw, var(--fs-h3))',
-              lineHeight: '124%',
-              fontWeight: 500,
-              letterSpacing: '-1.04px',
-            }}
-          >
-            Acoustic Solutions
-          </h2>
+          <div>
+            <h2
+              className="text-white m-0 mb-2"
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(26px, 3.5vw, 40px)',
+                lineHeight: '120%',
+                fontWeight: 500,
+                letterSpacing: '-0.8px',
+              }}
+            >
+              Acoustic Solutions
+            </h2>
+            <p className="text-white/70 m-0 text-sm md:text-base">
+              Everything your space needs — from sound control to full AV installations.
+            </p>
+          </div>
           <div className="flex flex-col gap-5 items-start md:items-end justify-center">
             <Link
               href="/contact"
@@ -61,7 +66,7 @@ export default function Solutions() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[18px] pt-14 md:pt-[100px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[18px] pt-8 md:pt-12">
           {solutions.map((s) => (
             <div
               key={s.title}
@@ -69,7 +74,7 @@ export default function Solutions() {
             >
               <Image src={s.icon} alt={s.title} width={52} height={52} unoptimized />
               <h3
-                className="text-[var(--color-dark-100)] mt-0 mb-5 pt-10 md:pt-[75px] pb-5 text-2xl font-semibold"
+                className="text-[var(--color-dark-100)] mt-0 mb-5 pt-8 md:pt-12 pb-5 text-2xl font-semibold"
               >
                 {s.title}
               </h3>
