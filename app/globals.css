@@ -89,6 +89,10 @@ body {
   animation: scroll-brands 18s linear infinite;
 }
 
+.brand-scroll-wrap:hover .brand-scroll-inner {
+  animation-play-state: paused;
+}
+
 .brand-scroll-wrap {
   overflow: hidden;
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
