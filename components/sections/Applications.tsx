@@ -5,22 +5,34 @@ import { urlFor } from '@/sanity/lib/image'
 
 const FALLBACK_APPLICATIONS = [
   {
-    title: 'Office Spaces',
+    title: 'Churches & Event Spaces',
+    description: 'Crystal-clear speech in every corner. Improve sound clarity in places of worship.',
+    href: '/services/churches-event-spaces',
+    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif',
+  },
+  {
+    title: 'Offices & Meeting Rooms',
     description: 'Boost productivity with better sound. Reduce distracting noise and echo.',
-    href: '/services/office-spaces',
+    href: '/services/offices-meeting-rooms',
     img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif',
   },
   {
-    title: 'Hospitality & Retail',
+    title: 'Restaurants, Cafes, Bars',
     description: 'Create comfortable dining experiences. Reduce echo in restaurants and cafes.',
-    href: '/services/hospitality-retail',
+    href: '/services/restaurants-cafes-bars',
     img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
   },
   {
-    title: 'Church & Event Spaces',
-    description: 'Crystal-clear speech in every corner. Improve sound clarity in places of worship.',
-    href: '/services/church-event-spaces',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif',
+    title: 'Education Spaces',
+    description: 'Create quieter, more focused classrooms for better learning outcomes.',
+    href: '/services/education-spaces',
+    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb30cf5a46b9a7edd3_4.png',
+  },
+  {
+    title: 'Gym & Leisure Spaces',
+    description: 'Control noise from equipment and group classes without dampening energy.',
+    href: '/services/gym-leisure-spaces',
+    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd62acdbb9d45cd3d_5.png',
   },
   {
     title: 'Cinema & Music Studios',
@@ -37,7 +49,7 @@ interface Props {
 export default function Applications({ services }: Props) {
   const items =
     services && services.length > 0
-      ? services.slice(0, 4).map((s) => ({
+      ? services.map((s) => ({
           title: s.title,
           description: s.shortDescription || '',
           href: `/services/${s.slug.current}`,
