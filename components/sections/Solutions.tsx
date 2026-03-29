@@ -65,7 +65,7 @@ export default function Solutions() {
           {solutions.map((s) => (
             <div
               key={s.title}
-              className="bg-white rounded-[16px] p-8"
+              className="bg-white rounded-[16px] p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-default"
             >
               <Image src={s.icon} alt={s.title} width={52} height={52} unoptimized />
               <h3

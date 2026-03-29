@@ -118,8 +118,8 @@ export default function ProductsGrid({ products }: Props) {
             )
           })}
 
-          {/* CTA card */}
-          <div className="bg-[var(--color-white-200)] rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-3">
+          {/* CTA card — spans 2 cols at 3-col breakpoint, 1 col at 4-col (fills remaining space) */}
+          <div className="col-span-2 lg:col-span-1 bg-[var(--color-white-200)] rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-3">
             <h3 className="text-[var(--color-dark-100)] m-0 text-lg font-semibold">Which works for me?</h3>
             <p className="text-[var(--color-gray-200)] text-sm m-0">Let us recommend the best solution for you!</p>
             <Link

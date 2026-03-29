@@ -96,7 +96,8 @@ export default function Applications({ services }: Props) {
                 />
               )}
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
+              <div className="absolute inset-0 bg-black/30 z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent z-10" />
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 z-20 p-7">
                 <h3
