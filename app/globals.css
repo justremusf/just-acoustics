@@ -95,6 +95,12 @@ body {
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
+/* Hide Tally iframe scrollbar */
+iframe[title="Free Acoustic Consultation"] {
+  overflow: hidden;
+  scrollbar-width: none;
+}
+
 /* Shimmer button animation */
 @keyframes shimmer2 {
   0% { background-position: 0% 0%; }

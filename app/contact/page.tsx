@@ -35,44 +35,15 @@ export default function ContactPage() {
       {/* Main content */}
       <section className="py-20">
         <div className="max-w-[1280px] mx-auto px-5">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_0.7fr] gap-12 items-start">
-            {/* Tally form embed */}
-            <div>
-              {/*
-                Replace the src below with your Tally embed URL.
-                Get it from: tally.so → your form → Share → Embed
-                Example: https://tally.so/embed/YOUR_FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1
-              */}
-              <iframe
-                data-tally-src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                loading="lazy"
-                width="100%"
-                height="400"
-                frameBorder="0"
-                marginHeight={0}
-                marginWidth={0}
-                title="Free Acoustic Consultation"
-                className="min-h-[400px]"
-              />
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
-                  `,
-                }}
-              />
-            </div>
-
-            {/* Contact info */}
+          <div className="grid grid-cols-1 md:grid-cols-[0.35fr_1fr] gap-12 items-start">
+            {/* Contact info — left */}
             <div className="flex flex-col gap-6">
-              <div>
-                <h2
-                  className="text-[var(--color-dark-100)] m-0 mb-6 text-2xl font-semibold"
-                  style={{ fontFamily: 'var(--font-heading)' }}
-                >
-                  We are here to help
-                </h2>
-              </div>
+              <h2
+                className="text-[var(--color-dark-100)] m-0 mb-2 text-2xl font-semibold"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                We are here to help
+              </h2>
 
               <div className="flex flex-col gap-0">
                 {[
@@ -89,26 +60,33 @@ export default function ContactPage() {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="py-5 border-b border-[var(--color-gray-500)] flex justify-between items-center"
+                    className="py-5 border-b border-[var(--color-gray-500)] flex flex-col gap-1"
                   >
                     <span className="text-[var(--color-gray-100)] font-medium text-sm">{item.label}</span>
                     <a
                       href={item.href}
                       target={item.href.startsWith('http') ? '_blank' : undefined}
                       rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="text-[var(--color-dark-100)] font-semibold text-sm no-underline hover:text-[var(--color-brand-orange)] transition-colors"
+                      className="text-[var(--color-dark-100)] font-semibold text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors"
                     >
                       {item.value}
                     </a>
                   </div>
                 ))}
               </div>
+            </div>
 
-              <div className="bg-[var(--color-white-200)] rounded-[16px] p-6 mt-2">
-                <p className="text-[var(--color-gray-100)] text-sm m-0 leading-relaxed">
-                  <strong>Make sure contact details are fully filled out</strong> so that we can contact you as soon as possible.
-                </p>
-              </div>
+            {/* Tally form — right, takes most of the width */}
+            <div>
+              <iframe
+                src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                loading="lazy"
+                width="100%"
+                height="1100"
+                frameBorder="0"
+                title="Free Acoustic Consultation"
+                style={{ overflow: 'hidden', display: 'block' }}
+              />
             </div>
           </div>
         </div>
