@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     })
 
     // Send internal notification to the team
-    const teamEmail = process.env.RESEND_FROM_EMAIL || 'hello@justacoustics.co'
+    const teamEmail = 'justacousticssg@gmail.com'
     const fieldsHtml = fields
       .map((f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;color:#666;font-size:13px;">${f.label}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;font-size:13px;">${f.value}</td></tr>`)
       .join('')
