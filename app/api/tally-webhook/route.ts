@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     // Send confirmation to the enquirer
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'hello@justacoustics.co',
+      from: 'Just Acoustics <onboarding@resend.dev>',
       to: email,
       subject: 'Thanks for reaching out — Just Acoustics',
       html: `
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       .join('')
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'hello@justacoustics.co',
+      from: 'Just Acoustics <onboarding@resend.dev>',
       to: teamEmail,
       subject: `New enquiry from ${name}`,
       html: `
