@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(B=~/.claude/skills/gstack/browse/dist/browse)",
+      "Bash($B screenshot:*)",
+      "Bash($B js:*)",
+      "Bash($B viewport:*)",
+      "Bash($B goto:*)",
+      "Bash($B scroll:*)",
+      "Bash(__NEW_LINE_cf2fc473af6399a4__ $B js \"window.scrollTo\\(0,600\\)\")",
+      "Bash(__NEW_LINE_cf2fc473af6399a4__ $B js \"window.scrollTo\\(0,1100\\)\")",
+      "Bash(__NEW_LINE_cf2fc473af6399a4__ $B js \"window.scrollTo\\(0,1900\\)\")",
+      "Bash(__NEW_LINE_cf2fc473af6399a4__ $B js \"window.scrollTo\\(0,2800\\)\")",
+      "Bash(__NEW_LINE_1b65509c1a95034d__ $B js \"window.scrollTo\\(0,1400\\)\")",
+      "Bash(__NEW_LINE_1b65509c1a95034d__ $B js \"window.scrollTo\\(0,2300\\)\")",
+      "Bash(__NEW_LINE_1b65509c1a95034d__ $B js \"window.scrollTo\\(0,3100\\)\")",
+      "Bash(__NEW_LINE_1b65509c1a95034d__ $B js \"window.scrollTo\\(0,4000\\)\")",
+      "Bash(open http://localhost:3000)",
+      "Bash(node -e \"const p=require\\(''./package.json''\\); console.log\\(''clsx:'', p.dependencies?.clsx || p.devDependencies?.clsx || ''NOT FOUND''\\); console.log\\(''tw-merge:'', p.dependencies?.[''tailwind-merge''] || p.devDependencies?.[''tailwind-merge''] || ''NOT FOUND''\\)\")",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(xargs sed:*)",
+      "Bash(xargs -0 sed -i '' 's/max-w-\\\\[990px\\\\]/max-w-\\\\[1280px\\\\]/g')",
+      "Bash(node scripts/seed-products.mjs)",
+      "Bash(node scripts/seed-product-images.mjs)"
+    ]
+  }
+}

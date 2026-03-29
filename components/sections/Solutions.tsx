@@ -1,0 +1,89 @@
+import Link from 'next/link'
+import Image from 'next/image'
+
+const solutions = [
+  {
+    icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc85d7daca7cccae5c1_3.svg',
+    title: 'Echo Control',
+    benefits: ['Voice Clarity', 'Lower Stress Levels', 'Improve Productivity'],
+  },
+  {
+    icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dccd68664f77d9ba78b_2.svg',
+    title: 'Noise Control',
+    benefits: ['Block Outside Sounds', 'Improve Privacy', 'Contain Noise'],
+  },
+  {
+    icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc89aa0f23320b10d20_1.svg',
+    title: 'Acoustic Treatment',
+    benefits: ['Quality Recordings', 'Accurate Mixing', 'Studio-Grade Sound'],
+  },
+]
+
+export default function Solutions() {
+  return (
+    <section
+      className="relative rounded-[20px] mx-4 my-11 pt-[10px] pb-16 md:pb-[120px]"
+    >
+      {/* Background overlay */}
+      <div
+        className="absolute inset-0 rounded-[20px] z-[99]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0,0,0,0.36),rgba(0,0,0,0.36)),url('https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+
+      <div className="relative z-[999] max-w-[1280px] mx-auto px-5">
+        {/* Top row */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.5fr] gap-6 md:gap-[120px] mt-9">
+          <h2
+            className="text-white m-0"
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(32px, 4vw, var(--fs-h3))',
+              lineHeight: '124%',
+              fontWeight: 500,
+              letterSpacing: '-1.04px',
+            }}
+          >
+            Acoustic Solutions
+          </h2>
+          <div className="flex flex-col gap-5 items-start md:items-end justify-center">
+            <Link
+              href="/contact"
+              className="inline-block bg-[var(--color-brand-orange)] text-white rounded-[100px] px-6 py-3 text-base no-underline transition-all duration-300 hover:bg-[var(--color-gray-100)] hover:tracking-wide"
+            >
+              Get Free Quote
+            </Link>
+          </div>
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[18px] pt-14 md:pt-[100px]">
+          {solutions.map((s) => (
+            <div
+              key={s.title}
+              className="bg-white rounded-[16px] p-8"
+            >
+              <Image src={s.icon} alt={s.title} width={52} height={52} unoptimized />
+              <h3
+                className="text-[var(--color-dark-100)] mt-0 mb-5 pt-10 md:pt-[75px] pb-5 text-2xl font-semibold"
+              >
+                {s.title}
+              </h3>
+              <ul className="m-0 p-0 list-none text-[var(--color-gray-100)] text-base leading-relaxed">
+                {s.benefits.map((b) => (
+                  <li key={b} className="before:content-['✔_'] mb-1">
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
