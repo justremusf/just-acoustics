@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         <SpeedInsights />
         <Analytics />
+        <WhatsAppButton />
       </body>
     </html>
   )

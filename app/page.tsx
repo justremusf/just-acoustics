@@ -10,6 +10,7 @@ import Testimonials from '@/components/sections/Testimonials'
 import FAQ from '@/components/sections/FAQ'
 import BlogPreview from '@/components/sections/BlogPreview'
 import ContactCTA from '@/components/sections/ContactCTA'
+import FadeUp from '@/components/ui/FadeUp'
 import {
   getSiteSettings,
   getAllProducts,
@@ -32,17 +33,17 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <BrandScroller logos={settings?.brandLogos} />
-      <Solutions />
-      <ProductsGrid products={products} />
-      <HearTheDifference />
-      <Applications services={services} />
-      <WhyChooseUs />
-      <ProcessSteps />
-      <Testimonials testimonials={testimonials} />
-      <FAQ />
-      {posts.length > 0 && <BlogPreview posts={posts} />}
-      <ContactCTA />
+      <FadeUp><BrandScroller logos={settings?.brandLogos} /></FadeUp>
+      <FadeUp delay={50}><Solutions /></FadeUp>
+      <FadeUp delay={50}><ProductsGrid products={products} /></FadeUp>
+      <FadeUp delay={50}><HearTheDifference /></FadeUp>
+      <FadeUp delay={50}><Applications services={services} /></FadeUp>
+      <FadeUp delay={50}><WhyChooseUs /></FadeUp>
+      <FadeUp delay={50}><ProcessSteps /></FadeUp>
+      <FadeUp delay={50}><Testimonials testimonials={testimonials} /></FadeUp>
+      <FadeUp delay={50}><FAQ /></FadeUp>
+      {posts.length > 0 && <FadeUp delay={50}><BlogPreview posts={posts} /></FadeUp>}
+      <FadeUp delay={50}><ContactCTA /></FadeUp>
     </>
   )
 }
