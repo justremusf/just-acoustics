@@ -23,7 +23,7 @@ export default function Header() {
           style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.8) inset' }}
         >
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" className="block transition-all duration-300 hover:scale-105 hover:opacity-80">
             <Image
               src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg"
               alt="Just Acoustics"
