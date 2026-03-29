@@ -86,11 +86,7 @@ body {
 }
 
 .brand-scroll-inner {
-  animation: scroll-brands 18s linear infinite;
-}
-
-.brand-scroll-wrap:hover .brand-scroll-inner {
-  animation-play-state: paused;
+  animation: scroll-brands 12s linear infinite;
 }
 
 .brand-scroll-wrap {

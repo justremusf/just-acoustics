@@ -49,7 +49,7 @@ export default function BrandScroller({ logos }: Props) {
           {doubled.map((logo, i) => (
             <div
               key={i}
-              className="flex-none bg-[var(--color-white-200)] rounded-[10px] flex items-center justify-center px-10 py-4 min-w-[220px] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:bg-white cursor-pointer"
+              className="flex-none bg-[var(--color-white-200)] rounded-[10px] flex items-center justify-center px-10 py-4 min-w-[220px] transition-all duration-500 hover:opacity-80 cursor-pointer"
             >
               <Image
                 src={logo.src}
