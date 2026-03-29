@@ -14,8 +14,8 @@ const solutions = [
   },
   {
     icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc89aa0f23320b10d20_1.svg',
-    title: 'AV: Audio Visual Lighting',
-    benefits: ['Speaker Installation', 'Lighting Installation', 'Visuals (such as TV)'],
+    title: 'Audio Visual Lighting',
+    benefits: ['Speaker Solutions', 'LED Wall', 'Professional Lighting'],
   },
 ]
 
