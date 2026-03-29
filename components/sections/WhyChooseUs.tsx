@@ -29,7 +29,7 @@ export default function WhyChooseUs() {
     <section className="py-20 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-5">
         {/* Heading */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-[270px] items-start mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-16 items-start mb-14">
           <h2
             className="text-[var(--color-dark-100)] m-0"
             style={{
@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
                 <div key={stat.label}>
                   <div
                     className="text-[var(--color-dark-100)] font-semibold"
-                    style={{ fontSize: 52, lineHeight: '112%' }}
+                    style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: '112%' }}
                   >
                     {stat.number}
                   </div>

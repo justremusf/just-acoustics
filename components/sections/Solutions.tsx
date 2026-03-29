@@ -37,7 +37,7 @@ export default function Solutions() {
 
       <div className="relative z-[999] max-w-[1280px] mx-auto px-5">
         {/* Top row */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.5fr] gap-6 md:gap-[120px] mt-9">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.5fr] gap-6 md:gap-16 mt-9">
           <h2
             className="text-white m-0"
             style={{

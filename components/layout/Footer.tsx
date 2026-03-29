@@ -28,7 +28,7 @@ export default function Footer() {
     <footer className="bg-[var(--color-dark-100)] pt-20 pb-6">
       <div className="max-w-[1280px] mx-auto px-5">
         {/* Top grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-[200px] mb-16 pb-8 border-b border-[var(--color-gray-100)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 pb-8 border-b border-[var(--color-gray-100)]">
           {/* Left col */}
           <div>
             <Link href="/">
