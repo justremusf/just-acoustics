@@ -28,7 +28,7 @@ export default function HearTheDifference() {
 
   return (
     <>
-      <section className="py-28 md:py-36">
+      <section className="py-20 md:py-28">
         <div className="max-w-[1280px] mx-auto px-5">
           <div className="text-center mb-20 md:mb-24">
             <h2

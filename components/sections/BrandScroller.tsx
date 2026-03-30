@@ -30,8 +30,8 @@ export default function BrandScroller({ logos }: Props) {
   const doubled = [...items, ...items]
 
   return (
-    <section className="py-20 md:py-28">
-      <div className="text-center mb-14 md:mb-16">
+    <section className="py-16 md:py-20">
+      <div className="text-center mb-8 md:mb-10">
         <h2
           className="text-[var(--color-dark-100)] m-0"
           style={{
@@ -45,11 +45,11 @@ export default function BrandScroller({ logos }: Props) {
         </h2>
       </div>
       <div className="brand-scroll-wrap">
-        <div className="brand-scroll-inner flex gap-4">
+        <div className="brand-scroll-inner flex">
           {doubled.map((logo, i) => (
             <div
               key={i}
-              className="flex-none bg-[var(--color-white-200)] rounded-[10px] flex items-center justify-center px-10 py-4 min-w-[220px] transition-all duration-500 hover:opacity-80 cursor-pointer"
+              className="flex-none bg-[var(--color-white-200)] rounded-[10px] flex items-center justify-center px-10 py-4 min-w-[220px] mr-4 transition-all duration-500 hover:opacity-80 cursor-pointer"
             >
               <Image
                 src={logo.src}

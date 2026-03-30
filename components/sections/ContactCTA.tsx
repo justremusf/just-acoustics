@@ -4,7 +4,7 @@ import ShimmerButton from '@/components/ui/shimmer-button'
 export default function ContactCTA() {
   return (
     <section
-      className="relative mx-4 md:mx-6 rounded-[20px] py-20 md:py-[120px] my-10 md:my-16 overflow-hidden"
+      className="relative mx-4 md:mx-6 rounded-[20px] py-24 md:py-[140px] my-14 md:my-20 overflow-hidden"
     >
       {/* Background */}
       <div

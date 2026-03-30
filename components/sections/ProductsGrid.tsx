@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Product } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
+import ShimmerButton from '@/components/ui/shimmer-button'
 
 // Fallback products matching the current site
 const FALLBACK_PRODUCTS = [
@@ -33,7 +34,26 @@ export default function ProductsGrid({ products }: Props) {
   const items = products && products.length > 0 ? products.slice(0, 7) : FALLBACK_PRODUCTS
 
   return (
-    <section className="mt-[70px] mb-10">
+    <section className="mt-16 mb-16">
+      {/* Section heading */}
+      <div className="max-w-[1280px] mx-auto px-5 mb-10 md:mb-12 text-center">
+        <h2
+          className="text-[var(--color-dark-100)] m-0 mb-4"
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
+            lineHeight: '124%',
+            fontWeight: 500,
+            letterSpacing: '-1.04px',
+          }}
+        >
+          Acoustic Solutions
+        </h2>
+        <p className="text-[var(--color-gray-100)] text-base m-0 max-w-xl mx-auto">
+          Our dynamic range of acoustic panels reduces echo and matches your space, whether it&apos;s walls or ceilings.
+        </p>
+      </div>
+
       {/* Mobile: horizontal scroll row */}
       <div className="md:hidden overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
         <div className="flex gap-3 px-5">
@@ -62,7 +82,7 @@ export default function ProductsGrid({ products }: Props) {
                     unoptimized={isFallback}
                   />
                 </div>
-                <h3 className="text-[var(--color-dark-100)] px-4 pt-3 pb-4 m-0 text-base font-semibold">
+                <h3 className="text-[var(--color-dark-100)] px-4 pt-3 pb-4 m-0 text-lg font-semibold">
                   {p.title}
                 </h3>
               </Link>
@@ -71,8 +91,8 @@ export default function ProductsGrid({ products }: Props) {
 
           {/* CTA card */}
           <div className="flex-none w-[72vw] bg-[var(--color-brand-orange)] rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-3">
-            <h3 className="text-white m-0 text-lg font-semibold">Which works for me?</h3>
-            <p className="text-white/80 text-sm m-0">Let us recommend the best solution for you!</p>
+            <h3 className="text-white m-0 text-xl font-semibold">Which works for me?</h3>
+            <p className="text-white/80 text-base m-0">Let us recommend the best solution for you!</p>
             <Link
               href="/contact"
               className="mt-2 inline-block bg-white text-[var(--color-dark-100)] rounded-[100px] px-5 py-2.5 text-sm no-underline font-semibold"
@@ -111,7 +131,7 @@ export default function ProductsGrid({ products }: Props) {
                     unoptimized={isFallback}
                   />
                 </div>
-                <h3 className="text-[var(--color-dark-100)] px-4 pt-4 pb-4 m-0 text-base font-semibold group-hover:text-[var(--color-brand-orange)] transition-colors">
+                <h3 className="text-[var(--color-dark-100)] px-4 pt-4 pb-4 m-0 text-lg font-semibold group-hover:text-[var(--color-brand-orange)] transition-colors">
                   {p.title}
                 </h3>
               </Link>
@@ -120,13 +140,12 @@ export default function ProductsGrid({ products }: Props) {
 
           {/* CTA card — spans 2 cols at 3-col breakpoint, 1 col at 4-col (fills remaining space) */}
           <div className="col-span-2 lg:col-span-1 bg-[var(--color-white-200)] rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-3">
-            <h3 className="text-[var(--color-dark-100)] m-0 text-lg font-semibold">Which works for me?</h3>
-            <p className="text-[var(--color-gray-200)] text-sm m-0">Let us recommend the best solution for you!</p>
-            <Link
-              href="/contact"
-              className="mt-2 inline-block bg-[var(--color-brand-orange)] text-white rounded-[100px] px-5 py-2.5 text-sm no-underline transition-all duration-300 hover:bg-[var(--color-gray-100)]"
-            >
-              Get Free Quote
+            <h3 className="text-[var(--color-dark-100)] m-0 text-xl font-semibold">Which works for me?</h3>
+            <p className="text-[var(--color-gray-200)] text-base m-0">Let us recommend the best solution for you!</p>
+            <Link href="/contact" className="mt-2 no-underline">
+              <ShimmerButton className="text-sm px-5 py-2.5 h-auto">
+                Get Free Quote
+              </ShimmerButton>
             </Link>
           </div>
         </div>

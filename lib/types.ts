@@ -70,6 +70,22 @@ export interface Testimonial {
   videoUrl?: string
 }
 
+export interface ShopItem {
+  _id: string
+  title: string
+  slug: { current: string }
+  category?: string
+  mainImage?: SanityImage
+  gallery?: SanityImage[]
+  price?: number
+  sku?: string
+  madeToOrder?: boolean
+  shortDescription?: string
+  features?: string[]
+  body?: unknown[]
+  seo?: { metaTitle?: string; metaDescription?: string }
+}
+
 export interface SiteSettings {
   phone?: string
   whatsapp?: string

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import ShimmerButton from '@/components/ui/shimmer-button'
 
 const solutions = [
   {
@@ -14,15 +15,15 @@ const solutions = [
   },
   {
     icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc89aa0f23320b10d20_1.svg',
-    title: 'Audio Visual Lighting',
-    benefits: ['Speaker Solutions', 'LED Wall', 'Professional Lighting'],
+    title: 'Acoustic Panels',
+    benefits: ['Increased Productivity', 'Better Sound Quality', 'Reduced Noise Levels'],
   },
 ]
 
 export default function Solutions() {
   return (
     <section
-      className="relative rounded-[20px] mx-4 my-6 pt-[10px] pb-10 md:pb-14"
+      className="relative rounded-[20px] mx-4 my-10 md:my-14 pt-[10px] pb-14 md:pb-20"
     >
       {/* Background overlay */}
       <div
@@ -49,18 +50,17 @@ export default function Solutions() {
                 letterSpacing: '-0.8px',
               }}
             >
-              Acoustic Solutions
+              Why Acoustics Matter
             </h2>
             <p className="text-white/70 m-0 text-sm md:text-base">
-              Everything your space needs — from sound control to full AV installations.
+              Poor acoustics affect how people feel, focus, and communicate in a space.
             </p>
           </div>
           <div className="flex flex-col gap-5 items-start md:items-end justify-center">
-            <Link
-              href="/contact"
-              className="inline-block bg-[var(--color-brand-orange)] text-white rounded-[100px] px-6 py-3 text-base no-underline transition-all duration-300 hover:bg-[var(--color-gray-100)] hover:tracking-wide"
-            >
-              Get Free Quote
+            <Link href="/contact" className="no-underline">
+              <ShimmerButton className="text-base px-6 py-3 h-auto">
+                Get Free Quote
+              </ShimmerButton>
             </Link>
           </div>
         </div>
@@ -70,7 +70,8 @@ export default function Solutions() {
           {solutions.map((s) => (
             <div
               key={s.title}
-              className="bg-white rounded-[16px] p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-default"
+              className="bg-white rounded-[16px] p-8 transition-all duration-300 hover:-translate-y-2 cursor-default"
+              style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05)' }}
             >
               <Image src={s.icon} alt={s.title} width={52} height={52} unoptimized />
               <h3

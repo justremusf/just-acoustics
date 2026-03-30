@@ -9,75 +9,83 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 bg-[var(--color-dark-100)]">
+      <section className="py-20 text-center">
         <div className="max-w-[1280px] mx-auto px-5">
-          <span className="inline-block border border-white/30 text-white rounded-[100px] px-4 py-2 text-sm mb-6">
-            Contact
+          <span className="inline-block border border-[var(--color-dark-100)] rounded-[100px] px-4 py-2 text-sm mb-6">
+            Contact Us
           </span>
           <h1
-            className="text-white m-0 mb-4"
+            className="text-[var(--color-dark-100)] m-0 mb-4"
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
-              lineHeight: '124%',
+              fontSize: 'clamp(36px, 5vw, var(--fs-h2))',
+              lineHeight: '112%',
               fontWeight: 500,
-              letterSpacing: '-1.04px',
+              letterSpacing: '-1.28px',
             }}
           >
-            Free Consultation
+            Book Your Free Consultation
           </h1>
-          <p className="text-white/70 text-base m-0 max-w-lg leading-relaxed">
-            Complete the form to get your free acoustic consultation! We will never share your info with anyone.
+          <p className="text-[var(--color-gray-100)] text-base m-0 max-w-lg mx-auto leading-relaxed">
+            Fill out the form below and we will recommend the best noise reduction solution for you!
           </p>
         </div>
       </section>
 
       {/* Main content */}
-      <section className="py-20">
+      <section className="py-16 md:py-20">
         <div className="max-w-[1280px] mx-auto px-5">
-          <div className="grid grid-cols-1 md:grid-cols-[0.35fr_1fr] gap-12 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12 items-start">
+
             {/* Contact info — left */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-8">
               <h2
-                className="text-[var(--color-dark-100)] m-0 mb-2 text-2xl font-semibold"
-                style={{ fontFamily: 'var(--font-heading)' }}
+                className="text-[var(--color-dark-100)] m-0 text-2xl font-semibold"
+                style={{ fontFamily: 'var(--font-heading)', letterSpacing: '-0.5px' }}
               >
-                We are here to help
+                Contact Us
               </h2>
 
-              <div className="flex flex-col gap-0">
-                {[
-                  {
-                    label: 'Phone / WhatsApp',
-                    value: '+65 8930 1905',
-                    href: 'https://wa.me/6589301905',
-                  },
-                  {
-                    label: 'Email',
-                    value: 'info@justacoustics.co',
-                    href: 'mailto:info@justacoustics.co',
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="py-5 border-b border-[var(--color-gray-500)] flex flex-col gap-1"
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[var(--color-dark-100)] font-semibold text-base">Hotline Phone Number</span>
+                  <a
+                    href="tel:+6589301905"
+                    className="text-[var(--color-gray-100)] text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors flex items-center gap-2"
                   >
-                    <span className="text-[var(--color-gray-100)] font-medium text-sm">{item.label}</span>
-                    <a
-                      href={item.href}
-                      target={item.href.startsWith('http') ? '_blank' : undefined}
-                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="text-[var(--color-dark-100)] font-semibold text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors"
-                    >
-                      {item.value}
-                    </a>
-                  </div>
-                ))}
+                    📞 +65 8930 1905
+                  </a>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <span className="text-[var(--color-dark-100)] font-semibold text-base">WhatsApp</span>
+                  <a
+                    href="https://wa.me/6589301905"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-gray-100)] text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors flex items-center gap-2"
+                  >
+                    💬 Click here to start chat
+                  </a>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <span className="text-[var(--color-dark-100)] font-semibold text-base">Email</span>
+                  <a
+                    href="mailto:info@justacoustics.co"
+                    className="text-[var(--color-gray-100)] text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors flex items-center gap-2"
+                  >
+                    ✉️ info@justacoustics.co
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* Tally form — right, takes most of the width */}
-            <div>
+            {/* Tally form — right */}
+            <div
+              className="bg-white rounded-[20px] p-8 md:p-10"
+              style={{ boxShadow: '0 2px 24px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)' }}
+            >
               <iframe
                 src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
                 loading="lazy"
@@ -88,6 +96,7 @@ export default function ContactPage() {
                 style={{ overflow: 'hidden', display: 'block' }}
               />
             </div>
+
           </div>
         </div>
       </section>

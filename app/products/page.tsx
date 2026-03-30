@@ -38,7 +38,7 @@ export default async function ProductsPage() {
             letterSpacing: '-1.28px',
           }}
         >
-          Acoustic Products &amp; Solutions
+          Acoustic Solutions
         </h1>
         <p className="text-[var(--color-gray-100)] text-base m-0 max-w-xl">
           Our dynamic range of acoustic panels reduces echo and matches your space, whether it&apos;s walls or ceilings.

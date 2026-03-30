@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Instrument_Sans, Manrope } from 'next/font/google'
+import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
@@ -17,6 +17,13 @@ const instrumentSans = Instrument_Sans({
 const manrope = Manrope({
   subsets: ['latin'],
   variable: '--font-body',
+  display: 'swap',
+})
+
+const leagueSpartan = League_Spartan({
+  subsets: ['latin'],
+  variable: '--font-spartan',
+  weight: ['800'],
   display: 'swap',
 })
 
@@ -59,7 +66,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${manrope.variable}`}>
+    <html lang="en" className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}>
       <body className="bg-white">
         <div className="page-wrap overflow-hidden">
           <Header />

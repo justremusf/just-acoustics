@@ -59,7 +59,7 @@ export default function Applications({ services }: Props) {
       : FALLBACK_APPLICATIONS.map((a) => ({ ...a, unoptimized: true }))
 
   return (
-    <section className="py-28 md:py-36 bg-[var(--color-white-100)]">
+    <section className="py-20 md:py-28 bg-[var(--color-white-100)]">
       <div className="max-w-[1280px] mx-auto px-5">
         <div className="text-center mb-20 md:mb-24">
           <h2
@@ -84,7 +84,8 @@ export default function Applications({ services }: Props) {
             <Link
               key={app.href}
               href={app.href}
-              className="relative block rounded-[16px] overflow-hidden no-underline group min-h-[260px] sm:min-h-[280px]"
+              className="relative block rounded-[16px] overflow-hidden no-underline group min-h-[295px] sm:min-h-[320px]"
+              style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05)' }}
             >
               {app.img && (
                 <Image
@@ -95,32 +96,40 @@ export default function Applications({ services }: Props) {
                   unoptimized={'unoptimized' in app ? app.unoptimized : false}
                 />
               )}
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-black/30 z-10" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent z-10" />
+              {/* Gradient overlay — deepens on hover */}
+              <div className="absolute inset-0 bg-black/30 z-10 transition-opacity duration-500 group-hover:opacity-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-80" />
               {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 z-20 p-7">
+              <div className="absolute bottom-0 left-0 right-0 z-20 p-7 transition-transform duration-500 group-hover:-translate-y-1">
                 <h3
                   className="text-white m-0 mb-2 font-semibold"
                   style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 2.5vw, 26px)', letterSpacing: '-0.3px' }}
                 >
                   {app.title}
                 </h3>
-                <p className="text-white/80 text-base m-0 leading-relaxed">
+                <p className="text-white/80 text-base m-0 leading-relaxed mb-4">
                   {app.description}
                 </p>
+                {/* Arrow */}
+                <svg
+                  width="36"
+                  height="20"
+                  viewBox="0 0 36 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-white transition-all duration-300 group-hover:text-[var(--color-brand-orange)] group-hover:translate-x-1"
+                >
+                  <path
+                    d="M0 10H33M33 10L24 1M33 10L24 19"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
             </Link>
           ))}
-        </div>
-
-        <div className="text-center mt-24 md:mt-28">
-          <Link
-            href="/services"
-            className="inline-block border border-[var(--color-dark-100)] text-[var(--color-dark-100)] rounded-[100px] px-8 py-4 text-base no-underline transition-all duration-300 hover:border-[var(--color-brand-orange)] hover:text-[var(--color-brand-orange)]"
-          >
-            View All Applications
-          </Link>
         </div>
       </div>
     </section>

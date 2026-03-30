@@ -46,7 +46,7 @@ export default function Testimonials({ testimonials }: Props) {
   const items = testimonials && testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS
 
   return (
-    <section className="py-28 md:py-36 bg-[var(--color-white-100)]">
+    <section className="py-20 md:py-28 bg-[var(--color-white-100)]">
       <div className="max-w-[1280px] mx-auto px-5">
         <div className="text-center mb-20 md:mb-24 max-w-[640px] mx-auto">
           <h2
@@ -64,6 +64,19 @@ export default function Testimonials({ testimonials }: Props) {
           <p className="text-[var(--color-gray-100)] text-base m-0">
             Trusted by businesses and homeowners across Singapore
           </p>
+        </div>
+
+        {/* YouTube video — replace YOUR_VIDEO_ID_HERE with the actual YouTube video ID */}
+        <div className="mb-20 md:mb-24 rounded-[20px] overflow-hidden">
+          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/-1WDATPou2Y"
+              title="Client Testimonial Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

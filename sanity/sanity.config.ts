@@ -18,6 +18,7 @@ export default defineConfig({
             S.documentTypeListItem('product').title('Products'),
             S.documentTypeListItem('service').title('Services'),
             S.documentTypeListItem('project').title('Projects'),
+            S.documentTypeListItem('shopItem').title('Shop Items'),
             S.documentTypeListItem('testimonial').title('Testimonials'),
             S.divider(),
             S.listItem()

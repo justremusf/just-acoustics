@@ -31,7 +31,7 @@ export default function Hero() {
                 letterSpacing: '-1.28px',
               }}
             >
-              Acoustic Panels that quietly transforms spaces
+              Acoustic Panels That<br />Get Rid of Echo
             </h1>
             <p className="text-white m-0 text-base">
               Acoustic Solutions for Offices, Churches, Restaurants &amp; more.

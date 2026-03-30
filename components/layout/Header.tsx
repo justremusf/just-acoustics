@@ -3,23 +3,45 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ShimmerButton from '@/components/ui/shimmer-button'
 
-const navLinks = [
-  { label: 'Products', href: '/products' },
-  { label: 'Services', href: '/services' },
+type NavLink = { label: string; href: string; dropdown?: { label: string; href: string }[] }
+
+const navLinks: NavLink[] = [
+  { label: 'Shop', href: '/shop' },
+  { label: 'Solutions', href: '/products' },
+  { label: 'Applications', href: '/services' },
   { label: 'Projects', href: '/projects' },
-  { label: 'Blog', href: '/blog' },
+  {
+    label: 'About',
+    href: '/about',
+    dropdown: [
+      { label: 'About Us', href: '/about' },
+      { label: 'Acoustic Education', href: '/blog' },
+    ],
+  },
+]
+
+const mobileLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Shop', href: '/shop' },
+  { label: 'Solutions', href: '/products' },
+  { label: 'Applications', href: '/services' },
+  { label: 'Projects', href: '/projects' },
   { label: 'About', href: '/about' },
+  { label: 'Acoustic Education', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [aboutOpen, setAboutOpen] = useState(false)
 
   return (
     <header className="relative z-[9999] pt-[26px]">
       <div className="flex justify-center px-4">
         <div
-          className="flex items-center justify-between bg-white/90 backdrop-blur-md rounded-[40px] py-2 pl-6 pr-2 w-full max-w-[860px] border border-white/60"
+          className="flex items-center justify-between bg-white/90 backdrop-blur-md rounded-[40px] py-2 pl-7 pr-2 w-full max-w-[960px] border border-white/60"
           style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.8) inset' }}
         >
           {/* Logo */}
@@ -38,26 +60,62 @@ export default function Header() {
           {/* Desktop nav */}
           <nav className="hidden md:block">
             <ul className="flex items-center gap-6 list-none m-0 p-0">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-[var(--color-gray-100)] text-[15px] no-underline transition-all duration-300 hover:text-[var(--color-dark-100)] hover:tracking-wide"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {navLinks.map((link) =>
+                link.dropdown ? (
+                  <li key={link.href} className="relative">
+                    <button
+                      className="flex items-center gap-1 text-[var(--color-gray-100)] text-[15px] bg-transparent border-0 cursor-pointer transition-all duration-300 hover:text-[var(--color-dark-100)] hover:tracking-wide p-0"
+                      onMouseEnter={() => setAboutOpen(true)}
+                      onMouseLeave={() => setAboutOpen(false)}
+                    >
+                      {link.label}
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-0.5">
+                        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    {aboutOpen && (
+                      <div
+                        className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
+                        onMouseEnter={() => setAboutOpen(true)}
+                        onMouseLeave={() => setAboutOpen(false)}
+                      >
+                        <div
+                          className="bg-white rounded-[12px] py-2 min-w-[180px] border border-black/5"
+                          style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.12)' }}
+                        >
+                          {link.dropdown.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="block px-4 py-2 text-[var(--color-gray-100)] text-[14px] no-underline hover:text-[var(--color-dark-100)] hover:bg-[var(--color-white-200)] transition-colors"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-[var(--color-gray-100)] text-[15px] no-underline transition-all duration-300 hover:text-[var(--color-dark-100)] hover:tracking-wide"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </nav>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-2">
-            <Link
-              href="/contact"
-              className="bg-[var(--color-brand-orange)] text-white rounded-[100px] px-6 py-3 text-[15px] no-underline transition-all duration-300 hover:bg-[var(--color-gray-100)] hover:tracking-wide"
-            >
-              Free Consultation
+            <Link href="/contact" className="no-underline">
+              <ShimmerButton className="text-[15px] px-6 py-3 h-auto">
+                Free Consultation
+              </ShimmerButton>
             </Link>
           </div>
 
@@ -101,7 +159,7 @@ export default function Header() {
           </div>
 
           <ul className="list-none m-0 p-0 text-center w-full px-8">
-            {[{ label: 'Home', href: '/' }, ...navLinks, { label: 'Contact', href: '/contact' }].map((link) => (
+            {mobileLinks.map((link) => (
               <li key={link.href} className="mb-4">
                 <Link
                   href={link.href}
@@ -115,12 +173,10 @@ export default function Header() {
             ))}
           </ul>
           <div className="mt-8">
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="inline-block bg-[var(--color-brand-orange)] text-white rounded-[100px] px-8 py-4 text-base no-underline"
-            >
-              Free Consultation
+            <Link href="/contact" onClick={() => setMobileOpen(false)} className="no-underline">
+              <ShimmerButton className="text-base px-8 py-4 h-auto">
+                Free Consultation
+              </ShimmerButton>
             </Link>
           </div>
         </div>

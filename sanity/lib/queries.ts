@@ -101,6 +101,29 @@ export async function getAllProjectSlugs() {
   return client.fetch(`*[_type == "project"] { "slug": slug.current }`)
 }
 
+// ─── Shop Items ───────────────────────────────────────────────────────────────
+
+export async function getAllShopItems() {
+  return client.fetch(`
+    *[_type == "shopItem"] | order(_createdAt asc) {
+      _id, title, slug, mainImage, category, price, inStock, shortDescription
+    }
+  `)
+}
+
+export async function getShopItemBySlug(slug: string) {
+  return client.fetch(
+    `*[_type == "shopItem" && slug.current == $slug][0] {
+      _id, title, slug, mainImage, gallery, category, price, sku, inStock, shortDescription, features, body, seo
+    }`,
+    { slug }
+  )
+}
+
+export async function getAllShopItemSlugs() {
+  return client.fetch(`*[_type == "shopItem"] { "slug": slug.current }`)
+}
+
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 
 export async function getFeaturedTestimonials() {
