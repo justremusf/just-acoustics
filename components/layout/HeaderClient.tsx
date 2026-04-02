@@ -81,19 +81,19 @@ const PROJECT_CATEGORY_LABELS: Record<string, string> = {
 }
 
 const desktopNav = [
-  { key: 'shop' as const, label: 'Shop', href: '/shop' },
   { key: 'solutions' as const, label: 'Solutions', href: '/products' },
   { key: 'applications' as const, label: 'Applications', href: '/services' },
   { key: 'projects' as const, label: 'Projects', href: '/projects' },
+  { key: 'shop' as const, label: 'Shop', href: '/shop' },
   { key: 'about' as const, label: 'About', href: '/about' },
 ]
 
 const mobileLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Shop', href: '/shop' },
   { label: 'Solutions', href: '/products' },
   { label: 'Applications', href: '/services' },
   { label: 'Projects', href: '/projects' },
+  { label: 'Shop', href: '/shop' },
   { label: 'About', href: '/about' },
   { label: 'Acoustic Education', href: '/blog' },
   { label: 'Contact', href: '/contact' },
@@ -431,7 +431,7 @@ export default function HeaderClient({
   const activeMenuData = renderedMenu ? megaMenus[renderedMenu] : null
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-[16px] sm:px-4 sm:pt-[16px] lg:px-4">
+    <header className="sticky top-0 z-50 px-4 pt-[24px] sm:px-4 sm:pt-[24px] lg:px-4">
       <style>{`
         .burger-btn line {
           transition-property: transform, opacity;

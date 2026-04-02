@@ -66,8 +66,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}>
-      <body className="bg-white">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}
+    >
+      <body suppressHydrationWarning className="bg-white">
         <div className="min-h-screen overflow-x-clip">
           <Header />
           <main>{children}</main>
