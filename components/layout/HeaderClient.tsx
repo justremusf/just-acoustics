@@ -274,7 +274,7 @@ export default function HeaderClient({
   const openMobile = () => setMobileOpen(true)
   const closeMobile = () => {
     setMobileVisible(false)
-    window.setTimeout(() => setMobileOpen(false), 260)
+    window.setTimeout(() => setMobileOpen(false), 420)
   }
 
   function clearDesktopCloseTimer() {
@@ -356,12 +356,11 @@ export default function HeaderClient({
         sections: buildCategorizedSections(shopItems, SHOP_CATEGORY_LABELS, '/shop', '/shop'),
         panel: {
           eyebrow: 'Shop Online',
-          title: 'Browse ready-to-order acoustic panels and packages.',
+          title: 'Browse Acoustic Panels and Package Deals.',
           body:
-            'Let customers jump straight to the exact product they need, or browse every category in one place.',
+            'Explore in-stock and made-to-order panels, plus package deals that make getting started simple.',
           ctaLabel: 'Show All',
           ctaHref: '/shop',
-          pills: Object.values(SHOP_CATEGORY_LABELS),
         },
       },
       solutions: {
@@ -371,12 +370,11 @@ export default function HeaderClient({
         sections: buildCategorizedSections(products, PRODUCT_CATEGORY_LABELS, '/products', '/products'),
         panel: {
           eyebrow: 'Acoustic Solutions',
-          title: 'See every acoustic product we install and recommend.',
+          title: 'See All of Our Acoustic Product Lines.',
           body:
             'Wall panels, ceiling systems, custom finishes, and soundproofing options are all accessible directly from the menu.',
           ctaLabel: 'See All',
           ctaHref: '/products',
-          pills: Object.values(PRODUCT_CATEGORY_LABELS),
         },
       },
       applications: {
@@ -386,12 +384,11 @@ export default function HeaderClient({
         sections: buildApplicationSections(services),
         panel: {
           eyebrow: 'Space Applications',
-          title: 'Navigate by the kind of room you need to improve.',
+          title: 'Learn More About Your Space Type.',
           body:
-            'From churches and offices to restaurants and studios, customers can go straight into the most relevant application.',
+            'Go straight to the room type that best matches the space you want to improve.',
           ctaLabel: 'See All',
           ctaHref: '/services',
-          pills: services.slice(0, 4).map((service) => service.title),
         },
       },
       projects: {
@@ -400,13 +397,12 @@ export default function HeaderClient({
         href: '/projects',
         sections: buildProjectSections(projectCategories),
         panel: {
-          eyebrow: 'Project Filters',
-          title: 'Jump straight into the project type that matches the customer.',
+          eyebrow: 'Our Projects',
+          title: 'Check Out Our Success Stories.',
           body:
-            'Each category link opens the projects page with the relevant filter already applied, so people can browse by space immediately.',
+            'See how different spaces were treated successfully, and jump straight into the category most relevant to yours.',
           ctaLabel: 'See All',
           ctaHref: '/projects',
-          pills: Object.values(PROJECT_CATEGORY_LABELS).slice(0, 4),
         },
       },
       about: {
@@ -423,10 +419,9 @@ export default function HeaderClient({
           eyebrow: 'Company',
           title: 'Learn how we approach acoustic treatment in Singapore.',
           body:
-            'Visit the About page, read the education content, or start a consultation directly from the menu.',
+            'Learn who we are, how we work, and where to go next if you want help with your space.',
           ctaLabel: 'Learn More',
           ctaHref: '/about',
-          pills: ['About Us', 'Acoustic Education', 'Contact'],
         },
       },
     }),
@@ -436,7 +431,7 @@ export default function HeaderClient({
   const activeMenuData = renderedMenu ? megaMenus[renderedMenu] : null
 
   return (
-    <header className="sticky top-0 z-50 px-7 pt-4 sm:px-5 sm:pt-4">
+    <header className="sticky top-0 z-50 px-4 pt-[16px] sm:px-4 sm:pt-[16px] lg:px-4">
       <style>{`
         .burger-btn line {
           transition-property: transform, opacity;
@@ -504,7 +499,7 @@ export default function HeaderClient({
           transform-origin: top center;
           transition:
             opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
-            transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+            transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
         }
         .header-menu-backdrop {
           will-change: opacity;
@@ -533,7 +528,7 @@ export default function HeaderClient({
       )}
 
       <div
-        className="relative z-10 mx-auto hidden max-w-[1280px] lg:block"
+        className="relative z-10 mx-auto hidden w-full max-w-[1280px] px-4 lg:block"
         onMouseEnter={clearDesktopCloseTimer}
         onMouseLeave={scheduleCloseDesktopMenu}
       >
@@ -619,8 +614,8 @@ export default function HeaderClient({
             renderedMenu
               ? openMenu
                 ? 'pointer-events-auto opacity-100 translate-y-0'
-                : 'pointer-events-none opacity-0 translate-y-2'
-              : 'pointer-events-none opacity-0 translate-y-2'
+                : 'pointer-events-none opacity-0 translate-y-0'
+              : 'pointer-events-none opacity-0 translate-y-0'
           }`}
         >
           {activeMenuData && (
@@ -712,7 +707,7 @@ export default function HeaderClient({
         </div>
       </div>
 
-      <div className="relative mx-auto max-w-[1280px] lg:hidden">
+      <div className="relative mx-auto w-full max-w-[1280px] px-4 lg:hidden">
         <div
           className={`flex w-full items-center justify-between rounded-[28px] border py-2 pl-4 pr-2 transition-all duration-300 sm:rounded-[40px] sm:pl-7 ${
             scrolled
@@ -748,8 +743,8 @@ export default function HeaderClient({
                 strokeLinecap="round"
                 style={{
                   transformOrigin: '12px 12px',
-                  transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease',
-                  transform: mobileOpen ? 'translateY(7px) rotate(45deg)' : 'none',
+                  transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
+                  transform: mobileOpen ? 'translateY(7px) rotate(45deg)' : 'translateY(0)',
                 }}
               />
               <line
@@ -762,9 +757,9 @@ export default function HeaderClient({
                 strokeLinecap="round"
                 style={{
                   transformOrigin: '12px 12px',
-                  transition: 'opacity 0.2s ease, transform 0.2s ease',
+                  transition: 'opacity 0.28s ease, transform 0.32s cubic-bezier(0.22,1,0.36,1)',
                   opacity: mobileOpen ? 0 : 1,
-                  transform: mobileOpen ? 'scaleX(0.5)' : 'none',
+                  transform: mobileOpen ? 'scaleX(0.65)' : 'scaleX(1)',
                 }}
               />
               <line
@@ -777,8 +772,8 @@ export default function HeaderClient({
                 strokeLinecap="round"
                 style={{
                   transformOrigin: '12px 12px',
-                  transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease',
-                  transform: mobileOpen ? 'translateY(-7px) rotate(-45deg)' : 'none',
+                  transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
+                  transform: mobileOpen ? 'translateY(-7px) rotate(-45deg)' : 'translateY(0)',
                 }}
               />
             </svg>
@@ -791,16 +786,16 @@ export default function HeaderClient({
           className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[var(--color-dark-100)] px-5 pt-6 pb-6 sm:px-6 sm:pt-8"
           style={{
             opacity: mobileVisible ? 1 : 0,
-            transition: 'opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         >
           <div
             className="flex items-center justify-between"
             style={{
               opacity: mobileVisible ? 1 : 0,
-              transform: mobileVisible ? 'translateY(0)' : 'translateY(-8px)',
+              transform: mobileVisible ? 'translateY(0)' : 'translateY(-4px)',
               transition:
-                'opacity 0.35s cubic-bezier(0.4,0,0.2,1) 0.04s, transform 0.35s cubic-bezier(0.4,0,0.2,1) 0.04s',
+                'opacity 0.46s cubic-bezier(0.22,1,0.36,1) 0.03s, transform 0.46s cubic-bezier(0.22,1,0.36,1) 0.03s',
             }}
           >
             <Link href="/" onClick={closeMobile} className="block">
@@ -824,17 +819,17 @@ export default function HeaderClient({
             </button>
           </div>
 
-          <ul className="my-auto list-none px-0 py-10 text-center sm:py-12">
+          <ul className="list-none px-0 pt-12 pb-8 text-center sm:pt-14 sm:pb-9">
             {mobileLinks.map((link, index) => (
               <li
                 key={link.href}
                 className="mb-3"
                 style={{
                   opacity: mobileVisible ? 1 : 0,
-                  transform: mobileVisible ? 'translateY(0)' : 'translateY(16px)',
-                  transition: `opacity 0.35s cubic-bezier(0.4,0,0.2,1) ${
-                    0.08 + index * 0.04
-                  }s, transform 0.35s cubic-bezier(0.4,0,0.2,1) ${0.08 + index * 0.04}s`,
+                  transform: mobileVisible ? 'translateY(0)' : 'translateY(10px)',
+                  transition: `opacity 0.46s cubic-bezier(0.22,1,0.36,1) ${
+                    0.09 + index * 0.035
+                  }s, transform 0.46s cubic-bezier(0.22,1,0.36,1) ${0.09 + index * 0.035}s`,
                 }}
               >
                 <Link
@@ -850,13 +845,13 @@ export default function HeaderClient({
           </ul>
 
           <div
-            className="pt-2 pb-4 sm:pb-10"
+            className="pb-8 sm:pb-9"
             style={{
               opacity: mobileVisible ? 1 : 0,
-              transform: mobileVisible ? 'translateY(0)' : 'translateY(16px)',
-              transition: `opacity 0.35s cubic-bezier(0.4,0,0.2,1) ${
-                0.08 + mobileLinks.length * 0.04
-              }s, transform 0.35s cubic-bezier(0.4,0,0.2,1) ${0.08 + mobileLinks.length * 0.04}s`,
+              transform: mobileVisible ? 'translateY(0)' : 'translateY(10px)',
+              transition: `opacity 0.46s cubic-bezier(0.22,1,0.36,1) ${
+                0.1 + mobileLinks.length * 0.035
+              }s, transform 0.46s cubic-bezier(0.22,1,0.36,1) ${0.1 + mobileLinks.length * 0.035}s`,
             }}
           >
             <Link href="/contact" onClick={closeMobile} className="block no-underline">

@@ -9,21 +9,21 @@ const videos = [
     thumbnail: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69687b1239333b922d70b26a_Title.avif',
     label: 'Meeting Room Transformation',
     category: 'Office',
-    note: 'Speech clarity reel',
+    note: 'Clearer voices',
   },
   {
     videoId: 'bm-q3dQWB6g',
     thumbnail: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69687d6c4e41c7a3a58f9107_Title.avif',
     label: 'Restaurant Acoustic Treatment',
     category: 'Hospitality',
-    note: 'Echo control reel',
+    note: 'Comfortable dining',
   },
   {
     videoId: 'Y9b0NNTRnFw',
     thumbnail: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69687c96d1feff52c5d91be4_3.avif',
     label: 'Church Sound Improvement',
     category: 'Worship',
-    note: 'Clarity upgrade reel',
+    note: 'Quiet worship',
   },
 ]
 
@@ -35,27 +35,33 @@ export default function HearTheDifference() {
   return (
     <>
       <section className="px-4 py-12 md:px-5 md:py-14">
-        <div className="section-shell-pad mx-auto max-w-[1280px] overflow-hidden rounded-[32px] border border-black/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,243,236,0.96))] shadow-[0_26px_80px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.82)_inset]">
+        <div className="section-shell-pad mx-auto max-w-[1280px] overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,243,236,0.96))] shadow-[0_26px_80px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.82)_inset]" style={{ borderRadius: 'var(--section-radius)', border: '1px solid var(--section-border)' }}>
           <div className="mb-8 flex flex-col gap-4 md:mb-12">
             <div className="max-w-[700px]">
-              <span className="inline-flex rounded-[100px] border border-black/8 bg-white/82 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-black/52">
+              <span className="inline-flex rounded-[100px] border border-black/8 bg-white/82 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-black/52">
                 Hear the difference
               </span>
               <h2 className="mt-4 max-w-[12ch] text-[var(--color-dark-100)] home-heading">
-                Before-and-after examples that make acoustic improvement feel real.
+                Listen to the results yourself
               </h2>
               <p className="mt-5 max-w-[52ch] text-[15px] leading-7 text-[var(--color-gray-100)] sm:text-base">
-                If the problem is hard to picture from copy alone, these clips make the benefit immediate.
+                How spaces like yours sound after acoustic panels
               </p>
             </div>
           </div>
 
-          <div className="flex gap-4 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
+          <div className="relative overflow-hidden rounded-[32px] bg-white md:overflow-visible md:rounded-none md:bg-transparent">
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 flex w-16 items-center justify-end bg-[linear-gradient(270deg,rgba(255,255,255,0.92),rgba(255,255,255,0))] pr-2 md:hidden">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,255,255,0.36))] text-base font-medium text-[var(--color-dark-100)] shadow-[0_18px_36px_rgba(0,0,0,0.12),0_1px_0_rgba(255,255,255,0.9)_inset] backdrop-blur-xl">
+                <span className="translate-x-[0.5px]">→</span>
+              </div>
+            </div>
+            <div className="no-scrollbar flex gap-4 overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
               {videos.map((v, index) => (
                 <button
                   key={v.videoId}
                   onClick={() => setActiveId(v.videoId)}
-                  className="group relative w-[76vw] max-w-[292px] flex-none overflow-hidden rounded-[28px] border border-black/8 bg-[linear-gradient(180deg,rgba(22,22,22,0.94),rgba(8,8,8,1))] p-0 text-left shadow-[0_22px_60px_rgba(0,0,0,0.18)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_75px_rgba(0,0,0,0.22)] md:w-full md:max-w-none"
+                  className="group relative w-[76vw] max-w-[292px] flex-none overflow-hidden rounded-[28px] border border-white/18 bg-[linear-gradient(180deg,rgba(22,22,22,0.94),rgba(8,8,8,1))] p-0 text-left shadow-[0_28px_70px_rgba(0,0,0,0.16),0_10px_28px_rgba(0,0,0,0.06),0_1px_0_rgba(255,255,255,0.16)_inset] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_34px_82px_rgba(0,0,0,0.22),0_14px_34px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.18)_inset] md:w-full md:max-w-none"
                   aria-label={`Play: ${v.label}`}
                 >
                   <div className="relative aspect-[9/16] md:aspect-[4/5] xl:aspect-[5/6]">
@@ -74,7 +80,7 @@ export default function HearTheDifference() {
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <span className="inline-flex rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/62 backdrop-blur-md">
-                        Case reel
+                        Video
                       </span>
                     </div>
 
@@ -103,6 +109,7 @@ export default function HearTheDifference() {
                   </div>
                 </button>
               ))}
+            </div>
           </div>
         </div>
       </section>

@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import ShimmerButton from '@/components/ui/shimmer-button'
 
 const faqs = [
   {
@@ -31,19 +30,35 @@ const faqs = [
   },
 ]
 
-function AccordionItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false)
+function AccordionItem({
+  q,
+  a,
+  open,
+  onToggle,
+}: {
+  q: string
+  a: string
+  open: boolean
+  onToggle: () => void
+}) {
   const bodyRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="glass-card mb-3 p-5 md:p-6">
-      <button className="flex w-full items-center justify-between gap-4 border-0 bg-transparent p-0 text-left" onClick={() => setOpen(!open)}>
-        <span className="text-[22px] leading-[1.1] font-medium tracking-[-0.8px] text-[var(--color-dark-100)] md:text-[28px]" style={{ fontFamily: 'var(--font-heading)' }}>
+    <div className="glass-card group mb-3 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_70px_rgba(0,0,0,0.12),0_10px_28px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.78)_inset] md:p-6">
+      <button className="flex w-full items-center justify-between gap-4 border-0 bg-transparent p-0 text-left" onClick={onToggle}>
+        <span
+          className={`text-[19px] leading-[1.14] font-medium tracking-[-0.6px] transition-all duration-300 md:text-[28px] ${
+            open
+              ? 'translate-x-1 text-[var(--color-brand-orange)]'
+              : 'text-[var(--color-dark-100)] group-hover:translate-x-1 group-hover:text-[var(--color-brand-orange)]'
+          }`}
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
           {q}
         </span>
-        <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-black/8 bg-white">
-          <span className="absolute h-0.5 w-4 bg-[var(--color-dark-100)]" />
-          <span className="absolute h-4 w-0.5 bg-[var(--color-dark-100)] transition-all duration-300" style={{ opacity: open ? 0 : 1, transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }} />
+        <span className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-white transition-colors duration-300 ${open ? 'border-[var(--color-brand-orange)]' : 'border-black/8 group-hover:border-[var(--color-brand-orange)]'}`}>
+          <span className={`absolute h-0.5 w-4 transition-colors duration-300 ${open ? 'bg-[var(--color-brand-orange)]' : 'bg-[var(--color-dark-100)] group-hover:bg-[var(--color-brand-orange)]'}`} />
+          <span className={`absolute h-4 w-0.5 transition-all duration-300 ${open ? 'bg-[var(--color-brand-orange)]' : 'bg-[var(--color-dark-100)] group-hover:bg-[var(--color-brand-orange)]'}`} style={{ opacity: open ? 0 : 1, transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }} />
         </span>
       </button>
       <div
@@ -61,34 +76,60 @@ function AccordionItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function FAQ() {
+  const [openQuestion, setOpenQuestion] = useState<string | null>(null)
+
   return (
     <section className="px-4 py-10 md:px-5 md:py-12">
       <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.78fr_1fr] md:gap-10">
           <div>
             <span className="soft-pill">FAQ</span>
-            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Questions we usually answer before people decide to treat the room.</h2>
-            <p className="home-copy mt-4 max-w-[40ch]">If you still want help after reading these, the consultation is the easiest next step.</p>
+            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Commonly Asked Questions</h2>
+            <p className="home-copy mt-4 max-w-[40ch]">We make acoustics simple for you.</p>
           </div>
           <div>
             {faqs.map((faq) => (
-              <AccordionItem key={faq.q} q={faq.q} a={faq.a} />
+              <AccordionItem
+                key={faq.q}
+                q={faq.q}
+                a={faq.a}
+                open={openQuestion === faq.q}
+                onToggle={() =>
+                  setOpenQuestion((current) => (current === faq.q ? null : faq.q))
+                }
+              />
             ))}
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-black/6 pt-8 sm:flex-row sm:flex-wrap sm:items-center md:mt-10">
-          <Link href="/contact" className="w-full no-underline sm:w-auto">
-            <ShimmerButton className="h-auto w-full px-7 py-4 text-sm sm:w-auto">
-              Free Consultation
-            </ShimmerButton>
-          </Link>
-          <Link
-            href="/blog"
-            className="inline-flex min-h-[54px] items-center justify-center rounded-full border border-black/8 bg-white/82 px-6 py-3.5 text-sm font-semibold text-[var(--color-dark-100)] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:border-black/14 hover:text-[var(--color-brand-orange)]"
-          >
-            Visit resource center
-          </Link>
+        <div className="mt-8 border-t border-black/6 pt-8 md:mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-[0.78fr_1fr] md:gap-10">
+            <div className="hidden md:block" />
+            <Link
+              href="/contact"
+              className="glass-card group flex flex-col items-start gap-5 p-5 no-underline transition-transform duration-300 hover:-translate-y-0.5 md:flex-row md:items-center md:justify-between md:gap-4 md:p-6"
+            >
+              <div>
+                <p className="page-kicker text-[var(--color-brand-orange)]">Still need help</p>
+                <h3
+                  className="mt-3 mb-0 text-[var(--color-dark-100)]"
+                  style={{
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: 'clamp(22px, 2.2vw, 28px)',
+                    lineHeight: '1.04',
+                    fontWeight: 600,
+                    letterSpacing: '-0.7px',
+                  }}
+                >
+                  Your question not answered?
+                </h3>
+              </div>
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)]">
+                Contact Us
+                <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

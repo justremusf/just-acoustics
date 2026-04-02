@@ -37,8 +37,8 @@ export default function ProductsGrid({ products }: Props) {
       <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
         <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[620px]">
-            <span className="soft-pill">Acoustic Solutions</span>
-            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Panels that solve echo without fighting your interior.</h2>
+            <span className="soft-pill">Solutions</span>
+            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Acoustic Panels that fit your space</h2>
             <p className="home-copy mt-4 max-w-[54ch]">
               Browse the most common treatment types we recommend when a room needs clearer speech, lower echo, or better listening comfort.
             </p>
@@ -48,8 +48,7 @@ export default function ProductsGrid({ products }: Props) {
           </Link>
         </div>
 
-        <div className="md:hidden overflow-x-auto pb-3" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-          <div className="flex snap-x snap-mandatory gap-3 px-0.5">
+        <div className="grid grid-cols-1 gap-4 md:hidden">
             {items.map((product) => {
               const p = product as Product | FallbackProduct
               const isFallback = '_fallbackSrc' in (p.mainImage || {})
@@ -63,9 +62,9 @@ export default function ProductsGrid({ products }: Props) {
                 <Link
                   key={p._id}
                   href={`/products/${p.slug.current}`}
-                  className="glass-card group block w-[84vw] max-w-[320px] flex-none snap-start overflow-hidden no-underline"
+                  className="glass-card group block overflow-hidden rounded-[24px] border border-white/55 bg-white/35 no-underline shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
                 >
-                  <div className="overflow-hidden rounded-[20px]">
+                  <div className="overflow-hidden rounded-t-[20px] rounded-b-none">
                     <Image
                       src={imgSrc}
                       alt={p.title}
@@ -87,7 +86,7 @@ export default function ProductsGrid({ products }: Props) {
               )
             })}
 
-            <div className="glass-card flex w-[84vw] max-w-[320px] flex-none snap-start flex-col justify-between p-5">
+            <div className="glass-card flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
               <div>
                 <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
                 <h3 className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
@@ -96,10 +95,9 @@ export default function ProductsGrid({ products }: Props) {
                 <p className="mt-4 text-sm leading-6 text-[var(--color-gray-100)]">Tell us about the room and we’ll point you toward the right panel system.</p>
               </div>
               <Link href="/contact" className="mt-6 no-underline">
-                <ShimmerButton className="h-auto w-full px-5 py-3 text-sm">Contact Us to Buy</ShimmerButton>
+                <ShimmerButton className="h-auto w-full px-5 py-3 text-sm">Contact Us</ShimmerButton>
               </Link>
             </div>
-          </div>
         </div>
 
         <div className="hidden md:grid md:grid-cols-3 md:gap-4 xl:grid-cols-4">
@@ -113,8 +111,12 @@ export default function ProductsGrid({ products }: Props) {
               : '/placeholder.jpg'
 
             return (
-              <Link key={p._id} href={`/products/${p.slug.current}`} className="glass-card group overflow-hidden no-underline">
-                <div className="overflow-hidden rounded-[20px]">
+              <Link
+                key={p._id}
+                href={`/products/${p.slug.current}`}
+                className="glass-card group overflow-hidden rounded-[24px] border border-white/55 bg-white/35 no-underline shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="overflow-hidden rounded-t-[20px] rounded-b-none">
                   <Image
                     src={imgSrc}
                     alt={p.title}
@@ -134,7 +136,7 @@ export default function ProductsGrid({ products }: Props) {
             )
           })}
 
-          <div className="glass-card col-span-2 flex flex-col justify-between p-6 xl:col-span-1">
+          <div className="glass-card col-span-2 flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 xl:col-span-1">
             <div>
               <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
               <h3 className="mt-3 text-[28px] leading-[1.04] font-medium tracking-[-1px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
@@ -143,7 +145,7 @@ export default function ProductsGrid({ products }: Props) {
               <p className="mt-4 text-[15px] leading-7 text-[var(--color-gray-100)]">We’ll recommend the best acoustic treatment based on the room, not guesswork.</p>
             </div>
             <Link href="/contact" className="mt-6 no-underline">
-              <ShimmerButton className="h-auto px-6 py-3 text-sm">Contact Us to Buy</ShimmerButton>
+              <ShimmerButton className="h-auto px-6 py-3 text-sm">Contact Us</ShimmerButton>
             </Link>
           </div>
         </div>

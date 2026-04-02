@@ -1,6 +1,4 @@
-import Link from 'next/link'
 import Image from 'next/image'
-import ShimmerButton from '@/components/ui/shimmer-button'
 
 const solutions = [
   {
@@ -10,9 +8,9 @@ const solutions = [
     summary:
       'Calm reflected sound so conversations feel easier to follow and the room stops sounding harsh.',
     benefits: [
-      'Voice clarity in conversation-heavy spaces',
-      'Lower listening fatigue through the day',
-      'A calmer atmosphere for teams and guests',
+      'Clearer speech in busy rooms',
+      'Lower fatigue across the day',
+      'Calmer atmosphere for teams',
     ],
     surfaceClass:
       'bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(249,245,238,0.98))]',
@@ -26,9 +24,9 @@ const solutions = [
     summary:
       'Reduce spill between adjacent zones so work, conversation, and rest are less constantly interrupted.',
     benefits: [
-      'Reduce spill from adjacent areas',
-      'Improve privacy and concentration',
-      'Keep energy without the harshness',
+      'Reduce spill from nearby zones',
+      'Improve privacy and focus',
+      'Keep energy without harshness',
     ],
     surfaceClass:
       'bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(243,244,246,0.98))]',
@@ -42,8 +40,8 @@ const solutions = [
     summary:
       'Treat the room with systems that perform properly while still fitting the visual language of the space.',
     benefits: [
-      'A cleaner visual finish than ad hoc treatment',
-      'Flexible wall and ceiling options',
+      'Cleaner finish than ad hoc treatment',
+      'Flexible wall or ceiling options',
       'Performance matched to the space',
     ],
     surfaceClass:
@@ -52,8 +50,6 @@ const solutions = [
       'border-[rgba(255,165,0,0.14)] bg-[rgba(255,165,0,0.08)]',
   },
 ]
-
-const outcomeChips = ['Clearer speech', 'Better privacy', 'Lower fatigue']
 
 export default function Solutions() {
   return (
@@ -73,30 +69,12 @@ export default function Solutions() {
                   letterSpacing: '-1px',
                 }}
               >
-                Fixing sound changes how people focus, communicate, and stay in a space.
+                Sound is often overlooked in many spaces
               </h2>
               <p className="home-copy mt-5 max-w-[44ch]">
                 The right treatment is not just about making a room quieter. It shapes clarity,
                 comfort, privacy, and the overall experience of being there.
               </p>
-            </div>
-
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-wrap gap-3">
-                {outcomeChips.map((chip) => (
-                  <span
-                    key={chip}
-                    className="inline-flex rounded-full border border-black/8 bg-white/78 px-4 py-2 text-[13px] font-semibold text-[var(--color-dark-100)]/72 shadow-[0_8px_22px_rgba(0,0,0,0.04)]"
-                  >
-                    {chip}
-                  </span>
-                ))}
-              </div>
-              <Link href="/contact" className="w-full no-underline sm:w-auto">
-                <ShimmerButton className="h-auto w-full px-7 py-4 text-sm sm:w-auto">
-                  Free Consultation
-                </ShimmerButton>
-              </Link>
             </div>
           </div>
 
@@ -104,16 +82,16 @@ export default function Solutions() {
             {solutions.map((solution, index) => (
               <article
                 key={solution.title}
-                className={`rounded-[26px] border border-black/6 ${solution.surfaceClass} p-5 shadow-[0_18px_42px_rgba(0,0,0,0.05)] sm:p-6`}
+                className={`overflow-hidden rounded-[26px] border border-black/6 ${solution.surfaceClass} p-5 shadow-[0_18px_42px_rgba(0,0,0,0.05)] sm:p-6`}
               >
-                <div className="grid gap-5 xl:grid-cols-[auto_minmax(0,1fr)_minmax(240px,0.88fr)] xl:items-start">
+                <div className="grid gap-5 md:grid-cols-[auto_minmax(0,1fr)] xl:grid-cols-[auto_minmax(0,0.72fr)_minmax(360px,0.9fr)] xl:items-start">
                   <div
                     className={`flex h-14 w-14 items-center justify-center rounded-[18px] border ${solution.iconShellClass} shadow-[0_10px_24px_rgba(0,0,0,0.04)]`}
                   >
                     <Image src={solution.icon} alt={solution.title} width={42} height={42} unoptimized />
                   </div>
 
-                  <div className="max-w-[34ch]">
+                  <div className="max-w-none md:max-w-[34ch]">
                     <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
                       {String(index + 1).padStart(2, '0')} · {solution.label}
                     </p>
@@ -131,7 +109,7 @@ export default function Solutions() {
                     </h3>
                   </div>
 
-                  <ul className="m-0 grid gap-3 border-t border-black/6 pt-4 text-[14px] leading-6 text-[var(--color-gray-100)] xl:border-t-0 xl:border-l xl:pt-0 xl:pl-5">
+                  <ul className="m-0 grid max-w-none gap-3 border-t border-black/6 pt-4 text-[14px] leading-6 text-[var(--color-gray-100)] md:col-span-2 xl:col-span-1 xl:max-w-[360px] xl:border-t-0 xl:border-l xl:pt-0 xl:pl-6">
                     {solution.benefits.map((benefit) => (
                       <li key={benefit} className="flex items-start gap-3 list-none">
                         <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[var(--color-brand-orange)]" />

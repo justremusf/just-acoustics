@@ -7,7 +7,6 @@ const navGroups = [
       { label: 'Home', href: '/' },
       { label: 'Shop', href: '/shop' },
       { label: 'Projects', href: '/projects' },
-      { label: 'About', href: '/about' },
     ],
   },
   {
@@ -16,12 +15,13 @@ const navGroups = [
       { label: 'Products', href: '/products' },
       { label: 'Services', href: '/services' },
       { label: 'Acoustic Education', href: '/blog' },
-      { label: 'Contact', href: '/contact' },
     ],
   },
   {
     title: 'Company',
     links: [
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms & Conditions', href: '/terms-of-service' },
     ],
@@ -100,7 +100,7 @@ export default function Footer() {
 
               <div className="relative z-10 flex h-full flex-col">
                 <div className="space-y-4">
-                  <div className="max-w-[28ch]">
+                  <div className="max-w-[271px]">
                     <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72">
                       Connect with us
                     </p>
@@ -108,7 +108,7 @@ export default function Footer() {
                       className="mt-3 mb-0 text-white"
                       style={{
                         fontFamily: 'var(--font-heading)',
-                        fontSize: 'clamp(28px, 3.4vw, 42px)',
+                        fontSize: 'clamp(26px, 3vw, 38px)',
                         lineHeight: '1',
                         fontWeight: 500,
                         letterSpacing: '-1.1px',
@@ -116,20 +116,17 @@ export default function Footer() {
                     >
                       Let&apos;s Reduce Noise Together
                     </h2>
-                    <p className="mt-3 mb-0 text-[14px] leading-6 text-white/82">
-                      Tell us about the room and the noise issue. We&apos;ll point you toward the clearest next step.
-                    </p>
                   </div>
                 </div>
 
-                <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
                   {contactLinks.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
                       target={item.href.startsWith('http') ? '_blank' : undefined}
                       rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="rounded-[20px] border border-white/24 bg-white/18 p-4 text-white no-underline shadow-[0_14px_34px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/24"
+                      className="rounded-[16px] border border-white/24 bg-white/18 px-4 py-2.5 text-white no-underline shadow-[0_10px_24px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/24"
                     >
                       <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/72">
                         {item.label}
@@ -138,7 +135,7 @@ export default function Footer() {
                         className="mt-2 mb-0"
                         style={{
                           fontFamily: 'var(--font-heading)',
-                          fontSize: 'clamp(19px, 2vw, 25px)',
+                          fontSize: 'clamp(16px, 1.6vw, 20px)',
                           lineHeight: '1.05',
                           letterSpacing: '-0.6px',
                         }}
@@ -149,7 +146,7 @@ export default function Footer() {
                   ))}
                 </div>
 
-                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <Link
                     href="/contact"
                     className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[100px] bg-white px-6 py-4 text-[14px] font-semibold text-[var(--color-dark-100)] no-underline shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92 sm:w-auto"
@@ -166,7 +163,7 @@ export default function Footer() {
                   </Link>
                 </div>
 
-                <div className="mt-auto pt-6">
+                <div className="mt-auto pt-5">
                   <div className="flex flex-wrap gap-3">
                     {socialLinks.map((social) => (
                       <a
@@ -186,14 +183,14 @@ export default function Footer() {
             </div>
 
             <div className="rounded-[30px] border border-black/6 bg-white/58 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.04),0_1px_0_rgba(255,255,255,0.82)_inset] sm:p-6 md:p-7">
-              <div className="flex h-full flex-col gap-6">
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="flex h-full flex-col gap-5">
+                <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-14">
                   {navGroups.map((group) => (
                     <div key={group.title}>
                       <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">
                         {group.title}
                       </p>
-                      <div className="mt-4 flex flex-col gap-3">
+                      <div className="mt-4 flex flex-col gap-4">
                         {group.links.map((link) => (
                           <Link
                             key={link.href}
@@ -208,44 +205,19 @@ export default function Footer() {
                   ))}
                 </div>
 
-                <div className="rounded-[24px] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(247,244,238,0.92))] p-5 shadow-[0_12px_34px_rgba(0,0,0,0.04)]">
-                  <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
-                    <div>
-                    <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">
-                      Singapore
-                    </p>
-                    <h3
-                      className="mt-4 mb-0 text-[var(--color-dark-100)]"
-                      style={{
-                        fontFamily: 'var(--font-heading)',
-                        fontSize: 'clamp(20px, 2.2vw, 28px)',
-                        lineHeight: '1.04',
-                        fontWeight: 500,
-                        letterSpacing: '-0.7px',
-                      }}
-                    >
-                      Acoustic treatment that feels considered, not generic.
-                    </h3>
-                    <p className="mt-3 mb-0 max-w-[58ch] text-[14px] leading-6 text-[var(--color-gray-100)]">
-                      Offices, worship spaces, hospitality venues, studios, and homes all need a different acoustic response. We design around how the room is actually used.
-                    </p>
-                    </div>
-                    <Link href="/services" className="home-link mt-5 inline-flex items-center gap-2">
-                      Explore applications
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 border-t border-black/8 pt-5 text-sm text-[var(--color-gray-100)] md:flex-row md:items-center md:justify-between">
-                  <p className="m-0">Just Acoustics © {new Date().getFullYear()} — All rights reserved</p>
-                  <p className="m-0 text-[var(--color-gray-200)]">
-                    Acoustic panels, echo control, and sound treatment across Singapore.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div
+          className="flex flex-col gap-2 px-1 text-sm text-[var(--color-gray-100)] md:flex-row md:items-start md:justify-between"
+          style={{ marginTop: '40px' }}
+        >
+          <p className="m-0">Just Acoustics © {new Date().getFullYear()} — All rights reserved</p>
+          <p className="m-0 text-[var(--color-gray-200)]">
+            Acoustic panels, echo control, and sound treatment across Singapore.
+          </p>
         </div>
       </div>
     </footer>

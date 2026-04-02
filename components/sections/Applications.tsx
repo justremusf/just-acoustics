@@ -65,7 +65,7 @@ export default function Applications({ services }: Props) {
           <div className="max-w-[640px]">
             <span className="soft-pill">Space Applications</span>
             <h2 className="home-heading mt-4 max-w-[14ch] text-[var(--color-dark-100)]">
-              Designed around how the space needs to feel and sound.
+              Why acoustics matter in your space
             </h2>
             <p className="home-copy mt-4 max-w-[54ch]">
               Different rooms create different acoustic problems. These are some of the environments we most often help transform.
@@ -98,7 +98,7 @@ export default function Applications({ services }: Props) {
                   <h3 className="m-0 text-[22px] leading-[1.04] font-medium tracking-[-0.8px] text-white sm:text-[24px]" style={{ fontFamily: 'var(--font-heading)' }}>
                     {app.title}
                   </h3>
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-white/78 md:text-[15px]">{app.description}</p>
+                  <p className="mt-2 line-clamp-2 text-[13px] leading-5.5 text-white/78 md:text-[14px]">{app.description}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white transition-colors group-hover:text-[var(--color-brand-orange)]">
                     View application <span aria-hidden="true">→</span>
                   </span>

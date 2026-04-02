@@ -5,7 +5,7 @@ import ShimmerButton from '@/components/ui/shimmer-button'
 export default function Hero() {
   return (
     <section
-      className="relative mx-3 mt-[-82px] overflow-hidden rounded-[24px] px-0 pt-[146px] pb-12 sm:mx-4 sm:pt-[170px] md:pt-[232px] md:pb-20"
+      className="relative mx-4 mt-[-66px] overflow-hidden rounded-[24px] px-0 pt-[188px] pb-12 sm:mx-4 sm:pt-[198px] md:mt-[-76px] md:pt-[246px] md:pb-20"
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
       <div
@@ -35,7 +35,7 @@ export default function Hero() {
                 letterSpacing: '-1.4px',
               }}
             >
-              Reduce Echo and Make Every Room Easier To Hear
+              Reduce Echo and Make Your Space Easier To Hear
             </h1>
             <p className="mt-5 max-w-[40ch] text-[15px] leading-7 text-white/82 sm:text-[16px] sm:leading-7 md:text-[17px]">
               We design and install acoustic panels for offices, restaurants, churches, schools, and studios.

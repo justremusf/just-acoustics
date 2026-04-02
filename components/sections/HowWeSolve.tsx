@@ -24,7 +24,7 @@ const painPoints = [
 export default function HowWeSolve() {
   return (
     <section className="px-4 py-8 md:px-5 md:py-12">
-      <div className="home-shell section-shell-pad mx-auto max-w-[1280px] rounded-[24px]">
+      <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,1.32fr)]">
           <div className="max-w-[500px]">
             <span className="soft-pill">Acoustic pain points</span>

@@ -30,7 +30,7 @@ export default function BrandScroller({ logos }: Props) {
 
   return (
     <section className="px-4 py-10 md:px-5 md:py-12">
-      <div className="mx-auto max-w-[1280px] rounded-[24px] border border-[var(--color-white-300)] bg-[var(--color-white-100)] px-4 py-6 shadow-[0_16px_50px_rgba(0,0,0,0.05)] md:px-6 md:py-8">
+      <div className="mx-auto max-w-[1280px] border border-[var(--color-white-300)] bg-[var(--color-white-100)] px-4 py-6 shadow-[0_16px_50px_rgba(0,0,0,0.05)] md:px-6 md:py-8" style={{ borderRadius: 'var(--section-radius)' }}>
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[620px]">
             <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
@@ -46,7 +46,7 @@ export default function BrandScroller({ logos }: Props) {
                 letterSpacing: '-0.8px',
               }}
             >
-              Successfully tranformed spaces all over Singapore
+              Successfully transformed spaces all over Singapore
             </h2>
           </div>
           <Link

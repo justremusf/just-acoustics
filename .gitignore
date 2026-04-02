@@ -34,3 +34,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .gstack/
+.claude/
+.next_stale*/
+.next_stale_*/
+*.bak
+TODO.md
