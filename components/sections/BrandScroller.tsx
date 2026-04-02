@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import type { SanityImage } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 
-// Fallback logos (from current site CDN) if Sanity isn't populated yet
 const FALLBACK_LOGOS = [
   { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425eeaa3c0b1b8e1f078_4.png', alt: 'Brand' },
   { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425e28c744e5908bc3d8_2.png', alt: 'Brand' },
@@ -23,44 +23,59 @@ interface Props {
 export default function BrandScroller({ logos }: Props) {
   const items =
     logos && logos.length > 0
-      ? logos.map((logo) => ({ src: urlFor(logo).width(180).url(), alt: logo.alt || 'Brand' }))
+      ? logos.map((logo) => ({ src: urlFor(logo).width(234).url(), alt: logo.alt || 'Brand' }))
       : FALLBACK_LOGOS
 
-  // Duplicate for seamless loop
   const doubled = [...items, ...items]
 
   return (
-    <section className="py-16 md:py-20">
-      <div className="text-center mb-8 md:mb-10">
-        <h2
-          className="text-[var(--color-dark-100)] m-0"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(22px, 3vw, 32px)',
-            fontWeight: 600,
-            letterSpacing: '-0.5px',
-          }}
-        >
-          A Trusted Acoustic Company for Superior Sound
-        </h2>
-      </div>
-      <div className="brand-scroll-wrap">
-        <div className="brand-scroll-inner flex">
-          {doubled.map((logo, i) => (
-            <div
-              key={i}
-              className="flex-none bg-[var(--color-white-200)] rounded-[10px] flex items-center justify-center px-10 py-4 min-w-[220px] mr-4 transition-all duration-500 hover:opacity-80 cursor-pointer"
+    <section className="px-4 py-10 md:px-5 md:py-12">
+      <div className="mx-auto max-w-[1280px] rounded-[24px] border border-[var(--color-white-300)] bg-[var(--color-white-100)] px-4 py-6 shadow-[0_16px_50px_rgba(0,0,0,0.05)] md:px-6 md:py-8">
+        <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-[620px]">
+            <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+              Trusted by teams who need quieter rooms
+            </p>
+            <h2
+              className="m-0 mt-3 text-[var(--color-dark-100)]"
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(22px, 2.8vw, 32px)',
+                fontWeight: 600,
+                lineHeight: '1.08',
+                letterSpacing: '-0.8px',
+              }}
             >
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={180}
-                height={90}
-                className="object-contain max-h-[90px]"
-                unoptimized
-              />
-            </div>
-          ))}
+              Successfully tranformed spaces all over Singapore
+            </h2>
+          </div>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)]"
+          >
+            See project examples
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+
+        <div className="brand-scroll-wrap">
+          <div className="brand-scroll-inner flex">
+            {doubled.map((logo, i) => (
+              <div
+                key={i}
+                className="mr-3 flex min-w-[176px] flex-none items-center justify-center rounded-[14px] border border-black/4 bg-[var(--color-white-200)] px-5 py-4 transition-all duration-500 hover:-translate-y-0.5 hover:opacity-90 sm:min-w-[203px] sm:px-6"
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={132}
+                  height={63}
+                  className="max-h-[63px] object-contain sm:max-h-[73px]"
+                  unoptimized
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

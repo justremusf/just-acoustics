@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { RESOURCE_TOPICS } from '../../lib/resourceTopics'
 
 export default defineType({
   name: 'post',
@@ -17,6 +18,18 @@ export default defineType({
       type: 'slug',
       options: { source: 'title', maxLength: 96 },
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'category',
+      title: 'Resource Topic',
+      type: 'string',
+      options: {
+        list: RESOURCE_TOPICS.map((topic) => ({
+          title: topic.title,
+          value: topic.value,
+        })),
+      },
+      description: 'Used to group articles inside the resource center.',
     }),
     defineField({
       name: 'mainImage',

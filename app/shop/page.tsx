@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { ShopItem } from '@/lib/types'
+import ShopFilters from '@/components/sections/ShopFilters'
 
 export const revalidate = 60
 
@@ -17,102 +18,70 @@ const CATEGORY_LABELS: Record<string, string> = {
   'standard-panels': 'Standard Panels',
   'custom-panels': 'Custom Panels',
   'ceiling-panels': 'Ceiling Panels',
-  'accessories': 'Accessories',
+  accessories: 'Accessories',
 }
 
-export default async function ShopPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
-  const { category } = await searchParams
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ category?: string; sort?: string }> }) {
+  const { category, sort } = await searchParams
   const allItems: ShopItem[] = await getAllShopItems().catch(() => [])
+
   const filtered = category ? allItems.filter((i) => i.category === category) : allItems
+  const sorted = [...filtered].sort((a, b) => {
+    if (sort === 'price-asc') return (a.price ?? Infinity) - (b.price ?? Infinity)
+    if (sort === 'price-desc') return (b.price ?? -Infinity) - (a.price ?? -Infinity)
+    return 0
+  })
 
   return (
-    <div className="max-w-[1280px] mx-auto px-5 py-20">
-      <div className="mb-14">
-        <span className="inline-block border border-[var(--color-dark-100)] rounded-[100px] px-4 py-2 text-sm mb-4">
-          Shop
-        </span>
-        <h1
-          className="text-[var(--color-dark-100)] m-0 mb-4"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(32px, 5vw, var(--fs-h2))',
-            lineHeight: '112%',
-            fontWeight: 500,
-            letterSpacing: '-1.28px',
-          }}
-        >
-          Shop Acoustic Products
-        </h1>
-        <p className="text-[var(--color-gray-100)] text-base m-0 max-w-xl">
-          Browse acoustic panels, package deals, and custom solutions for your space.
+    <div className="page-wrap page-stack">
+      <section className="home-shell page-hero-shell flex flex-col gap-5">
+        <span className="soft-pill">Shop</span>
+        <h1 className="page-title">Shop Acoustic Panels Online</h1>
+        <p className="page-subtitle">
+          Browse package deals, standard panels, and made-to-order options with upfront pricing. If you are unsure what fits, use the consultation flow before buying.
         </p>
-      </div>
+      </section>
 
-      {/* Category filters */}
-      <div className="flex flex-wrap gap-3 mb-10">
-        <Link
-          href="/shop"
-          className={`rounded-[100px] px-5 py-2 text-sm no-underline transition-colors border ${
-            !category
-              ? 'bg-[var(--color-dark-100)] text-white border-[var(--color-dark-100)]'
-              : 'border-[var(--color-gray-300)] text-[var(--color-gray-200)] hover:border-[var(--color-dark-100)] hover:text-[var(--color-dark-100)]'
-          }`}
-        >
-          All
-        </Link>
-        {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-          <Link
-            key={value}
-            href={`/shop?category=${value}`}
-            className={`rounded-[100px] px-5 py-2 text-sm no-underline transition-colors border ${
-              category === value
-                ? 'bg-[var(--color-dark-100)] text-white border-[var(--color-dark-100)]'
-                : 'border-[var(--color-gray-300)] text-[var(--color-gray-200)] hover:border-[var(--color-dark-100)] hover:text-[var(--color-dark-100)]'
-            }`}
-          >
-            {label}
-          </Link>
-        ))}
-      </div>
+      <section className="home-shell page-hero-shell flex flex-col gap-4">
+        <ShopFilters
+          category={category}
+          sort={sort}
+          categories={Object.entries(CATEGORY_LABELS).map(([value, label]) => ({ value, label }))}
+        />
+      </section>
 
-      {filtered.length === 0 ? (
-        <p className="text-[var(--color-gray-200)]">No products yet. Check back soon!</p>
+      {sorted.length === 0 ? (
+        <section className="glass-card page-hero-shell">
+          <p className="page-card-copy">No products yet. Check back soon.</p>
+        </section>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {filtered.map((item) => (
+        <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {sorted.map((item) => (
             <Link
               key={item._id}
-              href={`/shop/${item.slug.current}`}
-              className="block no-underline group rounded-[16px] overflow-hidden bg-[var(--color-white-200)] transition-shadow duration-300"
-              style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05)' }}
+              href={'/shop/' + item.slug.current}
+              className="page-card glass-card group transition-transform duration-300 hover:-translate-y-1"
             >
               {item.mainImage?.asset._ref && (
-                <div className="overflow-hidden aspect-square">
+                <div className="page-card-image aspect-square">
                   <Image
-                    src={urlFor(item.mainImage).width(400).height(400).url()}
+                    src={urlFor(item.mainImage).width(720).height(720).url()}
                     alt={item.mainImage.alt || item.title}
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    width={720}
+                    height={720}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
               )}
-              <div className="p-4">
-                {item.category && (
-                  <span className="text-[var(--color-gray-200)] text-xs uppercase tracking-wide mb-1 block">
-                    {CATEGORY_LABELS[item.category] || item.category}
-                  </span>
-                )}
-                <h2 className="text-[var(--color-dark-100)] m-0 text-base font-semibold group-hover:text-[var(--color-brand-orange)] transition-colors">
-                  {item.title}
-                </h2>
-                {item.price != null && (
-                  <p className="text-[var(--color-gray-200)] text-sm m-0 mt-1">S${item.price.toLocaleString()}</p>
-                )}
+              <div className="page-card-body">
+                {item.category && <p className="page-kicker">{CATEGORY_LABELS[item.category] || item.category}</p>}
+                <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{item.title}</h2>
+                {item.price != null && <p className="page-card-copy">S${item.price.toLocaleString()}</p>}
+                <span className="page-link mt-1">Buy now <span aria-hidden="true">→</span></span>
               </div>
             </Link>
           ))}
-        </div>
+        </section>
       )}
     </div>
   )

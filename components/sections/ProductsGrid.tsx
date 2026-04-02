@@ -4,7 +4,6 @@ import type { Product } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
-// Fallback products matching the current site
 const FALLBACK_PRODUCTS = [
   { _id: '1', title: 'Acoustic Wall Panels', slug: { current: 'acoustic-wall-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbb798931f99abbc38_1.avif' } },
   { _id: '2', title: 'Acoustic Ceiling Panels', slug: { current: 'acoustic-ceiling-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb0907dcf8dacbcd54_2.png' } },
@@ -34,118 +33,117 @@ export default function ProductsGrid({ products }: Props) {
   const items = products && products.length > 0 ? products.slice(0, 7) : FALLBACK_PRODUCTS
 
   return (
-    <section className="mt-16 mb-16">
-      {/* Section heading */}
-      <div className="max-w-[1280px] mx-auto px-5 mb-10 md:mb-12 text-center">
-        <h2
-          className="text-[var(--color-dark-100)] m-0 mb-4"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
-            lineHeight: '124%',
-            fontWeight: 500,
-            letterSpacing: '-1.04px',
-          }}
-        >
-          Acoustic Solutions
-        </h2>
-        <p className="text-[var(--color-gray-100)] text-base m-0 max-w-xl mx-auto">
-          Our dynamic range of acoustic panels reduces echo and matches your space, whether it&apos;s walls or ceilings.
-        </p>
-      </div>
+    <section className="px-4 py-10 md:px-5 md:py-12">
+      <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
+        <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-[620px]">
+            <span className="soft-pill">Acoustic Solutions</span>
+            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Panels that solve echo without fighting your interior.</h2>
+            <p className="home-copy mt-4 max-w-[54ch]">
+              Browse the most common treatment types we recommend when a room needs clearer speech, lower echo, or better listening comfort.
+            </p>
+          </div>
+          <Link href="/products" className="home-link inline-flex items-center gap-2 self-start md:self-auto">
+            See all solutions <span aria-hidden="true">→</span>
+          </Link>
+        </div>
 
-      {/* Mobile: horizontal scroll row */}
-      <div className="md:hidden overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-        <div className="flex gap-3 px-5">
-          {items.map((product) => {
-            const p = product as Product | FallbackProduct
-            const isFallback = '_fallbackSrc' in (p.mainImage || {})
-            const imgSrc = isFallback
-              ? (p.mainImage as FallbackProduct['mainImage'])._fallbackSrc!
-              : p.mainImage
-              ? urlFor(p.mainImage as Product['mainImage'] & {}).width(400).url()
-              : '/placeholder.jpg'
+        <div className="md:hidden overflow-x-auto pb-3" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+          <div className="flex snap-x snap-mandatory gap-3 px-0.5">
+            {items.map((product) => {
+              const p = product as Product | FallbackProduct
+              const isFallback = '_fallbackSrc' in (p.mainImage || {})
+              const imgSrc = isFallback
+                ? (p.mainImage as FallbackProduct['mainImage'])._fallbackSrc!
+                : p.mainImage
+                ? urlFor(p.mainImage as Product['mainImage'] & {}).width(500).url()
+                : '/placeholder.jpg'
 
-            return (
-              <Link
-                key={p._id}
-                href={`/products/${p.slug.current}`}
-                className="flex-none w-[72vw] block bg-[var(--color-white-200)] rounded-[16px] overflow-hidden no-underline group"
-              >
-                <div className="overflow-hidden rounded-t-[16px]">
-                  <Image
-                    src={imgSrc}
-                    alt={p.title}
-                    width={300}
-                    height={220}
-                    className="w-full object-cover"
-                    unoptimized={isFallback}
-                  />
-                </div>
-                <h3 className="text-[var(--color-dark-100)] px-4 pt-3 pb-4 m-0 text-lg font-semibold">
-                  {p.title}
+              return (
+                <Link
+                  key={p._id}
+                  href={`/products/${p.slug.current}`}
+                  className="glass-card group block w-[84vw] max-w-[320px] flex-none snap-start overflow-hidden no-underline"
+                >
+                  <div className="overflow-hidden rounded-[20px]">
+                    <Image
+                      src={imgSrc}
+                      alt={p.title}
+                      width={320}
+                      height={220}
+                      className="h-[220px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      unoptimized={isFallback}
+                    />
+                  </div>
+                  <div className="p-5">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
+                      Product
+                    </span>
+                    <h3 className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                      {p.title}
+                    </h3>
+                  </div>
+                </Link>
+              )
+            })}
+
+            <div className="glass-card flex w-[84vw] max-w-[320px] flex-none snap-start flex-col justify-between p-5">
+              <div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
+                <h3 className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                  Which solution fits my space?
                 </h3>
+                <p className="mt-4 text-sm leading-6 text-[var(--color-gray-100)]">Tell us about the room and we’ll point you toward the right panel system.</p>
+              </div>
+              <Link href="/contact" className="mt-6 no-underline">
+                <ShimmerButton className="h-auto w-full px-5 py-3 text-sm">Contact Us to Buy</ShimmerButton>
               </Link>
-            )
-          })}
-
-          {/* CTA card */}
-          <div className="flex-none w-[72vw] bg-[var(--color-brand-orange)] rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-3">
-            <h3 className="text-white m-0 text-xl font-semibold">Which works for me?</h3>
-            <p className="text-white/80 text-base m-0">Let us recommend the best solution for you!</p>
-            <Link
-              href="/contact"
-              className="mt-2 inline-block bg-white text-[var(--color-dark-100)] rounded-[100px] px-5 py-2.5 text-sm no-underline font-semibold"
-            >
-              Get Free Quote
-            </Link>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Desktop: grid */}
-      <div className="hidden md:block max-w-[1280px] mx-auto px-5">
-        <div className="grid grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="hidden md:grid md:grid-cols-3 md:gap-4 xl:grid-cols-4">
           {items.map((product) => {
             const p = product as Product | FallbackProduct
             const isFallback = '_fallbackSrc' in (p.mainImage || {})
             const imgSrc = isFallback
               ? (p.mainImage as FallbackProduct['mainImage'])._fallbackSrc!
               : p.mainImage
-              ? urlFor(p.mainImage as Product['mainImage'] & {}).width(400).url()
+              ? urlFor(p.mainImage as Product['mainImage'] & {}).width(500).url()
               : '/placeholder.jpg'
 
             return (
-              <Link
-                key={p._id}
-                href={`/products/${p.slug.current}`}
-                className="block bg-[var(--color-white-200)] rounded-[16px] overflow-hidden no-underline group"
-              >
-                <div className="overflow-hidden rounded-t-[16px]">
+              <Link key={p._id} href={`/products/${p.slug.current}`} className="glass-card group overflow-hidden no-underline">
+                <div className="overflow-hidden rounded-[20px]">
                   <Image
                     src={imgSrc}
                     alt={p.title}
-                    width={300}
+                    width={320}
                     height={240}
-                    className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-[240px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     unoptimized={isFallback}
                   />
                 </div>
-                <h3 className="text-[var(--color-dark-100)] px-4 pt-4 pb-4 m-0 text-lg font-semibold group-hover:text-[var(--color-brand-orange)] transition-colors">
-                  {p.title}
-                </h3>
+                <div className="p-5">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Product</span>
+                  <h3 className="mt-3 text-[26px] leading-[1.04] font-medium tracking-[-1px] text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                    {p.title}
+                  </h3>
+                </div>
               </Link>
             )
           })}
 
-          {/* CTA card — spans 2 cols at 3-col breakpoint, 1 col at 4-col (fills remaining space) */}
-          <div className="col-span-2 lg:col-span-1 bg-[var(--color-white-200)] rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-3">
-            <h3 className="text-[var(--color-dark-100)] m-0 text-xl font-semibold">Which works for me?</h3>
-            <p className="text-[var(--color-gray-200)] text-base m-0">Let us recommend the best solution for you!</p>
-            <Link href="/contact" className="mt-2 no-underline">
-              <ShimmerButton className="text-sm px-5 py-2.5 h-auto">
-                Get Free Quote
-              </ShimmerButton>
+          <div className="glass-card col-span-2 flex flex-col justify-between p-6 xl:col-span-1">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
+              <h3 className="mt-3 text-[28px] leading-[1.04] font-medium tracking-[-1px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                Not sure which panel is right for you?
+              </h3>
+              <p className="mt-4 text-[15px] leading-7 text-[var(--color-gray-100)]">We’ll recommend the best acoustic treatment based on the room, not guesswork.</p>
+            </div>
+            <Link href="/contact" className="mt-6 no-underline">
+              <ShimmerButton className="h-auto px-6 py-3 text-sm">Contact Us to Buy</ShimmerButton>
             </Link>
           </div>
         </div>

@@ -15,18 +15,25 @@ export default function FadeUp({ children, delay = 0, className = '' }: FadeUpPr
     const el = ref.current
     if (!el) return
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) {
+      el.classList.add('visible')
+      return
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          if (delay > 0) {
-            setTimeout(() => el.classList.add('visible'), delay)
-          } else {
-            el.classList.add('visible')
-          }
-          observer.unobserve(el)
+        if (!entry.isIntersecting) return
+
+        const reveal = () => el.classList.add('visible')
+        if (delay > 0) {
+          window.setTimeout(reveal, delay)
+        } else {
+          reveal()
         }
+        observer.unobserve(el)
       },
-      { threshold: 0.12 }
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
     )
 
     observer.observe(el)

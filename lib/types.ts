@@ -9,6 +9,7 @@ export interface Post {
   _id: string
   title: string
   slug: { current: string }
+  category?: string
   mainImage?: SanityImage
   excerpt?: string
   publishedAt?: string

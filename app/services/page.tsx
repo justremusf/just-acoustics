@@ -16,65 +16,47 @@ export default async function ServicesPage() {
   const services: Service[] = await getAllServices().catch(() => [])
 
   return (
-    <div className="max-w-[1280px] mx-auto px-5 py-20">
-      <div className="mb-14">
-        <span className="inline-block border border-[var(--color-dark-100)] rounded-[100px] px-4 py-2 text-sm mb-4">
-          Services
-        </span>
-        <h1
-          className="text-[var(--color-dark-100)] m-0 mb-4"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(32px, 5vw, var(--fs-h2))',
-            lineHeight: '112%',
-            fontWeight: 500,
-            letterSpacing: '-1.28px',
-          }}
-        >
-          Space Applications
-        </h1>
-        <p className="text-[var(--color-gray-100)] text-base m-0 max-w-xl">
-          Whether you need to soundproof an office or create a unique ambience for your venue, we can help.
+    <div className="page-wrap page-stack">
+      <section className="home-shell page-hero-shell flex flex-col gap-5">
+        <span className="soft-pill">Space Applications</span>
+        <h1 className="page-title">Why Acoustics Matter</h1>
+        <p className="page-subtitle">
+          From worship spaces to offices and restaurants, these are the environments where we most often improve clarity, comfort, and noise control.
         </p>
-      </div>
+      </section>
 
       {services.length === 0 ? (
-        <p className="text-[var(--color-gray-200)]">Services coming soon.</p>
+        <section className="glass-card page-hero-shell">
+          <p className="page-card-copy">Services coming soon.</p>
+        </section>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {services.map((service) => (
             <Link
               key={service._id}
-              href={`/services/${service.slug.current}`}
-              className="block no-underline group rounded-[16px] overflow-hidden"
+              href={'/services/' + service.slug.current}
+              className="page-card glass-card group grid overflow-hidden md:grid-cols-[240px_minmax(0,1fr)] transition-transform duration-300 hover:-translate-y-1"
             >
               {service.mainImage && (
-                <div className="overflow-hidden h-56">
+                <div className="page-card-image min-h-[220px] md:min-h-full">
                   <Image
-                    src={urlFor(service.mainImage).width(600).height(224).url()}
+                    src={urlFor(service.mainImage).width(560).height(420).url()}
                     alt={service.mainImage.alt || service.title}
-                    width={600}
-                    height={224}
-                    className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    width={560}
+                    height={420}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
               )}
-              <div className="bg-[var(--color-white-200)] p-6">
-                <h2
-                  className="text-[var(--color-dark-100)] m-0 mb-2 text-xl font-semibold group-hover:text-[var(--color-brand-orange)] transition-colors"
-                  style={{ fontFamily: 'var(--font-heading)' }}
-                >
-                  {service.title}
-                </h2>
-                {service.shortDescription && (
-                  <p className="text-[var(--color-gray-100)] text-sm m-0 leading-relaxed">
-                    {service.shortDescription}
-                  </p>
-                )}
+              <div className="page-card-body justify-center">
+                <p className="page-kicker">Space Application</p>
+                <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{service.title}</h2>
+                {service.shortDescription && <p className="page-card-copy line-clamp-3">{service.shortDescription}</p>}
+                <span className="page-link mt-1">View application <span aria-hidden="true">→</span></span>
               </div>
             </Link>
           ))}
-        </div>
+        </section>
       )}
     </div>
   )

@@ -1,133 +1,250 @@
 import Link from 'next/link'
 
-const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Products', href: '/products' },
-  { label: 'Services', href: '/services' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+const navGroups = [
+  {
+    title: 'Explore',
+    links: [
+      { label: 'Home', href: '/' },
+      { label: 'Shop', href: '/shop' },
+      { label: 'Projects', href: '/projects' },
+      { label: 'About', href: '/about' },
+    ],
+  },
+  {
+    title: 'Solutions',
+    links: [
+      { label: 'Products', href: '/products' },
+      { label: 'Services', href: '/services' },
+      { label: 'Acoustic Education', href: '/blog' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Terms & Conditions', href: '/terms-of-service' },
+    ],
+  },
+]
+
+const socialLinks = [
+  {
+    label: 'X / Twitter',
+    href: 'https://x.com/justacoustics',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.745l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/company/justacoustics',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Instagram',
+    href: 'https://instagram.com/justacoustics',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Facebook',
+    href: 'https://facebook.com/justacoustics',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    ),
+  },
+]
+
+const contactLinks = [
+  {
+    label: 'WhatsApp / Hotline',
+    value: '+65 8930 1905',
+    href: 'https://wa.me/6589301905',
+  },
+  {
+    label: 'Email',
+    value: 'info@justacoustics.co',
+    href: 'mailto:info@justacoustics.co',
+  },
 ]
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-dark-100)] pt-16 md:pt-20">
-      <div className="max-w-[1280px] mx-auto px-5">
-        {/* Main grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          {/* Left col */}
-          <div>
-            <h2
-              className="text-white m-0 mb-10"
-              style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(36px, 5vw, 60px)',
-                fontWeight: 500,
-                lineHeight: '112%',
-                letterSpacing: '-1.2px',
-              }}
-            >
-              Let&apos;s Reduce<br />Noise Together
-            </h2>
+    <footer className="relative pt-10 pb-8 md:pt-14">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[8%] top-12 h-48 w-48 rounded-full bg-[rgba(255,165,0,0.12)] blur-[90px]" />
+        <div className="absolute right-[10%] bottom-8 h-52 w-52 rounded-full bg-[rgba(255,245,224,0.9)] blur-[110px]" />
+      </div>
 
-            {/* Social media row */}
-            <div className="flex items-center gap-5 py-5 border-t border-white/15">
-              <span className="text-white/50 text-sm w-48 shrink-0">Social media</span>
-              <div className="flex items-center gap-3">
-                <a href="https://x.com/justacoustics" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter"
-                  className="flex items-center justify-center w-9 h-9 rounded-full border border-white/25 text-white hover:border-white transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.745l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </a>
-                <a href="https://linkedin.com/company/justacoustics" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                  className="flex items-center justify-center w-9 h-9 rounded-full border border-white/25 text-white hover:border-white transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </a>
-                <a href="https://instagram.com/justacoustics" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                  className="flex items-center justify-center w-9 h-9 rounded-full border border-white/25 text-white hover:border-white transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                  </svg>
-                </a>
-                <a href="https://facebook.com/justacoustics" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-                  className="flex items-center justify-center w-9 h-9 rounded-full border border-white/25 text-white hover:border-white transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                </a>
+      <div className="relative mx-auto max-w-[1280px] px-4 sm:px-5">
+        <div className="overflow-hidden rounded-[34px] border border-black/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(245,242,236,0.96))] shadow-[0_28px_90px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.88)_inset]">
+          <div className="grid gap-4 p-3 lg:grid-cols-[minmax(320px,0.82fr)_minmax(0,1.18fr)] lg:p-4">
+            <div className="relative overflow-hidden rounded-[30px] border border-black/8 bg-[linear-gradient(180deg,#ffb62d,#ffa500_52%,#f09b00)] p-5 shadow-[0_26px_70px_rgba(255,165,0,0.28)] sm:p-6">
+              <div className="pointer-events-none absolute inset-0">
+                <div className="absolute left-[-10%] top-[-8%] h-40 w-40 rounded-full bg-white/22 blur-[60px]" />
+                <div className="absolute right-[-8%] bottom-[-12%] h-48 w-48 rounded-full bg-[rgba(0,0,0,0.08)] blur-[80px]" />
+                <div className="absolute inset-x-0 top-0 h-px bg-white/28" />
+              </div>
+
+              <div className="relative z-10 flex h-full flex-col">
+                <div className="space-y-4">
+                  <div className="max-w-[28ch]">
+                    <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72">
+                      Connect with us
+                    </p>
+                    <h2
+                      className="mt-3 mb-0 text-white"
+                      style={{
+                        fontFamily: 'var(--font-heading)',
+                        fontSize: 'clamp(28px, 3.4vw, 42px)',
+                        lineHeight: '1',
+                        fontWeight: 500,
+                        letterSpacing: '-1.1px',
+                      }}
+                    >
+                      Let&apos;s Reduce Noise Together
+                    </h2>
+                    <p className="mt-3 mb-0 text-[14px] leading-6 text-white/82">
+                      Tell us about the room and the noise issue. We&apos;ll point you toward the clearest next step.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  {contactLinks.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="rounded-[20px] border border-white/24 bg-white/18 p-4 text-white no-underline shadow-[0_14px_34px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/24"
+                    >
+                      <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/72">
+                        {item.label}
+                      </p>
+                      <p
+                        className="mt-2 mb-0"
+                        style={{
+                          fontFamily: 'var(--font-heading)',
+                          fontSize: 'clamp(19px, 2vw, 25px)',
+                          lineHeight: '1.05',
+                          letterSpacing: '-0.6px',
+                        }}
+                      >
+                        {item.value}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                  <Link
+                    href="/contact"
+                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[100px] bg-white px-6 py-4 text-[14px] font-semibold text-[var(--color-dark-100)] no-underline shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92 sm:w-auto"
+                  >
+                    Free Consultation
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                  <Link
+                    href="/projects"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-white no-underline transition-colors hover:text-white/80"
+                  >
+                    See project results
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+
+                <div className="mt-auto pt-6">
+                  <div className="flex flex-wrap gap-3">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={social.label}
+                        className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-white text-[var(--color-dark-100)] shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92"
+                      >
+                        {social.icon}
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Email row */}
-            <div className="flex items-center gap-5 py-5 border-t border-white/15">
-              <span className="text-white/50 text-sm w-48 shrink-0">Email</span>
-              <a href="mailto:info@justacoustics.co" className="text-white text-sm no-underline hover:text-white/70 transition-colors">
-                info@justacoustics.co
-              </a>
-            </div>
+            <div className="rounded-[30px] border border-black/6 bg-white/58 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.04),0_1px_0_rgba(255,255,255,0.82)_inset] sm:p-6 md:p-7">
+              <div className="flex h-full flex-col gap-6">
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {navGroups.map((group) => (
+                    <div key={group.title}>
+                      <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">
+                        {group.title}
+                      </p>
+                      <div className="mt-4 flex flex-col gap-3">
+                        {group.links.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="inline-flex items-center gap-2 text-[14px] font-medium text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)]"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-            {/* Hotline / WhatsApp row */}
-            <div className="flex items-center gap-5 py-5 border-t border-b border-white/15">
-              <span className="text-white/50 text-sm w-48 shrink-0">Hotline / Whatsapp</span>
-              <a href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer"
-                className="text-white text-sm no-underline hover:text-white/70 transition-colors">
-                +65 8930 1905
-              </a>
-            </div>
-          </div>
-
-          {/* Right col — nav links */}
-          <div className="pt-0 md:pt-4">
-            <ul className="list-none m-0 p-0 border-t border-white/15">
-              {navLinks.map((link) => (
-                <li key={link.href} className="border-b border-white/15">
-                  <Link
-                    href={link.href}
-                    className="flex items-center justify-between py-5 text-white no-underline hover:text-white/60 transition-colors group"
-                    style={{ fontSize: 'clamp(15px, 1.5vw, 17px)' }}
-                  >
-                    {link.label}
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                <div className="rounded-[24px] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(247,244,238,0.92))] p-5 shadow-[0_12px_34px_rgba(0,0,0,0.04)]">
+                  <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
+                    <div>
+                    <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">
+                      Singapore
+                    </p>
+                    <h3
+                      className="mt-4 mb-0 text-[var(--color-dark-100)]"
+                      style={{
+                        fontFamily: 'var(--font-heading)',
+                        fontSize: 'clamp(20px, 2.2vw, 28px)',
+                        lineHeight: '1.04',
+                        fontWeight: 500,
+                        letterSpacing: '-0.7px',
+                      }}
                     >
-                      <path
-                        d="M3 15L15 3M15 3H7M15 3V11"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+                      Acoustic treatment that feels considered, not generic.
+                    </h3>
+                    <p className="mt-3 mb-0 max-w-[58ch] text-[14px] leading-6 text-[var(--color-gray-100)]">
+                      Offices, worship spaces, hospitality venues, studios, and homes all need a different acoustic response. We design around how the room is actually used.
+                    </p>
+                    </div>
+                    <Link href="/services" className="home-link mt-5 inline-flex items-center gap-2">
+                      Explore applications
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </div>
 
-      </div>
-
-      {/* Bottom bar */}
-      <div className="max-w-[1280px] mx-auto px-5">
-        <div className="border-t border-white/15 mt-12 md:mt-16 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-sm m-0">
-            Just Acoustics © {new Date().getFullYear()} – All rights reserved
-          </p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="text-white/40 text-sm no-underline hover:text-white/70 transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms-and-conditions" className="text-white/40 text-sm no-underline hover:text-white/70 transition-colors">
-              Terms &amp; Conditions
-            </Link>
+                <div className="flex flex-col gap-3 border-t border-black/8 pt-5 text-sm text-[var(--color-gray-100)] md:flex-row md:items-center md:justify-between">
+                  <p className="m-0">Just Acoustics © {new Date().getFullYear()} — All rights reserved</p>
+                  <p className="m-0 text-[var(--color-gray-200)]">
+                    Acoustic panels, echo control, and sound treatment across Singapore.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

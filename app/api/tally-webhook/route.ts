@@ -1,10 +1,36 @@
+import { createHmac, timingSafeEqual } from 'node:crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY)
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'Just Acoustics <onboarding@resend.dev>'
+  const signingSecret = process.env.TALLY_WEBHOOK_SECRET
+  const teamEmail = process.env.ENQUIRY_NOTIFICATION_EMAIL || 'justacousticssg@gmail.com'
   try {
-    const body = await req.json()
+    const rawBody = await req.text()
+
+    if (signingSecret) {
+      const receivedSignature = req.headers.get('tally-signature')
+
+      if (!receivedSignature) {
+        return NextResponse.json({ error: 'Missing Tally signature' }, { status: 401 })
+      }
+
+      const expectedSignature = createHmac('sha256', signingSecret)
+        .update(rawBody)
+        .digest('base64')
+
+      const isValidSignature =
+        receivedSignature.length === expectedSignature.length &&
+        timingSafeEqual(Buffer.from(receivedSignature), Buffer.from(expectedSignature))
+
+      if (!isValidSignature) {
+        return NextResponse.json({ error: 'Invalid Tally signature' }, { status: 401 })
+      }
+    }
+
+    const body = JSON.parse(rawBody)
 
     // Extract fields from Tally webhook payload
     // Tally sends: { formId, responseId, fields: [{ label, value }] }
@@ -22,7 +48,7 @@ export async function POST(req: NextRequest) {
 
     // Send confirmation to the enquirer
     await resend.emails.send({
-      from: 'Just Acoustics <onboarding@resend.dev>',
+      from: fromEmail,
       to: email,
       subject: 'Thanks for reaching out — Just Acoustics',
       html: `
@@ -30,7 +56,7 @@ export async function POST(req: NextRequest) {
           <img src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg" alt="Just Acoustics" style="width: 180px; margin-bottom: 32px;" />
           <h1 style="font-size: 24px; font-weight: 600; margin: 0 0 16px; color: #010101;">Hi ${name}, we've received your enquiry!</h1>
           <p style="margin: 0 0 16px; line-height: 1.6; color: #4a4a4a;">
-            Thank you for reaching out to Just Acoustics. One of our acoustic specialists will be in touch with you within 24 hours.
+            Thank you for reaching out to Just Acoustics. One of our acoustic specialists will be in touch with you within 1 hour.
           </p>
           <p style="margin: 0 0 32px; line-height: 1.6; color: #4a4a4a;">
             In the meantime, you can WhatsApp us directly at <a href="https://wa.me/6589301905" style="color: #ffa500;">+65 8930 1905</a> for a quicker response.
@@ -44,13 +70,12 @@ export async function POST(req: NextRequest) {
     })
 
     // Send internal notification to the team
-    const teamEmail = 'justacousticssg@gmail.com'
     const fieldsHtml = fields
       .map((f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;color:#666;font-size:13px;">${f.label}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;font-size:13px;">${f.value}</td></tr>`)
       .join('')
 
     await resend.emails.send({
-      from: 'Just Acoustics <onboarding@resend.dev>',
+      from: fromEmail,
       to: teamEmail,
       subject: `New enquiry from ${name}`,
       html: `

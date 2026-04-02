@@ -30,78 +30,55 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   if (!service) notFound()
 
   return (
-    <div className="max-w-[1280px] mx-auto px-5 py-20">
-      <Link
-        href="/services"
-        className="text-[var(--color-gray-200)] text-sm no-underline hover:text-[var(--color-dark-100)] transition-colors inline-flex items-center gap-1 mb-10"
-      >
-        ← All Services
-      </Link>
+    <div className="page-wrap page-stack">
+      <Link href="/services" className="page-link">← All Services</Link>
 
-      {service.mainImage && (
-        <div className="rounded-[20px] overflow-hidden mb-12 h-[400px]">
-          <Image
-            src={urlFor(service.mainImage).width(990).height(400).url()}
-            alt={service.mainImage.alt || service.title}
-            width={990}
-            height={400}
-            className="w-full h-full object-cover"
-            priority
-          />
+      <section className="home-shell page-hero-shell">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+          <div className="flex flex-col gap-4">
+            <span className="soft-pill">Space Application</span>
+            <h1 className="page-title">{service.title}</h1>
+            {service.shortDescription && <p className="page-subtitle">{service.shortDescription}</p>}
+            <Link href="/contact" className="page-cta mt-2 w-fit">Free Consultation</Link>
+          </div>
+
+          <div className="grid gap-4">
+            {service.mainImage && (
+              <div className="glass-card overflow-hidden rounded-[28px]">
+                <Image
+                  src={urlFor(service.mainImage).width(900).height(720).url()}
+                  alt={service.mainImage.alt || service.title}
+                  width={900}
+                  height={720}
+                  className="aspect-[4/3] h-full w-full object-cover"
+                  priority
+                />
+              </div>
+            )}
+            {service.benefits && service.benefits.length > 0 && (
+              <div className="glass-card p-5 sm:p-6">
+                <p className="page-kicker">Benefits</p>
+                <ul className="mt-4 flex list-none flex-col gap-3 p-0 text-sm leading-6 text-[var(--color-gray-100)]">
+                  {service.benefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-3">
+                      <span className="mt-1 text-[var(--color-brand-orange)]">●</span>
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
+      </section>
+
+      {service.body && (
+        <section className="home-shell page-hero-shell">
+          <div className="rich-content max-w-none">
+            <PortableText value={service.body as Parameters<typeof PortableText>[0]['value']} />
+          </div>
+        </section>
       )}
-
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_0.5fr] gap-12 items-start">
-        <div>
-          <h1
-            className="text-[var(--color-dark-100)] m-0 mb-4"
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
-              lineHeight: '124%',
-              fontWeight: 500,
-              letterSpacing: '-1.04px',
-            }}
-          >
-            {service.title}
-          </h1>
-
-          {service.shortDescription && (
-            <p className="text-[var(--color-gray-100)] text-lg m-0 mb-8 leading-relaxed">
-              {service.shortDescription}
-            </p>
-          )}
-
-          {service.body && (
-            <div className="prose prose-lg max-w-none text-[var(--color-gray-100)] leading-relaxed">
-              <PortableText value={service.body as Parameters<typeof PortableText>[0]['value']} />
-            </div>
-          )}
-        </div>
-
-        {/* Sidebar */}
-        <div className="sticky top-12">
-          {service.benefits && service.benefits.length > 0 && (
-            <div className="bg-[var(--color-white-200)] rounded-[16px] p-6 mb-4">
-              <h3 className="text-[var(--color-dark-100)] text-base font-semibold m-0 mb-4">Benefits</h3>
-              <ul className="list-none m-0 p-0 flex flex-col gap-2">
-                {service.benefits.map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-[var(--color-gray-100)] text-sm">
-                    <span className="text-[var(--color-brand-orange)] mt-0.5">✔</span>
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <Link
-            href="/contact"
-            className="block w-full bg-[var(--color-brand-orange)] text-white text-center rounded-[100px] px-6 py-3.5 text-base no-underline hover:bg-[var(--color-gray-100)] transition-colors"
-          >
-            Get Free Quote
-          </Link>
-        </div>
-      </div>
     </div>
   )
 }

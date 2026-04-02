@@ -1,105 +1,66 @@
 import type { Metadata } from 'next'
 
+const consultationSteps = [
+  'Submit the form',
+  'We will reach out to you within 1 hour',
+  'We provide free consultation on your space',
+]
+
 export const metadata: Metadata = {
   title: 'Contact — Free Consultation',
-  description: 'Get your free acoustic consultation. Complete the form and our team will be in touch within 24 hours.',
+  description: 'Get your free acoustic consultation. Complete the form and our team will be in touch within 1 hour.',
 }
 
 export default function ContactPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="py-20 text-center">
-        <div className="max-w-[1280px] mx-auto px-5">
-          <span className="inline-block border border-[var(--color-dark-100)] rounded-[100px] px-4 py-2 text-sm mb-6">
-            Contact Us
-          </span>
-          <h1
-            className="text-[var(--color-dark-100)] m-0 mb-4"
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(36px, 5vw, var(--fs-h2))',
-              lineHeight: '112%',
-              fontWeight: 500,
-              letterSpacing: '-1.28px',
-            }}
-          >
-            Book Your Free Consultation
-          </h1>
-          <p className="text-[var(--color-gray-100)] text-base m-0 max-w-lg mx-auto leading-relaxed">
-            Fill out the form below and we will recommend the best noise reduction solution for you!
-          </p>
-        </div>
+    <div className="page-wrap page-stack">
+      <section className="home-shell page-hero-shell flex flex-col gap-5 text-center">
+        <span className="soft-pill mx-auto">Contact</span>
+        <h1 className="page-title">Book your free acoustic consultation.</h1>
       </section>
 
-      {/* Main content */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[1280px] mx-auto px-5">
-          <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12 items-start">
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
+        <aside className="flex flex-col gap-6 lg:sticky lg:top-24">
+          <div className="glass-card p-6">
+            <span className="soft-pill">What To Expect</span>
+            <ol className="mt-5 flex list-decimal flex-col gap-4 pl-5 text-sm leading-6 text-[var(--color-gray-100)]">
+              {consultationSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </div>
 
-            {/* Contact info — left */}
-            <div className="flex flex-col gap-8">
-              <h2
-                className="text-[var(--color-dark-100)] m-0 text-2xl font-semibold"
-                style={{ fontFamily: 'var(--font-heading)', letterSpacing: '-0.5px' }}
-              >
-                Contact Us
-              </h2>
-
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[var(--color-dark-100)] font-semibold text-base">Hotline Phone Number</span>
-                  <a
-                    href="tel:+6589301905"
-                    className="text-[var(--color-gray-100)] text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors flex items-center gap-2"
-                  >
-                    📞 +65 8930 1905
-                  </a>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <span className="text-[var(--color-dark-100)] font-semibold text-base">WhatsApp</span>
-                  <a
-                    href="https://wa.me/6589301905"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-gray-100)] text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors flex items-center gap-2"
-                  >
-                    💬 Click here to start chat
-                  </a>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <span className="text-[var(--color-dark-100)] font-semibold text-base">Email</span>
-                  <a
-                    href="mailto:info@justacoustics.co"
-                    className="text-[var(--color-gray-100)] text-base no-underline hover:text-[var(--color-brand-orange)] transition-colors flex items-center gap-2"
-                  >
-                    ✉️ info@justacoustics.co
-                  </a>
-                </div>
+          <div className="glass-card p-6">
+            <span className="soft-pill">Direct Contact</span>
+            <div className="mt-5 flex flex-col gap-5">
+              <div>
+                <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Hotline</p>
+                <a href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</a>
+              </div>
+              <div>
+                <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">WhatsApp</p>
+                <a href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">Start chat directly</a>
+              </div>
+              <div>
+                <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Email</p>
+                <a href="mailto:info@justacoustics.co" className="page-link mt-2">info@justacoustics.co</a>
               </div>
             </div>
-
-            {/* Tally form — right */}
-            <div
-              className="bg-white rounded-[20px] p-8 md:p-10"
-              style={{ boxShadow: '0 2px 24px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)' }}
-            >
-              <iframe
-                src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                loading="lazy"
-                width="100%"
-                height="1100"
-                frameBorder="0"
-                title="Free Acoustic Consultation"
-                style={{ overflow: 'hidden', display: 'block' }}
-              />
-            </div>
-
           </div>
+        </aside>
+
+        <div className="home-shell rounded-[32px] p-5 md:p-8 lg:p-10">
+          <iframe
+            src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+            loading="lazy"
+            width="100%"
+            height="1100"
+            frameBorder="0"
+            title="Free Acoustic Consultation"
+            style={{ overflow: 'hidden', display: 'block' }}
+          />
         </div>
       </section>
-    </>
+    </div>
   )
 }

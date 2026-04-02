@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}>
       <body className="bg-white">
-        <div className="page-wrap overflow-hidden">
+        <div className="min-h-screen overflow-x-clip">
           <Header />
           <main>{children}</main>
           <Footer />

@@ -1,46 +1,53 @@
 import Link from 'next/link'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
+
 export default function Hero() {
   return (
     <section
-      className="relative rounded-[20px] mx-4 mt-[-86px] px-0 pt-[160px] md:pt-[260px] pb-16 md:pb-[90px]"
+      className="relative mx-3 mt-[-82px] overflow-hidden rounded-[24px] px-0 pt-[146px] pb-12 sm:mx-4 sm:pt-[170px] md:pt-[232px] md:pb-20"
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
-      {/* Background overlay */}
       <div
-        className="absolute inset-0 rounded-[20px] z-auto"
+        className="absolute inset-0 z-0 rounded-[24px]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0,0,0,0.47),rgba(0,0,0,0.47)),url('https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp')",
+            "linear-gradient(115deg, rgba(1,1,1,0.80) 0%, rgba(1,1,1,0.62) 44%, rgba(1,1,1,0.42) 100%), url('https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       />
+      <div className="absolute inset-0 z-0 rounded-[24px] bg-[radial-gradient(circle_at_top_right,rgba(255,165,0,0.22),transparent_32%),linear-gradient(to_top,rgba(1,1,1,0.22),transparent_24%)]" />
 
-      <div className="relative z-[999] max-w-[1280px] mx-auto px-5">
-        <div className="grid grid-cols-1 md:grid-cols-[1.75fr_0.5fr] items-end mt-10">
-          <div className="flex flex-col gap-6 md:gap-9 mb-[-18px]">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-5">
+        <div className="grid grid-cols-1 gap-10">
+          <div className="max-w-[760px]">
+            <span className="mb-4 inline-flex items-center gap-1.5 rounded-[100px] border border-white/18 bg-white/10 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/84 backdrop-blur-sm sm:gap-2 sm:px-4 sm:py-2 sm:text-[12px] sm:tracking-[0.18em]">
+              Acoustic Panels Singapore
+            </span>
             <h1
-              className="text-white m-0"
+              className="m-0 max-w-[15ch] text-white sm:max-w-[18ch]"
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(36px, 5vw, var(--fs-h2))',
-                lineHeight: '112%',
+                fontSize: 'clamp(30px, 7.2vw, 54px)',
+                lineHeight: '0.99',
                 fontWeight: 500,
-                letterSpacing: '-1.28px',
+                letterSpacing: '-1.4px',
               }}
             >
-              Acoustic Panels That<br />Get Rid of Echo
+              Reduce Echo and Make Every Room Easier To Hear
             </h1>
-            <p className="text-white m-0 text-base">
-              Acoustic Solutions for Offices, Churches, Restaurants &amp; more.
+            <p className="mt-5 max-w-[40ch] text-[15px] leading-7 text-white/82 sm:text-[16px] sm:leading-7 md:text-[17px]">
+              We design and install acoustic panels for offices, restaurants, churches, schools, and studios.
             </p>
-            <Link href="/contact" className="self-start no-underline">
-              <ShimmerButton className="text-base px-8 py-4 h-auto">
-                Get Free Consultation
-              </ShimmerButton>
-            </Link>
+
+            <div className="mt-12 mb-4 flex flex-col gap-3 sm:mt-14 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-center">
+              <Link href="/contact" className="no-underline">
+                <ShimmerButton className="h-auto w-full px-7 py-4 text-[14px] font-semibold sm:min-w-[212px] sm:w-auto">
+                  Free Acoustic Consultation
+                </ShimmerButton>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

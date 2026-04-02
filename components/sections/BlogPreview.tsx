@@ -1,79 +1,143 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import type { Post } from '@/lib/types'
-import { urlFor } from '@/sanity/lib/image'
+import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
+import ShimmerButton from '@/components/ui/shimmer-button'
 
 interface Props {
   posts?: Post[]
 }
 
-function formatDate(iso?: string) {
-  if (!iso) return ''
-  return new Date(iso).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })
-}
+export default function BlogPreview({ posts = [] }: Props) {
+  const visiblePosts = posts.slice(0, 6)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const cardRefs = useRef<Array<HTMLAnchorElement | null>>([])
 
-export default function BlogPreview({ posts }: Props) {
-  if (!posts || posts.length === 0) return null
+  useEffect(() => {
+    if (visiblePosts.length < 2) return
+
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % visiblePosts.length)
+    }, 4200)
+
+    return () => window.clearInterval(interval)
+  }, [visiblePosts.length])
+
+  useEffect(() => {
+    const track = trackRef.current
+    const activeCard = cardRefs.current[activeIndex]
+    if (!track || !activeCard) return
+
+    const trackBounds = track.getBoundingClientRect()
+    const cardBounds = activeCard.getBoundingClientRect()
+    const left = cardBounds.left - trackBounds.left + track.scrollLeft
+
+    track.scrollTo({
+      left,
+      behavior: 'smooth',
+    })
+  }, [activeIndex])
+
+  if (visiblePosts.length === 0) return null
+
+  const goToPrevious = () => {
+    setActiveIndex((current) => (current - 1 + visiblePosts.length) % visiblePosts.length)
+  }
+
+  const goToNext = () => {
+    setActiveIndex((current) => (current + 1) % visiblePosts.length)
+  }
 
   return (
-    <section className="py-28 md:py-36">
-      <div className="max-w-[1280px] mx-auto px-5">
-        <div className="flex items-center justify-between mb-16 md:mb-20">
-          <h2
-            className="text-[var(--color-dark-100)] m-0"
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(24px, 3vw, var(--fs-h4))',
-              lineHeight: '132%',
-              fontWeight: 500,
-              letterSpacing: '-0.96px',
-            }}
-          >
-            Latest from the Blog
-          </h2>
-          <Link
-            href="/blog"
-            className="text-[var(--color-gray-200)] text-sm no-underline hover:text-[var(--color-dark-100)] transition-colors"
-          >
-            View all →
-          </Link>
-        </div>
+    <section className="px-4 py-10 md:px-5 md:py-12">
+      <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.66fr)_minmax(0,1.34fr)] lg:gap-10">
+          <div className="max-w-[520px]">
+            <span className="soft-pill">Resource Center</span>
+            <h2 className="home-heading mt-4 max-w-[12ch] text-[var(--color-dark-100)]">
+              Learn More About Acoustic Treatment from Our Articles.
+            </h2>
+            <p className="home-copy mt-4 max-w-[44ch]">
+              Practical guidance, room-specific advice, and clearer buying context from the kinds of acoustic problems we solve most often across Singapore.
+            </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {posts.map((post) => (
-            <Link
-              key={post._id}
-              href={`/blog/${post.slug.current}`}
-              className="block no-underline group"
-            >
-              {post.mainImage && (
-                <div className="rounded-[16px] overflow-hidden mb-4">
-                  <Image
-                    src={urlFor(post.mainImage).width(400).height(240).url()}
-                    alt={post.mainImage.alt || post.title}
-                    width={400}
-                    height={240}
-                    className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              )}
-              {post.publishedAt && (
-                <p className="text-[var(--color-gray-200)] text-sm m-0 mb-2">
-                  {formatDate(post.publishedAt)}
-                </p>
-              )}
-              <h3
-                className="text-[var(--color-dark-100)] m-0 mb-2 text-lg font-semibold leading-snug group-hover:text-[var(--color-brand-orange)] transition-colors"
+            <div className="mt-6">
+              <Link href="/blog" className="w-full no-underline sm:w-auto">
+                <ShimmerButton className="h-auto w-full px-7 py-4 text-sm sm:w-auto">
+                  Explore Resource Center
+                </ShimmerButton>
+              </Link>
+            </div>
+          </div>
+
+          <div className="min-w-0">
+            <div className="mb-4 flex items-center justify-end gap-2">
+              <button
+                type="button"
+                onClick={goToPrevious}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/78 text-[var(--color-dark-100)] shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:border-black/14 hover:text-[var(--color-brand-orange)]"
+                aria-label="Previous article"
               >
-                {post.title}
-              </h3>
-              {post.excerpt && (
-                <p className="text-[var(--color-gray-100)] text-sm m-0 leading-relaxed line-clamp-3">
-                  {post.excerpt}
-                </p>
-              )}
-            </Link>
-          ))}
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={goToNext}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white/78 text-[var(--color-dark-100)] shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:border-black/14 hover:text-[var(--color-brand-orange)]"
+                aria-label="Next article"
+              >
+                →
+              </button>
+            </div>
+
+            <div
+              ref={trackRef}
+              className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {visiblePosts.map((post, index) => {
+                const topic = RESOURCE_TOPICS.find((item) => item.value === post.category)
+
+                return (
+                  <Link
+                    key={post._id}
+                    href={`/blog/${post.slug.current}`}
+                    ref={(element) => {
+                      cardRefs.current[index] = element
+                    }}
+                    className="group flex min-h-[360px] min-w-[84%] snap-start flex-col rounded-[24px] border border-black/6 bg-white/84 p-5 no-underline shadow-[0_16px_42px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 md:min-w-[calc(50%-8px)]"
+                  >
+                    <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
+                      {topic?.title || 'Acoustic Education'}
+                    </p>
+                    <h3
+                      className="mt-4 m-0 text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)]"
+                      style={{
+                        fontFamily: 'var(--font-heading)',
+                        fontSize: 'clamp(24px, 2.4vw, 34px)',
+                        lineHeight: '1.02',
+                        fontWeight: 600,
+                        letterSpacing: '-0.8px',
+                      }}
+                    >
+                      {post.title}
+                    </h3>
+                    {post.excerpt && (
+                      <p className="mt-4 text-[14px] leading-6 text-[var(--color-gray-100)]">
+                        {post.excerpt}
+                      </p>
+                    )}
+                    <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)]">
+                      Read article
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>

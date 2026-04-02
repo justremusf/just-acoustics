@@ -33,63 +33,46 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound()
 
   return (
-    <article className="max-w-[740px] mx-auto px-5 py-20">
-      <Link
-        href="/blog"
-        className="text-[var(--color-gray-200)] text-sm no-underline hover:text-[var(--color-dark-100)] transition-colors inline-flex items-center gap-1 mb-8"
-      >
-        ← Back to Blog
-      </Link>
+    <div className="page-wrap page-stack max-w-[940px]">
+      <Link href="/blog" className="page-link">← Back to Resource Center</Link>
 
-      {post.publishedAt && (
-        <p className="text-[var(--color-gray-200)] text-sm mb-4">
-          {new Date(post.publishedAt).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </p>
-      )}
-
-      <h1
-        className="text-[var(--color-dark-100)] m-0 mb-6"
-        style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
-          lineHeight: '124%',
-          fontWeight: 500,
-          letterSpacing: '-1.04px',
-        }}
-      >
-        {post.title}
-      </h1>
-
-      {post.mainImage && (
-        <div className="rounded-[16px] overflow-hidden mb-10">
-          <Image
-            src={urlFor(post.mainImage).width(740).height(420).url()}
-            alt={post.mainImage.alt || post.title}
-            width={740}
-            height={420}
-            className="w-full object-cover"
-            priority
-          />
+      <article className="home-shell page-hero-shell flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
+          {post.publishedAt && (
+            <span className="soft-pill">
+              {new Date(post.publishedAt).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
+          )}
+          <h1 className="page-title">{post.title}</h1>
+          {post.excerpt && <p className="page-subtitle">{post.excerpt}</p>}
         </div>
-      )}
 
-      {post.body && (
-        <div className="prose prose-lg max-w-none text-[var(--color-gray-100)] leading-relaxed">
-          <PortableText value={post.body as Parameters<typeof PortableText>[0]['value']} />
-        </div>
-      )}
+        {post.mainImage && (
+          <div className="glass-card overflow-hidden rounded-[28px]">
+            <Image
+              src={urlFor(post.mainImage).width(1200).height(720).url()}
+              alt={post.mainImage.alt || post.title}
+              width={1200}
+              height={720}
+              className="h-full w-full object-cover"
+              priority
+            />
+          </div>
+        )}
 
-      <div className="mt-16 pt-10 border-t border-[var(--color-white-300)]">
-        <p className="text-[var(--color-gray-100)] text-base mb-4">
-          Want to improve your space acoustics?
+        {post.body && (
+          <div className="rich-content max-w-none">
+            <PortableText value={post.body as Parameters<typeof PortableText>[0]['value']} />
+          </div>
+        )}
+      </article>
+
+      <section className="glass-card p-6 text-center">
+        <p className="page-card-copy mx-auto max-w-[48ch]">
+          Want help applying this to your room? Send us the space details and we will recommend the right next step.
         </p>
-        <Link
-          href="/contact"
-          className="inline-block bg-[var(--color-brand-orange)] text-white rounded-[100px] px-6 py-3 text-base no-underline hover:bg-[var(--color-gray-100)] transition-colors"
-        >
-          Get a Free Consultation
-        </Link>
-      </div>
-    </article>
+        <Link href="/contact" className="page-cta mt-5">Free Consultation</Link>
+      </section>
+    </div>
   )
 }

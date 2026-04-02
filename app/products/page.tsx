@@ -23,86 +23,58 @@ export default async function ProductsPage() {
   const products: Product[] = await getAllProducts().catch(() => [])
 
   return (
-    <div className="max-w-[1280px] mx-auto px-5 py-20">
-      <div className="mb-14">
-        <span className="inline-block border border-[var(--color-dark-100)] rounded-[100px] px-4 py-2 text-sm mb-4">
-          Products
-        </span>
-        <h1
-          className="text-[var(--color-dark-100)] m-0 mb-4"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(32px, 5vw, var(--fs-h2))',
-            lineHeight: '112%',
-            fontWeight: 500,
-            letterSpacing: '-1.28px',
-          }}
-        >
-          Acoustic Solutions
-        </h1>
-        <p className="text-[var(--color-gray-100)] text-base m-0 max-w-xl">
-          Our dynamic range of acoustic panels reduces echo and matches your space, whether it&apos;s walls or ceilings.
+    <div className="page-wrap page-stack">
+      <section className="home-shell page-hero-shell flex flex-col gap-5">
+        <span className="soft-pill">Products</span>
+        <h1 className="page-title">Acoustic Solutions</h1>
+        <p className="page-subtitle">
+          Browse wall panels, ceiling treatments, and custom acoustic products built to improve clarity while fitting the space visually.
         </p>
-      </div>
+      </section>
 
       {products.length === 0 ? (
-        <p className="text-[var(--color-gray-200)]">Products coming soon.</p>
+        <section className="glass-card page-hero-shell">
+          <p className="page-card-copy">Products coming soon.</p>
+        </section>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
             <Link
               key={product._id}
-              href={`/products/${product.slug.current}`}
-              className="block no-underline group"
+              href={'/products/' + product.slug.current}
+              className="page-card glass-card group transition-transform duration-300 hover:-translate-y-1"
             >
-              <div className="bg-[var(--color-white-200)] rounded-[16px] overflow-hidden">
-                {product.mainImage && (
-                  <div className="overflow-hidden rounded-t-[16px]">
-                    <Image
-                      src={urlFor(product.mainImage).width(300).height(240).url()}
-                      alt={product.mainImage.alt || product.title}
-                      width={300}
-                      height={240}
-                      className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                )}
-                <div className="p-4">
-                  {product.category && (
-                    <span className="text-[var(--color-gray-200)] text-xs uppercase tracking-wide mb-1 block">
-                      {CATEGORY_LABELS[product.category] || product.category}
-                    </span>
-                  )}
-                  <h2
-                    className="text-[var(--color-dark-100)] m-0 text-base font-semibold group-hover:text-[var(--color-brand-orange)] transition-colors"
-                  >
-                    {product.title}
-                  </h2>
+              {product.mainImage && (
+                <div className="page-card-image aspect-[4/3]">
+                  <Image
+                    src={urlFor(product.mainImage).width(560).height(420).url()}
+                    alt={product.mainImage.alt || product.title}
+                    width={560}
+                    height={420}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
+              )}
+              <div className="page-card-body">
+                {product.category && <p className="page-kicker">{CATEGORY_LABELS[product.category] || product.category}</p>}
+                <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{product.title}</h2>
+                <span className="page-link mt-1">Buy now <span aria-hidden="true">→</span></span>
               </div>
             </Link>
           ))}
-        </div>
+        </section>
       )}
 
-      {/* CTA */}
-      <div className="mt-16 bg-[var(--color-white-200)] rounded-[16px] p-10 text-center">
-        <h2
-          className="text-[var(--color-dark-100)] m-0 mb-3 text-2xl font-semibold"
-          style={{ fontFamily: 'var(--font-heading)' }}
-        >
-          Not sure which product is right for you?
-        </h2>
-        <p className="text-[var(--color-gray-100)] text-base m-0 mb-6">
-          Let us recommend the best acoustic solution for your space!
-        </p>
-        <Link
-          href="/contact"
-          className="inline-block bg-[var(--color-brand-orange)] text-white rounded-[100px] px-6 py-3 text-base no-underline hover:bg-[var(--color-gray-100)] transition-colors"
-        >
-          Get Free Quote
-        </Link>
-      </div>
+      <section className="home-shell page-hero-shell text-center">
+        <div className="mx-auto flex max-w-[700px] flex-col items-center gap-5">
+          <span className="soft-pill">Need Help Choosing</span>
+          <h2 className="page-card-title text-[clamp(26px,3vw,38px)]">Not sure which product fits the room?</h2>
+          <p className="page-subtitle max-w-[52ch]">
+            Share the room type, noise issue, and a few photos. We will point you to the right treatment before you buy.
+          </p>
+          <Link href="/contact" className="page-cta">Contact Us to Buy</Link>
+        </div>
+      </section>
     </div>
   )
 }

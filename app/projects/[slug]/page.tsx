@@ -32,117 +32,76 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (!project) notFound()
 
   return (
-    <div className="max-w-[1280px] mx-auto px-5 py-20">
-      <Link
-        href="/projects"
-        className="text-[var(--color-gray-200)] text-sm no-underline hover:text-[var(--color-dark-100)] transition-colors inline-flex items-center gap-1 mb-10"
-      >
-        ← All Projects
-      </Link>
+    <div className="page-wrap page-stack">
+      <Link href="/projects" className="page-link">← All Projects</Link>
 
-      {project.mainImage && (
-        <div className="rounded-[20px] overflow-hidden mb-10 h-[420px]">
-          <Image
-            src={urlFor(project.mainImage).width(990).height(420).url()}
-            alt={project.mainImage.alt || project.title}
-            width={990}
-            height={420}
-            className="w-full h-full object-cover"
-            priority
-          />
-        </div>
-      )}
+      <section className="home-shell page-hero-shell">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
+          <div className="flex flex-col gap-4">
+            <span className="soft-pill">Project</span>
+            <h1 className="page-title">{project.title}</h1>
+            {project.description && <p className="page-subtitle">{project.description}</p>}
+            <Link href="/contact" className="page-cta mt-2 w-fit">Get a Similar Solution</Link>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_0.4fr] gap-12 items-start">
-        <div>
-          <h1
-            className="text-[var(--color-dark-100)] m-0 mb-4"
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
-              lineHeight: '124%',
-              fontWeight: 500,
-              letterSpacing: '-1.04px',
-            }}
-          >
-            {project.title}
-          </h1>
-
-          {project.description && (
-            <p className="text-[var(--color-gray-100)] text-base m-0 mb-8 leading-relaxed">
-              {project.description}
-            </p>
-          )}
-
-          {/* Gallery */}
-          {project.gallery && project.gallery.length > 0 && (
-            <div className="grid grid-cols-2 gap-3 mt-8">
-              {project.gallery.map((img, i) => (
-                <div key={i} className="rounded-[12px] overflow-hidden aspect-[4/3]">
-                  <Image
-                    src={urlFor(img).width(480).height(360).url()}
-                    alt={img.alt || `${project.title} ${i + 1}`}
-                    width={480}
-                    height={360}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
+          <div className="grid gap-4">
+            <div className="glass-card p-5 sm:p-6">
+              <p className="page-kicker">Project Details</p>
+              <div className="mt-4 flex flex-col gap-4 text-sm leading-6 text-[var(--color-gray-100)]">
+                {project.clientName && <div><strong className="text-[var(--color-dark-100)]">Client:</strong> {project.clientName}</div>}
+                {project.location && <div><strong className="text-[var(--color-dark-100)]">Location:</strong> {project.location}</div>}
+                {project.completionDate && (
+                  <div>
+                    <strong className="text-[var(--color-dark-100)]">Completed:</strong>{' '}
+                    {new Date(project.completionDate).toLocaleDateString('en-SG', { year: 'numeric', month: 'long' })}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </div>
-
-        {/* Sidebar */}
-        <div className="sticky top-12 flex flex-col gap-4">
-          {/* Project info */}
-          <div className="bg-[var(--color-white-200)] rounded-[16px] p-6">
-            {project.clientName && (
-              <div className="mb-4 pb-4 border-b border-[var(--color-gray-600)]">
-                <span className="text-[var(--color-gray-200)] text-xs uppercase tracking-wide block mb-1">Client</span>
-                <span className="text-[var(--color-dark-100)] font-semibold">{project.clientName}</span>
-              </div>
-            )}
-            {project.location && (
-              <div className="mb-4 pb-4 border-b border-[var(--color-gray-600)]">
-                <span className="text-[var(--color-gray-200)] text-xs uppercase tracking-wide block mb-1">Location</span>
-                <span className="text-[var(--color-dark-100)] font-semibold">{project.location}</span>
-              </div>
-            )}
-            {project.completionDate && (
-              <div>
-                <span className="text-[var(--color-gray-200)] text-xs uppercase tracking-wide block mb-1">Completed</span>
-                <span className="text-[var(--color-dark-100)] font-semibold">
-                  {new Date(project.completionDate).toLocaleDateString('en-SG', { year: 'numeric', month: 'long' })}
-                </span>
+            {project.testimonial?.quote && (
+              <div className="dark-glass rounded-[28px] p-5 text-white sm:p-6">
+                <p className="page-kicker text-white/60">Client Feedback</p>
+                <p className="mt-4 text-base leading-7 text-white/88">&ldquo;{project.testimonial.quote}&rdquo;</p>
+                {project.testimonial.authorName && (
+                  <p className="mt-4 text-sm font-semibold text-white">
+                    {project.testimonial.authorName}
+                    {project.testimonial.authorRole && <span className="font-normal text-white/65">, {project.testimonial.authorRole}</span>}
+                  </p>
+                )}
               </div>
             )}
           </div>
-
-          {/* Testimonial */}
-          {project.testimonial?.quote && (
-            <div className="bg-[var(--color-white-200)] rounded-[16px] p-6">
-              <p className="text-[var(--color-gray-100)] text-sm m-0 mb-4 italic leading-relaxed">
-                &ldquo;{project.testimonial.quote}&rdquo;
-              </p>
-              {project.testimonial.authorName && (
-                <p className="text-[var(--color-dark-100)] text-sm font-semibold m-0">
-                  — {project.testimonial.authorName}
-                  {project.testimonial.authorRole && (
-                    <span className="text-[var(--color-gray-200)] font-normal">, {project.testimonial.authorRole}</span>
-                  )}
-                </p>
-              )}
-            </div>
-          )}
-
-          <Link
-            href="/contact"
-            className="block w-full bg-[var(--color-brand-orange)] text-white text-center rounded-[100px] px-6 py-3.5 text-base no-underline hover:bg-[var(--color-gray-100)] transition-colors"
-          >
-            Get a Similar Solution
-          </Link>
         </div>
-      </div>
+      </section>
+
+      {project.mainImage && (
+        <section className="glass-card overflow-hidden rounded-[32px]">
+          <Image
+            src={urlFor(project.mainImage).width(1400).height(760).url()}
+            alt={project.mainImage.alt || project.title}
+            width={1400}
+            height={760}
+            className="aspect-[4/3] h-full w-full object-cover sm:aspect-[16/9]"
+            priority
+          />
+        </section>
+      )}
+
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {project.gallery.map((img, index) => (
+            <div key={index} className="glass-card overflow-hidden rounded-[28px]">
+              <Image
+                src={urlFor(img).width(900).height(680).url()}
+                alt={img.alt || project.title + ' ' + (index + 1)}
+                width={900}
+                height={680}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </section>
+      )}
     </div>
   )
 }

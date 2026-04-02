@@ -1,13 +1,55 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
 export default function WhyChooseUs() {
+  const [projectCount, setProjectCount] = useState(0)
+  const lastValueRef = useRef(0)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    if (mediaQuery.matches) {
+      setProjectCount(100)
+      return
+    }
+
+    const durationMs = 1800
+    const start = window.performance.now()
+    let frameId = 0
+
+    const easeOutExpo = (value: number) => {
+      if (value >= 1) return 1
+      return 1 - 2 ** (-10 * value)
+    }
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / durationMs, 1)
+      const eased = easeOutExpo(progress)
+      const nextValue = Math.round(eased * 100)
+
+      if (nextValue !== lastValueRef.current) {
+        lastValueRef.current = nextValue
+        setProjectCount(nextValue)
+      }
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(tick)
+      }
+    }
+
+    frameId = window.requestAnimationFrame(tick)
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [])
+
   return (
-    <section className="py-20 md:py-28 overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-5">
-        {/* Top row: pill tag + heading */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16 items-center mb-10 md:mb-12">
+    <section className="overflow-hidden py-14 md:py-24">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-5">
+        <div className="mb-10 grid grid-cols-1 items-center gap-6 md:mb-12 md:grid-cols-2 md:gap-16">
           <div>
             <span className="inline-block border border-[var(--color-dark-100)] text-[var(--color-dark-100)] rounded-[100px] px-5 py-2 text-sm">
               Why choose us
@@ -17,21 +59,18 @@ export default function WhyChooseUs() {
             className="text-[var(--color-dark-100)] m-0"
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(32px, 4.5vw, 56px)',
+              fontSize: 'clamp(28px, 3.8vw, 46px)',
               lineHeight: '110%',
               fontWeight: 600,
-              letterSpacing: '-1.2px',
+              letterSpacing: '-1px',
             }}
           >
             Experts in Noise Reduction.
           </h2>
         </div>
 
-        {/* Bottom row: left stats card + right image card */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Left card */}
-          <div className="bg-[var(--color-white-200)] rounded-[20px] p-8 flex flex-col gap-6 min-h-[360px]">
-            {/* Google badge */}
+          <div className="flex min-h-[320px] flex-col gap-6 rounded-[20px] bg-[var(--color-white-200)] p-6 sm:min-h-[360px] sm:p-8">
             <div className="flex items-center gap-4">
               <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                 <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -41,32 +80,31 @@ export default function WhyChooseUs() {
               </svg>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-[var(--color-dark-100)] leading-none" style={{ fontSize: '28px' }}>4.9</span>
+                  <span className="font-bold text-[var(--color-dark-100)] leading-none" style={{ fontSize: '26px' }}>4.9</span>
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span key={i} className="text-[var(--color-brand-orange)] text-xl">★</span>
                     ))}
                   </div>
                 </div>
-                <span className="text-[var(--color-gray-200)] text-sm mt-0.5 block">Google Reviews</span>
+                <span className="mt-0.5 block text-[13px] text-[var(--color-gray-200)]">Google Reviews</span>
               </div>
             </div>
 
-            <p className="text-[var(--color-gray-100)] text-base m-0 leading-relaxed">
+            <p className="m-0 text-[15px] leading-7 text-[var(--color-gray-100)]">
               Be it an office or a home studio, we have helped improve sound in spaces all over Singapore.
             </p>
 
             <div className="mt-auto">
-              <Link href="/contact" className="no-underline inline-block">
-                <ShimmerButton className="text-base px-8 py-4 h-auto">
+              <Link href="/contact" className="inline-block w-full no-underline sm:w-auto">
+                <ShimmerButton className="h-auto w-full px-8 py-4 text-[14px] sm:w-auto">
                   Get in touch
                 </ShimmerButton>
               </Link>
             </div>
           </div>
 
-          {/* Right image card */}
-          <div className="relative rounded-[20px] overflow-hidden min-h-[360px]">
+          <div className="relative min-h-[320px] overflow-hidden rounded-[20px] sm:min-h-[360px]">
             <Image
               src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif"
               alt="Just Acoustics installation team at work"
@@ -75,15 +113,14 @@ export default function WhyChooseUs() {
               unoptimized
             />
             <div className="absolute inset-0 bg-black/45" />
-            {/* Stat overlay bottom-left */}
-            <div className="absolute bottom-8 left-8">
+            <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
               <div
-                className="text-white font-semibold leading-none"
-                style={{ fontSize: 'clamp(52px, 7vw, 80px)', fontFamily: 'var(--font-heading)' }}
+                className="text-white font-semibold leading-none tabular-nums"
+                style={{ fontSize: 'clamp(44px, 6vw, 68px)', fontFamily: 'var(--font-heading)' }}
               >
-                100+
+                {projectCount}+
               </div>
-              <div className="text-white text-lg font-medium mt-1">Projects Completed</div>
+              <div className="mt-1 text-[15px] font-medium text-white">Projects Completed</div>
             </div>
           </div>
         </div>

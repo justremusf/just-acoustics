@@ -1,186 +1,52 @@
-'use client'
+import type { Product, Project, Service, ShopItem } from '@/lib/types'
+import {
+  getAllProducts,
+  getAllProjects,
+  getAllServices,
+  getAllShopItems,
+} from '@/sanity/lib/queries'
+import HeaderClient from './HeaderClient'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import ShimmerButton from '@/components/ui/shimmer-button'
+function mapSluggedItems<T extends { title: string; slug: { current: string }; category?: string }>(
+  items: T[]
+) {
+  return items.flatMap((item) =>
+    item.slug?.current
+      ? [{ title: item.title, slug: item.slug.current, category: item.category }]
+      : []
+  )
+}
 
-type NavLink = { label: string; href: string; dropdown?: { label: string; href: string }[] }
+export default async function Header() {
+  const [shopItems, products, services, projects]: [ShopItem[], Product[], Service[], Project[]] = await Promise.all([
+    getAllShopItems().catch(() => [] as ShopItem[]),
+    getAllProducts().catch(() => [] as Product[]),
+    getAllServices().catch(() => [] as Service[]),
+    getAllProjects().catch(() => [] as Project[]),
+  ])
 
-const navLinks: NavLink[] = [
-  { label: 'Shop', href: '/shop' },
-  { label: 'Solutions', href: '/products' },
-  { label: 'Applications', href: '/services' },
-  { label: 'Projects', href: '/projects' },
-  {
-    label: 'About',
-    href: '/about',
-    dropdown: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Acoustic Education', href: '/blog' },
-    ],
-  },
-]
+  const serviceItems = services.flatMap((service) =>
+    service.slug?.current
+      ? [
+          {
+            title: service.title,
+            slug: service.slug.current,
+            shortDescription: service.shortDescription,
+          },
+        ]
+      : []
+  )
 
-const mobileLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Shop', href: '/shop' },
-  { label: 'Solutions', href: '/products' },
-  { label: 'Applications', href: '/services' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'About', href: '/about' },
-  { label: 'Acoustic Education', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
-]
-
-export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [aboutOpen, setAboutOpen] = useState(false)
+  const projectCategories = projects.flatMap((project) =>
+    project.category ? [project.category] : []
+  )
 
   return (
-    <header className="relative z-[9999] pt-[26px]">
-      <div className="flex justify-center px-4">
-        <div
-          className="flex items-center justify-between bg-white/90 backdrop-blur-md rounded-[40px] py-2 pl-7 pr-2 w-full max-w-[960px] border border-white/60"
-          style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.8) inset' }}
-        >
-          {/* Logo */}
-          <Link href="/" className="block transition-all duration-300 hover:scale-105 hover:opacity-80">
-            <Image
-              src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg"
-              alt="Just Acoustics"
-              width={180}
-              height={40}
-              className="w-[140px] md:w-[180px]"
-              style={{ height: 'auto' }}
-              priority
-            />
-          </Link>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:block">
-            <ul className="flex items-center gap-6 list-none m-0 p-0">
-              {navLinks.map((link) =>
-                link.dropdown ? (
-                  <li key={link.href} className="relative">
-                    <button
-                      className="flex items-center gap-1 text-[var(--color-gray-100)] text-[15px] bg-transparent border-0 cursor-pointer transition-all duration-300 hover:text-[var(--color-dark-100)] hover:tracking-wide p-0"
-                      onMouseEnter={() => setAboutOpen(true)}
-                      onMouseLeave={() => setAboutOpen(false)}
-                    >
-                      {link.label}
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-0.5">
-                        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
-                    {aboutOpen && (
-                      <div
-                        className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
-                        onMouseEnter={() => setAboutOpen(true)}
-                        onMouseLeave={() => setAboutOpen(false)}
-                      >
-                        <div
-                          className="bg-white rounded-[12px] py-2 min-w-[180px] border border-black/5"
-                          style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.12)' }}
-                        >
-                          {link.dropdown.map((item) => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              className="block px-4 py-2 text-[var(--color-gray-100)] text-[14px] no-underline hover:text-[var(--color-dark-100)] hover:bg-[var(--color-white-200)] transition-colors"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </li>
-                ) : (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-[var(--color-gray-100)] text-[15px] no-underline transition-all duration-300 hover:text-[var(--color-dark-100)] hover:tracking-wide"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                )
-              )}
-            </ul>
-          </nav>
-
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-2">
-            <Link href="/contact" className="no-underline">
-              <ShimmerButton className="text-[15px] px-6 py-3 h-auto">
-                Free Consultation
-              </ShimmerButton>
-            </Link>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden p-2 cursor-pointer bg-transparent border-0"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect y="4" width="24" height="2" rx="1" fill="#4a4a4a" />
-              <rect y="11" width="24" height="2" rx="1" fill="#4a4a4a" />
-              <rect y="18" width="24" height="2" rx="1" fill="#4a4a4a" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile offcanvas */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-[99999] bg-[var(--color-dark-100)] flex flex-col justify-center items-center">
-          <div className="absolute top-8 left-0 right-0 px-6 flex justify-between items-center">
-            <Link href="/" onClick={() => setMobileOpen(false)}>
-              <Image
-                src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696374f75670859d95904082_Just%20Acoustics%201600x900.svg"
-                alt="Just Acoustics"
-                width={140}
-                height={32}
-                style={{ filter: 'invert(1)' }}
-              />
-            </Link>
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="cursor-pointer bg-transparent border-0"
-              aria-label="Close menu"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
-          </div>
-
-          <ul className="list-none m-0 p-0 text-center w-full px-8">
-            {mobileLinks.map((link) => (
-              <li key={link.href} className="mb-4">
-                <Link
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-[var(--color-gray-300)] text-[44px] sm:text-[56px] leading-[1.12] no-underline transition-colors duration-300 hover:text-white block py-2"
-                  style={{ fontFamily: 'var(--font-heading)', fontWeight: 500 }}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8">
-            <Link href="/contact" onClick={() => setMobileOpen(false)} className="no-underline">
-              <ShimmerButton className="text-base px-8 py-4 h-auto">
-                Free Consultation
-              </ShimmerButton>
-            </Link>
-          </div>
-        </div>
-      )}
-    </header>
+    <HeaderClient
+      shopItems={mapSluggedItems(shopItems)}
+      products={mapSluggedItems(products)}
+      services={serviceItems}
+      projectCategories={projectCategories}
+    />
   )
 }

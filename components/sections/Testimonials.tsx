@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Testimonial } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import Image from 'next/image'
@@ -46,50 +47,102 @@ export default function Testimonials({ testimonials }: Props) {
   const items = testimonials && testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS
 
   return (
-    <section className="py-20 md:py-28 bg-[var(--color-white-100)]">
-      <div className="max-w-[1280px] mx-auto px-5">
-        <div className="text-center mb-20 md:mb-24 max-w-[640px] mx-auto">
-          <h2
-            className="text-[var(--color-dark-100)] m-0 mb-5"
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(28px, 4vw, var(--fs-h3))',
-              lineHeight: '124%',
-              fontWeight: 500,
-              letterSpacing: '-1.04px',
-            }}
-          >
-            We&apos;ll let our clients do the talking
-          </h2>
-          <p className="text-[var(--color-gray-100)] text-base m-0">
-            Trusted by businesses and homeowners across Singapore
-          </p>
-        </div>
+    <section className="bg-[var(--color-white-100)] py-14 md:py-24">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-5">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-end md:gap-12">
+          <div className="max-w-[620px]">
+            <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+              Social proof
+            </p>
+            <h2
+              className="m-0 mt-3 text-[var(--color-dark-100)]"
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(26px, 3.4vw, 44px)',
+                lineHeight: '1.08',
+                fontWeight: 600,
+                letterSpacing: '-0.9px',
+              }}
+            >
+              Clients call us in when the room sounds wrong and leave with spaces people actually want to stay in.
+            </h2>
+            <p className="mt-4 text-[15px] leading-7 text-[var(--color-gray-100)]">
+              Hospitality venues, meeting rooms, churches, and wellness spaces all need different acoustic treatment.
+              These reviews show how that work lands in the real world.
+            </p>
+          </div>
 
-        {/* YouTube video — replace YOUR_VIDEO_ID_HERE with the actual YouTube video ID */}
-        <div className="mb-20 md:mb-24 rounded-[20px] overflow-hidden">
-          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/-1WDATPou2Y"
-              title="Client Testimonial Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {[
+              { value: '4.9★', label: 'Google rating' },
+              { value: '500+', label: 'projects delivered' },
+              { value: 'SG', label: 'local install team' },
+            ].map((stat) => (
+              <div key={stat.label} className="rounded-[18px] bg-[var(--color-white-200)] p-5">
+                <div
+                  className="text-[var(--color-dark-100)]"
+                  style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(24px,3.2vw,34px)', lineHeight: '1', fontWeight: 600 }}
+                >
+                  {stat.value}
+                </div>
+                <p className="mt-2 text-sm text-[var(--color-gray-100)]">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-10 overflow-hidden rounded-[22px] border border-black/5 bg-[var(--color-dark-100)] shadow-[0_20px_60px_rgba(0,0,0,0.10)] md:mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+            <div className="section-shell-pad">
+              <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.18em] text-white/55">Client story</p>
+              <h3
+                className="m-0 mt-4 text-white"
+                style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: 'clamp(22px, 2.8vw, 32px)',
+                  lineHeight: '1.08',
+                  fontWeight: 600,
+                  letterSpacing: '-0.8px',
+                }}
+              >
+                Watch how acoustic treatment changes the experience of a room, not just the measurements.
+              </h3>
+              <p className="mt-4 max-w-[50ch] text-[14px] leading-6 text-white/72">
+                A quick before-and-after story helps people understand what clearer speech and lower echo actually feel like once the panels go in.
+              </p>
+              <div className="mt-6">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-white no-underline transition-colors hover:text-[var(--color-brand-orange)]"
+                >
+                  Browse completed projects
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+            <div className="min-h-[220px] rounded-t-[22px] lg:rounded-t-none lg:rounded-l-[22px]">
+              <div className="relative h-full w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/-1WDATPou2Y"
+                  title="Client Testimonial Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-4 md:mt-10 md:grid-cols-3">
           {items.map((t, i) => (
             <div
               key={'_id' in t ? (t._id as string) : i}
-              className="bg-[var(--color-white-200)] rounded-[16px] p-5 md:p-6 flex flex-col gap-4"
+              className="flex flex-col gap-4 rounded-[18px] border border-black/5 bg-[var(--color-white-200)] p-5 md:p-6"
             >
               <Stars rating={t.rating} />
-              <p className="text-[var(--color-gray-100)] text-base m-0 leading-relaxed italic">
-                &ldquo;{t.review}&rdquo;
-              </p>
-              <div className="flex items-center gap-3 mt-auto">
+              <p className="m-0 text-base italic leading-relaxed text-[var(--color-gray-100)]">&ldquo;{t.review}&rdquo;</p>
+              <div className="mt-auto flex items-center gap-3 pt-2">
                 {'image' in t && t.image ? (
                   <Image
                     src={urlFor(t.image).width(48).height(48).url()}
@@ -99,17 +152,13 @@ export default function Testimonials({ testimonials }: Props) {
                     className="rounded-full object-cover"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-[var(--color-gray-600)] flex items-center justify-center text-white font-semibold text-lg shrink-0">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-gray-600)] text-lg font-semibold text-white">
                     {t.authorName[0]}
                   </div>
                 )}
                 <div>
-                  <p className="text-[var(--color-dark-100)] font-semibold m-0 text-base">
-                    {t.authorName}
-                  </p>
-                  {t.company && (
-                    <p className="text-[var(--color-gray-200)] text-base m-0">{t.company}</p>
-                  )}
+                  <p className="m-0 text-base font-semibold text-[var(--color-dark-100)]">{t.authorName}</p>
+                  {t.company && <p className="m-0 text-sm text-[var(--color-gray-200)]">{t.company}</p>}
                 </div>
               </div>
             </div>
