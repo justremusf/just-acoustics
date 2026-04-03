@@ -34,13 +34,17 @@ export default async function HomePage() {
       <Hero />
       <FadeUp delay={20}><BrandScroller logos={settings?.brandLogos} /></FadeUp>
       <FadeUp delay={40}><Applications services={services} /></FadeUp>
-      <FadeUp delay={60}><ProductsGrid products={products} /></FadeUp>
-      <FadeUp delay={80}><HearTheDifference /></FadeUp>
-      <FadeUp delay={100}><Solutions /></FadeUp>
+      <FadeUp delay={60}><HearTheDifference /></FadeUp>
+      <FadeUp delay={80}><ProductsGrid products={products} /></FadeUp>
+      <div className="hidden md:block">
+        <FadeUp delay={100}><Solutions /></FadeUp>
+      </div>
       <FadeUp delay={120}><ProcessSteps /></FadeUp>
       <FadeUp delay={140}><Testimonials testimonials={testimonials} /></FadeUp>
       <FadeUp delay={160}><FAQ /></FadeUp>
-      <FadeUp delay={180}><BlogPreview posts={posts} /></FadeUp>
+      <div className="hidden md:block">
+        <FadeUp delay={180}><BlogPreview posts={posts} /></FadeUp>
+      </div>
       <FadeUp delay={200}><ContactCTA /></FadeUp>
     </>
   )

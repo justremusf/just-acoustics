@@ -19,7 +19,7 @@ export default async function ServicesPage() {
     <div className="page-wrap page-stack">
       <section className="home-shell page-hero-shell flex flex-col gap-5">
         <span className="soft-pill">Space Applications</span>
-        <h1 className="page-title">Why Acoustics Matter</h1>
+        <h1 className="page-title">Spaces we help sound better</h1>
         <p className="page-subtitle">
           From worship spaces to offices and restaurants, these are the environments where we most often improve clarity, comfort, and noise control.
         </p>

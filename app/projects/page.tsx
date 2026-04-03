@@ -31,19 +31,21 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
     <div className="page-wrap page-stack">
       <section className="home-shell page-hero-shell flex flex-col gap-5">
         <span className="soft-pill">Projects</span>
-        <h1 className="page-title">Space&apos;s that now sound better</h1>
+        <h1 className="page-title">Spaces that now sound better</h1>
         <p className="page-subtitle">
           Browse acoustic installations across hospitality, worship, education, office, and lifestyle spaces in Singapore.
         </p>
       </section>
 
-      <section className="home-shell page-hero-shell flex flex-wrap gap-3">
-        <Link href="/projects" className={`page-filter ${!category ? 'active' : ''}`}>All</Link>
-        {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-          <Link key={value} href={'/projects?category=' + value} className={`page-filter ${category === value ? 'active' : ''}`}>
-            {label}
-          </Link>
-        ))}
+      <section className="home-shell page-hero-shell overflow-hidden">
+        <div className="no-scrollbar flex gap-3 overflow-x-auto overflow-y-hidden pb-1 md:flex-wrap md:pb-0">
+          <Link href="/projects" className={`page-filter whitespace-nowrap ${!category ? 'active' : ''}`}>All</Link>
+          {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
+            <Link key={value} href={'/projects?category=' + value} className={`page-filter whitespace-nowrap ${category === value ? 'active' : ''}`}>
+              {label}
+            </Link>
+          ))}
+        </div>
       </section>
 
       {filtered.length === 0 ? (

@@ -154,13 +154,6 @@ export default function Footer() {
                     Free Consultation
                     <span aria-hidden="true">→</span>
                   </Link>
-                  <Link
-                    href="/projects"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-white no-underline transition-colors hover:text-white/80"
-                  >
-                    See project results
-                    <span aria-hidden="true">→</span>
-                  </Link>
                 </div>
 
                 <div className="mt-auto pt-5">

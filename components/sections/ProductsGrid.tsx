@@ -7,11 +7,7 @@ import ShimmerButton from '@/components/ui/shimmer-button'
 const FALLBACK_PRODUCTS = [
   { _id: '1', title: 'Acoustic Wall Panels', slug: { current: 'acoustic-wall-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbb798931f99abbc38_1.avif' } },
   { _id: '2', title: 'Acoustic Ceiling Panels', slug: { current: 'acoustic-ceiling-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb0907dcf8dacbcd54_2.png' } },
-  { _id: '3', title: 'Acoustic Fabric Wall', slug: { current: 'acoustic-fabric-wall' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd1be500fee866d95_3.png' } },
   { _id: '4', title: 'Custom Print Panels', slug: { current: 'custom-print-acoustic-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb30cf5a46b9a7edd3_4.png' } },
-  { _id: '5', title: 'Office Soundproofing', slug: { current: 'office-soundproofing' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd62acdbb9d45cd3d_5.png' } },
-  { _id: '6', title: 'Polyester Felt Panels', slug: { current: 'polyester-felt-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb6d770477375c64bd_6.png' } },
-  { _id: '7', title: 'Custom Acoustic Panel', slug: { current: 'custom-acoustic-panels' }, mainImage: { _type: 'image' as const, asset: { _ref: '', _type: 'reference' as const }, _fallbackSrc: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb255645d4686056e2_7.png' } },
 ]
 
 interface FallbackProduct {
@@ -30,7 +26,16 @@ interface Props {
 }
 
 export default function ProductsGrid({ products }: Props) {
-  const items = products && products.length > 0 ? products.slice(0, 7) : FALLBACK_PRODUCTS
+  const featuredSlugs = new Set([
+    'acoustic-wall-panels',
+    'acoustic-ceiling-panels',
+    'custom-print-acoustic-panels',
+  ])
+
+  const items =
+    products && products.length > 0
+      ? products.filter((product) => featuredSlugs.has(product.slug.current))
+      : FALLBACK_PRODUCTS
 
   return (
     <section className="px-4 py-10 md:px-5 md:py-12">
@@ -43,7 +48,7 @@ export default function ProductsGrid({ products }: Props) {
               Browse the most common treatment types we recommend when a room needs clearer speech, lower echo, or better listening comfort.
             </p>
           </div>
-          <Link href="/products" className="home-link inline-flex items-center gap-2 self-start md:self-auto">
+          <Link href="/products" className="home-link hidden items-center gap-2 self-start md:inline-flex md:self-auto">
             See all solutions <span aria-hidden="true">→</span>
           </Link>
         </div>
@@ -85,6 +90,12 @@ export default function ProductsGrid({ products }: Props) {
                 </Link>
               )
             })}
+
+            <div className="flex justify-end px-1">
+              <Link href="/products" className="home-link inline-flex items-center gap-2">
+                See all solutions <span aria-hidden="true">→</span>
+              </Link>
+            </div>
 
             <div className="glass-card flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
               <div>
@@ -136,16 +147,16 @@ export default function ProductsGrid({ products }: Props) {
             )
           })}
 
-          <div className="glass-card col-span-2 flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 xl:col-span-1">
-            <div>
+          <div className="glass-card col-span-3 flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-6 text-center shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 xl:col-span-1">
+            <div className="mx-auto max-w-[620px]">
               <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
               <h3 className="mt-3 text-[28px] leading-[1.04] font-medium tracking-[-1px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
                 Not sure which panel is right for you?
               </h3>
               <p className="mt-4 text-[15px] leading-7 text-[var(--color-gray-100)]">We’ll recommend the best acoustic treatment based on the room, not guesswork.</p>
             </div>
-            <Link href="/contact" className="mt-6 no-underline">
-              <ShimmerButton className="h-auto px-6 py-3 text-sm">Contact Us</ShimmerButton>
+            <Link href="/contact" className="mt-6 inline-flex items-center gap-2 self-center text-sm font-semibold text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)]">
+              Contact Us <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

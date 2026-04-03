@@ -81,8 +81,8 @@ const PROJECT_CATEGORY_LABELS: Record<string, string> = {
 }
 
 const desktopNav = [
-  { key: 'solutions' as const, label: 'Solutions', href: '/products' },
   { key: 'applications' as const, label: 'Applications', href: '/services' },
+  { key: 'solutions' as const, label: 'Solutions', href: '/products' },
   { key: 'projects' as const, label: 'Projects', href: '/projects' },
   { key: 'shop' as const, label: 'Shop', href: '/shop' },
   { key: 'about' as const, label: 'About', href: '/about' },
@@ -90,8 +90,8 @@ const desktopNav = [
 
 const mobileLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Solutions', href: '/products' },
   { label: 'Applications', href: '/services' },
+  { label: 'Solutions', href: '/products' },
   { label: 'Projects', href: '/projects' },
   { label: 'Shop', href: '/shop' },
   { label: 'About', href: '/about' },

@@ -25,8 +25,8 @@ export default async function ProductsPage() {
   return (
     <div className="page-wrap page-stack">
       <section className="home-shell page-hero-shell flex flex-col gap-5">
-        <span className="soft-pill">Products</span>
-        <h1 className="page-title">Acoustic Solutions</h1>
+        <span className="soft-pill">Solutions</span>
+        <h1 className="page-title">Acoustic Products</h1>
         <p className="page-subtitle">
           Browse wall panels, ceiling treatments, and custom acoustic products built to improve clarity while fitting the space visually.
         </p>
@@ -58,7 +58,7 @@ export default async function ProductsPage() {
               <div className="page-card-body">
                 {product.category && <p className="page-kicker">{CATEGORY_LABELS[product.category] || product.category}</p>}
                 <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{product.title}</h2>
-                <span className="page-link mt-1">Buy now <span aria-hidden="true">→</span></span>
+                <span className="page-link mt-1">Learn more <span aria-hidden="true">→</span></span>
               </div>
             </Link>
           ))}
@@ -68,11 +68,11 @@ export default async function ProductsPage() {
       <section className="home-shell page-hero-shell text-center">
         <div className="mx-auto flex max-w-[700px] flex-col items-center gap-5">
           <span className="soft-pill">Need Help Choosing</span>
-          <h2 className="page-card-title text-[clamp(26px,3vw,38px)]">Not sure which product fits the room?</h2>
+          <h2 className="page-card-title text-[clamp(26px,3vw,38px)]">Not sure which product you need?</h2>
           <p className="page-subtitle max-w-[52ch]">
-            Share the room type, noise issue, and a few photos. We will point you to the right treatment before you buy.
+            Share the room type, noise issue, and a few photos. We will point you to the right product for the space before you decide.
           </p>
-          <Link href="/contact" className="page-cta">Contact Us to Buy</Link>
+          <Link href="/contact" className="page-cta">Free Consultation</Link>
         </div>
       </section>
     </div>

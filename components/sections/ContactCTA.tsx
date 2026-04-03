@@ -26,12 +26,12 @@ export default function ContactCTA() {
           <p className="mx-auto mt-6 max-w-[30ch] text-[15px] leading-7 text-white/78 sm:max-w-[56ch] sm:text-base">
             Our acoustic engineers and team are on standby.
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/contact" className="w-full no-underline sm:w-auto">
               <ShimmerButton className="h-auto w-full px-8 py-4 text-sm">Free Consultation</ShimmerButton>
             </Link>
-            <Link href="/projects" className="inline-flex min-h-[54px] w-full items-center justify-center rounded-[100px] border border-white/18 bg-white/10 px-6 py-3.5 text-sm font-medium text-white no-underline backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-white/16 sm:w-auto">
-              See All Projects
+            <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-semibold text-white no-underline transition-colors duration-300 hover:text-white/78">
+              See All Projects <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

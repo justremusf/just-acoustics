@@ -53,7 +53,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="no-scrollbar -mx-1 flex gap-4 overflow-x-auto overflow-y-hidden px-1 pb-1 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-3">
             {RESOURCE_TOPICS.map((resourceTopic) => {
               const count = topicCount(posts, resourceTopic.value)
               const isActive = activeTopic?.value === resourceTopic.value
@@ -62,13 +62,13 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 <Link
                   key={resourceTopic.value}
                   href={`/blog?topic=${resourceTopic.value}`}
-                  className={`page-card glass-card p-6 transition-all duration-300 hover:-translate-y-1 ${isActive ? 'border-[rgba(255,165,0,0.3)] shadow-[0_18px_45px_rgba(255,165,0,0.12)]' : ''}`}
+                  className={`page-card glass-card w-[min(84vw,320px)] shrink-0 p-6 transition-all duration-300 hover:-translate-y-1 md:w-auto ${isActive ? 'border-[rgba(255,165,0,0.3)] shadow-[0_18px_45px_rgba(255,165,0,0.12)]' : ''}`}
                 >
                   <p className="page-kicker text-[var(--color-brand-orange)]">
                     {count > 0 ? `${count} article${count === 1 ? '' : 's'}` : 'More coming soon'}
                   </p>
                   <h2 className="page-card-title">{resourceTopic.title}</h2>
-                  <p className="page-card-copy">{resourceTopic.description}</p>
+                  <p className="page-card-copy hidden md:block">{resourceTopic.description}</p>
                   <span className="page-link mt-2">Browse topic <span aria-hidden="true">→</span></span>
                 </Link>
               )
@@ -104,8 +104,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     <Link href={`/blog/${featuredPost.slug.current}`} className="page-cta">
                       Read featured article
                     </Link>
-                    <Link href="/contact" className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-black/8 bg-white/82 px-6 py-3 text-sm font-semibold text-[var(--color-dark-100)] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:border-black/14 hover:text-[var(--color-brand-orange)]">
-                      Free Consultation
+                    <Link href="/contact" className="page-link">
+                      Free Consultation <span aria-hidden="true">→</span>
                     </Link>
                   </div>
                 </div>

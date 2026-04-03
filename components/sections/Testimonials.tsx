@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import type { Testimonial } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import Image from 'next/image'
@@ -75,15 +74,6 @@ export default function Testimonials({ testimonials }: Props) {
               <p className="mt-4 max-w-[50ch] text-[14px] leading-6 text-[var(--color-gray-100)]">
                 A quick before-and-after story helps people understand what clearer speech and lower echo actually feel like once the panels go in.
               </p>
-              <div className="mt-6">
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)]"
-                >
-                  Browse completed projects
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
             </div>
             <div className="min-h-[220px] border-t border-black/6 lg:border-t-0 lg:border-l lg:border-black/6">
               <div className="relative h-full w-full" style={{ paddingBottom: '56.25%' }}>
@@ -106,7 +96,7 @@ export default function Testimonials({ testimonials }: Props) {
               className="glass-card flex flex-col gap-4 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(0,0,0,0.12),0_10px_28px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.78)_inset] md:p-6"
             >
               <Stars rating={t.rating} />
-              <p className="m-0 text-base italic leading-relaxed text-[var(--color-gray-100)]">&ldquo;{t.review}&rdquo;</p>
+              <p className="m-0 text-base leading-relaxed text-[var(--color-gray-100)]">&ldquo;{t.review}&rdquo;</p>
               <div className="mt-auto flex items-center gap-3 pt-2">
                 {'image' in t && t.image ? (
                   <Image

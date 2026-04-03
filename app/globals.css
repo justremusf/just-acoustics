@@ -285,7 +285,8 @@ body {
   justify-content: center;
   gap: 8px;
   border-radius: 999px;
-  background: var(--color-brand-orange);
+  background: linear-gradient(110deg, #ffa500, 40%, #ffcc55, 50%, #ffa500);
+  background-size: 200% 100%;
   padding: 13px 22px;
   color: white;
   text-decoration: none;
@@ -293,11 +294,13 @@ body {
   font-weight: 700;
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   box-shadow: 0 12px 28px rgba(255, 165, 0, 0.28);
+  animation: shimmer2 2.5s infinite linear;
 }
 
 .page-cta:hover {
   transform: translateY(-1px);
-  opacity: 0.92;
+  opacity: 0.96;
+  box-shadow: 0 0 24px 6px rgba(255, 165, 0, 0.4);
 }
 
 .dark-glass {
