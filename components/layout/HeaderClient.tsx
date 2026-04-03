@@ -610,7 +610,7 @@ export default function HeaderClient({
         </div>
 
         <div
-          className={`header-mega-panel absolute inset-x-0 top-full pt-3 ${
+          className={`header-mega-panel absolute left-4 right-4 top-full pt-3 ${
             renderedMenu
               ? openMenu
                 ? 'pointer-events-auto opacity-100 translate-y-0'
@@ -619,7 +619,7 @@ export default function HeaderClient({
           }`}
         >
           {activeMenuData && (
-            <div className="overflow-hidden rounded-[30px] border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(246,243,237,0.94))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.14),0_1px_0_rgba(255,255,255,0.84)_inset] backdrop-blur-[40px] backdrop-saturate-150 xl:p-7">
+            <div className="w-full overflow-hidden rounded-[30px] border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(246,243,237,0.94))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.14),0_1px_0_rgba(255,255,255,0.84)_inset] backdrop-blur-[40px] backdrop-saturate-150 xl:p-7">
               <div className="grid gap-6 xl:grid-cols-[minmax(0,1.38fr)_300px]">
                 <div
                   className={`grid gap-6 ${getSectionsGridClass(

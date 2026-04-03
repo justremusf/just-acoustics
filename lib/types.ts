@@ -5,6 +5,11 @@ export interface SanityImage {
   alt?: string
 }
 
+export interface KeyValueSpec {
+  label: string
+  value: string
+}
+
 export interface Post {
   _id: string
   title: string
@@ -83,6 +88,7 @@ export interface ShopItem {
   madeToOrder?: boolean
   shortDescription?: string
   features?: string[]
+  specifications?: KeyValueSpec[]
   body?: unknown[]
   seo?: { metaTitle?: string; metaDescription?: string }
 }

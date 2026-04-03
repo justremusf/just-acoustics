@@ -114,7 +114,9 @@ export async function getAllShopItems() {
 export async function getShopItemBySlug(slug: string) {
   return client.fetch(
     `*[_type == "shopItem" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
-      _id, title, slug, mainImage, gallery, category, price, sku, inStock, shortDescription, features, body, seo
+      _id, title, slug, mainImage, gallery, category, price, sku, inStock, shortDescription, features,
+      specifications[]{label, value},
+      body, seo
     }`,
     { slug }
   )

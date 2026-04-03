@@ -88,6 +88,39 @@ export default defineType({
       description: 'Key selling points, e.g. "NRC 0.95", "Fire-rated"',
     }),
     defineField({
+      name: 'specifications',
+      title: 'Specifications',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'specification',
+          title: 'Specification',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: 'value',
+              title: 'Value',
+              type: 'string',
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'label',
+              subtitle: 'value',
+            },
+          },
+        }),
+      ],
+      description: 'Structured product specs shown under the Specs tab',
+    }),
+    defineField({
       name: 'body',
       title: 'Full Description',
       type: 'array',
