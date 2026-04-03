@@ -41,7 +41,7 @@ export default function FadeUp({ children, delay = 0, className = '' }: FadeUpPr
   }, [delay])
 
   return (
-    <div ref={ref} className={`fade-up ${className}`}>
+    <div ref={ref} className={`fade-up visible ${className}`}>
       {children}
     </div>
   )

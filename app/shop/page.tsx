@@ -34,7 +34,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="page-wrap page-stack">
-      <section className="home-shell page-hero-shell flex flex-col gap-5">
+      <section className="home-shell page-hero-shell flex min-h-[184px] flex-col gap-5 md:min-h-0">
         <span className="soft-pill">Shop</span>
         <h1 className="page-title">Shop Acoustic Panels Online</h1>
         <p className="page-subtitle">
@@ -42,7 +42,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </p>
       </section>
 
-      <section className="home-shell page-hero-shell flex flex-col gap-4">
+      <section className="home-shell page-hero-shell flex min-h-[110px] flex-col gap-4 md:min-h-0">
         <ShopFilters
           category={category}
           sort={sort}
@@ -56,24 +56,26 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </section>
       ) : (
         <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {sorted.map((item) => (
+          {sorted.map((item, index) => (
             <Link
               key={item._id}
               href={'/shop/' + item.slug.current}
-              className="page-card glass-card group transition-transform duration-300 hover:-translate-y-1"
+              className="page-card glass-card group h-full transition-transform duration-300 hover:-translate-y-1"
             >
-              {item.mainImage?.asset._ref && (
-                <div className="page-card-image aspect-square">
+              <div className="page-card-image aspect-square bg-[var(--color-white-200)]">
+                {item.mainImage?.asset._ref && (
                   <Image
                     src={urlFor(item.mainImage).width(720).height(720).url()}
                     alt={item.mainImage.alt || item.title}
                     width={720}
                     height={720}
+                    sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1279px) calc(50vw - 40px), calc(25vw - 40px)"
+                    priority={index < 2}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                </div>
-              )}
-              <div className="page-card-body">
+                )}
+              </div>
+              <div className="page-card-body min-h-[136px]">
                 {item.category && <p className="page-kicker">{CATEGORY_LABELS[item.category] || item.category}</p>}
                 <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{item.title}</h2>
                 {item.price != null && <p className="page-card-copy">S${item.price.toLocaleString()}</p>}
