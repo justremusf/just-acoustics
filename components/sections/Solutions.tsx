@@ -88,7 +88,7 @@ export default function Solutions() {
                   <div
                     className={`flex h-14 w-14 items-center justify-center rounded-[18px] border ${solution.iconShellClass} shadow-[0_10px_24px_rgba(0,0,0,0.04)]`}
                   >
-                    <Image src={solution.icon} alt={solution.title} width={42} height={42} unoptimized />
+                    <Image src={solution.icon} alt={solution.title} width={42} height={42} sizes="42px" />
                   </div>
 
                   <div className="max-w-none md:max-w-[34ch]">

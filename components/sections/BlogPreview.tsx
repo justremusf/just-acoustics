@@ -17,6 +17,7 @@ export default function BlogPreview({ posts = [] }: Props) {
 
   useEffect(() => {
     if (visiblePosts.length < 2) return
+    if (typeof window === 'undefined' || !window.matchMedia('(min-width: 768px)').matches) return
 
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % visiblePosts.length)
@@ -28,6 +29,7 @@ export default function BlogPreview({ posts = [] }: Props) {
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
+    if (typeof window === 'undefined' || !window.matchMedia('(min-width: 768px)').matches) return
 
     const cardWidth = track.clientWidth >= 768 ? (track.clientWidth - 20) / 2 : track.clientWidth * 0.86
     const left = activeIndex * (cardWidth + 20)

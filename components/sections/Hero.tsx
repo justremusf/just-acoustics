@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
+const HERO_IMAGE =
+  'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp'
 
 export default function Hero() {
   return (
@@ -8,15 +11,18 @@ export default function Hero() {
       className="relative mx-4 mt-[-66px] overflow-hidden rounded-[24px] px-0 pt-[188px] pb-12 sm:mx-4 sm:pt-[198px] md:mt-[-76px] md:pt-[246px] md:pb-20"
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
-      <div
-        className="absolute inset-0 z-0 rounded-[24px]"
-        style={{
-          backgroundImage:
-            "linear-gradient(115deg, rgba(1,1,1,0.80) 0%, rgba(1,1,1,0.62) 44%, rgba(1,1,1,0.42) 100%), url('https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+      <div className="absolute inset-0 z-0 rounded-[24px] overflow-hidden">
+        <Image
+          src={HERO_IMAGE}
+          alt="Installed acoustic panels in a hospitality space"
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+      <div className="absolute inset-0 z-0 rounded-[24px] bg-[linear-gradient(115deg,rgba(1,1,1,0.80)_0%,rgba(1,1,1,0.62)_44%,rgba(1,1,1,0.42)_100%)]" />
       <div className="absolute inset-0 z-0 rounded-[24px] bg-[radial-gradient(circle_at_top_right,rgba(255,165,0,0.22),transparent_32%),linear-gradient(to_top,rgba(1,1,1,0.22),transparent_24%)]" />
 
       <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-5">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import LeadConversionTracker from '@/components/analytics/LeadConversionTracker'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ const nextSteps = [
 export default function ThankYouPage() {
   return (
     <div className="page-wrap page-stack">
+      <LeadConversionTracker />
       <section className="home-shell page-hero-shell flex flex-col items-center gap-5 text-center">
         <span className="soft-pill mx-auto">Thank You</span>
         <h1 className="page-title max-w-[14ch] text-center">

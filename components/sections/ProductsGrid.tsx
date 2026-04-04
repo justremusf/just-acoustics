@@ -75,6 +75,7 @@ export default function ProductsGrid({ products }: Props) {
                       alt={p.title}
                       width={320}
                       height={220}
+                      sizes="(max-width: 767px) calc(100vw - 32px)"
                       className="h-[220px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       unoptimized={isFallback}
                     />
@@ -133,6 +134,7 @@ export default function ProductsGrid({ products }: Props) {
                     alt={p.title}
                     width={320}
                     height={240}
+                    sizes="(max-width: 1279px) calc(33vw - 32px), calc(25vw - 32px)"
                     className="h-[240px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     unoptimized={isFallback}
                   />

@@ -70,8 +70,8 @@ export default function BrandScroller({ logos }: Props) {
                   alt={logo.alt}
                   width={132}
                   height={63}
+                  sizes="132px"
                   className="max-h-[63px] object-contain sm:max-h-[73px]"
-                  unoptimized
                 />
               </div>
             ))}

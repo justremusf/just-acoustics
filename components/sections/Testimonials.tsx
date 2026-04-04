@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import type { Testimonial } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import Image from 'next/image'
@@ -44,6 +47,7 @@ function Stars({ rating = 5 }: { rating?: number }) {
 
 export default function Testimonials({ testimonials }: Props) {
   const items = testimonials && testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS
+  const [isStoryVideoActive, setIsStoryVideoActive] = useState(false)
 
   return (
     <section className="px-4 py-10 md:px-5 md:py-12">
@@ -76,14 +80,36 @@ export default function Testimonials({ testimonials }: Props) {
               </p>
             </div>
             <div className="min-h-[220px] border-t border-black/6 lg:border-t-0 lg:border-l lg:border-black/6">
-              <div className="relative h-full w-full" style={{ paddingBottom: '56.25%' }}>
-                <iframe
-                  className="absolute inset-0 h-full w-full"
-                  src="https://www.youtube.com/embed/-1WDATPou2Y"
-                  title="Client Testimonial Video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+              <div className="relative h-full w-full overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+                {isStoryVideoActive ? (
+                  <iframe
+                    className="absolute inset-0 h-full w-full"
+                    src="https://www.youtube.com/embed/-1WDATPou2Y?autoplay=1&rel=0&playsinline=1"
+                    title="Client Testimonial Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setIsStoryVideoActive(true)}
+                    className="absolute inset-0 block border-0 bg-black/70 p-0 text-left"
+                    aria-label="Play client testimonial video"
+                  >
+                    <img
+                      src="https://i.ytimg.com/vi/-1WDATPou2Y/maxresdefault.jpg"
+                      alt="Client testimonial preview"
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.38)_56%,rgba(0,0,0,0.68))]" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="inline-flex h-[72px] w-[72px] items-center justify-center rounded-full border border-white/18 bg-white/12 text-[34px] text-white shadow-[0_24px_60px_rgba(0,0,0,0.3)] backdrop-blur-md">
+                        ▶
+                      </span>
+                    </div>
+                  </button>
+                )}
               </div>
             </div>
           </div>

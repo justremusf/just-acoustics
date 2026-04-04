@@ -88,6 +88,7 @@ export default function Applications({ services }: Props) {
                   src={app.img}
                   alt={app.title}
                   fill
+                  sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc(50vw - 28px), calc(33vw - 32px)"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   unoptimized={'unoptimized' in app ? app.unoptimized : false}
                 />

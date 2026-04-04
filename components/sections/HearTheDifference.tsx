@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 
 const videos = [
@@ -31,18 +31,9 @@ const videos = [
 const PLAY_ICON = 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6967a0f62bd9b7dce9e01040_Play%20icon.png'
 
 export default function HearTheDifference() {
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const [isDesktop, setIsDesktop] = useState(false)
+  const [activeMobileId, setActiveMobileId] = useState<string | null>(null)
+  const [activeDesktopId, setActiveDesktopId] = useState<string | null>(null)
   const featuredVideo = videos[0]
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 768px)')
-    const updateViewport = () => setIsDesktop(mediaQuery.matches)
-
-    updateViewport()
-    mediaQuery.addEventListener('change', updateViewport)
-    return () => mediaQuery.removeEventListener('change', updateViewport)
-  }, [])
 
   return (
     <>
@@ -62,15 +53,14 @@ export default function HearTheDifference() {
             </div>
           </div>
 
-          {!isDesktop && (
-          <div>
+          <div className="md:hidden">
             <button
-              onClick={() => setActiveId(featuredVideo.videoId)}
+              onClick={() => setActiveMobileId(featuredVideo.videoId)}
               className="group relative w-full overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]"
               aria-label={`Play: ${featuredVideo.label}`}
             >
               <div className="relative aspect-[9/16]">
-                {activeId === featuredVideo.videoId ? (
+                {activeMobileId === featuredVideo.videoId ? (
                   <div className="absolute inset-0 bg-black">
                     <iframe
                       className="absolute inset-0 h-full w-full"
@@ -88,7 +78,6 @@ export default function HearTheDifference() {
                       fill
                       sizes="92vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                      unoptimized
                     />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,186,88,0.2),transparent_24%),linear-gradient(180deg,rgba(0,0,0,0.06),rgba(0,0,0,0.22)_38%,rgba(0,0,0,0.84)_100%)]" />
                   </>
@@ -103,11 +92,11 @@ export default function HearTheDifference() {
                   </span>
                 </div>
 
-                {activeId !== featuredVideo.videoId && (
+                {activeMobileId !== featuredVideo.videoId && (
                   <>
                     <div className="absolute inset-x-0 top-[34%] flex items-center justify-center">
                       <div className="flex h-[78px] w-[78px] items-center justify-center rounded-full border border-white/18 bg-white/10 shadow-[0_0_0_12px_rgba(255,255,255,0.03),0_24px_60px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_0_16px_rgba(255,255,255,0.04),0_24px_80px_rgba(0,0,0,0.4)] sm:h-[88px] sm:w-[88px]">
-                        <Image src={PLAY_ICON} alt="Play" width={56} height={56} className="drop-shadow-lg sm:h-[68px] sm:w-[68px]" unoptimized />
+                        <Image src={PLAY_ICON} alt="Play" width={56} height={56} sizes="56px" className="drop-shadow-lg sm:h-[68px] sm:w-[68px]" />
                       </div>
                     </div>
 
@@ -129,7 +118,7 @@ export default function HearTheDifference() {
                     </div>
                   </>
                 )}
-                {activeId === featuredVideo.videoId && (
+                {activeMobileId === featuredVideo.videoId && (
                   <div className="absolute right-4 top-4 z-10">
                     <span className="inline-flex rounded-full border border-white/16 bg-black/42 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
                       Playing
@@ -145,20 +134,18 @@ export default function HearTheDifference() {
               </Link>
             </div>
           </div>
-          )}
 
-          {isDesktop && (
-          <div className="relative md:overflow-visible md:rounded-none md:bg-transparent">
+          <div className="relative hidden md:block md:overflow-visible md:rounded-none md:bg-transparent">
             <div className="md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
               {videos.map((v, index) => (
                 <button
                   key={v.videoId}
-                  onClick={() => setActiveId(v.videoId)}
+                  onClick={() => setActiveDesktopId(v.videoId)}
                   className="group relative w-full max-w-none overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]"
                   aria-label={`Play: ${v.label}`}
                 >
                   <div className="relative aspect-[9/16] md:aspect-[4/5] xl:aspect-[5/6]">
-                    {activeId === v.videoId ? (
+                    {activeDesktopId === v.videoId ? (
                       <div className="absolute inset-0 bg-black">
                         <iframe
                           className="absolute inset-0 h-full w-full"
@@ -176,7 +163,6 @@ export default function HearTheDifference() {
                           fill
                           sizes="(min-width: 1024px) 320px, (min-width: 768px) 300px, 78vw"
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                          unoptimized
                         />
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,186,88,0.2),transparent_24%),linear-gradient(180deg,rgba(0,0,0,0.06),rgba(0,0,0,0.22)_38%,rgba(0,0,0,0.84)_100%)]" />
                       </>
@@ -191,11 +177,11 @@ export default function HearTheDifference() {
                       </span>
                     </div>
 
-                    {activeId !== v.videoId && (
+                    {activeDesktopId !== v.videoId && (
                       <>
                         <div className="absolute inset-x-0 top-[34%] flex items-center justify-center">
                           <div className="flex h-[78px] w-[78px] items-center justify-center rounded-full border border-white/18 bg-white/10 shadow-[0_0_0_12px_rgba(255,255,255,0.03),0_24px_60px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_0_16px_rgba(255,255,255,0.04),0_24px_80px_rgba(0,0,0,0.4)] sm:h-[88px] sm:w-[88px]">
-                            <Image src={PLAY_ICON} alt="Play" width={56} height={56} className="drop-shadow-lg sm:h-[68px] sm:w-[68px]" unoptimized />
+                            <Image src={PLAY_ICON} alt="Play" width={56} height={56} sizes="56px" className="drop-shadow-lg sm:h-[68px] sm:w-[68px]" />
                           </div>
                         </div>
 
@@ -217,7 +203,7 @@ export default function HearTheDifference() {
                         </div>
                       </>
                     )}
-                    {activeId === v.videoId && (
+                    {activeDesktopId === v.videoId && (
                       <div className="absolute right-4 top-4 z-10">
                         <span className="inline-flex rounded-full border border-white/16 bg-black/42 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
                           Playing
@@ -229,7 +215,6 @@ export default function HearTheDifference() {
               ))}
             </div>
           </div>
-          )}
         </div>
       </section>
     </>
