@@ -53,7 +53,7 @@ export default function HearTheDifference() {
               <span className="inline-flex rounded-[100px] border border-black/8 bg-white/82 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-black/52">
                 Hear the difference
               </span>
-              <h2 className="mt-4 max-w-[12ch] text-[var(--color-dark-100)] home-heading">
+              <h2 className="mt-5 max-w-[12ch] text-[var(--color-dark-100)] home-heading">
                 Listen to the results yourself
               </h2>
               <p className="mt-5 max-w-[52ch] text-[15px] leading-7 text-[var(--color-gray-100)] sm:text-base">

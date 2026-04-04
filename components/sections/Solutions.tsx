@@ -60,7 +60,7 @@ export default function Solutions() {
             <div className="max-w-[560px]">
               <span className="soft-pill px-3 py-1.5 text-[11px]">Why acoustics matter</span>
               <h2
-                className="mt-4 m-0 max-w-[11ch] text-[var(--color-dark-100)]"
+                className="mt-5 m-0 max-w-[11ch] text-[var(--color-dark-100)]"
                 style={{
                   fontFamily: 'var(--font-heading)',
                   fontSize: 'clamp(28px, 3.5vw, 42px)',

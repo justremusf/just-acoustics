@@ -50,7 +50,7 @@ export default function Testimonials({ testimonials }: Props) {
       <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
         <div className="max-w-[620px]">
             <span className="soft-pill">Reviews</span>
-            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">
+            <h2 className="home-heading mt-5 text-[var(--color-dark-100)]">
               Hear from our clients
             </h2>
         </div>

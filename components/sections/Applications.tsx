@@ -64,10 +64,10 @@ export default function Applications({ services }: Props) {
         <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[640px]">
             <span className="soft-pill">Space Applications</span>
-            <h2 className="home-heading mt-4 max-w-[14ch] text-[var(--color-dark-100)]">
+            <h2 className="home-heading mt-5 max-w-[14ch] text-[var(--color-dark-100)]">
               Why acoustics matter in your space
             </h2>
-            <p className="home-copy mt-4 max-w-[54ch]">
+            <p className="home-copy mt-5 max-w-[54ch]">
               Different rooms create different acoustic problems. These are some of the environments we most often help transform.
             </p>
           </div>

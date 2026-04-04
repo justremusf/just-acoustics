@@ -84,8 +84,8 @@ export default function FAQ() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.78fr_1fr] md:gap-10">
           <div>
             <span className="soft-pill">FAQ</span>
-            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Commonly Asked Questions</h2>
-            <p className="home-copy mt-4 max-w-[40ch]">We make acoustics simple for you.</p>
+            <h2 className="home-heading mt-5 text-[var(--color-dark-100)]">Commonly Asked Questions</h2>
+            <p className="home-copy mt-5 max-w-[40ch]">We make acoustics simple for you.</p>
           </div>
           <div>
             {faqs.map((faq) => (

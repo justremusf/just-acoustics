@@ -43,8 +43,8 @@ export default function ProductsGrid({ products }: Props) {
         <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[620px]">
             <span className="soft-pill">Solutions</span>
-            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Acoustic Panels that fit your space</h2>
-            <p className="home-copy mt-4 max-w-[54ch]">
+            <h2 className="home-heading mt-5 text-[var(--color-dark-100)]">Acoustic Panels that fit your space</h2>
+            <p className="home-copy mt-5 max-w-[54ch]">
               Browse the most common treatment types we recommend when a room needs clearer speech, lower echo, or better listening comfort.
             </p>
           </div>

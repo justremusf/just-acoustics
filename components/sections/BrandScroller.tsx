@@ -37,7 +37,7 @@ export default function BrandScroller({ logos }: Props) {
               Trusted by teams who need quieter rooms
             </p>
             <h2
-              className="m-0 mt-3 text-[var(--color-dark-100)]"
+              className="m-0 mt-5 text-[var(--color-dark-100)]"
               style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: 'clamp(22px, 2.8vw, 32px)',

@@ -432,7 +432,7 @@ export default function HeaderClient({
   const activeMenuData = renderedMenu ? megaMenus[renderedMenu] : null
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-[24px] sm:px-4 sm:pt-[24px] lg:px-4">
+    <header className="sticky top-0 z-50 px-5 pt-[24px] sm:px-5 sm:pt-[24px] lg:px-4">
       <style>{`
         .burger-btn line {
           transition-property: transform, opacity;
@@ -708,7 +708,7 @@ export default function HeaderClient({
         </div>
       </div>
 
-      <div className="relative mx-auto w-full max-w-[1280px] px-4 lg:hidden">
+      <div className="relative mx-auto w-full max-w-[1280px] px-0 lg:hidden">
         <div
           className={`flex w-full items-center justify-between rounded-[28px] border py-2 pl-4 pr-2 transition-all duration-300 sm:rounded-[40px] sm:pl-7 ${
             scrolled
