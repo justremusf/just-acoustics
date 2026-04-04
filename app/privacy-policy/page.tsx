@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -42,11 +43,11 @@ export default function PrivacyPolicyPage() {
           <p>We retain your data for as long as necessary to fulfil the purposes above, or as required by law.</p>
           <h2>5. Your Rights</h2>
           <p>Under the PDPA, you have the right to access your personal data, correct inaccurate personal data, and withdraw consent for marketing communications at any time.</p>
-          <p>To exercise these rights, email <a href="mailto:info@justacoustics.co">info@justacoustics.co</a>.</p>
+          <p>To exercise these rights, email <TrackedAnchor href="mailto:info@justacoustics.co">info@justacoustics.co</TrackedAnchor>.</p>
           <h2>6. Cookies</h2>
           <p>We use cookies for analytics purposes. See our <Link href="/cookie-policy">Cookie Policy</Link> for details.</p>
           <h2>7. Contact</h2>
-          <p>For privacy-related queries, contact our Data Protection Officer at <a href="mailto:info@justacoustics.co">info@justacoustics.co</a>.</p>
+          <p>For privacy-related queries, contact our Data Protection Officer at <TrackedAnchor href="mailto:info@justacoustics.co">info@justacoustics.co</TrackedAnchor>.</p>
         </div>
       </section>
     </div>

@@ -8,7 +8,6 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
-import ContactInteractionTracker from '@/components/analytics/ContactInteractionTracker'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -133,7 +132,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <GaPageViewTracker gaId={gaId} />
               </Suspense>
             )}
-            <ContactInteractionTracker />
           </>
         )}
         <div className="min-h-screen overflow-x-clip">

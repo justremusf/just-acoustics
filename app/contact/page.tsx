@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 const consultationSteps = [
   'Submit the form',
@@ -43,15 +44,15 @@ export default function ContactPage() {
             <div className="mt-5 flex flex-col gap-5">
               <div>
                 <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Hotline</p>
-                <a href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</a>
+                <TrackedAnchor href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</TrackedAnchor>
               </div>
               <div>
                 <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">WhatsApp</p>
-                <a href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">Start chat directly</a>
+                <TrackedAnchor href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">Start chat directly</TrackedAnchor>
               </div>
               <div>
                 <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Email</p>
-                <a href="mailto:info@justacoustics.co" className="page-link mt-2">info@justacoustics.co</a>
+                <TrackedAnchor href="mailto:info@justacoustics.co" className="page-link mt-2">info@justacoustics.co</TrackedAnchor>
               </div>
             </div>
           </div>
@@ -84,15 +85,15 @@ export default function ContactPage() {
           <div className="mt-5 flex flex-col gap-5">
             <div>
               <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Hotline</p>
-              <a href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</a>
+              <TrackedAnchor href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</TrackedAnchor>
             </div>
             <div>
               <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">WhatsApp</p>
-              <a href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">Start chat directly</a>
+              <TrackedAnchor href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">Start chat directly</TrackedAnchor>
             </div>
             <div>
               <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Email</p>
-              <a href="mailto:info@justacoustics.co" className="page-link mt-2">info@justacoustics.co</a>
+              <TrackedAnchor href="mailto:info@justacoustics.co" className="page-link mt-2">info@justacoustics.co</TrackedAnchor>
             </div>
           </div>
         </div>

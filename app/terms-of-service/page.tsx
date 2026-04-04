@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -29,7 +30,7 @@ export default function TermsPage() {
           <h2>6. Governing Law</h2>
           <p>These Terms are governed by the laws of Singapore.</p>
           <h2>7. Contact</h2>
-          <p>For queries, email <a href="mailto:info@justacoustics.co">info@justacoustics.co</a>.</p>
+          <p>For queries, email <TrackedAnchor href="mailto:info@justacoustics.co">info@justacoustics.co</TrackedAnchor>.</p>
         </div>
       </section>
     </div>

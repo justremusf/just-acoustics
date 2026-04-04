@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy',
@@ -43,7 +44,7 @@ export default function CookiePolicyPage() {
           <h2>Managing cookies</h2>
           <p>You can control cookies through your browser settings. Disabling analytics cookies will not affect your ability to use this website.</p>
           <h2>Contact</h2>
-          <p>Questions? Email <a href="mailto:info@justacoustics.co">info@justacoustics.co</a>.</p>
+          <p>Questions? Email <TrackedAnchor href="mailto:info@justacoustics.co">info@justacoustics.co</TrackedAnchor>.</p>
         </div>
       </section>
     </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import LeadConversionTracker from '@/components/analytics/LeadConversionTracker'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
 export const metadata: Metadata = {
@@ -54,13 +55,13 @@ export default function ThankYouPage() {
           <div className="mt-5 flex flex-col gap-4 text-sm leading-6 text-[var(--color-gray-100)]">
             <div>
               <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Hotline</p>
-              <a href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</a>
+              <TrackedAnchor href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</TrackedAnchor>
             </div>
             <div>
               <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">WhatsApp</p>
-              <a href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">
+              <TrackedAnchor href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">
                 Start chat directly
-              </a>
+              </TrackedAnchor>
             </div>
             <div>
               <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Explore Projects</p>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 const navGroups = [
   {
@@ -112,7 +113,7 @@ export default function Footer() {
 
                 <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
                   {contactLinks.map((item) => (
-                    <a
+                    <TrackedAnchor
                       key={item.label}
                       href={item.href}
                       target={item.href.startsWith('http') ? '_blank' : undefined}
@@ -133,7 +134,7 @@ export default function Footer() {
                       >
                         {item.value}
                       </p>
-                    </a>
+                    </TrackedAnchor>
                   ))}
                 </div>
 
