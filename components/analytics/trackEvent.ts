@@ -19,24 +19,54 @@ declare global {
   }
 }
 
+function getGaParams(eventName: string, params: object) {
+  if (eventName === 'generate_lead') {
+    return {
+      value: 1,
+      currency: 'SGD',
+      engagement_time_msec: 100,
+      ...params,
+    }
+  }
+
+  if (eventName === 'whatsapp_click') {
+    return {
+      method: 'whatsapp',
+      engagement_time_msec: 100,
+      ...params,
+    }
+  }
+
+  if (eventName === 'phone_click') {
+    return {
+      method: 'phone',
+      engagement_time_msec: 100,
+      ...params,
+    }
+  }
+
+  return params
+}
+
 export function trackEvent(eventName: string, params: object = {}) {
   if (typeof window === 'undefined') return
+  const eventParams = getGaParams(eventName, params)
 
   if (typeof window.gtag === 'function') {
-    window.gtag('event', eventName, params)
+    window.gtag('event', eventName, eventParams)
   }
 
   const adsLabel = googleAdsLabels[eventName as keyof typeof googleAdsLabels]
   if (googleAdsId && adsLabel && typeof window.gtag === 'function') {
     window.gtag('event', 'conversion', {
       send_to: `${googleAdsId}/${adsLabel}`,
-      ...params,
+      ...eventParams,
     })
   }
 
   if (metaPixelId && typeof window.fbq === 'function') {
     if (eventName === 'generate_lead') {
-      window.fbq('track', 'Lead', params)
+      window.fbq('track', 'Lead', eventParams)
       return
     }
 
@@ -45,7 +75,7 @@ export function trackEvent(eventName: string, params: object = {}) {
       eventName === 'phone_click' ||
       eventName === 'email_click'
     ) {
-      window.fbq('track', 'Contact', params)
+      window.fbq('track', 'Contact', eventParams)
     }
   }
 }
