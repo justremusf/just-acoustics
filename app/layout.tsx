@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next'
 import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
+import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -65,6 +66,8 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID
+
   return (
     <html
       lang="en"
@@ -72,14 +75,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}
     >
       <body suppressHydrationWarning className="bg-white">
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', '${gaId}', { send_page_view: false });
+              `}
+            </Script>
+            <GaPageViewTracker gaId={gaId} />
+          </>
+        )}
         <div className="min-h-screen overflow-x-clip">
           <Header />
           <main>{children}</main>
           <Footer />
         </div>
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
         <SpeedInsights />
         <Analytics />
         <WhatsAppButton />
