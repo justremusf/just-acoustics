@@ -79,7 +79,7 @@ export default function FAQ() {
   const [openQuestion, setOpenQuestion] = useState<string | null>(null)
 
   return (
-    <section className="px-4 py-10 md:px-5 md:py-12">
+    <section id="faq" className="px-4 py-10 md:px-5 md:py-12">
       <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.78fr_1fr] md:gap-10">
           <div>

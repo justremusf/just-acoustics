@@ -72,6 +72,59 @@ export default defineType({
       of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
     }),
     defineField({
+      name: 'specifications',
+      title: 'Specifications',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'specification',
+          title: 'Specification',
+          type: 'object',
+          fields: [
+            defineField({ name: 'label', title: 'Label', type: 'string' }),
+            defineField({ name: 'value', title: 'Value', type: 'string' }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'acousticalSpecs',
+      title: 'Acoustical Specs',
+      type: 'object',
+      fields: [
+        defineField({ name: 'title', title: 'Title', type: 'string' }),
+        defineField({ name: 'subtitle', title: 'Subtitle', type: 'string' }),
+        defineField({
+          name: 'rows',
+          title: 'Rows',
+          type: 'array',
+          of: [
+            defineField({
+              name: 'acousticalSpecRow',
+              title: 'Acoustical Spec Row',
+              type: 'object',
+              fields: [
+                defineField({ name: 'thickness', title: 'Thickness', type: 'string' }),
+                defineField({ name: 'hz125', title: '125Hz', type: 'string' }),
+                defineField({ name: 'hz250', title: '250Hz', type: 'string' }),
+                defineField({ name: 'hz500', title: '500Hz', type: 'string' }),
+                defineField({ name: 'hz1000', title: '1kHz', type: 'string' }),
+                defineField({ name: 'hz2000', title: '2kHz', type: 'string' }),
+                defineField({ name: 'hz4000', title: '4kHz', type: 'string' }),
+                defineField({ name: 'nrc', title: 'NRC', type: 'string' }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'installation',
+      title: 'Installation',
+      type: 'array',
+      of: [{ type: 'block' }],
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'object',

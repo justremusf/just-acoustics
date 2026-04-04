@@ -121,6 +121,68 @@ export default defineType({
       description: 'Structured product specs shown under the Specs tab',
     }),
     defineField({
+      name: 'acousticalSpecs',
+      title: 'Acoustical Specs',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Table Title',
+          type: 'string',
+          initialValue: 'Acoustic Performance',
+        }),
+        defineField({
+          name: 'subtitle',
+          title: 'Subtitle',
+          type: 'string',
+          initialValue: 'ASTM C423 - Mounting A as per ASTM E795',
+        }),
+        defineField({
+          name: 'rows',
+          title: 'Rows',
+          type: 'array',
+          of: [
+            defineField({
+              name: 'acousticalSpecRow',
+              title: 'Acoustical Spec Row',
+              type: 'object',
+              fields: [
+                defineField({ name: 'thickness', title: 'Thickness', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'hz125', title: '125Hz', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'hz250', title: '250Hz', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'hz500', title: '500Hz', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'hz1000', title: '1kHz', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'hz2000', title: '2kHz', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'hz4000', title: '4kHz', type: 'string', validation: (r) => r.required() }),
+                defineField({ name: 'nrc', title: 'NRC', type: 'string', validation: (r) => r.required() }),
+              ],
+              preview: {
+                select: {
+                  title: 'thickness',
+                  subtitle: 'nrc',
+                },
+                prepare({ title, subtitle }) {
+                  return {
+                    title: title ? `${title} thickness` : 'Acoustical spec row',
+                    subtitle: subtitle ? `NRC ${subtitle}` : 'No NRC set',
+                  }
+                },
+              },
+            }),
+          ],
+          description: 'Sound absorption values shown under the Acoustical Specs tab',
+        }),
+      ],
+      description: 'Acoustical performance table for frequency absorption values',
+    }),
+    defineField({
+      name: 'installation',
+      title: 'Installation',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Installation notes shown under the Installation tab',
+    }),
+    defineField({
       name: 'body',
       title: 'Full Description',
       type: 'array',

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 const videos = [
@@ -32,7 +32,17 @@ const PLAY_ICON = 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6
 
 export default function HearTheDifference() {
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
   const featuredVideo = videos[0]
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 768px)')
+    const updateViewport = () => setIsDesktop(mediaQuery.matches)
+
+    updateViewport()
+    mediaQuery.addEventListener('change', updateViewport)
+    return () => mediaQuery.removeEventListener('change', updateViewport)
+  }, [])
 
   return (
     <>
@@ -52,7 +62,8 @@ export default function HearTheDifference() {
             </div>
           </div>
 
-          <div className="md:hidden">
+          {!isDesktop && (
+          <div>
             <button
               onClick={() => setActiveId(featuredVideo.videoId)}
               className="group relative w-full overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]"
@@ -134,8 +145,10 @@ export default function HearTheDifference() {
               </Link>
             </div>
           </div>
+          )}
 
-          <div className="relative hidden md:overflow-visible md:rounded-none md:bg-transparent md:block">
+          {isDesktop && (
+          <div className="relative md:overflow-visible md:rounded-none md:bg-transparent">
             <div className="md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
               {videos.map((v, index) => (
                 <button
@@ -216,6 +229,7 @@ export default function HearTheDifference() {
               ))}
             </div>
           </div>
+          )}
         </div>
       </section>
     </>

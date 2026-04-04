@@ -368,7 +368,7 @@ body {
 }
 
 .brand-scroll-inner {
-  animation: scroll-brands 4s linear infinite;
+  animation: scroll-brands 3.2s linear infinite;
   will-change: transform;
 }
 

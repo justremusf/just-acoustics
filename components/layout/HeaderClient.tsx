@@ -101,6 +101,7 @@ const mobileLinks = [
 
 const aboutLinks = [
   { label: 'About Us', href: '/about' },
+  { label: 'FAQ', href: '/#faq' },
   { label: 'Acoustic Education', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ]

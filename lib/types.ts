@@ -10,6 +10,23 @@ export interface KeyValueSpec {
   value: string
 }
 
+export interface AcousticalSpecRow {
+  thickness: string
+  hz125: string
+  hz250: string
+  hz500: string
+  hz1000: string
+  hz2000: string
+  hz4000: string
+  nrc: string
+}
+
+export interface AcousticalSpecsTable {
+  title?: string
+  subtitle?: string
+  rows?: AcousticalSpecRow[]
+}
+
 export interface Post {
   _id: string
   title: string
@@ -32,6 +49,9 @@ export interface Product {
   description?: string
   features?: string[]
   body?: unknown[]
+  specifications?: KeyValueSpec[]
+  acousticalSpecs?: AcousticalSpecsTable
+  installation?: unknown[]
   seo?: { metaTitle?: string; metaDescription?: string }
 }
 
@@ -89,6 +109,8 @@ export interface ShopItem {
   shortDescription?: string
   features?: string[]
   specifications?: KeyValueSpec[]
+  acousticalSpecs?: AcousticalSpecsTable
+  installation?: unknown[]
   body?: unknown[]
   seo?: { metaTitle?: string; metaDescription?: string }
 }

@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PortableText } from '@portabletext/react'
 import { getProductBySlug, getAllProductSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Product } from '@/lib/types'
+import ProductTabContent from './ProductTabContent'
 
 export const revalidate = 60
 
@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <h1 className="page-title">{product.title}</h1>
             {product.description && <p className="page-subtitle">{product.description}</p>}
             <div className="flex flex-wrap gap-3 pt-2">
-              <Link href="/contact" className="page-cta">Contact Us to Buy</Link>
+              <Link href="/contact" className="page-cta">Request a Quote</Link>
             </div>
           </div>
 
@@ -93,13 +93,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {product.body && (
-        <section className="home-shell page-hero-shell">
-          <div className="rich-content max-w-none">
-            <PortableText value={product.body as Parameters<typeof PortableText>[0]['value']} />
-          </div>
-        </section>
-      )}
+      <section className="home-shell page-hero-shell">
+        <ProductTabContent product={product} />
+      </section>
     </div>
   )
 }

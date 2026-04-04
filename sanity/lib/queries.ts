@@ -45,7 +45,24 @@ export async function getAllProducts() {
 export async function getProductBySlug(slug: string) {
   return client.fetch(
     `*[_type == "product" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
-      _id, title, slug, mainImage, gallery, category, description, features, body, seo
+      _id, title, slug, mainImage, gallery, category, description, features,
+      specifications[]{label, value},
+      acousticalSpecs{
+        title,
+        subtitle,
+        rows[]{
+          thickness,
+          hz125,
+          hz250,
+          hz500,
+          hz1000,
+          hz2000,
+          hz4000,
+          nrc
+        }
+      },
+      installation,
+      body, seo
     }`,
     { slug }
   )
@@ -116,6 +133,21 @@ export async function getShopItemBySlug(slug: string) {
     `*[_type == "shopItem" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
       _id, title, slug, mainImage, gallery, category, price, sku, inStock, shortDescription, features,
       specifications[]{label, value},
+      acousticalSpecs{
+        title,
+        subtitle,
+        rows[]{
+          thickness,
+          hz125,
+          hz250,
+          hz500,
+          hz1000,
+          hz2000,
+          hz4000,
+          nrc
+        }
+      },
+      installation,
       body, seo
     }`,
     { slug }

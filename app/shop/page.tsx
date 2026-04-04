@@ -79,7 +79,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
                 {item.category && <p className="page-kicker">{CATEGORY_LABELS[item.category] || item.category}</p>}
                 <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{item.title}</h2>
                 {item.price != null && <p className="page-card-copy">S${item.price.toLocaleString()}</p>}
-                <span className="page-link mt-1">Buy now <span aria-hidden="true">→</span></span>
+                <span className="page-link mt-1">Request a Quote <span aria-hidden="true">→</span></span>
               </div>
             </Link>
           ))}

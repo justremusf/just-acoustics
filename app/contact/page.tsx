@@ -19,12 +19,17 @@ export default function ContactPage() {
 
       <section className="home-shell page-hero-shell flex flex-col gap-5 text-center">
         <span className="soft-pill mx-auto">Contact</span>
-        <h1 className="page-title">Book your free acoustic consultation.</h1>
+        <h1
+          className="page-title sm:text-[clamp(36px,6vw,64px)]"
+          style={{ fontSize: '30px' }}
+        >
+          Book your free acoustic consultation
+        </h1>
       </section>
 
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-stretch">
         <aside className="flex flex-col gap-6 lg:sticky lg:top-24 lg:self-start">
-          <div className="glass-card p-6">
+          <div className="hidden glass-card p-6 lg:block">
             <span className="soft-pill">What To Expect</span>
             <ol className="mt-5 flex list-decimal flex-col gap-4 pl-5 text-sm leading-6 text-[var(--color-gray-100)]">
               {consultationSteps.map((step) => (
@@ -63,6 +68,15 @@ export default function ContactPage() {
             className="min-h-0 lg:h-full"
             style={{ overflow: 'hidden', display: 'block' }}
           />
+        </div>
+
+        <div className="glass-card p-6 lg:hidden">
+          <span className="soft-pill">What To Expect</span>
+          <ol className="mt-5 flex list-decimal flex-col gap-4 pl-5 text-sm leading-6 text-[var(--color-gray-100)]">
+            {consultationSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
         </div>
 
         <div className="glass-card p-6 lg:hidden">
