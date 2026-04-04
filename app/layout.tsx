@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -90,7 +91,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 gtag('config', '${gaId}', { send_page_view: false });
               `}
             </Script>
-            <GaPageViewTracker gaId={gaId} />
+            <Suspense fallback={null}>
+              <GaPageViewTracker gaId={gaId} />
+            </Suspense>
           </>
         )}
         <div className="min-h-screen overflow-x-clip">
