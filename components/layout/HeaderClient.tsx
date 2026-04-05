@@ -256,20 +256,35 @@ export default function HeaderClient({
 }: HeaderClientProps) {
   const pathname = usePathname()
   const isHomePage = pathname === '/'
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [mobileVisible, setMobileVisible] = useState(false)
+  const [mobileMenuMounted, setMobileMenuMounted] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileMenu, setMobileMenu] = useState<MenuKey | null>(null)
   const [openMenu, setOpenMenu] = useState<MenuKey | null>(null)
   const [renderedMenu, setRenderedMenu] = useState<MenuKey | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const [mobileHeaderProgress, setMobileHeaderProgress] = useState(0)
   const closeTimerRef = useRef<number | null>(null)
+  const mobileCloseTimerRef = useRef<number | null>(null)
 
-  const openMobile = () => setMobileOpen(true)
+  const openMobile = () => {
+    if (mobileCloseTimerRef.current !== null) {
+      window.clearTimeout(mobileCloseTimerRef.current)
+      mobileCloseTimerRef.current = null
+    }
+    setMobileMenuMounted(true)
+    requestAnimationFrame(() => setMobileMenuOpen(true))
+  }
+
   const closeMobile = () => {
-    setMobileVisible(false)
+    setMobileMenuOpen(false)
     setMobileMenu(null)
-    window.setTimeout(() => setMobileOpen(false), 420)
+    if (mobileCloseTimerRef.current !== null) {
+      window.clearTimeout(mobileCloseTimerRef.current)
+    }
+    mobileCloseTimerRef.current = window.setTimeout(() => {
+      setMobileMenuMounted(false)
+      mobileCloseTimerRef.current = null
+    }, 320)
   }
 
   function clearDesktopCloseTimer() {
@@ -314,19 +329,14 @@ export default function HeaderClient({
   }, [])
 
   useEffect(() => {
-    if (!mobileOpen) return
-    requestAnimationFrame(() => setMobileVisible(true))
-  }, [mobileOpen])
-
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    document.body.style.overflow = mobileMenuMounted ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
     }
-  }, [mobileOpen])
+  }, [mobileMenuMounted])
 
   useEffect(() => {
-    if (!mobileOpen) return
+    if (!mobileMenuMounted) return
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') closeMobile()
@@ -334,11 +344,14 @@ export default function HeaderClient({
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [mobileOpen])
+  }, [mobileMenuMounted])
 
   useEffect(() => {
     return () => {
       clearDesktopCloseTimer()
+      if (mobileCloseTimerRef.current !== null) {
+        window.clearTimeout(mobileCloseTimerRef.current)
+      }
     }
   }, [])
 
@@ -437,84 +450,89 @@ export default function HeaderClient({
   )
 
   const activeMenuData = renderedMenu ? megaMenus[renderedMenu] : null
-  const mobileHeaderIntensity = isHomePage ? mobileHeaderProgress : 1
-  const mobileHeaderInnerWidth = `${100 - (1 - mobileHeaderIntensity) * 12}%`
-  const mobileHeaderShift = `${(1 - mobileHeaderIntensity) * 8}px`
-  const mobileHeaderBgOpacity = mobileHeaderIntensity * 0.66
-  const mobileHeaderBorderOpacity = mobileHeaderIntensity * 0.3
-  const mobileHeaderShadowOpacity = mobileHeaderIntensity * 0.08
-  const mobileHeaderBlur = mobileHeaderIntensity * 24
-  const mobileLogoFilter =
-    !isHomePage || mobileHeaderIntensity >= 0.55
-      ? 'brightness(0) saturate(1) opacity(1)'
-      : `brightness(0) invert(1) opacity(${0.94 - mobileHeaderIntensity * 0.16})`
-  const mobileBurgerStroke =
-    !isHomePage || mobileHeaderIntensity >= 0.55
-      ? 'rgba(74,74,74,1)'
-      : `rgba(255,255,255,${0.94 - mobileHeaderIntensity * 0.22})`
-  const mobileBurgerBg =
-    !isHomePage || mobileHeaderIntensity >= 0.55
-      ? 'rgba(255,255,255,0.9)'
-      : `rgba(20,20,20,${0.84 - mobileHeaderIntensity * 0.2})`
+  const isHeroOverlay = isHomePage && mobileHeaderProgress < 0.55 && !mobileMenuMounted
+  const mobileHeaderIsSolid = !isHeroOverlay
+  const mobileHeaderDisplayIntensity = isHeroOverlay ? mobileHeaderProgress : 1
+  const mobileHeaderInnerWidth = `${100 - (1 - mobileHeaderDisplayIntensity) * 12}%`
+  const mobileHeaderShift = `${(1 - mobileHeaderDisplayIntensity) * 8}px`
+  const mobileLogoFilter = mobileHeaderIsSolid ? 'brightness(0) saturate(1) opacity(1)' : 'brightness(0) invert(1)'
+  const mobileBurgerStroke = 'rgba(74,74,74,1)'
+  const mobileBurgerBg = 'rgba(255,255,255,0.92)'
+  const mobileHeaderBorderColor = mobileHeaderIsSolid ? 'rgba(255,255,255,0.28)' : 'transparent'
+  const mobileHeaderBackground = mobileHeaderIsSolid
+    ? 'linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,246,241,0.78))'
+    : 'transparent'
+  const mobileHeaderShadow = mobileHeaderIsSolid
+    ? '0 14px 36px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.3)'
+    : 'none'
+  const mobileHeaderBackdrop = mobileHeaderIsSolid ? 'blur(22px)' : 'blur(0px)'
 
-  function renderMobileToggle(open: boolean, onClick: () => void, ariaLabel: string) {
+  function renderMobileToggle(
+    open: boolean,
+    onClick: () => void,
+    ariaLabel: string,
+    options?: {
+      forceSolid?: boolean
+      shiftOverride?: string
+    }
+  ) {
+    const useSolidStyle = options?.forceSolid ?? mobileHeaderIsSolid
+    const buttonShift = options?.shiftOverride ?? mobileHeaderShift
+    const buttonStroke = useSolidStyle ? 'rgba(74,74,74,1)' : 'rgba(255,255,255,0.95)'
+    const buttonBg = useSolidStyle ? 'rgba(255,255,255,0.92)' : 'rgba(20,20,20,0.84)'
+    const buttonBorder = useSolidStyle ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.1)'
+
     return (
       <button
         className={`burger-btn flex h-11 w-11 items-center justify-center rounded-[14px] border p-0 shadow-[0_10px_24px_rgba(0,0,0,0.08)] backdrop-blur-md ${open ? 'is-open' : ''}`}
         onClick={onClick}
         aria-label={ariaLabel}
         style={{
-          borderColor: `rgba(255,255,255,${0.08 + mobileHeaderIntensity * 0.12})`,
-          background: mobileBurgerBg,
-          transform: `translateX(${mobileHeaderShift})`,
-          transition: 'background 280ms ease, transform 320ms cubic-bezier(0.22,1,0.36,1)',
+          borderColor: buttonBorder,
+          background: buttonBg,
+          transform: `translateX(${buttonShift})`,
+          transition: 'background 280ms ease, border-color 280ms ease, transform 320ms cubic-bezier(0.22,1,0.36,1)',
         }}
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ display: 'block' }}>
-          <line
-            x1="3"
-            y1="5"
-            x2="21"
-            y2="5"
-            stroke={mobileBurgerStroke}
-            strokeWidth="2"
-            strokeLinecap="round"
+        <span
+          aria-hidden="true"
+          className="relative block h-[18px] w-[20px]"
+          style={{ pointerEvents: 'none' }}
+        >
+          <span
+            className="absolute left-1/2 top-0 block h-[2px] w-[20px] rounded-full"
             style={{
-              transformOrigin: '12px 12px',
-              transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
-              transform: open ? 'translateY(7px) rotate(45deg)' : 'translateY(0)',
+              background: buttonStroke,
+              transformOrigin: 'center',
+              transform: open
+                ? 'translateX(-50%) translateY(8px) rotate(45deg)'
+                : 'translateX(-50%) translateY(0) rotate(0deg)',
+              transition: 'transform 0.42s cubic-bezier(0.22,1,0.36,1), background 280ms ease',
             }}
           />
-          <line
-            x1="3"
-            y1="12"
-            x2="21"
-            y2="12"
-            stroke={mobileBurgerStroke}
-            strokeWidth="2"
-            strokeLinecap="round"
+          <span
+            className="absolute left-1/2 top-1/2 block h-[2px] w-[20px] rounded-full"
             style={{
-              transformOrigin: '12px 12px',
-              transition: 'opacity 0.28s ease, transform 0.32s cubic-bezier(0.22,1,0.36,1)',
+              background: buttonStroke,
+              transformOrigin: 'center',
+              transform: open ? 'translateX(-50%) translateY(-50%) scaleX(0.7)' : 'translateX(-50%) translateY(-50%)',
               opacity: open ? 0 : 1,
-              transform: open ? 'scaleX(0.65)' : 'scaleX(1)',
+              transition:
+                'opacity 0.2s ease, transform 0.28s cubic-bezier(0.22,1,0.36,1), background 280ms ease',
             }}
           />
-          <line
-            x1="3"
-            y1="19"
-            x2="21"
-            y2="19"
-            stroke={mobileBurgerStroke}
-            strokeWidth="2"
-            strokeLinecap="round"
+          <span
+            className="absolute bottom-0 left-1/2 block h-[2px] w-[20px] rounded-full"
             style={{
-              transformOrigin: '12px 12px',
-              transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
-              transform: open ? 'translateY(-7px) rotate(-45deg)' : 'translateY(0)',
+              background: buttonStroke,
+              transformOrigin: 'center',
+              transform: open
+                ? 'translateX(-50%) translateY(-8px) rotate(-45deg)'
+                : 'translateX(-50%) translateY(0) rotate(0deg)',
+              transition: 'transform 0.42s cubic-bezier(0.22,1,0.36,1), background 280ms ease',
             }}
           />
-        </svg>
+        </span>
       </button>
     )
   }
@@ -522,20 +540,14 @@ export default function HeaderClient({
   return (
     <header className="sticky top-0 z-50 px-0 pt-0 lg:px-4 lg:pt-[24px]">
       <style>{`
-        .burger-btn line {
-          transition-property: transform, opacity;
-        }
-        .burger-btn:hover line {
-          stroke: #1a1a1a;
-        }
         .burger-btn {
-          transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+          transition:
+            box-shadow 220ms cubic-bezier(0.22,1,0.36,1),
+            background-color 220ms cubic-bezier(0.22,1,0.36,1),
+            border-color 220ms cubic-bezier(0.22,1,0.36,1);
         }
         .burger-btn:hover {
-          transform: scale(1.08);
-        }
-        .burger-btn:active {
-          transform: scale(0.94);
+          box-shadow: 0 14px 28px rgba(0,0,0,0.12);
         }
         .header-nav-link,
         .header-nav-trigger {
@@ -811,18 +823,20 @@ export default function HeaderClient({
         <div
           className="mx-auto flex w-full items-center justify-center border-b px-4 pt-5 pb-3 transition-all duration-300 sm:px-5"
           style={{
-            borderBottomColor: `rgba(255,255,255,${mobileHeaderIntensity * 0.28})`,
-            background: `linear-gradient(180deg, rgba(255,255,255,${mobileHeaderBgOpacity}), rgba(248,246,241,${mobileHeaderBgOpacity * 0.84}))`,
-            boxShadow: `0 14px 36px rgba(0,0,0,${mobileHeaderShadowOpacity}), inset 0 1px 0 rgba(255,255,255,${mobileHeaderBorderOpacity})`,
-            backdropFilter: `blur(${mobileHeaderBlur}px)`,
-            WebkitBackdropFilter: `blur(${mobileHeaderBlur}px)`,
+            opacity: mobileMenuMounted ? 0 : 1,
+            pointerEvents: mobileMenuMounted ? 'none' : 'auto',
+            borderBottomColor: mobileHeaderBorderColor,
+            background: mobileHeaderBackground,
+            boxShadow: mobileHeaderShadow,
+            backdropFilter: mobileHeaderBackdrop,
+            WebkitBackdropFilter: mobileHeaderBackdrop,
           }}
         >
           <div
             className="flex w-full items-center justify-between transition-all duration-300"
             style={{
               width: mobileHeaderInnerWidth,
-              transform: `translateY(${(1 - mobileHeaderProgress) * 2}px)`,
+              transform: `translateY(${isHeroOverlay ? 2 : 0}px)`,
             }}
           >
           <Link href="/" className="header-logo-link block">
@@ -843,19 +857,19 @@ export default function HeaderClient({
           </Link>
 
           {renderMobileToggle(
-            mobileVisible,
-            mobileOpen ? closeMobile : openMobile,
-            mobileOpen ? 'Close menu' : 'Open menu'
+            mobileMenuOpen,
+            mobileMenuMounted ? closeMobile : openMobile,
+            mobileMenuMounted ? 'Close menu' : 'Open menu'
           )}
           </div>
         </div>
       </div>
 
-      {mobileOpen && (
+      {mobileMenuMounted && (
         <div
-          className="fixed inset-x-0 bottom-0 top-[72px] z-40 overflow-y-auto bg-[rgba(244,241,235,0.7)] px-0 pb-6 backdrop-blur-[22px] sm:top-[80px]"
+          className="fixed inset-0 z-40 overflow-y-auto bg-[rgba(244,241,235,0.72)] px-0 pt-0 pb-6 backdrop-blur-[22px]"
           style={{
-            opacity: mobileVisible ? 1 : 0,
+            opacity: mobileMenuOpen ? 1 : 0,
             transition: 'opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
           onClick={closeMobile}
@@ -863,12 +877,46 @@ export default function HeaderClient({
           <div
             className="mx-auto flex w-full max-w-[1280px] flex-col"
             style={{
-              opacity: mobileVisible ? 1 : 0,
-              transition: 'opacity 0.32s cubic-bezier(0.22,1,0.36,1) 0.03s',
+              opacity: mobileMenuOpen ? 1 : 0,
+              transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(-6px)',
+              transition:
+                'opacity 0.32s cubic-bezier(0.22,1,0.36,1) 0.03s, transform 0.36s cubic-bezier(0.22,1,0.36,1)',
             }}
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="mx-4 mt-5 rounded-[30px] border border-white/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(246,243,237,0.94))] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.12),0_1px_0_rgba(255,255,255,0.84)_inset] sm:mx-5 sm:mt-6 sm:p-5">
+            <div className="relative mx-auto w-full max-w-[1280px] px-0 lg:hidden">
+              <div
+                className="mx-auto flex w-full items-center justify-center border-b px-4 pt-5 pb-3 transition-all duration-300 sm:px-5"
+                style={{
+                  borderBottomColor: 'rgba(255,255,255,0.28)',
+                  background: 'linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,246,241,0.78))',
+                  boxShadow: '0 14px 36px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.3)',
+                  backdropFilter: 'blur(22px)',
+                  WebkitBackdropFilter: 'blur(22px)',
+                }}
+              >
+                <div className="flex w-full items-center justify-between transition-all duration-300">
+                  <Link href="/" className="header-logo-link block" onClick={closeMobile}>
+                    <Image
+                      src={LOGO_SRC}
+                      alt="Just Acoustics"
+                      width={180}
+                      height={40}
+                      className="w-[124px] sm:w-[138px]"
+                      style={{ height: 'auto', filter: 'brightness(0) saturate(1) opacity(1)' }}
+                      priority
+                    />
+                  </Link>
+
+                  {renderMobileToggle(true, closeMobile, 'Close menu', {
+                    forceSolid: true,
+                    shiftOverride: '0px',
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="mx-4 mt-8 rounded-[30px] border border-white/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(246,243,237,0.94))] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.12),0_1px_0_rgba(255,255,255,0.84)_inset] sm:mx-5 sm:mt-10 sm:p-5">
               <div className="flex flex-col gap-3">
                 {desktopNav.map((link) => {
                   const isOpen = mobileMenu === link.key
