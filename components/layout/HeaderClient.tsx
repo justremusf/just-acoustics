@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
 type MenuKey = 'shop' | 'solutions' | 'applications' | 'projects' | 'about'
@@ -86,17 +87,6 @@ const desktopNav = [
   { key: 'projects' as const, label: 'Projects', href: '/projects' },
   { key: 'shop' as const, label: 'Shop', href: '/shop' },
   { key: 'about' as const, label: 'About', href: '/about' },
-]
-
-const mobileLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Applications', href: '/services' },
-  { label: 'Solutions', href: '/products' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Shop', href: '/shop' },
-  { label: 'About', href: '/about' },
-  { label: 'Acoustic Education', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
 ]
 
 const aboutLinks = [
@@ -223,7 +213,6 @@ function buildProjectSections(projectCategories: string[]) {
     .map(([value, label]) => ({
       label,
       href: `/projects?category=${encodeURIComponent(value)}`,
-      meta: `${counts[value]} ${counts[value] === 1 ? 'project' : 'projects'}`,
     }))
 
   const projectLinks =
@@ -265,16 +254,21 @@ export default function HeaderClient({
   services,
   projectCategories,
 }: HeaderClientProps) {
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileVisible, setMobileVisible] = useState(false)
+  const [mobileMenu, setMobileMenu] = useState<MenuKey | null>(null)
   const [openMenu, setOpenMenu] = useState<MenuKey | null>(null)
   const [renderedMenu, setRenderedMenu] = useState<MenuKey | null>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [mobileHeaderProgress, setMobileHeaderProgress] = useState(0)
   const closeTimerRef = useRef<number | null>(null)
 
   const openMobile = () => setMobileOpen(true)
   const closeMobile = () => {
     setMobileVisible(false)
+    setMobileMenu(null)
     window.setTimeout(() => setMobileOpen(false), 420)
   }
 
@@ -308,7 +302,9 @@ export default function HeaderClient({
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 20)
+      const scrollY = window.scrollY
+      setScrolled(scrollY > 20)
+      setMobileHeaderProgress(Math.min(Math.max(scrollY / 96, 0), 1))
       if (window.scrollY > 24) closeDesktopMenuImmediate()
     }
 
@@ -327,6 +323,17 @@ export default function HeaderClient({
     return () => {
       document.body.style.overflow = ''
     }
+  }, [mobileOpen])
+
+  useEffect(() => {
+    if (!mobileOpen) return
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeMobile()
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
   }, [mobileOpen])
 
   useEffect(() => {
@@ -430,9 +437,90 @@ export default function HeaderClient({
   )
 
   const activeMenuData = renderedMenu ? megaMenus[renderedMenu] : null
+  const mobileHeaderIntensity = isHomePage ? mobileHeaderProgress : 1
+  const mobileHeaderInnerWidth = `${100 - (1 - mobileHeaderIntensity) * 12}%`
+  const mobileHeaderShift = `${(1 - mobileHeaderIntensity) * 8}px`
+  const mobileHeaderBgOpacity = mobileHeaderIntensity * 0.66
+  const mobileHeaderBorderOpacity = mobileHeaderIntensity * 0.3
+  const mobileHeaderShadowOpacity = mobileHeaderIntensity * 0.08
+  const mobileHeaderBlur = mobileHeaderIntensity * 24
+  const mobileLogoFilter =
+    !isHomePage || mobileHeaderIntensity >= 0.55
+      ? 'brightness(0) saturate(1) opacity(1)'
+      : `brightness(0) invert(1) opacity(${0.94 - mobileHeaderIntensity * 0.16})`
+  const mobileBurgerStroke =
+    !isHomePage || mobileHeaderIntensity >= 0.55
+      ? 'rgba(74,74,74,1)'
+      : `rgba(255,255,255,${0.94 - mobileHeaderIntensity * 0.22})`
+  const mobileBurgerBg =
+    !isHomePage || mobileHeaderIntensity >= 0.55
+      ? 'rgba(255,255,255,0.9)'
+      : `rgba(20,20,20,${0.84 - mobileHeaderIntensity * 0.2})`
+
+  function renderMobileToggle(open: boolean, onClick: () => void, ariaLabel: string) {
+    return (
+      <button
+        className={`burger-btn flex h-11 w-11 items-center justify-center rounded-[14px] border p-0 shadow-[0_10px_24px_rgba(0,0,0,0.08)] backdrop-blur-md ${open ? 'is-open' : ''}`}
+        onClick={onClick}
+        aria-label={ariaLabel}
+        style={{
+          borderColor: `rgba(255,255,255,${0.08 + mobileHeaderIntensity * 0.12})`,
+          background: mobileBurgerBg,
+          transform: `translateX(${mobileHeaderShift})`,
+          transition: 'background 280ms ease, transform 320ms cubic-bezier(0.22,1,0.36,1)',
+        }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ display: 'block' }}>
+          <line
+            x1="3"
+            y1="5"
+            x2="21"
+            y2="5"
+            stroke={mobileBurgerStroke}
+            strokeWidth="2"
+            strokeLinecap="round"
+            style={{
+              transformOrigin: '12px 12px',
+              transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
+              transform: open ? 'translateY(7px) rotate(45deg)' : 'translateY(0)',
+            }}
+          />
+          <line
+            x1="3"
+            y1="12"
+            x2="21"
+            y2="12"
+            stroke={mobileBurgerStroke}
+            strokeWidth="2"
+            strokeLinecap="round"
+            style={{
+              transformOrigin: '12px 12px',
+              transition: 'opacity 0.28s ease, transform 0.32s cubic-bezier(0.22,1,0.36,1)',
+              opacity: open ? 0 : 1,
+              transform: open ? 'scaleX(0.65)' : 'scaleX(1)',
+            }}
+          />
+          <line
+            x1="3"
+            y1="19"
+            x2="21"
+            y2="19"
+            stroke={mobileBurgerStroke}
+            strokeWidth="2"
+            strokeLinecap="round"
+            style={{
+              transformOrigin: '12px 12px',
+              transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
+              transform: open ? 'translateY(-7px) rotate(-45deg)' : 'translateY(0)',
+            }}
+          />
+        </svg>
+      </button>
+    )
+  }
 
   return (
-    <header className="sticky top-0 z-50 px-5 pt-[24px] sm:px-5 sm:pt-[24px] lg:px-4">
+    <header className="sticky top-0 z-50 px-0 pt-0 lg:px-4 lg:pt-[24px]">
       <style>{`
         .burger-btn line {
           transition-property: transform, opacity;
@@ -485,6 +573,17 @@ export default function HeaderClient({
           color: white;
           letter-spacing: 0.018em;
           transform: translateY(-1px);
+        }
+        .header-mobile-pill {
+          transition:
+            border-color 300ms cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+            background-color 300ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .header-mobile-pill:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 18px 36px rgba(0,0,0,0.08), 0 1px 0 rgba(255,255,255,0.84) inset;
         }
         .header-logo-link {
           transition:
@@ -710,12 +809,22 @@ export default function HeaderClient({
 
       <div className="relative mx-auto w-full max-w-[1280px] px-0 lg:hidden">
         <div
-          className={`flex w-full items-center justify-between rounded-[28px] border py-2 pl-4 pr-2 transition-all duration-300 sm:rounded-[40px] sm:pl-7 ${
-            scrolled
-              ? 'border-black/6 bg-white/96 shadow-[0_18px_50px_rgba(0,0,0,0.12)] backdrop-blur-xl'
-              : 'border-white/60 bg-white/88 shadow-[0_8px_32px_rgba(0,0,0,0.10),0_2px_8px_rgba(0,0,0,0.06),0_0_0_1px_rgba(255,255,255,0.8)_inset] backdrop-blur-md'
-          }`}
+          className="mx-auto flex w-full items-center justify-center border-b px-4 pt-5 pb-3 transition-all duration-300 sm:px-5"
+          style={{
+            borderBottomColor: `rgba(255,255,255,${mobileHeaderIntensity * 0.28})`,
+            background: `linear-gradient(180deg, rgba(255,255,255,${mobileHeaderBgOpacity}), rgba(248,246,241,${mobileHeaderBgOpacity * 0.84}))`,
+            boxShadow: `0 14px 36px rgba(0,0,0,${mobileHeaderShadowOpacity}), inset 0 1px 0 rgba(255,255,255,${mobileHeaderBorderOpacity})`,
+            backdropFilter: `blur(${mobileHeaderBlur}px)`,
+            WebkitBackdropFilter: `blur(${mobileHeaderBlur}px)`,
+          }}
         >
+          <div
+            className="flex w-full items-center justify-between transition-all duration-300"
+            style={{
+              width: mobileHeaderInnerWidth,
+              transform: `translateY(${(1 - mobileHeaderProgress) * 2}px)`,
+            }}
+          >
           <Link href="/" className="header-logo-link block">
             <Image
               src={LOGO_SRC}
@@ -723,143 +832,161 @@ export default function HeaderClient({
               width={180}
               height={40}
               className="w-[124px] sm:w-[138px]"
-              style={{ height: 'auto' }}
+              style={{
+                height: 'auto',
+                filter: mobileLogoFilter,
+                transform: `translateX(-${mobileHeaderShift})`,
+                transition: 'filter 280ms ease, transform 320ms cubic-bezier(0.22,1,0.36,1)',
+              }}
               priority
             />
           </Link>
 
-          <button
-            className={`burger-btn rounded-full p-2 ${mobileOpen ? 'is-open' : ''}`}
-            onClick={mobileOpen ? closeMobile : openMobile}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ display: 'block' }}>
-              <line
-                x1="3"
-                y1="5"
-                x2="21"
-                y2="5"
-                stroke="#4a4a4a"
-                strokeWidth="2"
-                strokeLinecap="round"
-                style={{
-                  transformOrigin: '12px 12px',
-                  transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
-                  transform: mobileOpen ? 'translateY(7px) rotate(45deg)' : 'translateY(0)',
-                }}
-              />
-              <line
-                x1="3"
-                y1="12"
-                x2="21"
-                y2="12"
-                stroke="#4a4a4a"
-                strokeWidth="2"
-                strokeLinecap="round"
-                style={{
-                  transformOrigin: '12px 12px',
-                  transition: 'opacity 0.28s ease, transform 0.32s cubic-bezier(0.22,1,0.36,1)',
-                  opacity: mobileOpen ? 0 : 1,
-                  transform: mobileOpen ? 'scaleX(0.65)' : 'scaleX(1)',
-                }}
-              />
-              <line
-                x1="3"
-                y1="19"
-                x2="21"
-                y2="19"
-                stroke="#4a4a4a"
-                strokeWidth="2"
-                strokeLinecap="round"
-                style={{
-                  transformOrigin: '12px 12px',
-                  transition: 'transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease',
-                  transform: mobileOpen ? 'translateY(-7px) rotate(-45deg)' : 'translateY(0)',
-                }}
-              />
-            </svg>
-          </button>
+          {renderMobileToggle(
+            mobileVisible,
+            mobileOpen ? closeMobile : openMobile,
+            mobileOpen ? 'Close menu' : 'Open menu'
+          )}
+          </div>
         </div>
       </div>
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[var(--color-dark-100)] px-5 pt-6 pb-6 sm:px-6 sm:pt-8"
+          className="fixed inset-x-0 bottom-0 top-[72px] z-40 overflow-y-auto bg-[rgba(244,241,235,0.7)] px-0 pb-6 backdrop-blur-[22px] sm:top-[80px]"
           style={{
             opacity: mobileVisible ? 1 : 0,
             transition: 'opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
+          onClick={closeMobile}
         >
           <div
-            className="flex items-center justify-between"
+            className="mx-auto flex w-full max-w-[1280px] flex-col"
             style={{
               opacity: mobileVisible ? 1 : 0,
-              transform: mobileVisible ? 'translateY(0)' : 'translateY(-4px)',
-              transition:
-                'opacity 0.46s cubic-bezier(0.22,1,0.36,1) 0.03s, transform 0.46s cubic-bezier(0.22,1,0.36,1) 0.03s',
+              transition: 'opacity 0.32s cubic-bezier(0.22,1,0.36,1) 0.03s',
             }}
+            onClick={(event) => event.stopPropagation()}
           >
-            <Link href="/" onClick={closeMobile} className="block">
-              <Image
-                src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696374f75670859d95904082_Just%20Acoustics%201600x900.svg"
-                alt="Just Acoustics"
-                width={146}
-                height={32}
-                className="w-[128px] sm:w-[146px]"
-                style={{ filter: 'invert(1)' }}
-              />
-            </Link>
-            <button
-              onClick={closeMobile}
-              aria-label="Close menu"
-              className="cursor-pointer border-0 bg-transparent p-1 text-white transition-all duration-200 hover:opacity-60 active:scale-90"
-            >
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M26 6L6 26M6 6l20 20" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-              </svg>
-            </button>
-          </div>
+            <div className="mx-4 mt-5 rounded-[30px] border border-white/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(246,243,237,0.94))] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.12),0_1px_0_rgba(255,255,255,0.84)_inset] sm:mx-5 sm:mt-6 sm:p-5">
+              <div className="flex flex-col gap-3">
+                {desktopNav.map((link) => {
+                  const isOpen = mobileMenu === link.key
+                  const menuData = megaMenus[link.key]
 
-          <ul className="list-none px-0 pt-12 pb-8 text-center sm:pt-14 sm:pb-9">
-            {mobileLinks.map((link, index) => (
-              <li
-                key={link.href}
-                className="mb-3"
-                style={{
-                  opacity: mobileVisible ? 1 : 0,
-                  transform: mobileVisible ? 'translateY(0)' : 'translateY(10px)',
-                  transition: `opacity 0.46s cubic-bezier(0.22,1,0.36,1) ${
-                    0.09 + index * 0.035
-                  }s, transform 0.46s cubic-bezier(0.22,1,0.36,1) ${0.09 + index * 0.035}s`,
-                }}
-              >
-                <Link
-                  href={link.href}
-                  onClick={closeMobile}
-                  className="header-mobile-link block py-2 text-[24px] leading-[1.04] text-[var(--color-gray-300)] no-underline sm:text-[30px] md:text-[38px]"
-                  style={{ fontFamily: 'var(--font-heading)', fontWeight: 500 }}
-                >
-                  {link.label}
+                  return (
+                    <div key={link.key}>
+                      <button
+                        type="button"
+                        onClick={() => setMobileMenu(isOpen ? null : link.key)}
+                        aria-expanded={isOpen}
+                        className={`header-mobile-pill flex w-full items-center justify-between gap-4 rounded-[22px] border px-5 py-4 text-left ${
+                          isOpen
+                            ? 'border-[rgba(255,165,0,0.6)] bg-white shadow-[0_18px_36px_rgba(255,165,0,0.08)]'
+                            : 'border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(249,247,243,0.94))] shadow-[0_12px_28px_rgba(0,0,0,0.06),0_1px_0_rgba(255,255,255,0.82)_inset]'
+                        }`}
+                      >
+                        <span
+                          className="text-[18px] text-[var(--color-dark-100)]"
+                          style={{ fontFamily: 'var(--font-heading)', fontWeight: 500 }}
+                        >
+                          {link.label}
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          className="shrink-0 text-[28px] leading-none text-[var(--color-gray-200)]"
+                          style={{
+                            transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+                            transition: 'transform 280ms cubic-bezier(0.22,1,0.36,1)',
+                          }}
+                        >
+                          +
+                        </span>
+                      </button>
+
+                      <div
+                        className={`grid transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isOpen ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0 mt-0'
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="rounded-[24px] border border-white/70 bg-white/92 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.08)] sm:p-5">
+                            <div className="flex flex-col gap-5">
+                              {menuData.sections.map((section, index) => (
+                                <div key={`${menuData.key}-${section.title ?? index}`} className="min-w-0">
+                                  {section.title && (
+                                    <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-gray-200)]">
+                                      {section.title}
+                                    </p>
+                                  )}
+                                  <div className={`${section.title ? 'mt-3' : ''} flex flex-col gap-2`}>
+                                    {section.links.map((item) => (
+                                      <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={closeMobile}
+                                        className="group flex items-center justify-between gap-4 rounded-[18px] border border-black/5 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(248,246,241,0.92))] px-4 py-3 text-[14px] font-medium text-[var(--color-dark-100)] no-underline shadow-[0_10px_24px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.8)_inset]"
+                                      >
+                                        <span className="min-w-0">{item.label}</span>
+                                        {item.meta ? (
+                                          <span className="shrink-0 text-[12px] font-medium text-[var(--color-gray-200)]">
+                                            {item.meta}
+                                          </span>
+                                        ) : (
+                                          <span className="shrink-0 text-[var(--color-gray-300)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-[var(--color-brand-orange)]">
+                                            →
+                                          </span>
+                                        )}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+
+                              <div className="rounded-[22px] border border-[rgba(255,165,0,0.18)] bg-[linear-gradient(180deg,rgba(255,184,66,0.16),rgba(255,255,255,0.96))] p-4 shadow-[0_16px_36px_rgba(255,165,0,0.1)]">
+                                <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[rgba(180,106,0,0.88)]">
+                                  {menuData.panel.eyebrow}
+                                </p>
+                                <h3
+                                  className="mt-3 mb-0 text-[var(--color-dark-100)]"
+                                  style={{
+                                    fontFamily: 'var(--font-heading)',
+                                    fontSize: '24px',
+                                    lineHeight: '1.04',
+                                    fontWeight: 500,
+                                    letterSpacing: '-0.04em',
+                                  }}
+                                >
+                                  {menuData.panel.title}
+                                </h3>
+                                <p className="mt-3 mb-0 text-[14px] leading-6 text-[var(--color-gray-100)]">
+                                  {menuData.panel.body}
+                                </p>
+                                <Link
+                                  href={menuData.panel.ctaHref}
+                                  onClick={closeMobile}
+                                  className="mt-5 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[100px] bg-[var(--color-dark-100)] px-5 py-3 text-sm font-semibold text-white no-underline shadow-[0_16px_30px_rgba(0,0,0,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-black/88"
+                                >
+                                  {menuData.panel.ctaLabel}
+                                  <span aria-hidden="true">→</span>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="mt-5">
+                <Link href="/contact" onClick={closeMobile} className="block no-underline">
+                  <ShimmerButton className="h-auto w-full px-8 py-4 text-base">
+                    Free Consultation
+                  </ShimmerButton>
                 </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div
-            className="pb-8 sm:pb-9"
-            style={{
-              opacity: mobileVisible ? 1 : 0,
-              transform: mobileVisible ? 'translateY(0)' : 'translateY(10px)',
-              transition: `opacity 0.46s cubic-bezier(0.22,1,0.36,1) ${
-                0.1 + mobileLinks.length * 0.035
-              }s, transform 0.46s cubic-bezier(0.22,1,0.36,1) ${0.1 + mobileLinks.length * 0.035}s`,
-            }}
-          >
-            <Link href="/contact" onClick={closeMobile} className="block no-underline">
-              <ShimmerButton className="h-auto w-full px-8 py-4 text-base">
-                Free Consultation
-              </ShimmerButton>
-            </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}

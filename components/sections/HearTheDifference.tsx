@@ -41,10 +41,10 @@ export default function HearTheDifference() {
         <div className="section-shell-pad mx-auto max-w-[1280px] overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,243,236,0.96))] shadow-[0_26px_80px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.82)_inset]" style={{ borderRadius: 'var(--section-radius)', border: '1px solid var(--section-border)' }}>
           <div className="mb-8 flex flex-col gap-4 md:mb-12">
             <div className="max-w-[700px]">
-              <span className="inline-flex rounded-[100px] border border-black/8 bg-white/82 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-black/52">
+              <span className="soft-pill">
                 Hear the difference
               </span>
-              <h2 className="mt-5 max-w-[12ch] text-[var(--color-dark-100)] home-heading">
+              <h2 className="max-w-[12ch] text-[var(--color-dark-100)] home-heading">
                 Listen to the results yourself
               </h2>
               <p className="mt-5 max-w-[52ch] text-[15px] leading-7 text-[var(--color-gray-100)] sm:text-base">
