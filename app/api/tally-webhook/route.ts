@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const fromEmail = process.env.RESEND_FROM_EMAIL || 'Just Acoustics <onboarding@resend.dev>'
   const signingSecret = process.env.TALLY_WEBHOOK_SECRET
-  const teamEmail = process.env.ENQUIRY_NOTIFICATION_EMAIL || 'info@justacoustics.co'
+  const teamEmail = 'info@justacoustics.co'
   try {
     const rawBody = await req.text()
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Send confirmation to the enquirer
-    await resend.emails.send({
+    const confirmationResult = await resend.emails.send({
       from: fromEmail,
       to: email,
       subject: 'Thanks for reaching out — Just Acoustics',
@@ -69,12 +69,17 @@ export async function POST(req: NextRequest) {
       `,
     })
 
+    if (confirmationResult.error) {
+      console.error('Resend confirmation email error:', confirmationResult.error)
+      return NextResponse.json({ error: 'Failed to send confirmation email' }, { status: 502 })
+    }
+
     // Send internal notification to the team
     const fieldsHtml = fields
       .map((f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;color:#666;font-size:13px;">${f.label}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;font-size:13px;">${f.value}</td></tr>`)
       .join('')
 
-    await resend.emails.send({
+    const notificationResult = await resend.emails.send({
       from: fromEmail,
       to: teamEmail,
       subject: `New enquiry from ${name}`,
@@ -87,6 +92,14 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     })
+
+    if (notificationResult.error) {
+      console.error('Resend internal notification error:', {
+        recipient: teamEmail,
+        error: notificationResult.error,
+      })
+      return NextResponse.json({ error: 'Failed to send internal notification email' }, { status: 502 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {
