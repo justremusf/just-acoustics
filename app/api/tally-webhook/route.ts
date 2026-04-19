@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const fromEmail = process.env.RESEND_FROM_EMAIL || 'Just Acoustics <onboarding@resend.dev>'
   const signingSecret = process.env.TALLY_WEBHOOK_SECRET
-  const teamEmail = process.env.ENQUIRY_NOTIFICATION_EMAIL || 'justacousticssg@gmail.com'
+  const teamEmail = process.env.ENQUIRY_NOTIFICATION_EMAIL || 'info@justacoustics.co'
   try {
     const rawBody = await req.text()
 
