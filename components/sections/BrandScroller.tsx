@@ -4,16 +4,16 @@ import type { SanityImage } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 
 const FALLBACK_LOGOS = [
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425eeaa3c0b1b8e1f078_4.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425e28c744e5908bc3d8_2.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425ee946da6b4ca8ef31_5.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425ece94e3df9257d5b0_10.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425edf801a5d999fb496_8.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425e6d6f97df75c68604_6.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425efdd0e2c6bcb9b18e_11.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425e5fc7b7c1f3b95be8_12.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425e65e679ade375ee17_13.png', alt: 'Brand' },
-  { src: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6987425e54111c126a709545_14.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425eeaa3c0b1b8e1f078_4.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425e28c744e5908bc3d8_2.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425ee946da6b4ca8ef31_5.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425ece94e3df9257d5b0_10.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425edf801a5d999fb496_8.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425e6d6f97df75c68604_6.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425efdd0e2c6bcb9b18e_11.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425e5fc7b7c1f3b95be8_12.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425e65e679ade375ee17_13.png', alt: 'Brand' },
+  { src: '/assets/webflow/6987425e54111c126a709545_14.png', alt: 'Brand' },
 ]
 
 interface Props {

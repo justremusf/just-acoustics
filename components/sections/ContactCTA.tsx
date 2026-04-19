@@ -9,7 +9,7 @@ export default function ContactCTA() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "linear-gradient(120deg, rgba(1,1,1,0.74), rgba(1,1,1,0.46)), url('https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif')",
+              "linear-gradient(120deg, rgba(1,1,1,0.74), rgba(1,1,1,0.46)), url('/assets/webflow/696a459f805f921445e4427e_9.avif')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}

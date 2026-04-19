@@ -3,12 +3,12 @@ import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
 const HERO_IMAGE =
-  'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp'
+  '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp'
 
 export default function Hero() {
   return (
     <section
-      className="relative mx-4 mt-[-66px] overflow-hidden rounded-[24px] px-0 pt-[188px] pb-12 sm:mx-4 sm:pt-[198px] md:mt-[-76px] md:pt-[246px] md:pb-20"
+      className="relative mx-4 mt-0 overflow-hidden rounded-[24px] px-0 pt-[188px] pb-12 sm:mx-4 sm:mt-0 sm:pt-[198px] md:mt-[-76px] md:pt-[246px] md:pb-20"
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
       <div className="absolute inset-0 z-0 rounded-[24px] overflow-hidden">

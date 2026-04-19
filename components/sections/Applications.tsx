@@ -8,37 +8,37 @@ const FALLBACK_APPLICATIONS = [
     title: 'Churches & Event Spaces',
     description: 'Crystal-clear speech in every corner for worship, teaching, and live events.',
     href: '/services/churches-event-spaces',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif',
+    img: '/assets/webflow/696a459f805f921445e4427e_9.avif',
   },
   {
     title: 'Offices & Meeting Rooms',
     description: 'Reduce distractions and make meetings easier to follow in busy workspaces.',
     href: '/services/offices-meeting-rooms',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif',
+    img: '/assets/webflow/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif',
   },
   {
     title: 'Restaurants, Cafes, Bars',
     description: 'Create a dining experience where guests can enjoy the atmosphere and still talk comfortably.',
     href: '/services/restaurants-cafes-bars',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
+    img: '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
   },
   {
     title: 'Education Spaces',
     description: 'Support concentration and speech clarity in classrooms, studios, and learning environments.',
     href: '/services/education-spaces',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb30cf5a46b9a7edd3_4.png',
+    img: '/assets/webflow/696a4efb30cf5a46b9a7edd3_4.png',
   },
   {
     title: 'Gym & Leisure Spaces',
     description: 'Manage the energy of active spaces without letting noise overwhelm the room.',
     href: '/services/gym-leisure-spaces',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd62acdbb9d45cd3d_5.png',
+    img: '/assets/webflow/696a4efbd62acdbb9d45cd3d_5.png',
   },
   {
     title: 'Cinema & Music Studios',
     description: 'Bring focus and listening precision to recording, playback, and cinematic environments.',
     href: '/services/cinema-music-studios',
-    img: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb255645d4686056e2_7.png',
+    img: '/assets/webflow/696a4efb255645d4686056e2_7.png',
   },
 ]
 

@@ -106,11 +106,10 @@ export default function WhyChooseUs() {
 
           <div className="relative min-h-[320px] overflow-hidden rounded-[20px] sm:min-h-[360px]">
             <Image
-              src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif"
+              src="/assets/webflow/696a459f805f921445e4427e_9.avif"
               alt="Just Acoustics installation team at work"
               fill
               className="object-cover"
-              unoptimized
             />
             <div className="absolute inset-0 bg-black/45" />
             <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">

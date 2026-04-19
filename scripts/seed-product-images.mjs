@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client'
 import * as dotenv from 'dotenv'
 import { resolve } from 'path'
+import { readFile } from 'fs/promises'
 
 dotenv.config({ path: resolve(process.cwd(), '.env.local') })
 
@@ -15,40 +16,47 @@ const client = createClient({
 const productImages = [
   {
     slug: 'acoustic-wall-panels',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbb798931f99abbc38_1.avif',
+    imagePath: 'public/assets/webflow/696a4efbb798931f99abbc38_1.avif',
     filename: 'acoustic-wall-panels.avif',
   },
   {
     slug: 'acoustic-ceiling-panels',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb0907dcf8dacbcd54_2.png',
+    imagePath: 'public/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
     filename: 'acoustic-ceiling-panels.png',
   },
   {
     slug: 'acoustic-fabric-wall',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd1be500fee866d95_3.png',
+    imagePath: 'public/assets/webflow/696a4efbd1be500fee866d95_3.png',
     filename: 'acoustic-fabric-wall.png',
   },
   {
     slug: 'custom-print-acoustic-panels',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb30cf5a46b9a7edd3_4.png',
+    imagePath: 'public/assets/webflow/696a4efb30cf5a46b9a7edd3_4.png',
     filename: 'custom-print-panels.png',
   },
   {
     slug: 'office-soundproofing',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd62acdbb9d45cd3d_5.png',
+    imagePath: 'public/assets/webflow/696a4efbd62acdbb9d45cd3d_5.png',
     filename: 'office-soundproofing.png',
   },
   {
     slug: 'polyester-felt-panels',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb6d770477375c64bd_6.png',
+    imagePath: 'public/assets/webflow/696a4efb6d770477375c64bd_6.png',
     filename: 'polyester-felt-panels.png',
   },
   {
     slug: 'custom-acoustic-panels',
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb255645d4686056e2_7.png',
+    imagePath: 'public/assets/webflow/696a4efb255645d4686056e2_7.png',
     filename: 'custom-acoustic-panel.png',
   },
 ]
+
+function getContentType(filename) {
+  if (filename.endsWith('.avif')) return 'image/avif'
+  if (filename.endsWith('.webp')) return 'image/webp'
+  if (filename.endsWith('.svg')) return 'image/svg+xml'
+  return 'image/png'
+}
 
 async function seedImages() {
   console.log('Uploading product images to Sanity...\n')
@@ -66,16 +74,14 @@ async function seedImages() {
         continue
       }
 
-      // Fetch image from CDN
-      console.log(`  Downloading: ${item.filename}...`)
-      const response = await fetch(item.imageUrl)
-      if (!response.ok) throw new Error(`HTTP ${response.status}`)
-      const buffer = await response.arrayBuffer()
+      // Read image from local repo asset store
+      console.log(`  Reading: ${item.filename}...`)
+      const buffer = await readFile(resolve(process.cwd(), item.imagePath))
 
       // Upload to Sanity asset store
-      const asset = await client.assets.upload('image', Buffer.from(buffer), {
+      const asset = await client.assets.upload('image', buffer, {
         filename: item.filename,
-        contentType: response.headers.get('content-type') || 'image/png',
+        contentType: getContentType(item.filename),
       })
 
       // Patch the product document with the image

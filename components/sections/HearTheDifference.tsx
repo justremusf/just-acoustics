@@ -7,28 +7,28 @@ import Image from 'next/image'
 const videos = [
   {
     videoId: '8DURhlYt3wQ',
-    thumbnail: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69687b1239333b922d70b26a_Title.avif',
+    thumbnail: '/assets/webflow/69687b1239333b922d70b26a_Title.avif',
     label: 'Meeting Room Transformation',
     category: 'Office',
     note: 'Clearer voices',
   },
   {
     videoId: 'bm-q3dQWB6g',
-    thumbnail: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69687d6c4e41c7a3a58f9107_Title.avif',
+    thumbnail: '/assets/webflow/69687d6c4e41c7a3a58f9107_Title.avif',
     label: 'Restaurant Acoustic Treatment',
     category: 'Hospitality',
     note: 'Comfortable dining',
   },
   {
     videoId: 'Y9b0NNTRnFw',
-    thumbnail: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69687c96d1feff52c5d91be4_3.avif',
+    thumbnail: '/assets/webflow/69687c96d1feff52c5d91be4_3.avif',
     label: 'Church Sound Improvement',
     category: 'Worship',
     note: 'Quiet worship',
   },
 ]
 
-const PLAY_ICON = 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6967a0f62bd9b7dce9e01040_Play%20icon.png'
+const PLAY_ICON = '/assets/webflow/6967a0f62bd9b7dce9e01040_Play%20icon.png'
 
 export default function HearTheDifference() {
   const [activeMobileId, setActiveMobileId] = useState<string | null>(null)

@@ -54,7 +54,7 @@ interface HeaderClientProps {
 }
 
 const LOGO_SRC =
-  'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg'
+  '/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg'
 
 const SHOP_CATEGORY_LABELS: Record<string, string> = {
   'package-deals': 'Package Deals',
@@ -451,6 +451,9 @@ export default function HeaderClient({
 
   const activeMenuData = renderedMenu ? megaMenus[renderedMenu] : null
   const isHeroOverlay = isHomePage && mobileHeaderProgress < 0.55 && !mobileMenuMounted
+  const mobileHeaderWrapperClass = isHeroOverlay
+    ? 'absolute inset-x-0 top-0 z-10'
+    : 'relative z-10'
   const mobileHeaderIsSolid = !isHeroOverlay
   const mobileHeaderDisplayIntensity = isHeroOverlay ? mobileHeaderProgress : 1
   const mobileHeaderInnerWidth = `${100 - (1 - mobileHeaderDisplayIntensity) * 12}%`
@@ -819,7 +822,7 @@ export default function HeaderClient({
         </div>
       </div>
 
-      <div className="relative mx-auto w-full max-w-[1280px] px-0 lg:hidden">
+      <div className={`${mobileHeaderWrapperClass} mx-auto w-full max-w-[1280px] px-0 lg:hidden`}>
         <div
           className="mx-auto flex w-full items-center justify-center border-b px-4 pt-5 pb-3 transition-all duration-300 sm:px-5"
           style={{

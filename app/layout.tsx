@@ -29,6 +29,9 @@ const leagueSpartan = League_Spartan({
   display: 'swap',
 })
 
+const SITE_PREVIEW_IMAGE =
+  '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp'
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
     siteName: 'Just Acoustics',
     images: [
       {
-        url: '/og-image.jpg',
+        url: SITE_PREVIEW_IMAGE,
         width: 1200,
         height: 630,
         alt: 'Just Acoustics — Acoustic Panels Singapore',
@@ -59,6 +62,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    images: [
+      {
+        url: SITE_PREVIEW_IMAGE,
+        alt: 'Just Acoustics — Acoustic Panels Singapore',
+      },
+    ],
   },
   icons: {
     icon: '/favicon.ico',

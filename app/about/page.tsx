@@ -30,11 +30,10 @@ export default function AboutPage() {
         <div className="glass-card overflow-hidden">
           <div className="relative aspect-[4/3]">
             <Image
-              src="https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif"
+              src="/assets/webflow/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif"
               alt="Just Acoustics project installation"
               fill
               className="object-cover"
-              unoptimized
             />
           </div>
         </div>

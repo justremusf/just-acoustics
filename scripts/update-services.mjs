@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client'
 import * as dotenv from 'dotenv'
 import { resolve } from 'path'
+import { readFile } from 'fs/promises'
 
 dotenv.config({ path: resolve(process.cwd(), '.env.local') })
 
@@ -18,7 +19,7 @@ const services = [
     slug: 'churches-event-spaces',
     shortDescription: 'Crystal-clear speech in every corner. Improve sound clarity in places of worship and event venues.',
     benefits: ['Speech Intelligibility', 'Reduced Echo', 'Immersive Worship'],
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a459f805f921445e4427e_9.avif',
+    imagePath: 'public/assets/webflow/696a459f805f921445e4427e_9.avif',
     filename: 'churches-event-spaces.avif',
     body: [
       {
@@ -40,7 +41,7 @@ const services = [
     slug: 'offices-meeting-rooms',
     shortDescription: 'Improve speech privacy, reduce distractions, and create a productive work environment with tailored acoustic solutions.',
     benefits: ['Speech Privacy', 'Focus & Productivity', 'Professional Environment'],
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif',
+    imagePath: 'public/assets/webflow/6964fb659de42387a7d78754_Image from TinyPNG (4).avif',
     filename: 'offices-meeting-rooms.avif',
     body: [
       {
@@ -62,7 +63,7 @@ const services = [
     slug: 'restaurants-cafes-bars',
     shortDescription: 'Create the perfect dining ambience. Reduce noise levels and improve conversation clarity for a comfortable guest experience.',
     benefits: ['Voice Clarity', 'Ambient Noise Control', 'Better Dining Experience'],
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
+    imagePath: 'public/assets/webflow/6963a1ddcb30aae76c452853_Image from TinyPNG.webp',
     filename: 'restaurants-cafes-bars.webp',
     body: [
       {
@@ -84,7 +85,7 @@ const services = [
     slug: 'education-spaces',
     shortDescription: 'Create quieter, more focused classrooms. Acoustic solutions for schools, tuition centres, and learning environments.',
     benefits: ['Classroom Clarity', 'Reduced Distraction', 'Teacher Comfort'],
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb30cf5a46b9a7edd3_4.png',
+    imagePath: 'public/assets/webflow/696a4efb30cf5a46b9a7edd3_4.png',
     filename: 'education-spaces.png',
     body: [
       {
@@ -106,7 +107,7 @@ const services = [
     slug: 'gym-leisure-spaces',
     shortDescription: 'Control noise from equipment and group classes. Impact-resistant acoustic treatment for gyms and fitness studios.',
     benefits: ['Noise Reduction', 'Equipment Sound Control', 'Neighbour Compliance'],
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efbd62acdbb9d45cd3d_5.png',
+    imagePath: 'public/assets/webflow/696a4efbd62acdbb9d45cd3d_5.png',
     filename: 'gym-leisure-spaces.png',
     body: [
       {
@@ -128,7 +129,7 @@ const services = [
     slug: 'cinema-music-studios',
     shortDescription: 'Experience high-quality sound. Eliminate echo for recording studios, home theatres, and cinemas.',
     benefits: ['Professional Sound Quality', 'Full Frequency Control', 'Immersive Experience'],
-    imageUrl: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/696a4efb255645d4686056e2_7.png',
+    imagePath: 'public/assets/webflow/696a4efb255645d4686056e2_7.png',
     filename: 'cinema-music-studios.png',
     body: [
       {
@@ -147,6 +148,13 @@ const services = [
   },
 ]
 
+function getContentType(filename) {
+  if (filename.endsWith('.avif')) return 'image/avif'
+  if (filename.endsWith('.webp')) return 'image/webp'
+  if (filename.endsWith('.svg')) return 'image/svg+xml'
+  return 'image/png'
+}
+
 async function run() {
   // Step 1: Delete all existing services
   console.log('Deleting existing services...')
@@ -164,13 +172,11 @@ async function run() {
     // Upload image
     let mainImage = null
     try {
-      console.log(`  Downloading image: ${service.filename}...`)
-      const response = await fetch(service.imageUrl)
-      if (!response.ok) throw new Error(`HTTP ${response.status}`)
-      const buffer = await response.arrayBuffer()
-      const asset = await client.assets.upload('image', Buffer.from(buffer), {
+      console.log(`  Reading image: ${service.filename}...`)
+      const buffer = await readFile(resolve(process.cwd(), service.imagePath))
+      const asset = await client.assets.upload('image', buffer, {
         filename: service.filename,
-        contentType: response.headers.get('content-type') || 'image/png',
+        contentType: getContentType(service.filename),
       })
       mainImage = {
         _type: 'image',

@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 const solutions = [
   {
-    icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc85d7daca7cccae5c1_3.svg',
+    icon: '/assets/webflow/69650dc85d7daca7cccae5c1_3.svg',
     title: 'Echo Control',
     label: 'For clearer speech',
     summary:
@@ -18,7 +18,7 @@ const solutions = [
       'border-[rgba(255,165,0,0.18)] bg-[rgba(255,165,0,0.10)]',
   },
   {
-    icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dccd68664f77d9ba78b_2.svg',
+    icon: '/assets/webflow/69650dccd68664f77d9ba78b_2.svg',
     title: 'Noise Control',
     label: 'For better privacy',
     summary:
@@ -34,7 +34,7 @@ const solutions = [
       'border-[rgba(1,1,1,0.10)] bg-[rgba(1,1,1,0.04)]',
   },
   {
-    icon: 'https://cdn.prod.website-files.com/6962571d2d02027389a12edb/69650dc89aa0f23320b10d20_1.svg',
+    icon: '/assets/webflow/69650dc89aa0f23320b10d20_1.svg',
     title: 'Acoustic Panels',
     label: 'For a cleaner finish',
     summary:
