@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 
-const faqs = [
+export type FaqItem = { q: string; a: string }
+
+const DEFAULT_FAQS: FaqItem[] = [
   {
     q: 'What are acoustic panels?',
     a: 'Acoustic panels absorb sound reflections so a room feels calmer, clearer, and easier to speak in. They improve the way a space sounds rather than blocking all sound entirely.',
@@ -75,20 +77,43 @@ function AccordionItem({
   )
 }
 
-export default function FAQ() {
+export default function FAQ({
+  items = DEFAULT_FAQS,
+  title = 'Commonly Asked Questions',
+  subtitle = 'We make acoustics simple for you.',
+}: {
+  items?: FaqItem[]
+  title?: string
+  subtitle?: string
+}) {
   const [openQuestion, setOpenQuestion] = useState<string | null>(null)
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <section id="faq" className="px-4 py-10 md:px-5 md:py-12">
       <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.78fr_1fr] md:gap-10">
           <div>
             <span className="soft-pill">FAQ</span>
-            <h2 className="home-heading mt-5 text-[var(--color-dark-100)]">Commonly Asked Questions</h2>
-            <p className="home-copy mt-5 max-w-[40ch]">We make acoustics simple for you.</p>
+            <h2 className="home-heading mt-5 text-[var(--color-dark-100)]">{title}</h2>
+            <p className="home-copy mt-5 max-w-[40ch]">{subtitle}</p>
           </div>
           <div>
-            {faqs.map((faq) => (
+            {items.map((faq) => (
               <AccordionItem
                 key={faq.q}
                 q={faq.q}
@@ -133,5 +158,6 @@ export default function FAQ() {
         </div>
       </div>
     </section>
+    </>
   )
 }

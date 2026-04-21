@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { PortableText } from '@portabletext/react'
 import { getProjectBySlug, getAllProjectSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'
@@ -31,7 +32,19 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const project: Project | null = await getProjectBySlug(slug).catch(() => null)
   if (!project) notFound()
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: 'https://justacoustics.co/projects' },
+      { '@type': 'ListItem', position: 3, name: project.title, item: `https://justacoustics.co/projects/${slug}` },
+    ],
+  }
+
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
     <div className="page-wrap page-stack">
       <Link href="/projects" className="page-link">← All Projects</Link>
 
@@ -102,6 +115,90 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           ))}
         </section>
       )}
+
+      {project.metrics && project.metrics.length > 0 && (
+        <section className="home-shell page-hero-shell">
+          <span className="soft-pill">Outcome</span>
+          <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {project.metrics.map((m) => (
+              <div key={m.label} className="glass-card p-5 text-center">
+                <p className="text-[clamp(28px,4vw,44px)] font-bold leading-none tracking-tight text-[var(--color-brand-orange)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                  {m.value}
+                </p>
+                <p className="mt-2 text-xs font-medium uppercase tracking-widest text-[var(--color-gray-100)]">{m.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {(project.problem || project.solution || project.result) && (
+        <section className="home-shell page-hero-shell">
+          <div className="grid gap-8 md:grid-cols-3">
+            {project.problem && (
+              <div className="glass-card p-5 sm:p-6">
+                <p className="page-kicker text-[var(--color-brand-orange)]">Problem</p>
+                <div className="rich-content mt-4 text-sm">
+                  <PortableText value={project.problem as Parameters<typeof PortableText>[0]['value']} />
+                </div>
+              </div>
+            )}
+            {project.solution && (
+              <div className="glass-card p-5 sm:p-6">
+                <p className="page-kicker text-[var(--color-brand-orange)]">Solution</p>
+                <div className="rich-content mt-4 text-sm">
+                  <PortableText value={project.solution as Parameters<typeof PortableText>[0]['value']} />
+                </div>
+              </div>
+            )}
+            {project.result && (
+              <div className="glass-card p-5 sm:p-6">
+                <p className="page-kicker text-[var(--color-brand-orange)]">Result</p>
+                <div className="rich-content mt-4 text-sm">
+                  <PortableText value={project.result as Parameters<typeof PortableText>[0]['value']} />
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {(project.beforeImage || project.afterImage) && (
+        <section className="home-shell page-hero-shell">
+          <span className="soft-pill">Before &amp; After</span>
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {project.beforeImage && (
+              <div>
+                <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[var(--color-gray-100)]">Before</p>
+                <div className="glass-card overflow-hidden rounded-[28px]">
+                  <Image
+                    src={urlFor(project.beforeImage).width(900).height(680).url()}
+                    alt={project.beforeImage.alt || 'Before treatment'}
+                    width={900}
+                    height={680}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </div>
+            )}
+            {project.afterImage && (
+              <div>
+                <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[var(--color-gray-100)]">After</p>
+                <div className="glass-card overflow-hidden rounded-[28px]">
+                  <Image
+                    src={urlFor(project.afterImage).width(900).height(680).url()}
+                    alt={project.afterImage.alt || 'After treatment'}
+                    width={900}
+                    height={680}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
     </div>
+    </>
   )
 }

@@ -32,6 +32,7 @@ export interface Post {
   title: string
   slug: { current: string }
   category?: string
+  contentType?: string
   mainImage?: SanityImage
   excerpt?: string
   publishedAt?: string
@@ -77,6 +78,14 @@ export interface Project {
   mainImage?: SanityImage
   gallery?: SanityImage[]
   description?: string
+  spaceType?: string
+  spaceSize?: string
+  problem?: unknown[]
+  solution?: unknown[]
+  result?: unknown[]
+  metrics?: { label?: string; value?: string }[]
+  beforeImage?: SanityImage
+  afterImage?: SanityImage
   testimonial?: {
     quote?: string
     authorName?: string

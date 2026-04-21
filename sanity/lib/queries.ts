@@ -5,7 +5,7 @@ import { client } from './client'
 export async function getAllPosts() {
   return client.fetch(`
     *[_type == "post" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
-      _id, title, slug, category, mainImage, excerpt, publishedAt
+      _id, title, slug, category, contentType, mainImage, excerpt, publishedAt
     }
   `)
 }
@@ -13,7 +13,7 @@ export async function getAllPosts() {
 export async function getLatestPosts(count = 3) {
   return client.fetch(
     `*[_type == "post" && !(_id in path("drafts.**"))] | order(publishedAt desc) [0...$count] {
-      _id, title, slug, category, mainImage, excerpt, publishedAt
+      _id, title, slug, category, contentType, mainImage, excerpt, publishedAt
     }`,
     { count }
   )
@@ -22,7 +22,7 @@ export async function getLatestPosts(count = 3) {
 export async function getPostBySlug(slug: string) {
   return client.fetch(
     `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
-      _id, title, slug, category, mainImage, excerpt, publishedAt, body, seo
+      _id, title, slug, category, contentType, mainImage, excerpt, publishedAt, body, seo
     }`,
     { slug }
   )
@@ -108,7 +108,11 @@ export async function getAllProjects() {
 export async function getProjectBySlug(slug: string) {
   return client.fetch(
     `*[_type == "project" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
-      _id, title, slug, mainImage, gallery, category, location, clientName, description, testimonial, completionDate
+      _id, title, slug, mainImage, gallery, category, location, clientName, description,
+      spaceType, spaceSize, problem, solution, result,
+      metrics[]{label, value},
+      beforeImage, afterImage,
+      testimonial, completionDate
     }`,
     { slug }
   )

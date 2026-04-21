@@ -11,8 +11,16 @@ export const metadata: Metadata = {
   description: 'Acoustic education, buying guides, and room-specific advice from the Just Acoustics team.',
 }
 
+const CONTENT_TYPES = [
+  { value: 'article', label: 'Article' },
+  { value: 'guide', label: 'Guide' },
+  { value: 'comparison', label: 'Comparison' },
+  { value: 'video', label: 'Video' },
+  { value: 'case-study', label: 'Case Study' },
+] as const
+
 interface BlogPageProps {
-  searchParams: Promise<{ topic?: string }>
+  searchParams: Promise<{ topic?: string; type?: string; search?: string }>
 }
 
 function topicCount(posts: Post[], value: string) {
@@ -20,14 +28,27 @@ function topicCount(posts: Post[], value: string) {
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const [{ topic }, posts]: [{ topic?: string }, Post[]] = await Promise.all([
+  const [{ topic, type, search }, posts]: [{ topic?: string; type?: string; search?: string }, Post[]] = await Promise.all([
     searchParams,
     getAllPosts().catch(() => [] as Post[]),
   ])
 
   const activeTopic = RESOURCE_TOPICS.find((item) => item.value === topic)
-  const filteredPosts = activeTopic ? posts.filter((post) => post.category === activeTopic.value) : posts
+  const activeType = CONTENT_TYPES.find((ct) => ct.value === type)
+  const searchQuery = search?.trim().toLowerCase() || ''
+
+  let filteredPosts = activeTopic ? posts.filter((post) => post.category === activeTopic.value) : posts
+  if (activeType) filteredPosts = filteredPosts.filter((post) => post.contentType === activeType.value)
+  if (searchQuery) {
+    filteredPosts = filteredPosts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchQuery) ||
+        (post.excerpt?.toLowerCase().includes(searchQuery) ?? false)
+    )
+  }
+
   const [featuredPost, ...restPosts] = filteredPosts
+  const hasActiveFilter = activeTopic || activeType || searchQuery
 
   return (
     <div className="page-wrap page-stack">
@@ -46,7 +67,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               <p className="page-kicker">Browse by topic</p>
               <h2 className="page-card-title">Start with the acoustic problem you are trying to solve.</h2>
             </div>
-            {activeTopic && (
+            {hasActiveFilter && (
               <Link href="/blog" className="page-link">
                 Clear filter <span aria-hidden="true">→</span>
               </Link>
@@ -61,7 +82,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               return (
                 <Link
                   key={resourceTopic.value}
-                  href={`/blog?topic=${resourceTopic.value}`}
+                  href={`/blog?topic=${resourceTopic.value}${type ? `&type=${type}` : ''}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
                   className={`page-card glass-card w-[min(84vw,320px)] shrink-0 p-6 transition-all duration-300 hover:-translate-y-1 md:w-auto ${isActive ? 'border-[rgba(255,165,0,0.3)] shadow-[0_18px_45px_rgba(255,165,0,0.12)]' : ''}`}
                 >
                   <p className="page-kicker text-[var(--color-brand-orange)]">
@@ -74,13 +95,42 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               )
             })}
           </div>
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1 sm:pb-0">
+              {CONTENT_TYPES.map((ct) => (
+                <Link
+                  key={ct.value}
+                  href={`/blog?${topic ? `topic=${topic}&` : ''}type=${ct.value}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
+                  className={`page-filter shrink-0 whitespace-nowrap ${activeType?.value === ct.value ? 'active' : ''}`}
+                >
+                  {ct.label}
+                </Link>
+              ))}
+            </div>
+
+            <form method="get" action="/blog" className="flex items-center gap-2">
+              {topic && <input type="hidden" name="topic" value={topic} />}
+              {type && <input type="hidden" name="type" value={type} />}
+              <input
+                type="search"
+                name="search"
+                defaultValue={search}
+                placeholder="Search articles…"
+                className="glass-card h-10 min-w-[200px] rounded-full px-4 text-sm outline-none placeholder:text-[var(--color-gray-100)]"
+              />
+              <button type="submit" className="page-cta h-10 px-5 text-sm">Search</button>
+            </form>
+          </div>
         </div>
       </section>
 
       {filteredPosts.length === 0 ? (
         <section className="glass-card page-hero-shell">
           <p className="page-card-copy">
-            No published articles yet for this topic. Drafts have already been added in Sanity so you can edit and publish them whenever you are ready.
+            {hasActiveFilter
+              ? 'No articles match this filter. Try a different topic or search term.'
+              : 'No published articles yet for this topic. Drafts have already been added in Sanity so you can edit and publish them whenever you are ready.'}
           </p>
         </section>
       ) : (

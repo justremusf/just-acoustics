@@ -4,6 +4,31 @@ import Image from 'next/image'
 import { getAllProducts } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Product } from '@/lib/types'
+import FAQ from '@/components/sections/FAQ'
+import type { FaqItem } from '@/components/sections/FAQ'
+
+const PRODUCTS_FAQS: FaqItem[] = [
+  {
+    q: 'Should I use wall panels or ceiling panels?',
+    a: 'Wall panels are most effective for echo and flutter echo. Ceiling panels (clouds) help in open-plan or tall-ceiling spaces where wall placement is limited.',
+  },
+  {
+    q: 'What is the difference between standard and custom panels?',
+    a: 'Standard panels come in fixed sizes and colours. Custom panels are sized and finished to match specific dimensions or visual briefs.',
+  },
+  {
+    q: 'Does panel thickness matter?',
+    a: 'Yes. Thicker panels (50mm+) absorb more low-mid frequencies and are better for studios or vocal booths. 25mm panels work well for general echo control.',
+  },
+  {
+    q: 'Are your panels fire-rated?',
+    a: 'Our commercial-grade panels meet fire safety requirements for Singapore. We can provide certificates on request for project submissions.',
+  },
+  {
+    q: 'Do acoustic panels block outside noise?',
+    a: 'No. Acoustic panels reduce echo and reverberation inside the room. They do not stop sound from entering through walls, ceilings, or floors.',
+  },
+]
 
 export const revalidate = 60
 
@@ -75,6 +100,8 @@ export default async function ProductsPage() {
           <Link href="/contact" className="page-cta">Free Consultation</Link>
         </div>
       </section>
+
+      <FAQ items={PRODUCTS_FAQS} title="Product Questions" subtitle="Common questions before choosing a panel." />
     </div>
   )
 }

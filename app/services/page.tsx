@@ -4,6 +4,31 @@ import Image from 'next/image'
 import { getAllServices } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Service } from '@/lib/types'
+import FAQ from '@/components/sections/FAQ'
+import type { FaqItem } from '@/components/sections/FAQ'
+
+const SERVICES_FAQS: FaqItem[] = [
+  {
+    q: 'What is included in a service engagement?',
+    a: 'We handle site assessment, acoustic design, product supply, and installation. You receive a full scope and quote before work begins.',
+  },
+  {
+    q: 'Do you do a site visit before quoting?',
+    a: 'Yes. For most projects we visit the space to measure, assess the surfaces, and understand the acoustic problem before recommending a solution.',
+  },
+  {
+    q: 'Do you work with residential spaces?',
+    a: 'We work across both commercial and residential. Offices, restaurants, and churches make up most of our work, but home studios and listening rooms are also welcome.',
+  },
+  {
+    q: 'How long does a typical project take?',
+    a: 'From consultation to install, most projects are completed within two to four weeks. Larger or highly custom projects may take longer.',
+  },
+  {
+    q: 'What happens after installation?',
+    a: 'We walk you through the result and confirm everything meets the brief. If adjustments are needed, we handle them before closing the project.',
+  },
+]
 
 export const revalidate = 60
 
@@ -58,6 +83,8 @@ export default async function ServicesPage() {
           ))}
         </section>
       )}
+
+      <FAQ items={SERVICES_FAQS} title="Service Questions" subtitle="How our acoustic service works from start to finish." />
     </div>
   )
 }

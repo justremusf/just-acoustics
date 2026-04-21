@@ -6,6 +6,27 @@ import { PortableText } from '@portabletext/react'
 import { getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Post } from '@/lib/types'
+import FAQ from '@/components/sections/FAQ'
+import type { FaqItem } from '@/components/sections/FAQ'
+
+const BLOG_FAQS: FaqItem[] = [
+  {
+    q: 'How do I know if my room needs acoustic treatment?',
+    a: 'If speech is unclear, music sounds muddy, or you notice a noticeable echo after sounds stop, the room likely has too much reverb. A free consultation can confirm this.',
+  },
+  {
+    q: 'What is the difference between acoustic treatment and soundproofing?',
+    a: 'Acoustic treatment controls sound quality inside a room by absorbing reflections. Soundproofing reduces how much sound travels between rooms or from outside.',
+  },
+  {
+    q: 'Do acoustic panels work for home offices?',
+    a: 'Yes. Even a small number of panels placed on the walls behind and beside you can noticeably improve call clarity and reduce echo.',
+  },
+  {
+    q: 'How many panels do I need?',
+    a: 'It depends on room size, ceiling height, and hard surface coverage. We typically recommend treating 20–30% of total wall area as a starting point.',
+  },
+]
 
 export const revalidate = 60
 
@@ -32,7 +53,36 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post: Post | null = await getPostBySlug(slug).catch(() => null)
   if (!post) notFound()
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    ...(post.publishedAt && { datePublished: post.publishedAt }),
+    ...(post.mainImage && { image: urlFor(post.mainImage).width(1200).height(630).url() }),
+    author: { '@type': 'Organization', name: 'Just Acoustics' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Just Acoustics',
+      logo: { '@type': 'ImageObject', url: 'https://justacoustics.co/assets/logo.png' },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://justacoustics.co/blog/${slug}` },
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
+      { '@type': 'ListItem', position: 2, name: 'Resource Centre', item: 'https://justacoustics.co/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://justacoustics.co/blog/${slug}` },
+    ],
+  }
+
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
     <div className="page-wrap page-stack max-w-[940px]">
       <Link href="/blog" className="page-link">← Back to Resource Center</Link>
 
@@ -67,6 +117,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         )}
       </article>
 
+      <FAQ items={BLOG_FAQS} title="Common Questions" subtitle="Quick answers about acoustic treatment." />
+
       <section className="glass-card p-6 text-center">
         <p className="page-card-copy mx-auto max-w-[48ch]">
           Want help applying this to your room? Send us the space details and we will recommend the right next step.
@@ -74,5 +126,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <Link href="/contact" className="page-cta mt-5">Free Consultation</Link>
       </section>
     </div>
+    </>
   )
 }

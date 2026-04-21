@@ -143,6 +143,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             )}
           </>
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': ['Organization', 'LocalBusiness'],
+              name: 'Just Acoustics',
+              url: 'https://justacoustics.co',
+              logo: 'https://justacoustics.co/assets/logo.png',
+              description:
+                'Acoustic panel supply and installation for offices, restaurants, churches, studios, and more in Singapore.',
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'SG',
+                addressLocality: 'Singapore',
+              },
+              areaServed: { '@type': 'Country', name: 'Singapore' },
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'customer service',
+                availableLanguage: 'English',
+              },
+              sameAs: [
+                'https://www.instagram.com/justacoustics',
+                'https://www.facebook.com/justacoustics',
+              ],
+            }),
+          }}
+        />
         <div className="min-h-screen overflow-x-clip">
           <Header />
           <main>{children}</main>

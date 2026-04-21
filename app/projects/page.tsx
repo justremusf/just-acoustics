@@ -4,6 +4,31 @@ import Image from 'next/image'
 import { getAllProjects } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'
+import FAQ from '@/components/sections/FAQ'
+import type { FaqItem } from '@/components/sections/FAQ'
+
+const PROJECTS_FAQS: FaqItem[] = [
+  {
+    q: 'What kind of results can I expect?',
+    a: 'Most projects achieve a noticeable reduction in echo and reverberation within the first session. Specific outcomes depend on room size, surface types, and treatment coverage.',
+  },
+  {
+    q: 'How long does installation take?',
+    a: 'Most installs are completed in one to two days. Larger spaces or complex layouts may require additional sessions.',
+  },
+  {
+    q: 'Does the installation include all the work?',
+    a: 'Yes. We supply and install everything. You do not need to source panels or coordinate separate contractors.',
+  },
+  {
+    q: 'Can my project be featured in the portfolio?',
+    a: 'We always ask permission before publishing. If you are happy to be featured, we will photograph the result and add it here.',
+  },
+  {
+    q: 'Can the panels match the existing interior design?',
+    a: 'Yes. We offer custom colours, fabric finishes, and printed panels so treatment integrates with the space rather than looking like an afterthought.',
+  },
+]
 
 export const revalidate = 60
 
@@ -81,6 +106,8 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
           ))}
         </section>
       )}
+
+      <FAQ items={PROJECTS_FAQS} title="Project Questions" subtitle="What to expect from a Just Acoustics installation." />
     </div>
   )
 }

@@ -6,6 +6,31 @@ import { PortableText } from '@portabletext/react'
 import { getServiceBySlug, getAllServiceSlugs, getAllProducts } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Product, Service } from '@/lib/types'
+import FAQ from '@/components/sections/FAQ'
+import type { FaqItem } from '@/components/sections/FAQ'
+
+const SERVICE_FAQS: FaqItem[] = [
+  {
+    q: 'What is included in a typical service?',
+    a: 'We handle everything from site assessment and design to supply and installation. You get a clear scope and quote before any work begins.',
+  },
+  {
+    q: 'Do you do a site visit before quoting?',
+    a: 'Yes. For most projects we visit the space to measure, assess the surfaces, and understand how the room is used before recommending a solution.',
+  },
+  {
+    q: 'Do you work with residential and commercial spaces?',
+    a: 'We work across both. Commercial projects — offices, restaurants, churches — make up most of our work, but we also treat home studios and listening rooms.',
+  },
+  {
+    q: 'How long does a project typically take?',
+    a: 'From consultation to install, most projects are completed within two to four weeks. Larger or custom projects may take longer.',
+  },
+  {
+    q: 'What happens after installation?',
+    a: 'We walk you through the result and confirm everything meets the brief. If there are any adjustments needed, we handle them before closing the project.',
+  },
+]
 
 export const revalidate = 60
 
@@ -47,7 +72,34 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     .filter(Boolean)
     .slice(0, 3) as Product[]
 
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.shortDescription,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'Just Acoustics',
+      url: 'https://justacoustics.co',
+    },
+    areaServed: { '@type': 'Country', name: 'Singapore' },
+    url: `https://justacoustics.co/services/${slug}`,
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://justacoustics.co/services' },
+      { '@type': 'ListItem', position: 3, name: service.title, item: `https://justacoustics.co/services/${slug}` },
+    ],
+  }
+
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
     <div className="page-wrap page-stack">
       <Link href="/services" className="page-link">← All Services</Link>
 
@@ -154,6 +206,21 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
       )}
+
+      <FAQ items={SERVICE_FAQS} title="Questions About Our Services" subtitle="Everything you need to know before getting started." />
+
+      <section className="home-shell page-hero-shell">
+        <div className="glass-card p-6 text-center">
+          <p className="page-kicker text-[var(--color-brand-orange)]">See the results</p>
+          <p className="page-card-copy mx-auto mt-3 max-w-[52ch]">
+            Browse completed projects to see how we have treated spaces similar to yours.
+          </p>
+          <Link href="/projects" className="page-cta mt-5 inline-flex">
+            See Similar Projects →
+          </Link>
+        </div>
+      </section>
     </div>
+    </>
   )
 }

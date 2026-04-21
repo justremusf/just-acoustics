@@ -32,6 +32,20 @@ export default defineType({
       description: 'Used to group articles inside the resource center.',
     }),
     defineField({
+      name: 'contentType',
+      title: 'Content Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Article', value: 'article' },
+          { title: 'Guide', value: 'guide' },
+          { title: 'Comparison', value: 'comparison' },
+          { title: 'Video', value: 'video' },
+          { title: 'Case Study', value: 'case-study' },
+        ],
+      },
+    }),
+    defineField({
       name: 'mainImage',
       title: 'Main Image',
       type: 'image',

@@ -5,6 +5,31 @@ import { getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { ShopItem } from '@/lib/types'
 import ShopFilters from '@/components/sections/ShopFilters'
+import FAQ from '@/components/sections/FAQ'
+import type { FaqItem } from '@/components/sections/FAQ'
+
+const SHOP_FAQS: FaqItem[] = [
+  {
+    q: 'What is the typical lead time for panels?',
+    a: 'Standard panels are usually ready within 5–7 business days. Custom panels and made-to-order sizes take 2–3 weeks from confirmation.',
+  },
+  {
+    q: 'Do you deliver and install, or is this self-install?',
+    a: 'Both options are available. You can purchase panels for self-installation, or we can quote delivery and professional installation as a service.',
+  },
+  {
+    q: 'How many panels do I need for my room?',
+    a: 'As a guide, treating 20–30% of wall surface area gives a noticeable improvement. We are happy to help you calculate coverage for your specific room.',
+  },
+  {
+    q: 'Can I mix different panel categories in one order?',
+    a: 'Yes. You can combine wall panels, ceiling panels, and accessories in a single order. Contact us if you need a bundled price.',
+  },
+  {
+    q: 'Do you work on commercial projects?',
+    a: 'Yes. Our shop panels are used in offices, restaurants, churches, and studios. For larger commercial projects, reach out for a project consultation.',
+  },
+]
 
 export const revalidate = 60
 
@@ -85,6 +110,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           ))}
         </section>
       )}
+
+      <FAQ items={SHOP_FAQS} title="Shop Questions" subtitle="Everything you need to know before ordering." />
     </div>
   )
 }
