@@ -119,7 +119,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         )}
       </article>
 
-      <FAQ items={BLOG_FAQS} title="Common Questions" subtitle="Quick answers about acoustic treatment." />
+      <FAQ
+        items={
+          post.faqs?.length
+            ? post.faqs.map((f) => ({ q: f.question, a: f.answer }))
+            : BLOG_FAQS
+        }
+        title="Common Questions"
+        subtitle="Quick answers about acoustic treatment."
+      />
 
       <section className="glass-card p-6 text-center">
         <p className="page-card-copy mx-auto max-w-[48ch]">

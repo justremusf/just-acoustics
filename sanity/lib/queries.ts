@@ -22,7 +22,9 @@ export async function getLatestPosts(count = 3) {
 export async function getPostBySlug(slug: string) {
   return client.fetch(
     `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
-      _id, title, slug, category, contentType, mainImage, excerpt, publishedAt, body, seo
+      _id, title, slug, category, contentType, mainImage, excerpt, publishedAt, body, seo,
+      faqs[]{ question, answer },
+      imagePrompts[]{ role, placement, prompt, alt, aspectRatio }
     }`,
     { slug }
   )

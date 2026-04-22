@@ -27,6 +27,19 @@ export interface AcousticalSpecsTable {
   rows?: AcousticalSpecRow[]
 }
 
+export interface FaqItem {
+  question: string
+  answer: string
+}
+
+export interface ImagePrompt {
+  role: 'hero' | 'inline'
+  placement?: string
+  prompt: string
+  alt: string
+  aspectRatio?: '16:9' | '4:3' | '1:1' | '3:2'
+}
+
 export interface Post {
   _id: string
   title: string
@@ -38,6 +51,8 @@ export interface Post {
   publishedAt?: string
   body?: unknown[]
   seo?: { metaTitle?: string; metaDescription?: string }
+  faqs?: FaqItem[]
+  imagePrompts?: ImagePrompt[]
 }
 
 export interface Product {
