@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Suspense } from 'react'
 import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
 import Script from 'next/script'
+import { headers } from 'next/headers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
@@ -75,7 +76,9 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = (await headers()).get('x-pathname') ?? ''
+  const isStandalone = pathname.startsWith('/link')
   const gaId = process.env.NEXT_PUBLIC_GA_ID
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID
@@ -172,14 +175,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
-        <div className="min-h-screen overflow-x-clip">
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </div>
+        {isStandalone ? children : (
+          <div className="min-h-screen overflow-x-clip">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </div>
+        )}
         <SpeedInsights />
         <Analytics />
-        <WhatsAppButton />
+        {!isStandalone && <WhatsAppButton />}
       </body>
     </html>
   )
