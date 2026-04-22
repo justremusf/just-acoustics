@@ -27,7 +27,7 @@ const links = [
     ),
   },
   {
-    href: 'https://justacoustics.co/products',
+    href: 'https://justacoustics.co/projects',
     label: 'See our projects',
     sub: 'Completed installations',
     color: '#6C5CE7',
