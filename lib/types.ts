@@ -114,6 +114,7 @@ export interface ShopItem {
   gallery?: SanityImage[]
   price?: number
   sku?: string
+  inStock?: boolean
   madeToOrder?: boolean
   shortDescription?: string
   features?: string[]
