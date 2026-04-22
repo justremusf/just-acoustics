@@ -182,7 +182,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
         {isStandalone ? children : (
-          <div className="min-h-screen overflow-x-clip">
+          <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
             <Header />
             <main>{children}</main>
             <Footer />
