@@ -6,17 +6,23 @@ import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Resource Center',
-  description: 'Acoustic education, buying guides, and room-specific advice from the Just Acoustics team.',
+export async function generateMetadata({ searchParams }: BlogPageProps): Promise<Metadata> {
+  const { topic, type, search } = await searchParams
+  const isFiltered = Boolean(topic || type || search)
+  return {
+    title: 'Resource Center',
+    description: 'Acoustic education, buying guides, and room-specific advice from the Just Acoustics team.',
+    alternates: { canonical: 'https://justacoustics.co/blog' },
+    robots: isFiltered ? { index: false, follow: true } : undefined,
+  }
 }
 
 const CONTENT_TYPES = [
-  { value: 'article', label: 'Article' },
-  { value: 'guide', label: 'Guide' },
-  { value: 'comparison', label: 'Comparison' },
-  { value: 'video', label: 'Video' },
-  { value: 'case-study', label: 'Case Study' },
+  { value: 'article', label: 'Articles' },
+  { value: 'guide', label: 'Guides' },
+  { value: 'comparison', label: 'Comparisons' },
+  { value: 'video', label: 'Videos' },
+  { value: 'case-study', label: 'Case Studies' },
 ] as const
 
 interface BlogPageProps {
@@ -102,6 +108,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 <Link
                   key={ct.value}
                   href={`/blog?${topic ? `topic=${topic}&` : ''}type=${ct.value}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
+                  aria-label={`Filter resources by ${ct.label.toLowerCase()}`}
                   className={`page-filter shrink-0 whitespace-nowrap ${activeType?.value === ct.value ? 'active' : ''}`}
                 >
                   {ct.label}

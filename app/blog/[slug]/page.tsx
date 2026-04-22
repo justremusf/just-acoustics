@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import { stripBrand } from '@/lib/seo'
 import type { Post } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
@@ -40,8 +41,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post: Post | null = await getPostBySlug(slug).catch(() => null)
   if (!post) return {}
   return {
-    title: post.seo?.metaTitle || post.title,
+    title: stripBrand(post.seo?.metaTitle) || post.title,
     description: post.seo?.metaDescription || post.excerpt,
+    alternates: { canonical: `https://justacoustics.co/blog/${slug}` },
     openGraph: post.mainImage
       ? { images: [{ url: urlFor(post.mainImage).width(1200).height(630).url() }] }
       : undefined,

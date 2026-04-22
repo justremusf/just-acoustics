@@ -18,9 +18,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const project: Project | null = await getProjectBySlug(slug).catch(() => null)
   if (!project) return {}
+  const fallbackDescription = `${project.title}${project.location ? ` in ${project.location}` : ''} — acoustic panel installation and echo control project by Just Acoustics, Singapore.`
   return {
     title: project.title,
-    description: project.description,
+    description: project.description || fallbackDescription,
+    alternates: { canonical: `https://justacoustics.co/projects/${slug}` },
     openGraph: project.mainImage
       ? { images: [{ url: urlFor(project.mainImage).width(1200).height(630).url() }] }
       : undefined,

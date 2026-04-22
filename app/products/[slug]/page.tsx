@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getProductBySlug, getAllProductSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import { stripBrand } from '@/lib/seo'
 import type { Product } from '@/lib/types'
 import ProductTabContent from './ProductTabContent'
 
@@ -19,8 +20,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product: Product | null = await getProductBySlug(slug).catch(() => null)
   if (!product) return {}
   return {
-    title: product.seo?.metaTitle || product.title,
+    title: stripBrand(product.seo?.metaTitle) || product.title,
     description: product.seo?.metaDescription || product.description,
+    alternates: { canonical: `https://justacoustics.co/products/${slug}` },
     openGraph: product.mainImage
       ? { images: [{ url: urlFor(product.mainImage).width(1200).height(630).url() }] }
       : undefined,

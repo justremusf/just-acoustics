@@ -41,9 +41,9 @@ export default function AboutPage() {
 
       <section className="home-shell page-hero-shell grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
         <div className="max-w-[760px]">
-          <h1 className="page-title text-[clamp(34px,4vw,46px)] leading-[1.02] tracking-[-1.4px]">
+          <h2 className="page-title text-[clamp(34px,4vw,46px)] leading-[1.02] tracking-[-1.4px]">
             We help spaces sound clearer, calmer, and easier to use.
-          </h1>
+          </h2>
         </div>
 
         <div className="grid gap-4">

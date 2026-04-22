@@ -157,15 +157,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               logo: 'https://justacoustics.co/assets/logo.png',
               description:
                 'Acoustic panel supply and installation for offices, restaurants, churches, studios, and more in Singapore.',
+              telephone: '+65 8930 1905',
+              email: 'info@justacoustics.co',
+              priceRange: '$$',
               address: {
                 '@type': 'PostalAddress',
                 addressCountry: 'SG',
+                addressRegion: 'Singapore',
                 addressLocality: 'Singapore',
               },
               areaServed: { '@type': 'Country', name: 'Singapore' },
               contactPoint: {
                 '@type': 'ContactPoint',
                 contactType: 'customer service',
+                telephone: '+65 8930 1905',
+                email: 'info@justacoustics.co',
                 availableLanguage: 'English',
               },
               sameAs: [

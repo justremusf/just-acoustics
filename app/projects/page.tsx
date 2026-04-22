@@ -32,9 +32,14 @@ const PROJECTS_FAQS: FaqItem[] = [
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Projects',
-  description: 'View our portfolio of completed acoustic panel installations across offices, restaurants, churches and more in Singapore.',
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
+  const { category } = await searchParams
+  return {
+    title: 'Projects',
+    description: 'View our portfolio of completed acoustic panel installations across offices, restaurants, churches and more in Singapore.',
+    alternates: { canonical: 'https://justacoustics.co/projects' },
+    robots: category ? { index: false, follow: true } : undefined,
+  }
 }
 
 const CATEGORY_LABELS: Record<string, string> = {

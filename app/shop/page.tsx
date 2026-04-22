@@ -33,9 +33,15 @@ const SHOP_FAQS: FaqItem[] = [
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Shop — Just Acoustics',
-  description: 'Shop acoustic panels and soundproofing products from Just Acoustics, Singapore.',
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string; sort?: string }> }): Promise<Metadata> {
+  const { category, sort } = await searchParams
+  const isFiltered = Boolean(category || sort)
+  return {
+    title: 'Shop',
+    description: 'Shop acoustic panels and soundproofing products from Just Acoustics, Singapore.',
+    alternates: { canonical: 'https://justacoustics.co/shop' },
+    robots: isFiltered ? { index: false, follow: true } : undefined,
+  }
 }
 
 const CATEGORY_LABELS: Record<string, string> = {

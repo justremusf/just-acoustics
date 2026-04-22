@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getServiceBySlug, getAllServiceSlugs, getAllProducts } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import { stripBrand } from '@/lib/seo'
 import type { Product, Service } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
@@ -53,8 +54,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const service: Service | null = await getServiceBySlug(slug).catch(() => null)
   if (!service) return {}
   return {
-    title: service.seo?.metaTitle || service.title,
+    title: stripBrand(service.seo?.metaTitle) || service.title,
     description: service.seo?.metaDescription || service.shortDescription,
+    alternates: { canonical: `https://justacoustics.co/services/${slug}` },
   }
 }
 
@@ -81,6 +83,15 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       '@type': 'LocalBusiness',
       name: 'Just Acoustics',
       url: 'https://justacoustics.co',
+      telephone: '+65 8930 1905',
+      email: 'info@justacoustics.co',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'SG',
+        addressRegion: 'Singapore',
+        addressLocality: 'Singapore',
+      },
+      areaServed: { '@type': 'Country', name: 'Singapore' },
     },
     areaServed: { '@type': 'Country', name: 'Singapore' },
     url: `https://justacoustics.co/services/${slug}`,
