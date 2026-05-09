@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getProjectBySlug, getAllProjectSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import { canonicalPath, SITE_URL } from '@/lib/seo'
 import type { Project } from '@/lib/types'
 
 export const revalidate = 60
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: project.title,
     description: project.description || fallbackDescription,
-    alternates: { canonical: `https://justacoustics.co/projects/${slug}` },
+    alternates: { canonical: canonicalPath(`/projects/${slug}`) },
     openGraph: project.mainImage
       ? { images: [{ url: urlFor(project.mainImage).width(1200).height(630).url() }] }
       : undefined,
@@ -38,9 +39,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
-      { '@type': 'ListItem', position: 2, name: 'Projects', item: 'https://justacoustics.co/projects' },
-      { '@type': 'ListItem', position: 3, name: project.title, item: `https://justacoustics.co/projects/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: canonicalPath('/projects') },
+      { '@type': 'ListItem', position: 3, name: project.title, item: canonicalPath(`/projects/${slug}`) },
     ],
   }
 

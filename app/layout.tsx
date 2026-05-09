@@ -2,13 +2,14 @@ import type { Metadata, Viewport } from 'next'
 import { Suspense } from 'react'
 import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
 import Script from 'next/script'
-import { headers } from 'next/headers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import SiteShell from '@/components/layout/SiteShell'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
+import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -46,11 +47,11 @@ export const metadata: Metadata = {
   description:
     'Acoustic Solutions for Offices, Restaurants, Churches and more in Singapore. Expert echo control, noise reduction and acoustic panel installation.',
   keywords: ['acoustic panels', 'soundproofing', 'echo control', 'Singapore', 'office acoustics'],
-  metadataBase: new URL('https://justacoustics.co'),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: 'website',
     locale: 'en_SG',
-    url: 'https://justacoustics.co',
+    url: SITE_URL,
     siteName: 'Just Acoustics',
     images: [
       {
@@ -76,9 +77,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = (await headers()).get('x-pathname') ?? ''
-  const isStandalone = pathname.startsWith('/link')
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID
@@ -153,8 +152,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               '@context': 'https://schema.org',
               '@type': ['Organization', 'LocalBusiness'],
               name: 'Just Acoustics',
-              url: 'https://justacoustics.co',
-              logo: 'https://justacoustics.co/assets/logo.png',
+              url: SITE_URL,
+              logo: SITE_LOGO_URL,
               description:
                 'Acoustic panel supply and installation for offices, restaurants, churches, studios, and more in Singapore.',
               telephone: '+65 8930 1905',
@@ -181,16 +180,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }),
           }}
         />
-        {isStandalone ? children : (
-          <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </div>
-        )}
+        <SiteShell
+          defaultShell={
+            <>
+              <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
+                <Header />
+                <main>{children}</main>
+                <Footer />
+              </div>
+              <WhatsAppButton />
+            </>
+          }
+        >
+          {children}
+        </SiteShell>
         <SpeedInsights />
         <Analytics />
-        {!isStandalone && <WhatsAppButton />}
       </body>
     </html>
   )

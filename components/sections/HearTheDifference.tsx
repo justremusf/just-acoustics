@@ -15,7 +15,7 @@ const videos = [
   {
     videoId: 'bm-q3dQWB6g',
     thumbnail: '/assets/webflow/69687d6c4e41c7a3a58f9107_Title.avif',
-    label: 'Restaurant Acoustic Treatment',
+    label: 'Noisy Restaurant Fix',
     category: 'Hospitality',
     note: 'Comfortable dining',
   },

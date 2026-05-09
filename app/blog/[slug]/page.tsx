@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { stripBrand } from '@/lib/seo'
+import { canonicalPath, SITE_LOGO_URL, SITE_URL, stripBrand } from '@/lib/seo'
 import type { Post } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
@@ -29,6 +29,24 @@ const BLOG_FAQS: FaqItem[] = [
   },
 ]
 
+const portableTextComponents = {
+  types: {
+    imagePlaceholder: () => null,
+    image: ({ value }: { value?: Post['mainImage'] }) =>
+      value?.asset ? (
+        <div className="my-8 overflow-hidden rounded-[24px]">
+          <Image
+            src={urlFor(value).width(1000).height(600).url()}
+            alt={value.alt || ''}
+            width={1000}
+            height={600}
+            className="h-full w-full object-cover"
+          />
+        </div>
+      ) : null,
+  },
+}
+
 export const revalidate = 60
 
 export async function generateStaticParams() {
@@ -43,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: stripBrand(post.seo?.metaTitle) || post.title,
     description: post.seo?.metaDescription || post.excerpt,
-    alternates: { canonical: `https://justacoustics.co/blog/${slug}` },
+    alternates: { canonical: canonicalPath(`/blog/${slug}`) },
     openGraph: post.mainImage
       ? { images: [{ url: urlFor(post.mainImage).width(1200).height(630).url() }] }
       : undefined,
@@ -66,18 +84,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     publisher: {
       '@type': 'Organization',
       name: 'Just Acoustics',
-      logo: { '@type': 'ImageObject', url: 'https://justacoustics.co/assets/logo.png' },
+      logo: { '@type': 'ImageObject', url: SITE_LOGO_URL },
     },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://justacoustics.co/blog/${slug}` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalPath(`/blog/${slug}`) },
   }
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
-      { '@type': 'ListItem', position: 2, name: 'Resource Centre', item: 'https://justacoustics.co/blog' },
-      { '@type': 'ListItem', position: 3, name: post.title, item: `https://justacoustics.co/blog/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Resource Centre', item: canonicalPath('/blog') },
+      { '@type': 'ListItem', position: 3, name: post.title, item: canonicalPath(`/blog/${slug}`) },
     ],
   }
 
@@ -114,7 +132,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {post.body && (
           <div className="rich-content max-w-none">
-            <PortableText value={post.body as Parameters<typeof PortableText>[0]['value']} />
+            <PortableText value={post.body as Parameters<typeof PortableText>[0]['value']} components={portableTextComponents} />
           </div>
         )}
       </article>

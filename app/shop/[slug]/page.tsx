@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getShopItemBySlug, getAllShopItemSlugs, getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { stripBrand } from '@/lib/seo'
+import { canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
 import type { ShopItem } from '@/lib/types'
 import ShopItemDetail from './ShopItemDetail'
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: stripBrand(item.seo?.metaTitle) || item.title,
     description: item.seo?.metaDescription || item.shortDescription,
-    alternates: { canonical: `https://justacoustics.co/shop/${slug}` },
+    alternates: { canonical: canonicalPath(`/shop/${slug}`) },
   }
 }
 
@@ -53,7 +53,7 @@ export default async function ShopItemPage({ params }: { params: Promise<{ slug:
       availability: item.inStock !== false
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      url: `https://justacoustics.co/shop/${slug}`,
+      url: canonicalPath(`/shop/${slug}`),
       seller: { '@type': 'Organization', name: 'Just Acoustics' },
     },
   }
@@ -62,9 +62,9 @@ export default async function ShopItemPage({ params }: { params: Promise<{ slug:
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
-      { '@type': 'ListItem', position: 2, name: 'Shop', item: 'https://justacoustics.co/shop' },
-      { '@type': 'ListItem', position: 3, name: item.title, item: `https://justacoustics.co/shop/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Shop', item: canonicalPath('/shop') },
+      { '@type': 'ListItem', position: 3, name: item.title, item: canonicalPath(`/shop/${slug}`) },
     ],
   }
 

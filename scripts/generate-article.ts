@@ -27,7 +27,7 @@ import { z } from 'zod'
 dotenv.config({ path: resolve(process.cwd(), '.env.local'), override: true })
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const MEMORY_OS_CONTEXT = '/Users/remusfung/Desktop/Just Acoustic Agents/context'
+const MEMORY_OS_CONTEXT = '/Users/remusfung/Desktop/AI Work/Just Acoustic Agents/context'
 const GENERATED_DIR = resolve(__dirname, '../generated')
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
@@ -473,9 +473,11 @@ async function writeAssetsFile(slug: string, article: Article) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-  const keyword = process.argv.slice(2).join(' ').trim()
+  const args = process.argv.slice(2)
+  const shouldPublish = args.includes('--publish')
+  const keyword = args.filter((arg) => arg !== '--publish').join(' ').trim()
   if (!keyword) {
-    console.error('Usage: npx tsx scripts/generate-article.ts "<keyword>"')
+    console.error('Usage: npx tsx scripts/generate-article.ts [--publish] "<keyword>"')
     process.exit(1)
   }
 
@@ -494,7 +496,7 @@ async function main() {
     thinking: { type: 'adaptive' } as unknown as Anthropic.ThinkingConfigParam,
     output_config: { effort: 'high' },
     system: buildSystemPrompt(contextBlock, liveSlugs),
-    tools: [PUBLISH_ARTICLE_TOOL as Anthropic.Tool],
+    tools: [PUBLISH_ARTICLE_TOOL as unknown as Anthropic.Tool],
     messages: [
       {
         role: 'user',
@@ -592,14 +594,17 @@ async function main() {
   console.log('  ↳ Converting body to Portable Text…')
   const portableBody = toPortableText(article.body)
 
-  console.log('  ↳ Creating Sanity draft…')
+  const contentType = /\bvs\b|versus|compare|comparison/i.test(keyword) ? 'comparison' : 'article'
+  const documentId = `${shouldPublish ? '' : 'drafts.'}${randomUUID()}`
+
+  console.log(`  ↳ Creating Sanity ${shouldPublish ? 'published post' : 'draft'}…`)
   const doc = await sanity.create({
-    _id: `drafts.${randomUUID()}`,
+    _id: documentId,
     _type: 'post',
     title: article.title,
     slug: { _type: 'slug', current: finalSlug },
     category: article.category,
-    contentType: 'article',
+    contentType,
     excerpt: article.excerpt,
     publishedAt: new Date().toISOString(),
     body: portableBody,
@@ -631,7 +636,8 @@ async function main() {
 
   console.log('\n✅ Done')
   console.log(`   Slug:        /blog/${finalSlug}`)
-  console.log(`   Draft ID:    ${doc._id}`)
+  console.log(`   Status:      ${shouldPublish ? 'published' : 'draft'}`)
+  console.log(`   Document ID: ${doc._id}`)
   console.log(`   Studio:      ${studioDraftUrl}`)
   console.log(`   Assets file: ${assetsPath}`)
   console.log(`   Word count:  ~${article.body.filter((b) => b.type === 'block').reduce((n, b) => n + ('text' in b ? b.text.split(/\s+/).length : 0), 0)} words`)

@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
+import { canonicalPath } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About Just Acoustics | Acoustic Treatment Singapore',
   description: "Learn about Just Acoustics — Singapore's acoustic treatment team for offices, worship spaces, hospitality venues, studios, and homes.",
+  alternates: { canonical: canonicalPath('/about') },
 }
 
 export default function AboutPage() {

@@ -3,35 +3,35 @@
 > Just Acoustics is a Singapore-based acoustic treatment company that supplies and installs acoustic panels for offices, restaurants, churches, schools, studios, gyms, cinemas, and homes. Services include site assessment, custom panel design, and full installation. Established 2022.
 
 ## Contact
-- Website: https://justacoustics.co
+- Website: https://www.justacoustics.co
 - WhatsApp: +65 8930 1905
 - Email: info@justacoustics.co
 - Service area: Singapore
 
 ## Core pages
-- [Home](https://justacoustics.co): Overview of acoustic panel services, projects, and products.
-- [About](https://justacoustics.co/about): Company story, mission, and credentials.
-- [Contact](https://justacoustics.co/contact): Free consultation request form.
-- [Pricing](https://justacoustics.co/pricing): Pricing structure for commercial acoustic projects.
+- [Home](https://www.justacoustics.co): Overview of acoustic panel services, projects, and products.
+- [About](https://www.justacoustics.co/about): Company story, mission, and credentials.
+- [Contact](https://www.justacoustics.co/contact): Free consultation request form.
+- [Pricing](https://www.justacoustics.co/pricing): Pricing structure for commercial acoustic projects.
 
 ## Services
-- [All services](https://justacoustics.co/services): Overview of every acoustic service we offer.
-- [Offices & Meeting Rooms](https://justacoustics.co/services/offices-meeting-rooms): Echo control and call clarity for workplaces.
-- [Restaurants, Cafes & Bars](https://justacoustics.co/services/restaurants-cafes-bars): Noise reduction for hospitality venues.
-- [Churches & Event Spaces](https://justacoustics.co/services/churches-event-spaces): Speech intelligibility for worship and event halls.
-- [Education Spaces](https://justacoustics.co/services/education-spaces): Acoustic treatment for classrooms and learning environments.
-- [Gym & Leisure Spaces](https://justacoustics.co/services/gym-leisure-spaces): Sound dampening for high-impact activity rooms.
-- [Cinema & Music Studios](https://justacoustics.co/services/cinema-music-studios): Studio-grade acoustic environments.
+- [All services](https://www.justacoustics.co/services): Overview of every acoustic service we offer.
+- [Offices & Meeting Rooms](https://www.justacoustics.co/services/offices-meeting-rooms): Echo control and call clarity for workplaces.
+- [Restaurants, Cafes & Bars](https://www.justacoustics.co/services/restaurants-cafes-bars): Noise reduction for hospitality venues.
+- [Churches & Event Spaces](https://www.justacoustics.co/services/churches-event-spaces): Speech intelligibility for worship and event halls.
+- [Education Spaces](https://www.justacoustics.co/services/education-spaces): Acoustic treatment for classrooms and learning environments.
+- [Gym & Leisure Spaces](https://www.justacoustics.co/services/gym-leisure-spaces): Sound dampening for high-impact activity rooms.
+- [Cinema & Music Studios](https://www.justacoustics.co/services/cinema-music-studios): Studio-grade acoustic environments.
 
 ## Shop
-- [Shop home](https://justacoustics.co/shop): Browse acoustic panels and accessories online.
+- [Shop home](https://www.justacoustics.co/shop): Browse acoustic panels and accessories online.
 - Categories: Package Deals, Standard Panels, Custom Panels, Ceiling Panels, Accessories.
 
 ## Projects
-- [Project portfolio](https://justacoustics.co/projects): Completed installations across hospitality, worship, education, office, and lifestyle spaces in Singapore.
+- [Project portfolio](https://www.justacoustics.co/projects): Completed installations across hospitality, worship, education, office, and lifestyle spaces in Singapore.
 
 ## Resources
-- [Resource Center / Blog](https://justacoustics.co/blog): Acoustic education, buying guides, comparisons, videos, and case studies.
+- [Resource Center / Blog](https://www.justacoustics.co/blog): Acoustic education, buying guides, comparisons, videos, and case studies.
 
 ## Sitemaps
-- https://justacoustics.co/sitemap.xml
+- https://www.justacoustics.co/sitemap.xml

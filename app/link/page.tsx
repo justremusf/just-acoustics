@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const links = [
   {
-    href: 'https://justacoustics.co',
+    href: 'https://www.justacoustics.co',
     label: 'Visit our website',
     sub: 'justacoustics.co',
     color: '#FF6B00',
@@ -27,7 +27,7 @@ const links = [
     ),
   },
   {
-    href: 'https://justacoustics.co/projects',
+    href: 'https://www.justacoustics.co/projects',
     label: 'See our projects',
     sub: 'Completed installations',
     color: '#6C5CE7',
@@ -78,7 +78,7 @@ const links = [
     ),
   },
   {
-    href: 'https://justacoustics.co/#faq',
+    href: 'https://www.justacoustics.co/#faq',
     label: 'Frequently asked questions',
     sub: 'Quick acoustic answers',
     color: '#00B09B',
@@ -591,7 +591,7 @@ export default function LinkInBioPage() {
           </div>
 
           <div className="lib-footer">
-            <p>© Just Acoustics Singapore &nbsp;·&nbsp; <a href="https://justacoustics.co/privacy-policy">Privacy Policy</a></p>
+            <p>© Just Acoustics Singapore &nbsp;·&nbsp; <a href="https://www.justacoustics.co/privacy-policy">Privacy Policy</a></p>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import type { ShopItem } from '@/lib/types'
 import ShopFilters from '@/components/sections/ShopFilters'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
+import { canonicalPath } from '@/lib/seo'
 
 const SHOP_FAQS: FaqItem[] = [
   {
@@ -39,7 +40,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   return {
     title: 'Shop',
     description: 'Shop acoustic panels and soundproofing products from Just Acoustics, Singapore.',
-    alternates: { canonical: 'https://justacoustics.co/shop' },
+    alternates: { canonical: canonicalPath('/shop') },
     robots: isFiltered ? { index: false, follow: true } : undefined,
   }
 }

@@ -35,6 +35,9 @@ yarn-error.log*
 next-env.d.ts
 .gstack/
 .claude/
+.local-config/
+.seo-cache/
+generated/*.log
 .next_stale*/
 .next_stale_*/
 *.bak

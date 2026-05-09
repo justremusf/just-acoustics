@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       subject: 'Thanks for reaching out — Just Acoustics',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #333;">
-          <img src="https://justacoustics.co/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg" alt="Just Acoustics" style="width: 180px; margin-bottom: 32px;" />
+          <img src="https://www.justacoustics.co/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg" alt="Just Acoustics" style="width: 180px; margin-bottom: 32px;" />
           <h1 style="font-size: 24px; font-weight: 600; margin: 0 0 16px; color: #010101;">Hi ${name}, we've received your enquiry!</h1>
           <p style="margin: 0 0 16px; line-height: 1.6; color: #4a4a4a;">
             Thank you for reaching out to Just Acoustics. One of our acoustic specialists will be in touch with you within 1 hour.

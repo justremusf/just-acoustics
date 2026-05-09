@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getServiceBySlug, getAllServiceSlugs, getAllProducts } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { stripBrand } from '@/lib/seo'
+import { canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
 import type { Product, Service } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: stripBrand(service.seo?.metaTitle) || service.title,
     description: service.seo?.metaDescription || service.shortDescription,
-    alternates: { canonical: `https://justacoustics.co/services/${slug}` },
+    alternates: { canonical: canonicalPath(`/services/${slug}`) },
   }
 }
 
@@ -82,7 +82,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     provider: {
       '@type': 'LocalBusiness',
       name: 'Just Acoustics',
-      url: 'https://justacoustics.co',
+      url: SITE_URL,
       telephone: '+65 8930 1905',
       email: 'info@justacoustics.co',
       address: {
@@ -94,16 +94,16 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       areaServed: { '@type': 'Country', name: 'Singapore' },
     },
     areaServed: { '@type': 'Country', name: 'Singapore' },
-    url: `https://justacoustics.co/services/${slug}`,
+    url: canonicalPath(`/services/${slug}`),
   }
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://justacoustics.co' },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://justacoustics.co/services' },
-      { '@type': 'ListItem', position: 3, name: service.title, item: `https://justacoustics.co/services/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalPath('/services') },
+      { '@type': 'ListItem', position: 3, name: service.title, item: canonicalPath(`/services/${slug}`) },
     ],
   }
 

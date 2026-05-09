@@ -1032,7 +1032,7 @@ export default function HeaderClient({
               </div>
               <div className="mt-5">
                 <Link href="/contact" onClick={closeMobile} className="block no-underline">
-                  <ShimmerButton className="h-auto w-full px-8 py-4 text-base">
+                  <ShimmerButton className="h-auto w-full px-8 py-4 text-base hover:scale-[1.01] hover:shadow-[0_0_18px_4px_rgba(255,165,0,0.36)]">
                     Free Consultation
                   </ShimmerButton>
                 </Link>

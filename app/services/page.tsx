@@ -6,6 +6,7 @@ import { urlFor } from '@/sanity/lib/image'
 import type { Service } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
+import { canonicalPath } from '@/lib/seo'
 
 const SERVICES_FAQS: FaqItem[] = [
   {
@@ -34,7 +35,9 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Acoustic Services',
-  description: 'Office acoustics, restaurant sound treatment, church audio, studio soundproofing and more across Singapore.',
+  description:
+    'Acoustic services for offices, restaurants, churches, schools, studios, gyms, and homes across Singapore, from assessment to installation.',
+  alternates: { canonical: canonicalPath('/services') },
 }
 
 export default async function ServicesPage() {

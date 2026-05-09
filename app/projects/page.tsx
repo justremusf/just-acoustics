@@ -6,6 +6,7 @@ import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
+import { canonicalPath } from '@/lib/seo'
 
 const PROJECTS_FAQS: FaqItem[] = [
   {
@@ -37,7 +38,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   return {
     title: 'Projects',
     description: 'View our portfolio of completed acoustic panel installations across offices, restaurants, churches and more in Singapore.',
-    alternates: { canonical: 'https://justacoustics.co/projects' },
+    alternates: { canonical: canonicalPath('/projects') },
     robots: category ? { index: false, follow: true } : undefined,
   }
 }

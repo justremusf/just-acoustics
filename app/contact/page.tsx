@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import { canonicalPath } from '@/lib/seo'
 
 const consultationSteps = [
   'Submit the form',
@@ -10,7 +11,9 @@ const consultationSteps = [
 
 export const metadata: Metadata = {
   title: 'Contact — Free Consultation',
-  description: 'Get your free acoustic consultation. Complete the form and our team will be in touch within 1 hour.',
+  description:
+    'Book a free acoustic consultation in Singapore. Send your room details and the Just Acoustics team will respond with the next step.',
+  alternates: { canonical: canonicalPath('/contact') },
 }
 
 export default function ContactPage() {

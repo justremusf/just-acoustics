@@ -6,6 +6,7 @@ import { urlFor } from '@/sanity/lib/image'
 import type { Product } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
+import { canonicalPath } from '@/lib/seo'
 
 const PRODUCTS_FAQS: FaqItem[] = [
   {
@@ -34,7 +35,9 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Acoustic Products',
-  description: 'Browse our range of acoustic panels, ceiling panels, and custom solutions for any space in Singapore.',
+  description:
+    'Browse acoustic wall panels, ceiling panels, custom panels, and sound treatment products for offices, homes, and commercial spaces in Singapore.',
+  alternates: { canonical: canonicalPath('/products') },
 }
 
 const CATEGORY_LABELS: Record<string, string> = {

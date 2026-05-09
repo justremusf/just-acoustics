@@ -110,7 +110,7 @@ export default function FAQ({
           <div>
             <span className="soft-pill">FAQ</span>
             <h2 className="home-heading mt-5 text-[var(--color-dark-100)]">{title}</h2>
-            <p className="home-copy mt-5 max-w-[40ch]">{subtitle}</p>
+            {subtitle ? <p className="home-copy mt-5 max-w-[40ch]">{subtitle}</p> : null}
           </div>
           <div>
             {items.map((faq) => (
