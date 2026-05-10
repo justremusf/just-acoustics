@@ -19,8 +19,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="page-wrap page-stack">
-      <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
-
       <section className="home-shell page-hero-shell flex flex-col gap-5 text-center">
         <span className="soft-pill mx-auto">Contact</span>
         <h1
@@ -64,7 +62,6 @@ export default function ContactPage() {
         <div className="home-shell overflow-hidden rounded-[32px] p-0 sm:p-5 md:p-8 lg:flex lg:h-full lg:flex-col lg:p-10">
           <iframe
             src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-            loading="lazy"
             width="100%"
             height="640"
             frameBorder="0"

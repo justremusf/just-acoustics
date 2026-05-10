@@ -48,11 +48,12 @@ function ensureDOM() {
 function playSingleThump(multiplier: number, freqModifier: number = 1) {
   if (!audioCtx || !audioFilter || !audioGain || !audioBuffer) return;
 
-  audioGain.gain.value = multiplier;
+  // Reduced volume for a more subtle, premium feel
+  audioGain.gain.value = multiplier * 0.7;
 
-  // Add slight randomization to frequency for a more mechanical feel
-  const baseFreq = 2000 + multiplier * 2000;
-  const jitter = 1 + (Math.random() - 0.5) * 0.2;
+  // Lowered base frequency for a deeper, less "snappy" sound
+  const baseFreq = 1500 + multiplier * 1500;
+  const jitter = 1 + (Math.random() - 0.5) * 0.1; // Less jitter for more consistency
   audioFilter.frequency.value = baseFreq * jitter * freqModifier;
 
   const source = audioCtx.createBufferSource();
@@ -66,35 +67,36 @@ function playSingleThump(multiplier: number, freqModifier: number = 1) {
 function playAudioThump(intensity: HapticIntensity) {
   switch (intensity) {
     case 'success':
-      // Two-stage Apple Pay style (light click, then deep solid click)
-      playSingleThump(0.6, 1.2); 
-      setTimeout(() => playSingleThump(1.0, 0.8), 120);
+      // Two-stage Apple Pay style - Slower and deeper
+      playSingleThump(0.4, 0.8); 
+      setTimeout(() => playSingleThump(0.8, 0.6), 250); // Increased delay
       break;
     case 'error':
-      // Triple fast buzz
-      playSingleThump(0.8, 1.5);
-      setTimeout(() => playSingleThump(0.8, 1.5), 80);
-      setTimeout(() => playSingleThump(0.8, 1.5), 160);
+      // Triple fast buzz - slowed down slightly
+      playSingleThump(0.6, 1.2);
+      setTimeout(() => playSingleThump(0.6, 1.2), 120);
+      setTimeout(() => playSingleThump(0.6, 1.2), 240);
       break;
     case 'nudge':
-      playSingleThump(0.7);
-      setTimeout(() => playSingleThump(0.4), 80);
+      // Subtle double bump
+      playSingleThump(0.5, 0.9);
+      setTimeout(() => playSingleThump(0.3, 0.8), 150); // Increased delay
       break;
     case 'soft':
-      playSingleThump(0.3, 1.5); // Higher pitch, lower volume = softer click
+      playSingleThump(0.2, 1.2); // Extremely subtle
       break;
     case 'rigid':
-      playSingleThump(1.0, 0.7); // Lower pitch, high volume = rigid thud
+      playSingleThump(0.9, 0.5); // Deep, solid thud (lower freq)
       break;
     case 'heavy':
-      playSingleThump(1.0);
+      playSingleThump(0.8, 0.8);
       break;
     case 'medium':
-      playSingleThump(0.7);
+      playSingleThump(0.5, 0.9);
       break;
     case 'light':
     default:
-      playSingleThump(0.4);
+      playSingleThump(0.3, 1.0);
       break;
   }
 }

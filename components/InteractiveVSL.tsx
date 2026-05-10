@@ -19,6 +19,7 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
 
   const {
     videoRef,
+    ambientVideoRef,
     containerRef,
     speedMenuRef,
     speedButtonRef,
@@ -90,15 +91,30 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
             >
               <div
                 className={[
-                  'relative overflow-hidden bg-[var(--color-dark-100)] bg-cover bg-center',
+                  'relative overflow-hidden bg-[var(--color-dark-100)] bg-center',
                   fullscreenActive
-                    ? 'h-[100dvh] w-[100vw] rounded-none'
-                    : 'aspect-[9/16] rounded-[24px] sm:aspect-video',
+                    ? 'h-[100dvh] w-[100vw] rounded-none bg-black'
+                    : 'aspect-[9/16] rounded-[24px] sm:aspect-video bg-cover',
                 ].join(' ')}
-                style={{ backgroundImage: `url("${activeVideo.poster}")` }}
+                style={!fullscreenActive ? { backgroundImage: `url("${activeVideo.poster}")` } : undefined}
               >
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.10),rgba(1,1,1,0.72))]" />
                 <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-28 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),rgba(0,0,0,0))]" />
+
+                {/* Ambient Blurred Background (YouTube style) */}
+                {!videoError && fullscreenActive && (
+                  <video
+                    ref={ambientVideoRef}
+                    className="pointer-events-none absolute inset-0 z-0 h-full w-full scale-[1.2] object-cover opacity-60 blur-[60px] saturate-150 transition-opacity duration-1000"
+                    playsInline
+                    autoPlay
+                    muted
+                    loop
+                  >
+                    {activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
+                    <source src={activeVideo.videoMp4} type="video/mp4" />
+                  </video>
+                )}
 
                 {!videoError && (
                   <video

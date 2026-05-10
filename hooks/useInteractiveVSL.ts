@@ -47,6 +47,7 @@ export function formatTime(value: number) {
 
 export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: string) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const ambientVideoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const speedMenuRef = useRef<HTMLDivElement>(null)
   const speedButtonRef = useRef<HTMLButtonElement>(null)
@@ -84,8 +85,9 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   const formattedTotal = formatTime(duration)
   const progressForTracker = progress
   const showInitialPlay = !videoError && !selectedCategory && !hasStartedWithAudio
+  const isAutoPlayingSilently = isPlaying && isMuted && !hasStartedWithAudio
   const showCenterPlay =
-    !isPlaying && (showInitialPlay || (!videoError && autoplayBlocked && !showSelector && !showFinalCta))
+    (!isPlaying && (showInitialPlay || (!videoError && autoplayBlocked && !showSelector && !showFinalCta))) || isAutoPlayingSilently
   const showResumePlay =
     !videoError && !showCenterPlay && !showSelector && !showFinalCta && !isPlaying && currentTime > 0.1
   const fullscreenActive = isFullscreen || isPseudoFullscreen
@@ -108,6 +110,16 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     video.muted = isMuted
     video.volume = isMuted ? 0 : 1
     video.playbackRate = playbackRate
+
+    const ambient = ambientVideoRef.current
+    if (ambient) {
+      ambient.playbackRate = playbackRate
+      if (!video.paused) {
+        ambient.play().catch(() => {})
+      } else {
+        ambient.pause()
+      }
+    }
   }, [isMuted, playbackRate])
 
   const stopProgressAnimation = useCallback(() => {
@@ -715,6 +727,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   return {
     refs: {
       videoRef,
+      ambientVideoRef,
       containerRef,
       speedMenuRef,
       speedButtonRef,
