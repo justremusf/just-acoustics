@@ -82,11 +82,11 @@ export default function Solutions() {
             {solutions.map((solution, index) => (
               <article
                 key={solution.title}
-                className={`overflow-hidden rounded-[26px] border border-black/6 ${solution.surfaceClass} p-5 shadow-[0_18px_42px_rgba(0,0,0,0.05)] sm:p-6`}
+                className={`group overflow-hidden rounded-[26px] border border-black/6 ${solution.surfaceClass} p-5 shadow-[0_18px_42px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-black/10 hover:shadow-[0_32px_72px_rgba(0,0,0,0.08),0_12px_30px_rgba(0,0,0,0.04)] sm:p-6`}
               >
                 <div className="grid gap-5 md:grid-cols-[auto_minmax(0,1fr)] xl:grid-cols-[auto_minmax(0,0.72fr)_minmax(360px,0.9fr)] xl:items-start">
                   <div
-                    className={`flex h-14 w-14 items-center justify-center rounded-[18px] border ${solution.iconShellClass} shadow-[0_10px_24px_rgba(0,0,0,0.04)]`}
+                    className={`flex h-14 w-14 items-center justify-center rounded-[18px] border ${solution.iconShellClass} shadow-[0_10px_24px_rgba(0,0,0,0.04)] transition-transform duration-300 group-hover:scale-105`}
                   >
                     <Image src={solution.icon} alt={solution.title} width={42} height={42} sizes="42px" />
                   </div>
