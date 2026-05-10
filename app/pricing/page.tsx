@@ -168,7 +168,9 @@ export default async function PricingPage() {
                       >
                         {factor.title}
                       </h3>
-                      <p className="mt-4 mb-0 max-w-[42ch] text-lg leading-8 text-[var(--color-gray-100)]">{factor.body}</p>
+                      <p className="mt-4 mb-0 max-w-[42ch] text-base leading-relaxed text-[var(--color-gray-100)] md:text-lg md:leading-8">
+                        {factor.body}
+                      </p>
                     </div>
                   </div>
                 )

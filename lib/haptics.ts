@@ -1,14 +1,14 @@
 export type HapticIntensity = 'light' | 'medium' | 'heavy' | 'success' | 'error' | 'soft' | 'rigid' | 'nudge';
 
 const HAPTIC_PATTERNS: Record<HapticIntensity, number | number[]> = {
-  light: 10,
-  medium: 20,
-  heavy: 30,
-  soft: 5,
-  rigid: 15,
-  nudge: [15, 30, 10],
-  success: [15, 100, 30], // Two-stage Apple Pay style
-  error: [10, 50, 10, 50, 10], // Triple buzz
+  light: 15,
+  medium: 35,
+  heavy: 60,
+  soft: 10,
+  rigid: 25,
+  nudge: [20, 40, 15],
+  success: [20, 120, 40], 
+  error: [15, 60, 15, 60, 15],
 };
 
 // --- Advanced Web Haptics State ---
@@ -48,12 +48,12 @@ function ensureDOM() {
 function playSingleThump(multiplier: number, freqModifier: number = 1) {
   if (!audioCtx || !audioFilter || !audioGain || !audioBuffer) return;
 
-  // Reduced volume for a more subtle, premium feel
-  audioGain.gain.value = multiplier * 0.7;
+  // Increased volume for a more present, tactile feel
+  audioGain.gain.value = multiplier * 0.9;
 
-  // Lowered base frequency for a deeper, less "snappy" sound
-  const baseFreq = 1500 + multiplier * 1500;
-  const jitter = 1 + (Math.random() - 0.5) * 0.1; // Less jitter for more consistency
+  // SIGNIFICANTLY lowered base frequency for a deep, bassy thump (Premium feel)
+  const baseFreq = 150 + multiplier * 350;
+  const jitter = 1 + (Math.random() - 0.5) * 0.05; 
   audioFilter.frequency.value = baseFreq * jitter * freqModifier;
 
   const source = audioCtx.createBufferSource();
@@ -119,9 +119,9 @@ export function triggerHaptic(intensity: HapticIntensity = 'light') {
         audioCtx = new Ctx();
 
         audioFilter = audioCtx.createBiquadFilter();
-        audioFilter.type = 'bandpass';
-        audioFilter.frequency.value = 4000;
-        audioFilter.Q.value = 8;
+        audioFilter.type = 'lowpass'; // Switched to lowpass for more bass
+        audioFilter.frequency.value = 800; // Cut off high frequencies
+        audioFilter.Q.value = 2; // Smoother curve
 
         audioGain = audioCtx.createGain();
         
@@ -129,11 +129,12 @@ export function triggerHaptic(intensity: HapticIntensity = 'light') {
         audioGain.connect(audioCtx.destination);
 
         // Create a tiny noise buffer
-        const duration = 0.004;
+        // Create a slightly longer noise buffer with slower decay for more "body"
+        const duration = 0.04;
         audioBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * duration, audioCtx.sampleRate);
         const channelData = audioBuffer.getChannelData(0);
         for (let i = 0; i < channelData.length; i++) {
-          channelData[i] = (Math.random() * 2 - 1) * Math.exp(-i / 25);
+          channelData[i] = (Math.random() * 2 - 1) * Math.exp(-i / 150);
         }
       }
     }
