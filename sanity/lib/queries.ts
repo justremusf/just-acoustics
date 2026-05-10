@@ -183,3 +183,37 @@ export async function getSiteSettings() {
     }
   `)
 }
+
+// ─── Navigation Menu Queries (lightweight — header dropdowns only) ─────────────
+
+export async function getMenuProducts() {
+  return client.fetch(`
+    *[_type == "product" && !(_id in path("drafts.**"))] | order(_createdAt asc) {
+      _id, title, "slug": slug.current, category
+    }
+  `)
+}
+
+export async function getMenuServices() {
+  return client.fetch(`
+    *[_type == "service" && !(_id in path("drafts.**"))] | order(_createdAt asc) {
+      _id, title, "slug": slug.current, shortDescription
+    }
+  `)
+}
+
+export async function getMenuProjects() {
+  return client.fetch(`
+    *[_type == "project" && !(_id in path("drafts.**"))] {
+      _id, category
+    }
+  `)
+}
+
+export async function getMenuShopItems() {
+  return client.fetch(`
+    *[_type == "shopItem" && !(_id in path("drafts.**"))] | order(_createdAt asc) {
+      _id, title, "slug": slug.current, category
+    }
+  `)
+}

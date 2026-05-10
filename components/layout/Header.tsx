@@ -1,50 +1,40 @@
-import type { Product, Project, Service, ShopItem } from '@/lib/types'
 import {
-  getAllProducts,
-  getAllProjects,
-  getAllServices,
-  getAllShopItems,
+  getMenuProducts,
+  getMenuServices,
+  getMenuShopItems,
+  getMenuProjects,
 } from '@/sanity/lib/queries'
 import HeaderClient from './HeaderClient'
 
-function mapSluggedItems<T extends { title: string; slug: { current: string }; category?: string }>(
-  items: T[]
-) {
-  return items.flatMap((item) =>
-    item.slug?.current
-      ? [{ title: item.title, slug: item.slug.current, category: item.category }]
-      : []
-  )
-}
-
 export default async function Header() {
-  const [shopItems, products, services, projects]: [ShopItem[], Product[], Service[], Project[]] = await Promise.all([
-    getAllShopItems().catch(() => [] as ShopItem[]),
-    getAllProducts().catch(() => [] as Product[]),
-    getAllServices().catch(() => [] as Service[]),
-    getAllProjects().catch(() => [] as Project[]),
+  const [shopItems, products, services, projects] = await Promise.all([
+    getMenuShopItems().catch(() => [] as { _id: string; title: string; slug: string; category?: string }[]),
+    getMenuProducts().catch(() => [] as { _id: string; title: string; slug: string; category?: string }[]),
+    getMenuServices().catch(() => [] as { _id: string; title: string; slug: string; shortDescription?: string }[]),
+    getMenuProjects().catch(() => [] as { _id: string; category?: string }[]),
   ])
 
-  const serviceItems = services.flatMap((service) =>
-    service.slug?.current
-      ? [
-          {
-            title: service.title,
-            slug: service.slug.current,
-            shortDescription: service.shortDescription,
-          },
-        ]
+  const serviceItems = services.flatMap((service: { _id: string; title: string; slug: string; shortDescription?: string }) =>
+    service.slug
+      ? [{ title: service.title, slug: service.slug, shortDescription: service.shortDescription }]
       : []
   )
 
-  const projectCategories = projects.flatMap((project) =>
+  const projectCategories = projects.flatMap((project: { _id: string; category?: string }) =>
     project.category ? [project.category] : []
   )
 
+  // getMenu* queries already return slug as a flat string (slug.current projected),
+  // so we wrap them to match the { slug: { current: string } } shape HeaderClient expects.
+  const toSluggedItems = (items: { _id: string; title: string; slug: string; category?: string }[]) =>
+    items.flatMap((item) =>
+      item.slug ? [{ title: item.title, slug: item.slug, category: item.category }] : []
+    )
+
   return (
     <HeaderClient
-      shopItems={mapSluggedItems(shopItems)}
-      products={mapSluggedItems(products)}
+      shopItems={toSluggedItems(shopItems)}
+      products={toSluggedItems(products)}
       services={serviceItems}
       projectCategories={projectCategories}
     />

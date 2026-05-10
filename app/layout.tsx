@@ -9,6 +9,7 @@ import Footer from '@/components/layout/Footer'
 import SiteShell from '@/components/layout/SiteShell'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
+import HapticProvider from '@/components/providers/HapticProvider'
 import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
@@ -91,112 +92,115 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}
     >
       <body suppressHydrationWarning className="bg-white">
-        {hasTracking && (
-          <>
-            {gtagId && (
-              <>
-                <Script
-                  src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-                  strategy="afterInteractive"
-                />
-                <Script id="gtag-init" strategy="afterInteractive">
-                  {`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    window.gtag = gtag;
-                    gtag('js', new Date());
-                    ${gaId ? `gtag('config', '${gaId}', { send_page_view: false });` : ''}
-                    ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
-                  `}
-                </Script>
-              </>
-            )}
-            {metaPixelId && (
-              <>
-                <Script id="meta-pixel-base" strategy="afterInteractive">
-                  {`
-                    !function(f,b,e,v,n,t,s)
-                    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                    n.queue=[];t=b.createElement(e);t.async=!0;
-                    t.src=v;s=b.getElementsByTagName(e)[0];
-                    s.parentNode.insertBefore(t,s)}(window, document,'script',
-                    'https://connect.facebook.net/en_US/fbevents.js');
-                    fbq('init', '${metaPixelId}');
-                    fbq('track', 'PageView');
-                  `}
-                </Script>
-                <noscript>
-                  <img
-                    height="1"
-                    width="1"
-                    style={{ display: 'none' }}
-                    src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
-                    alt=""
+        <HapticProvider>
+          {hasTracking && (
+            <>
+              {gtagId && (
+                <>
+                  <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
+                    strategy="afterInteractive"
                   />
-                </noscript>
-              </>
-            )}
-            {gaId && (
-              <Suspense fallback={null}>
-                <GaPageViewTracker gaId={gaId} />
-              </Suspense>
-            )}
-          </>
-        )}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': ['Organization', 'LocalBusiness'],
-              name: 'Just Acoustics',
-              url: SITE_URL,
-              logo: SITE_LOGO_URL,
-              description:
-                'Acoustic panel supply and installation for offices, restaurants, churches, studios, and more in Singapore.',
-              telephone: '+65 8930 1905',
-              email: 'info@justacoustics.co',
-              priceRange: '$$',
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'SG',
-                addressRegion: 'Singapore',
-                addressLocality: 'Singapore',
-              },
-              areaServed: { '@type': 'Country', name: 'Singapore' },
-              contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'customer service',
+                  <Script id="gtag-init" strategy="afterInteractive">
+                    {`
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      window.gtag = gtag;
+                      gtag('js', new Date());
+                      ${gaId ? `gtag('config', '${gaId}', { send_page_view: false });` : ''}
+                      ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
+                    `}
+                  </Script>
+                </>
+              )}
+              {metaPixelId && (
+                <>
+                  <Script id="meta-pixel-base" strategy="afterInteractive">
+                    {`
+                      !function(f,b,e,v,n,t,s)
+                      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                      n.queue=[];t=b.createElement(e);t.async=!0;
+                      t.src=v;s=b.getElementsByTagName(e)[0];
+                      s.parentNode.insertBefore(t,s)}(window, document,'script',
+                      'https://connect.facebook.net/en_US/fbevents.js');
+                      fbq('init', '${metaPixelId}');
+                      fbq('track', 'PageView');
+                    `}
+                  </Script>
+                  <noscript>
+                    <img
+                      height="1"
+                      width="1"
+                      style={{ display: 'none' }}
+                      src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
+                      alt=""
+                    />
+                  </noscript>
+                </>
+              )}
+              {gaId && (
+                <Suspense fallback={null}>
+                  <GaPageViewTracker gaId={gaId} />
+                </Suspense>
+              )}
+            </>
+          )}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': ['Organization', 'LocalBusiness'],
+                name: 'Just Acoustics',
+                url: SITE_URL,
+                logo: SITE_LOGO_URL,
+                description:
+                  'Acoustic panel supply and installation for offices, restaurants, churches, studios, and more in Singapore.',
                 telephone: '+65 8930 1905',
                 email: 'info@justacoustics.co',
-                availableLanguage: 'English',
-              },
-              sameAs: [
-                'https://www.instagram.com/justacoustics',
-                'https://www.facebook.com/justacoustics',
-              ],
-            }),
-          }}
-        />
-        <SiteShell
-          defaultShell={
-            <>
-              <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
-                <Header />
-                <main>{children}</main>
-                <Footer />
-              </div>
-              <WhatsAppButton />
-            </>
-          }
-        >
-          {children}
-        </SiteShell>
-        <SpeedInsights />
-        <Analytics />
+                priceRange: '$$',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'SG',
+                  addressRegion: 'Singapore',
+                  addressLocality: 'Singapore',
+                },
+                areaServed: { '@type': 'Country', name: 'Singapore' },
+                contactPoint: {
+                  '@type': 'ContactPoint',
+                  contactType: 'customer service',
+                  telephone: '+65 8930 1905',
+                  email: 'info@justacoustics.co',
+                  availableLanguage: 'English',
+                },
+                sameAs: [
+                  'https://www.instagram.com/justacoustics',
+                  'https://www.facebook.com/justacoustics',
+                ],
+              }),
+            }}
+          />
+          <SiteShell
+            defaultShell={
+              <>
+                <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+                </div>
+                <WhatsAppButton />
+              </>
+            }
+          >
+            {children}
+          </SiteShell>
+          <SpeedInsights />
+          <Analytics />
+        </HapticProvider>
       </body>
     </html>
   )
 }
+

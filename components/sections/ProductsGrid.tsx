@@ -53,66 +53,8 @@ export default function ProductsGrid({ products }: Props) {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:hidden">
-            {items.map((product) => {
-              const p = product as Product | FallbackProduct
-              const isFallback = '_fallbackSrc' in (p.mainImage || {})
-              const imgSrc = isFallback
-                ? (p.mainImage as FallbackProduct['mainImage'])._fallbackSrc!
-                : p.mainImage
-                ? urlFor(p.mainImage as Product['mainImage'] & {}).width(500).url()
-                : '/placeholder.jpg'
-
-              return (
-                <Link
-                  key={p._id}
-                  href={`/products/${p.slug.current}`}
-                  className="glass-card group block overflow-hidden rounded-[24px] border border-white/55 bg-white/35 no-underline shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="overflow-hidden rounded-t-[20px] rounded-b-none">
-                    <Image
-                      src={imgSrc}
-                      alt={p.title}
-                      width={320}
-                      height={220}
-                      sizes="(max-width: 767px) calc(100vw - 32px)"
-                      className="h-[220px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      unoptimized={isFallback}
-                    />
-                  </div>
-                  <div className="p-5">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
-                      Product
-                    </span>
-                    <h3 className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
-                      {p.title}
-                    </h3>
-                  </div>
-                </Link>
-              )
-            })}
-
-            <div className="flex justify-end px-1">
-              <Link href="/products" className="home-link inline-flex items-center gap-2">
-                See all solutions <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-
-            <div className="glass-card flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
-              <div>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
-                <h3 className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
-                  Which solution fits my space?
-                </h3>
-                <p className="mt-4 text-sm leading-6 text-[var(--color-gray-100)]">Tell us about the room and we’ll point you toward the right panel system.</p>
-              </div>
-              <Link href="/contact" className="mt-6 no-underline">
-                <ShimmerButton className="h-auto w-full px-5 py-3 text-sm">Contact Us</ShimmerButton>
-              </Link>
-            </div>
-        </div>
-
-        <div className="hidden md:grid md:grid-cols-3 md:gap-4 xl:grid-cols-4">
+        {/* Single responsive grid — no hidden/duplicate rendering */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-4">
           {items.map((product) => {
             const p = product as Product | FallbackProduct
             const isFallback = '_fallbackSrc' in (p.mainImage || {})
@@ -134,14 +76,19 @@ export default function ProductsGrid({ products }: Props) {
                     alt={p.title}
                     width={320}
                     height={240}
-                    sizes="(max-width: 1279px) calc(33vw - 32px), calc(25vw - 32px)"
-                    className="h-[240px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc(33vw - 32px), calc(25vw - 32px)"
+                    className="h-[220px] w-full object-cover transition-transform duration-700 group-hover:scale-105 md:h-[240px]"
                     unoptimized={isFallback}
                   />
                 </div>
                 <div className="p-5">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Product</span>
-                  <h3 className="mt-3 text-[26px] leading-[1.04] font-medium tracking-[-1px] text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
+                    Product
+                  </span>
+                  <h3
+                    className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)] md:text-[26px] md:tracking-[-1px]"
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
                     {p.title}
                   </h3>
                 </div>
@@ -149,16 +96,37 @@ export default function ProductsGrid({ products }: Props) {
             )
           })}
 
-          <div className="glass-card col-span-3 flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-6 text-center shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 xl:col-span-1">
-            <div className="mx-auto max-w-[620px]">
+          {/* CTA card — always last in the grid */}
+          <div className="glass-card col-span-1 flex flex-col justify-between rounded-[24px] border border-white/55 bg-white/35 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 md:p-6 md:text-center xl:col-span-1">
+            <div className="md:mx-auto md:max-w-[620px]">
               <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">Need direction</span>
-              <h3 className="mt-3 text-[28px] leading-[1.04] font-medium tracking-[-1px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
+              <h3
+                className="mt-3 text-[24px] leading-[1.04] font-medium tracking-[-0.9px] text-[var(--color-dark-100)] md:text-[28px] md:tracking-[-1px]"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
                 Not sure which panel is right for you?
               </h3>
-              <p className="mt-4 text-[15px] leading-7 text-[var(--color-gray-100)]">We’ll recommend the best acoustic treatment based on the room, not guesswork.</p>
+              <p className="mt-4 text-sm leading-6 text-[var(--color-gray-100)] md:text-[15px] md:leading-7">
+                We&apos;ll recommend the best acoustic treatment based on the room, not guesswork.
+              </p>
             </div>
-            <Link href="/contact" className="mt-6 inline-flex items-center gap-2 self-center text-sm font-semibold text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)]">
+            {/* Mobile: full-width shimmer button */}
+            <Link href="/contact" className="mt-6 no-underline md:hidden">
+              <ShimmerButton className="h-auto w-full px-5 py-3 text-sm">Contact Us</ShimmerButton>
+            </Link>
+            {/* Desktop: text link */}
+            <Link
+              href="/contact"
+              className="mt-6 hidden items-center gap-2 self-center text-sm font-semibold text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)] md:inline-flex"
+            >
               Contact Us <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          {/* Mobile-only "See all" link row */}
+          <div className="flex justify-end px-1 md:hidden">
+            <Link href="/products" className="home-link inline-flex items-center gap-2">
+              See all solutions <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

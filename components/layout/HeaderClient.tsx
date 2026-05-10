@@ -5,8 +5,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import ShimmerButton from '@/components/ui/shimmer-button'
-
-type MenuKey = 'shop' | 'solutions' | 'applications' | 'projects' | 'about'
+import {
+  type MenuKey,
+  LOGO_SRC,
+  SHOP_CATEGORY_LABELS,
+  PRODUCT_CATEGORY_LABELS,
+  PROJECT_CATEGORY_LABELS,
+  desktopNav,
+  aboutLinks,
+} from '@/data/navigationConfig'
 
 type SluggedItem = {
   title: string
@@ -53,48 +60,7 @@ interface HeaderClientProps {
   projectCategories: string[]
 }
 
-const LOGO_SRC =
-  '/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg'
-
-const SHOP_CATEGORY_LABELS: Record<string, string> = {
-  'package-deals': 'Package Deals',
-  'standard-panels': 'Standard Panels',
-  'custom-panels': 'Custom Panels',
-  'ceiling-panels': 'Ceiling Panels',
-  accessories: 'Accessories',
-}
-
-const PRODUCT_CATEGORY_LABELS: Record<string, string> = {
-  'wall-panels': 'Wall Panels',
-  'ceiling-panels': 'Ceiling Panels',
-  'custom-solutions': 'Custom Solutions',
-  soundproofing: 'Soundproofing',
-}
-
-const PROJECT_CATEGORY_LABELS: Record<string, string> = {
-  restaurants: 'Restaurants',
-  'office-spaces': 'Office Spaces',
-  schools: 'Schools',
-  'studios-homes': 'Studios & Homes',
-  churches: 'Churches',
-  'gym-leisure': 'Gym & Leisure',
-  cinema: 'Cinema',
-}
-
-const desktopNav = [
-  { key: 'applications' as const, label: 'Applications', href: '/services' },
-  { key: 'solutions' as const, label: 'Solutions', href: '/products' },
-  { key: 'projects' as const, label: 'Projects', href: '/projects' },
-  { key: 'shop' as const, label: 'Shop', href: '/shop' },
-  { key: 'about' as const, label: 'About', href: '/about' },
-]
-
-const aboutLinks = [
-  { label: 'About Us', href: '/about' },
-  { label: 'FAQ', href: '/#faq' },
-  { label: 'Acoustic Education', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
-]
+// Static nav config is now in data/navigationConfig.ts
 
 function titleize(value: string) {
   return value
