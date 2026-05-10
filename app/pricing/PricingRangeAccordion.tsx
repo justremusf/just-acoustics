@@ -28,6 +28,7 @@ function PricingRangeItem({
       className="glass-card group mb-4 cursor-pointer p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_70px_rgba(0,0,0,0.12),0_10px_28px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.78)_inset] md:p-7"
       onClick={onToggle}
       role="button"
+      aria-expanded={open}
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
