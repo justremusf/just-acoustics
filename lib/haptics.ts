@@ -14,19 +14,19 @@ export type HapticIntensity =
   | 'error_buzz';
 
 const HAPTIC_PATTERNS: Record<string, number | number[]> = {
-  light: 40,
-  medium: 60,
-  heavy: 85,
-  soft: 30,
-  rigid: 75,
-  nudge: [35, 60, 35],
-  success: [30, 80, 70], // Light nudge then deep thud
-  purchase: [30, 80, 70],
-  error: [50, 50, 50, 50, 50],
-  error_buzz: [50, 50, 50, 50, 50],
-  cart: 90, // Solid heavy thump
-  menu: 70, // Rigid mechanical click
-  tick: 30, // Soft tick
+  light: 65,
+  medium: 110,
+  heavy: 180,
+  soft: 45,
+  rigid: 150,
+  nudge: [50, 80, 50],
+  success: [45, 110, 90], // Stronger nudge then deep thud
+  purchase: [45, 110, 90],
+  error: [70, 60, 70, 60, 70],
+  error_buzz: [70, 60, 70, 60, 70],
+  cart: 200, // Very solid heavy thump
+  menu: 130, // Rigid mechanical click
+  tick: 50, // More present tick
 };
 
 // --- Advanced Web Haptics State ---
