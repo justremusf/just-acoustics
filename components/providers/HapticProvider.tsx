@@ -77,7 +77,7 @@ export default function HapticProvider({ children }: { children: React.ReactNode
       } else if (isToggleInput) {
         intensity = 'tick'
       } else if (isPrimaryBtn) {
-        intensity = 'medium'
+        intensity = 'heavy'
       } else if (tagName === 'a' || tagName === 'button' || role === 'button') {
         // Standard buttons and links get a high-end "tick"
         intensity = 'tick'
