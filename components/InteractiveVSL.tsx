@@ -104,12 +104,11 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                 {/* Ambient Blurred Background (YouTube style) */}
                 {!videoError && fullscreenActive && (
                   <video
+                    key={sourceKey + '-ambient'}
                     ref={ambientVideoRef}
                     className="pointer-events-none absolute inset-0 z-0 h-full w-full scale-[1.2] object-cover opacity-60 blur-[60px] saturate-150 transition-opacity duration-1000"
                     playsInline
-                    autoPlay
                     muted
-                    loop
                   >
                     {activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
                     <source src={activeVideo.videoMp4} type="video/mp4" />

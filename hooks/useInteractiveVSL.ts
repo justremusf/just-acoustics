@@ -114,7 +114,10 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     const ambient = ambientVideoRef.current
     if (ambient) {
       ambient.playbackRate = playbackRate
-      if (!video.paused) {
+      if (Math.abs(ambient.currentTime - video.currentTime) > 0.3) {
+        ambient.currentTime = video.currentTime
+      }
+      if (!video.paused && !video.ended) {
         ambient.play().catch(() => {})
       } else {
         ambient.pause()
@@ -220,11 +223,13 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
         if (fromBeginning) {
           if (video.readyState >= 1) {
             video.currentTime = 0
+            if (ambientVideoRef.current) ambientVideoRef.current.currentTime = 0
           } else {
             await new Promise<void>((resolve) => {
               const handleLoaded = () => {
                 video.removeEventListener('loadedmetadata', handleLoaded)
                 video.currentTime = 0
+                if (ambientVideoRef.current) ambientVideoRef.current.currentTime = 0
                 resolve()
               }
 
@@ -280,6 +285,11 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   const syncProgressFromVideo = useCallback((options: { smooth?: boolean; visual?: boolean } = {}) => {
     const video = videoRef.current
     if (!video || !Number.isFinite(video.duration) || video.duration <= 0) return
+
+    const ambient = ambientVideoRef.current
+    if (ambient && Math.abs(ambient.currentTime - video.currentTime) > 0.3) {
+      ambient.currentTime = video.currentTime
+    }
 
     const nextCurrentTime = options.smooth ? getSmoothCurrentTime() : video.currentTime
     const ratio = nextCurrentTime / video.duration
@@ -361,6 +371,12 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   }, [sourceKey])
 
   useEffect(() => {
+    if (fullscreenActive) {
+      syncVideoState()
+    }
+  }, [fullscreenActive, syncVideoState])
+
+  useEffect(() => {
     if (!isPseudoFullscreen) return
 
     const previousOverflow = document.body.style.overflow
@@ -410,6 +426,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
         resetProgressClock(0)
         setCurrentTime(0)
         video.currentTime = 0
+        if (ambientVideoRef.current) ambientVideoRef.current.currentTime = 0
         void video
           .play()
           .then(() => {
@@ -474,6 +491,9 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     const safeProgress = Math.min(Math.max(nextProgress, 0), 1)
     const nextTime = video.duration * safeProgress
     video.currentTime = nextTime
+    if (ambientVideoRef.current) {
+      ambientVideoRef.current.currentTime = nextTime
+    }
     resetProgressClock(nextTime)
     updateProgressVisual(safeProgress)
     lastProgressStateUpdateRef.current = window.performance.now()
@@ -516,6 +536,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     resetProgressClock(0)
     setCurrentTime(0)
     video.currentTime = 0
+    if (ambientVideoRef.current) ambientVideoRef.current.currentTime = 0
     setShowSelector(false)
     setShowFinalCta(false)
     setIsPlaying(true)
