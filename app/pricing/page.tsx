@@ -24,35 +24,35 @@ const PRICING_RANGES: PricingRange[] = [
     range: 'S$1,000 - S$3,000',
     detail: 'For regular office rooms, meeting rooms, call rooms, and smaller collaboration spaces.',
     note: 'Best for clearer meetings, less echo, and better speech clarity.',
-    image: '/assets/webflow/696a459f805f921445e4427e_9.avif'
+    image: '/assets/pricing/office.jpg'
   },
   {
     space: 'Home studio',
     range: 'S$1,000 - S$3,000',
     detail: 'For HDB rooms, condo rooms, bedrooms, listening rooms, and creator setups.',
     note: 'Can include acoustic panels, bass traps, and self-install options when useful.',
-    image: '/assets/webflow/69687b1239333b922d70b26a_Title.avif'
+    image: '/assets/pricing/home-studio.jpg'
   },
   {
     space: 'Church',
     range: 'From S$1,500',
     detail: 'Smaller rooms start around S$1,500. Many hall projects range from S$4,000 - S$6,000+.',
     note: 'Scoped around speech intelligibility, music clarity, ceiling height, and install access.',
-    image: '/assets/webflow/6964fb659de42387a7d78754_Image from TinyPNG (4).avif'
+    image: '/assets/pricing/church.jpg'
   },
   {
     space: 'School',
     range: 'From S$1,000',
     detail: 'For classrooms, tuition rooms, learning spaces, and multipurpose education areas.',
     note: 'Larger rooms or multi-room rollouts are quoted based on room count and treatment scope.',
-    image: '/assets/webflow/696a4efbb798931f99abbc38_1.avif'
+    image: '/assets/pricing/school.jpg'
   },
   {
     space: 'Restaurant',
     range: 'S$2,000 - S$6,000',
     detail: 'For cafes, restaurants, bars, and hospitality spaces where conversation comfort matters.',
     note: 'Can include ceiling panels, colour-matched wall panels, or custom printed finishes.',
-    image: '/assets/webflow/69687c96d1feff52c5d91be4_3.avif'
+    image: '/assets/pricing/restaurant.jpg'
   },
   {
     space: 'Other',
