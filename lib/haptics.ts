@@ -1,14 +1,32 @@
-export type HapticIntensity = 'light' | 'medium' | 'heavy' | 'success' | 'error' | 'soft' | 'rigid' | 'nudge';
+export type HapticIntensity = 
+  | 'light' 
+  | 'medium' 
+  | 'heavy' 
+  | 'success' 
+  | 'error' 
+  | 'soft' 
+  | 'rigid' 
+  | 'nudge'
+  | 'cart'
+  | 'purchase'
+  | 'menu'
+  | 'tick'
+  | 'error_buzz';
 
-const HAPTIC_PATTERNS: Record<HapticIntensity, number | number[]> = {
-  light: 15,
-  medium: 35,
-  heavy: 60,
-  soft: 10,
-  rigid: 25,
-  nudge: [20, 40, 15],
-  success: [20, 120, 40], 
-  error: [15, 60, 15, 60, 15],
+const HAPTIC_PATTERNS: Record<string, number | number[]> = {
+  light: 40,
+  medium: 60,
+  heavy: 85,
+  soft: 30,
+  rigid: 75,
+  nudge: [35, 60, 35],
+  success: [30, 80, 70], // Light nudge then deep thud
+  purchase: [30, 80, 70],
+  error: [50, 50, 50, 50, 50],
+  error_buzz: [50, 50, 50, 50, 50],
+  cart: 90, // Solid heavy thump
+  menu: 70, // Rigid mechanical click
+  tick: 30, // Soft tick
 };
 
 // --- Advanced Web Haptics State ---
@@ -24,6 +42,12 @@ function ensureDOM() {
   if (domInitialized || typeof document === 'undefined') return;
 
   const id = 'ios-haptic-switch-hack';
+  if (document.getElementById(id)) {
+    hapticLabel = document.querySelector(`label[for="${id}"]`);
+    domInitialized = true;
+    return;
+  }
+
   const label = document.createElement('label');
   label.setAttribute('for', id);
   label.style.position = 'fixed';
@@ -31,10 +55,12 @@ function ensureDOM() {
   label.style.left = '-9999px';
   label.style.opacity = '0';
   label.style.pointerEvents = 'none';
+  label.style.zIndex = '-1';
 
   const input = document.createElement('input');
   input.type = 'checkbox';
-  input.setAttribute('switch', ''); // The magic iOS 17 attribute
+  // @ts-ignore - 'switch' is a non-standard attribute that triggers native haptics on iOS 17.4+
+  input.setAttribute('switch', ''); 
   input.id = id;
 
   label.appendChild(input);
@@ -44,123 +70,142 @@ function ensureDOM() {
   domInitialized = true;
 }
 
-// Helper to play a single mechanical tick
-function playSingleThump(multiplier: number, freqModifier: number = 1) {
+/**
+ * Builds the Web Audio "Thump" Engine
+ * Uses a BiquadFilter (lowpass) and a noise buffer with exponential decay
+ * to simulate premium mechanical feedback.
+ */
+function initAudioEngine() {
+  if (audioCtx || typeof window === 'undefined') return;
+
+  try {
+    const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!Ctx) return;
+
+    audioCtx = new Ctx();
+    audioFilter = audioCtx.createBiquadFilter();
+    audioFilter.type = 'lowpass';
+    audioFilter.frequency.value = 350; // Deep and bassy by default
+    audioFilter.Q.value = 1.5;
+
+    audioGain = audioCtx.createGain();
+    audioFilter.connect(audioGain);
+    audioGain.connect(audioCtx.destination);
+
+    // Create a 0.06s noise buffer for "body" and weight
+    const duration = 0.06;
+    const sampleRate = audioCtx.sampleRate;
+    audioBuffer = audioCtx.createBuffer(1, sampleRate * duration, sampleRate);
+    const channelData = audioBuffer.getChannelData(0);
+    
+    for (let i = 0; i < channelData.length; i++) {
+      // White noise with exponential decay
+      // Decay factor adjusted for "mechanical" weight (longer tail)
+      const decay = Math.exp(-i / (sampleRate * 0.015)); 
+      channelData[i] = (Math.random() * 2 - 1) * decay;
+    }
+  } catch (e) {
+    console.warn('Web Audio initialization failed', e);
+  }
+}
+
+// Helper to play a single mechanical thump
+function playSingleThump(volume: number, frequency: number) {
   if (!audioCtx || !audioFilter || !audioGain || !audioBuffer) return;
 
-  // Increased volume for a more present, tactile feel
-  audioGain.gain.value = multiplier * 0.9;
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
 
-  // SIGNIFICANTLY lowered base frequency for a deep, bassy thump (Premium feel)
-  const baseFreq = 150 + multiplier * 350;
-  const jitter = 1 + (Math.random() - 0.5) * 0.05; 
-  audioFilter.frequency.value = baseFreq * jitter * freqModifier;
-
+  // Create source
   const source = audioCtx.createBufferSource();
   source.buffer = audioBuffer;
+
+  // Configure dynamics for this specific thump
+  const now = audioCtx.currentTime;
+  audioGain.gain.cancelScheduledValues(now);
+  audioGain.gain.setValueAtTime(0, now);
+  audioGain.gain.linearRampToValueAtTime(volume, now + 0.002);
+  audioGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+  audioFilter.frequency.setValueAtTime(frequency, now);
+
   source.connect(audioFilter);
-  source.onended = () => source.disconnect();
-  source.start();
+  source.start(now);
+  source.stop(now + 0.06);
 }
 
 // 2. Play the audio thump with support for multi-stage patterns
 function playAudioThump(intensity: HapticIntensity) {
   switch (intensity) {
+    case 'purchase':
     case 'success':
-      // Two-stage Apple Pay style - Slower and deeper
-      playSingleThump(0.4, 0.8); 
-      setTimeout(() => playSingleThump(0.8, 0.6), 250); // Increased delay
+      // Two-stage "Apple Pay" style - light nudge followed by deep thud
+      playSingleThump(0.3, 450); 
+      setTimeout(() => playSingleThump(0.8, 150), 180);
       break;
+    
     case 'error':
-      // Triple fast buzz - slowed down slightly
-      playSingleThump(0.6, 1.2);
-      setTimeout(() => playSingleThump(0.6, 1.2), 120);
-      setTimeout(() => playSingleThump(0.6, 1.2), 240);
+    case 'error_buzz':
+      // Triple fast buzz
+      playSingleThump(0.6, 500);
+      setTimeout(() => playSingleThump(0.6, 500), 100);
+      setTimeout(() => playSingleThump(0.6, 500), 200);
       break;
-    case 'nudge':
-      // Subtle double bump
-      playSingleThump(0.5, 0.9);
-      setTimeout(() => playSingleThump(0.3, 0.8), 150); // Increased delay
-      break;
-    case 'soft':
-      playSingleThump(0.2, 1.2); // Extremely subtle
-      break;
-    case 'rigid':
-      playSingleThump(0.9, 0.5); // Deep, solid thud (lower freq)
-      break;
+
+    case 'cart':
     case 'heavy':
-      playSingleThump(0.8, 0.8);
+      // Solid, heavy rigid thump (like a heavy object landing)
+      playSingleThump(1.0, 120);
       break;
-    case 'medium':
-      playSingleThump(0.5, 0.9);
+
+    case 'menu':
+    case 'rigid':
+      // Rigid mechanical click - feels like a physical latch
+      playSingleThump(0.7, 250);
       break;
+
+    case 'tick':
+    case 'soft':
     case 'light':
+      // Soft, high-end "tick"
+      playSingleThump(0.3, 500);
+      break;
+
+    case 'medium':
+    case 'nudge':
     default:
-      playSingleThump(0.3, 1.0);
+      playSingleThump(0.5, 300);
       break;
   }
 }
 
 export function triggerHaptic(intensity: HapticIntensity = 'light') {
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
+  if (typeof window === 'undefined') return;
 
   try {
-    // Respect user's motion preferences
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    // Respect user's motion preferences as a proxy for sensitivity
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // --- 1. Initialize DOM & Audio on first use ---
-    // Must be triggered synchronously inside a user gesture (like a click)
+    // --- 1. Initialize ---
     ensureDOM();
+    initAudioEngine();
 
-    if (!audioCtx && typeof window !== 'undefined') {
-      const Ctx = window.AudioContext || (window as any).webkitAudioContext;
-      if (Ctx) {
-        audioCtx = new Ctx();
-
-        audioFilter = audioCtx.createBiquadFilter();
-        audioFilter.type = 'lowpass'; // Switched to lowpass for more bass
-        audioFilter.frequency.value = 800; // Cut off high frequencies
-        audioFilter.Q.value = 2; // Smoother curve
-
-        audioGain = audioCtx.createGain();
-        
-        audioFilter.connect(audioGain);
-        audioGain.connect(audioCtx.destination);
-
-        // Create a tiny noise buffer
-        // Create a slightly longer noise buffer with slower decay for more "body"
-        const duration = 0.04;
-        audioBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * duration, audioCtx.sampleRate);
-        const channelData = audioBuffer.getChannelData(0);
-        for (let i = 0; i < channelData.length; i++) {
-          channelData[i] = (Math.random() * 2 - 1) * Math.exp(-i / 150);
-        }
-      }
-    }
-
-    if (audioCtx && audioCtx.state === 'suspended') {
-      // Resume silently
-      audioCtx.resume().catch(() => {});
-    }
-
-    // --- 2. The iOS Switch Hack ---
-    // Clicking this triggers the native iOS system haptic for switches
+    // --- 2. iOS Switch Hack ---
     if (hapticLabel) {
       hapticLabel.click();
     }
 
-    // --- 3. The Audio Thump Hack ---
-    // Plays a mechanical thump sound
+    // --- 3. Web Audio Thump ---
     playAudioThump(intensity);
 
-    // --- 4. The Standard Web Vibration API ---
-    // This handles Android devices perfectly
+    // --- 4. Android / Standard Vibrate ---
     if ('vibrate' in navigator) {
-      navigator.vibrate(HAPTIC_PATTERNS[intensity]);
+      const pattern = HAPTIC_PATTERNS[intensity] || HAPTIC_PATTERNS.light;
+      navigator.vibrate(pattern);
     }
   } catch (error) {
-    // Silently fail if blocked by browser policies or unsupported
-    console.warn('Haptic feedback failed or blocked:', error);
+    // Silent fail
   }
 }
+

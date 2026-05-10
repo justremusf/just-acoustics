@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { triggerHaptic } from '@/lib/haptics'
+import { triggerHaptic, type HapticIntensity } from '@/lib/haptics'
 
 export default function HapticProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -24,67 +24,77 @@ export default function HapticProvider({ children }: { children: React.ReactNode
       const role = clickableElement.getAttribute('role') || ''
       const type = clickableElement.getAttribute('type') || ''
       const ariaExpanded = clickableElement.getAttribute('aria-expanded')
+      const text = (clickableElement.textContent || '').toLowerCase()
 
       // Determine intensity based on element type and semantics
-      let intensity: 'light' | 'medium' | 'heavy' | 'success' | 'error' | 'soft' | 'rigid' | 'nudge' = 'light'
+      let intensity: HapticIntensity = 'tick'
       
-      // 1. Accordions, FAQs, and Disclosures -> Two-stage 'success' haptic (matches opening animation)
+      // 1. Explicit data attribute (highest priority)
+      const dataHaptic = clickableElement.getAttribute('data-haptic') as HapticIntensity
+      if (dataHaptic) {
+        intensity = dataHaptic
+        triggerHaptic(intensity)
+        return
+      }
+
+      // 2. Add to Cart / Purchase Buttons -> 'cart' (Heavy Thump)
+      const isCart = className.includes('cart') || 
+                     className.includes('add-to-cart') || 
+                     text.includes('add to cart') ||
+                     text.includes('buy now') ||
+                     text.includes('purchase')
+
+      // 3. Accordions, FAQs, and Disclosures -> 'success' (Two-stage Apple Pay style)
       const isAccordion = tagName === 'summary' || 
                           className.includes('accordion') || 
                           className.includes('faq') || 
                           className.includes('disclosure') ||
                           ariaExpanded !== null
 
-      // 2. Navigation / Menu Toggles -> 'rigid' for a solid, mechanical feel
+      // 4. Navigation / Menu Toggles -> 'menu' (Rigid mechanical click)
       const isMenuToggle = className.includes('menu') || 
                            className.includes('hamburger') || 
                            className.includes('nav-toggle') || 
+                           className.includes('drawer') ||
                            id.includes('menu') ||
                            role === 'menuitem'
 
-      // 3. Inputs (Checkboxes, Switches, Tabs) -> 'nudge' or 'soft'
+      // 5. Inputs (Checkboxes, Switches, Tabs) -> 'tick' (Soft mechanical tick)
       const isToggleInput = type === 'checkbox' || type === 'radio' || role === 'switch' || role === 'tab'
 
-      // 4. Standard Links (non-buttons) -> 'soft'
-      const isTextLink = tagName === 'a' && !className.includes('btn') && !className.includes('button')
-
-      // 5. Primary Buttons -> 'medium'
+      // 6. Primary Buttons (CTA) -> 'medium' (Solid feedback)
       const isPrimaryBtn = className.includes('primary') || 
                            className.includes('cta') ||
-                           className.includes('orange')
+                           className.includes('orange') ||
+                           className.includes('btn-large')
 
-      if (clickableElement.hasAttribute('data-haptic-heavy')) {
-        intensity = 'heavy'
-      } else if (clickableElement.hasAttribute('data-haptic-medium')) {
-        intensity = 'medium'
+      if (isCart) {
+        intensity = 'cart'
       } else if (isAccordion) {
-        // Apple Pay style two-stage response for expanding content
         intensity = 'success' 
       } else if (isMenuToggle) {
-        // Solid thud for opening/closing heavy UI panels like drawers
-        intensity = 'rigid'
+        intensity = 'menu'
       } else if (isToggleInput) {
-        intensity = 'nudge'
+        intensity = 'tick'
       } else if (isPrimaryBtn) {
         intensity = 'medium'
-      } else if (isTextLink) {
-        // Very subtle click for text links so it's not overwhelming
-        intensity = 'soft'
+      } else if (tagName === 'a' || tagName === 'button' || role === 'button') {
+        // Standard buttons and links get a high-end "tick"
+        intensity = 'tick'
       } else {
-        // Standard button click
         intensity = 'light'
       }
 
       triggerHaptic(intensity)
     }
 
-    // Use capturing phase or bubbling phase? Bubbling phase is standard for interaction events
-    document.addEventListener('click', handleClick, { passive: true })
+    document.addEventListener('click', handleClick, { capture: true, passive: true })
 
     return () => {
-      document.removeEventListener('click', handleClick)
+      document.removeEventListener('click', handleClick, { capture: true })
     }
   }, [])
 
   return <>{children}</>
 }
+
