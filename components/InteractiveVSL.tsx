@@ -77,7 +77,6 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
     <section className={compact ? 'py-6 md:py-8' : 'py-7 md:py-9'}>
       <div className="mx-auto max-w-[1280px] px-4 sm:px-5">
         <div className="home-shell overflow-hidden p-4 sm:p-5 md:p-6">
-          <div className="mx-auto max-w-[960px]">
             <div
               ref={containerRef}
               tabIndex={0}
@@ -226,7 +225,6 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     </Link>
                   </div>
                 )}
-              </div>
             </div>
           </div>
         </div>
