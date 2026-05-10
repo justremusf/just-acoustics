@@ -31,6 +31,7 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
     showSelector,
     autoplayBlocked,
     videoError,
+    isLoading,
     isSwitching,
     hasStartedWithAudio,
     showFinalCta,
@@ -137,6 +138,8 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                       if (selectedCategory) state.setShowFinalCta(true)
                     }}
                     onLoadedMetadata={handleLoadedMetadata}
+                    onWaiting={() => state.setIsLoading(true)}
+                    onCanPlay={() => state.setIsLoading(false)}
                     onClick={handleVideoSurfaceClick}
                     onPause={() => {
                       state.setIsPlaying(false)
@@ -146,11 +149,13 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     }}
                     onPlay={() => {
                       state.setIsPlaying(true)
+                      state.setIsLoading(false)
                       resetProgressClock()
                       startProgressLoop()
                     }}
                     onPlaying={() => {
                       state.setIsPlaying(true)
+                      state.setIsLoading(false)
                       resetProgressClock()
                       startProgressLoop()
                     }}
@@ -159,6 +164,16 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     {activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
                     <source src={activeVideo.videoMp4} type="video/mp4" />
                   </video>
+                )}
+
+                {/* Loading Screen Overlay */}
+                {!videoError && ((isLoading && !showCenterPlay && !autoplayBlocked) || isSwitching) && (
+                  <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-sm transition-opacity duration-300">
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-[var(--color-brand-orange)]" />
+                      <p className="text-sm font-medium text-white/80">Loading...</p>
+                    </div>
+                  </div>
                 )}
 
                 <VSLProgressTracker

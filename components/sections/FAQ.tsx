@@ -46,8 +46,19 @@ function AccordionItem({
   const bodyRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="glass-card group mb-3 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_70px_rgba(0,0,0,0.12),0_10px_28px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.78)_inset] md:p-6">
-      <button className="flex w-full items-center justify-between gap-4 border-0 bg-transparent p-0 text-left" onClick={onToggle}>
+    <div 
+      className="glass-card group mb-3 cursor-pointer p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_70px_rgba(0,0,0,0.12),0_10px_28px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.78)_inset] md:p-6"
+      onClick={onToggle}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onToggle()
+        }
+      }}
+    >
+      <div className="flex w-full items-center justify-between gap-4 text-left">
         <span
           className={`text-[19px] leading-[1.14] font-medium tracking-[-0.6px] transition-all duration-300 md:text-[28px] ${
             open
@@ -62,7 +73,7 @@ function AccordionItem({
           <span className={`absolute h-0.5 w-4 transition-colors duration-300 ${open ? 'bg-[var(--color-brand-orange)]' : 'bg-[var(--color-dark-100)] group-hover:bg-[var(--color-brand-orange)]'}`} />
           <span className={`absolute h-4 w-0.5 transition-all duration-300 ${open ? 'bg-[var(--color-brand-orange)]' : 'bg-[var(--color-dark-100)] group-hover:bg-[var(--color-brand-orange)]'}`} style={{ opacity: open ? 0 : 1, transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }} />
         </span>
-      </button>
+      </div>
       <div
         ref={bodyRef}
         style={{
@@ -71,7 +82,12 @@ function AccordionItem({
           transition: 'height 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
-        <p className="m-0 pt-4 text-sm leading-7 text-[var(--color-gray-100)] md:text-[15px]">{a}</p>
+        <p 
+          className="m-0 pt-4 text-sm leading-7 text-[var(--color-gray-100)] md:text-[15px]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {a}
+        </p>
       </div>
     </div>
   )

@@ -53,7 +53,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   const speedButtonRef = useRef<HTMLButtonElement>(null)
   const muteRef = useRef(true)
   const progressLoopRef = useRef<number | null>(null)
-  const progressAnimationRef = useRef<Animation | null>(null)
+
   const progressFillRef = useRef<HTMLDivElement>(null)
   const lastProgressStateUpdateRef = useRef(0)
   const progressClockRef = useRef({
@@ -65,6 +65,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   const [showSelector, setShowSelector] = useState(false)
   const [autoplayBlocked, setAutoplayBlocked] = useState(false)
   const [videoError, setVideoError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [isSwitching, setIsSwitching] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [hasStartedWithAudio, setHasStartedWithAudio] = useState(false)
@@ -125,53 +126,15 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     }
   }, [isMuted, playbackRate])
 
-  const stopProgressAnimation = useCallback(() => {
-    progressAnimationRef.current?.cancel()
-    progressAnimationRef.current = null
-  }, [])
+
 
   const updateProgressVisual = useCallback((nextProgress: number) => {
-    stopProgressAnimation()
     if (progressFillRef.current) {
       progressFillRef.current.style.setProperty('--vsl-progress', getProgressValue(nextProgress))
     }
-  }, [stopProgressAnimation])
+  }, [])
 
-  const startProgressAnimation = useCallback(() => {
-    const video = videoRef.current
-    const fill = progressFillRef.current
-    if (!video || !fill || !Number.isFinite(video.duration) || video.duration <= 0) return
 
-    const startProgress = video.currentTime / video.duration
-    const remainingMs = Math.max(((video.duration - video.currentTime) / video.playbackRate) * 1000, 0)
-
-    stopProgressAnimation()
-    fill.style.setProperty('--vsl-progress', getProgressValue(startProgress))
-
-    if (remainingMs <= 0) {
-      fill.style.setProperty('--vsl-progress', getProgressValue(1))
-      return
-    }
-
-    const animation = fill.animate(
-      [
-        { transform: getProgressTransform(startProgress) },
-        { transform: getProgressTransform(1) },
-      ],
-      {
-        duration: remainingMs,
-        easing: 'linear',
-        fill: 'forwards',
-      }
-    )
-
-    progressAnimationRef.current = animation
-    animation.onfinish = () => {
-      if (progressAnimationRef.current !== animation) return
-      fill.style.setProperty('--vsl-progress', getProgressValue(1))
-      progressAnimationRef.current = null
-    }
-  }, [stopProgressAnimation])
 
   const resetProgressClock = useCallback((mediaTime?: number) => {
     const video = videoRef.current
@@ -241,6 +204,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
         await video.play()
       } catch {
         setAutoplayBlocked(true)
+        setIsLoading(false)
       }
     },
     [applyMuteState]
@@ -249,6 +213,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   useEffect(() => {
     setVideoError(false)
     setAutoplayBlocked(false)
+    setIsLoading(true)
     setIsPlaying(false)
     setProgress(0)
     updateProgressVisual(0)
@@ -277,10 +242,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   useEffect(() => {
     syncVideoState()
     resetProgressClock()
-    if (videoRef.current && !videoRef.current.paused && !videoRef.current.ended) {
-      startProgressAnimation()
-    }
-  }, [isMuted, playbackRate, resetProgressClock, startProgressAnimation, syncVideoState])
+  }, [isMuted, playbackRate, resetProgressClock, syncVideoState])
 
   const syncProgressFromVideo = useCallback((options: { smooth?: boolean; visual?: boolean } = {}) => {
     const video = videoRef.current
@@ -316,13 +278,12 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     const video = videoRef.current
     if (!video) return
 
-    startProgressAnimation()
     if (progressLoopRef.current !== null) return
 
     resetProgressClock(video.currentTime)
 
     const update = () => {
-      syncProgressFromVideo({ smooth: true, visual: false })
+      syncProgressFromVideo({ smooth: true, visual: true })
       if (!video.paused && !video.ended) {
         progressLoopRef.current = window.requestAnimationFrame(update)
       } else {
@@ -331,19 +292,17 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     }
 
     progressLoopRef.current = window.requestAnimationFrame(update)
-  }, [resetProgressClock, startProgressAnimation, syncProgressFromVideo])
+  }, [resetProgressClock, syncProgressFromVideo])
 
   useEffect(() => {
     return () => {
       stopProgressLoop()
-      stopProgressAnimation()
     }
-  }, [stopProgressAnimation, stopProgressLoop])
+  }, [stopProgressLoop])
 
   useEffect(() => {
     stopProgressLoop()
-    stopProgressAnimation()
-  }, [sourceKey, stopProgressAnimation, stopProgressLoop])
+  }, [sourceKey, stopProgressLoop])
 
   useEffect(() => {
     const updateFullscreen = () => {
@@ -759,6 +718,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
       showSelector, setShowSelector,
       autoplayBlocked, setAutoplayBlocked,
       videoError, setVideoError,
+      isLoading, setIsLoading,
       isSwitching, setIsSwitching,
       isPlaying, setIsPlaying,
       hasStartedWithAudio, setHasStartedWithAudio,

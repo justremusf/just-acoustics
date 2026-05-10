@@ -336,18 +336,36 @@ export default function HeaderClient({
 
   const megaMenus = useMemo<Record<MenuKey, MenuDefinition>>(
     () => ({
-      shop: {
-        key: 'shop',
-        label: 'Shop',
-        href: '/shop',
-        sections: buildCategorizedSections(shopItems, SHOP_CATEGORY_LABELS, '/shop', '/shop'),
+      pricing: {
+        key: 'pricing',
+        label: 'Pricing',
+        href: '/pricing',
+        sections: [
+          {
+            title: 'Pricing by Space Type',
+            links: [
+              { label: 'Offices & Meeting Rooms', href: '/pricing#pricing-ranges' },
+              { label: 'Home Studios', href: '/pricing#pricing-ranges' },
+              { label: 'Churches & Halls', href: '/pricing#pricing-ranges' },
+              { label: 'Education Spaces', href: '/pricing#pricing-ranges' },
+              { label: 'Restaurants & Cafes', href: '/pricing#pricing-ranges' },
+            ]
+          },
+          {
+            title: 'Shop',
+            links: shopItems.map((item) => ({
+              label: item.title,
+              href: `/shop/${item.slug}`
+            }))
+          }
+        ],
         panel: {
-          eyebrow: 'Shop Online',
-          title: 'Browse Acoustic Panels and Package Deals.',
+          eyebrow: 'Transparent Costs',
+          title: 'Acoustic Treatment Pricing.',
           body:
-            'Explore in-stock and made-to-order panels, plus package deals that make getting started simple.',
-          ctaLabel: 'Show All',
-          ctaHref: '/shop',
+            'Explore full solution ranges by space type, or browse individual a la carte panels in our shop.',
+          ctaLabel: 'View Pricing Guide',
+          ctaHref: '/pricing',
         },
       },
       solutions: {
