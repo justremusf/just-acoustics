@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import SiteShell from '@/components/layout/SiteShell'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
+import AttributionProvider from '@/components/analytics/AttributionProvider'
 import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
 import HapticProvider from '@/components/providers/HapticProvider'
 import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
@@ -147,6 +148,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               )}
             </>
           )}
+          <Suspense fallback={null}>
+            <AttributionProvider />
+          </Suspense>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
@@ -204,4 +208,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   )
 }
-

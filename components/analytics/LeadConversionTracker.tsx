@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { trackEvent } from '@/components/analytics/trackEvent'
+import { getAttributionEventParams } from '@/lib/tallyAttribution'
 
 export default function LeadConversionTracker() {
   const hasTracked = useRef(false)
@@ -15,10 +16,10 @@ export default function LeadConversionTracker() {
 
     if (navigationEntry && navigationEntry.type !== 'navigate') return
 
-    console.log('generate_lead fired')
     trackEvent('generate_lead', {
       form_name: 'free_acoustic_consultation',
       page_path: '/thank-you',
+      ...getAttributionEventParams(),
     })
 
     hasTracked.current = true

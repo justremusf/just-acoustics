@@ -2,6 +2,11 @@
 
 import { useRef } from 'react'
 import { trackEvent } from '@/components/analytics/trackEvent'
+import {
+  buildUrlWithAttribution,
+  buildWhatsAppUrlWithAttribution,
+  getAttributionEventParams,
+} from '@/lib/tallyAttribution'
 
 type TrackedAnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
 
@@ -10,6 +15,24 @@ function getEventName(href: string) {
   if (href.startsWith('tel:')) return 'phone_click'
   if (href.startsWith('mailto:')) return 'email_click'
   return null
+}
+
+function getFinalHref(href: string) {
+  if (href.includes('wa.me') || href.includes('api.whatsapp.com')) {
+    return buildWhatsAppUrlWithAttribution(href)
+  }
+
+  try {
+    const url = new URL(href, window.location.origin)
+
+    if (url.origin === window.location.origin || url.hostname.includes('justacoustics.co')) {
+      return buildUrlWithAttribution(href)
+    }
+  } catch {
+    return href
+  }
+
+  return href
 }
 
 export default function TrackedAnchor({
@@ -31,7 +54,8 @@ export default function TrackedAnchor({
         if (event.defaultPrevented || !href) return
 
         const eventName = getEventName(href)
-        if (!eventName) return
+        const finalHref = getFinalHref(href)
+        if (!eventName && finalHref === href) return
         if (isPendingRef.current) {
           event.preventDefault()
           return
@@ -40,14 +64,18 @@ export default function TrackedAnchor({
         isPendingRef.current = true
         event.preventDefault()
 
-        console.log(`${eventName} fired`)
-        trackEvent(eventName, { link_url: href })
+        if (eventName) {
+          trackEvent(eventName, {
+            link_url: finalHref,
+            ...getAttributionEventParams(),
+          })
+        }
 
         window.setTimeout(() => {
           if (target === '_blank') {
-            window.open(href, '_blank', 'noopener,noreferrer')
+            window.open(finalHref, '_blank', 'noopener,noreferrer')
           } else {
-            window.location.href = href
+            window.location.href = finalHref
           }
           isPendingRef.current = false
         }, 150)

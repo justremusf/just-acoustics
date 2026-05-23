@@ -3,7 +3,7 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { buildTallyUrlWithAttribution } from '@/lib/tallyAttribution'
+import { buildTallyUrlWithAttribution, captureAttribution } from '@/lib/tallyAttribution'
 
 type TallyWindow = Window & {
   Tally?: {
@@ -32,10 +32,8 @@ export default function TallyAttributionIframe({
   const routeKey = useMemo(() => `${pathname}?${search}`, [pathname, search])
 
   useEffect(() => {
-    const nextSrc = buildTallyUrlWithAttribution(baseUrl, {
-      pageUrl: window.location.href,
-      referrer: document.referrer,
-    })
+    captureAttribution()
+    const nextSrc = buildTallyUrlWithAttribution(baseUrl)
 
     setSrc(nextSrc)
 
