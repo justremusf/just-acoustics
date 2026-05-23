@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
+import { Suspense } from 'react'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import TallyAttributionIframe from '@/components/TallyAttributionIframe'
 import { canonicalPath } from '@/lib/seo'
 
 const consultationSteps = [
@@ -8,6 +9,9 @@ const consultationSteps = [
   'We will reach out to you within 1 hour',
   'We provide free consultation on your space',
 ]
+
+const TALLY_CONSULTATION_FORM_URL =
+  'https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1'
 
 export const metadata: Metadata = {
   title: 'Contact — Free Consultation',
@@ -60,15 +64,15 @@ export default function ContactPage() {
         </aside>
 
         <div className="home-shell overflow-hidden rounded-[32px] p-0 sm:p-5 md:p-8 lg:flex lg:h-full lg:flex-col lg:p-10">
-          <iframe
-            src="https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-            width="100%"
-            height="640"
-            frameBorder="0"
-            title="Free Acoustic Consultation"
-            className="min-h-0 lg:h-full"
-            style={{ overflow: 'hidden', display: 'block' }}
-          />
+          {/* Test with /?utm_source=test&utm_medium=cpc&utm_campaign=testcampaign&utm_term=acoustic+panels and confirm Tally hidden fields receive the values. */}
+          <Suspense fallback={null}>
+            <TallyAttributionIframe
+              baseUrl={TALLY_CONSULTATION_FORM_URL}
+              title="Free Acoustic Consultation"
+              className="min-h-0 lg:h-full"
+              style={{ overflow: 'hidden', display: 'block' }}
+            />
+          </Suspense>
         </div>
 
         <div className="glass-card p-6 lg:hidden">
