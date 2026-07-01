@@ -93,6 +93,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body suppressHydrationWarning className="bg-white">
         <HapticProvider>
           <CartProvider>
