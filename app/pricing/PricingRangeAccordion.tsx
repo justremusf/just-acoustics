@@ -63,7 +63,7 @@ function PricingRangeItem({
               ? 'bg-[var(--color-brand-orange)] text-white'
               : 'bg-[rgba(255,165,0,0.10)] text-[var(--color-brand-orange)] group-hover:bg-[var(--color-brand-orange)] group-hover:text-white'
           }`}>
-            S$ pricing
+            $ pricing
           </span>
           <span className={`relative flex h-8 w-8 items-center justify-center rounded-full border bg-white transition-colors duration-300 ${open ? 'border-[var(--color-brand-orange)]' : 'border-black/8 group-hover:border-[var(--color-brand-orange)]'}`}>
             <span className={`absolute h-0.5 w-4 transition-colors duration-300 ${open ? 'bg-[var(--color-brand-orange)]' : 'bg-[var(--color-dark-100)] group-hover:bg-[var(--color-brand-orange)]'}`} />

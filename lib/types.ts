@@ -27,6 +27,51 @@ export interface AcousticalSpecsTable {
   rows?: AcousticalSpecRow[]
 }
 
+export interface ShopConfigOption {
+  id?: string
+  label?: string
+  description?: string
+  priceAdjustment?: number
+  available?: boolean
+}
+
+export interface ShopSizeOption extends ShopConfigOption {
+  widthMm?: number
+  heightMm?: number
+  previewImage?: SanityImage
+}
+
+export interface ShopThicknessOption extends ShopConfigOption {
+  millimeters?: number
+  nrc?: string
+}
+
+export interface ShopColourOption extends ShopConfigOption {
+  name?: string
+  hex?: string
+  swatchImage?: SanityImage
+  projectPreviewImage?: SanityImage
+  swatchSrc?: string
+  fabricSeries?: '8080' | '2020'
+  swatchCrop?: { x: number; y: number }
+}
+
+export interface ShopInstallationOption extends ShopConfigOption {
+  priceType?: 'none' | 'fixed' | 'perUnit'
+  price?: number
+}
+
+export interface ShopPackageOption {
+  id?: string
+  name?: string
+  panelCount?: number
+  description?: string
+  bestFor?: string
+  price?: number
+  discountPercent?: number
+  available?: boolean
+}
+
 export interface FaqItem {
   question: string
   answer: string
@@ -55,31 +100,42 @@ export interface Post {
   imagePrompts?: ImagePrompt[]
 }
 
-export interface Product {
-  _id: string
-  title: string
-  slug: { current: string }
-  category?: string
-  mainImage?: SanityImage
-  gallery?: SanityImage[]
+export interface SpaceAudience {
+  _key?: string
+  title?: string
   description?: string
-  features?: string[]
-  body?: unknown[]
-  specifications?: KeyValueSpec[]
-  acousticalSpecs?: AcousticalSpecsTable
-  installation?: unknown[]
-  seo?: { metaTitle?: string; metaDescription?: string }
+  image?: SanityImage
 }
 
-export interface Service {
+export interface SpaceEditorialSection {
+  _key?: string
+  eyebrow?: string
+  title?: string
+  description?: string
+  image?: SanityImage
+}
+
+export interface Space {
   _id: string
   title: string
   slug: { current: string }
-  icon?: SanityImage
+  heroTagline?: string
   mainImage?: SanityImage
   shortDescription?: string
   benefits?: string[]
+  audiences?: SpaceAudience[]
+  editorialSections?: SpaceEditorialSection[]
   body?: unknown[]
+  recommendedShopItems?: ShopItem[]
+  featuredProjects?: Project[]
+  gallery?: SanityImage[]
+  faqs?: FaqItem[]
+  cta?: {
+    title?: string
+    body?: string
+    label?: string
+    href?: string
+  }
   seo?: { metaTitle?: string; metaDescription?: string }
 }
 
@@ -89,7 +145,7 @@ export interface Project {
   slug: { current: string }
   clientName?: string
   location?: string
-  category?: string
+  category?: 'standard-panels' | 'ceiling-panels' | 'custom-solutions' | 'soundproofing' | 'package-deals' | 'accessories'
   mainImage?: SanityImage
   gallery?: SanityImage[]
   description?: string
@@ -125,12 +181,30 @@ export interface ShopItem {
   title: string
   slug: { current: string }
   category?: string
+  productLine?: 'flexi-panel' | 'bass-trap' | 'gobo' | 'custom-print-panels' | 'pet-panel' | 'accessory'
   mainImage?: SanityImage
   gallery?: SanityImage[]
   price?: number
-  sku?: string
   inStock?: boolean
   madeToOrder?: boolean
+  checkoutMode?: 'quote-only' | 'configurable-quote' | 'payment-ready'
+  leadTime?: string
+  configuratorEnabled?: boolean
+  defaultQuantity?: number
+  minQuantity?: number
+  maxQuantity?: number
+  defaultSizeId?: string
+  defaultThicknessId?: string
+  allowCustomPrint?: boolean
+  customPrintLabel?: string
+  customPrintPrice?: number
+  customPrintRequiresReview?: boolean
+  paymentReadinessNote?: string
+  sizeOptions?: ShopSizeOption[]
+  thicknessOptions?: ShopThicknessOption[]
+  colourOptions?: ShopColourOption[]
+  installationOptions?: ShopInstallationOption[]
+  packageOptions?: ShopPackageOption[]
   shortDescription?: string
   features?: string[]
   specifications?: KeyValueSpec[]
@@ -153,4 +227,12 @@ export interface SiteSettings {
   }
   brandLogos?: SanityImage[]
   googleReviewLink?: string
+  shopPage?: {
+    heroTitle?: string
+    heroDescription?: string
+    heroImage?: SanityImage
+    consultationTitle?: string
+    consultationDescription?: string
+    consultationImage?: SanityImage
+  }
 }

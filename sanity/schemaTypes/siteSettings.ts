@@ -57,6 +57,31 @@ export default defineType({
       type: 'url',
       description: 'Link to your Google Business reviews',
     }),
+    defineField({
+      name: 'shopPage',
+      title: 'Shop Page',
+      type: 'object',
+      fields: [
+        defineField({ name: 'heroTitle', title: 'Hero Title', type: 'string' }),
+        defineField({ name: 'heroDescription', title: 'Hero Description', type: 'text', rows: 3 }),
+        defineField({
+          name: 'heroImage',
+          title: 'Hero Image',
+          type: 'image',
+          options: { hotspot: true },
+          fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+        }),
+        defineField({ name: 'consultationTitle', title: 'Consultation Card Title', type: 'string' }),
+        defineField({ name: 'consultationDescription', title: 'Consultation Card Description', type: 'text', rows: 3 }),
+        defineField({
+          name: 'consultationImage',
+          title: 'Consultation Card Image',
+          type: 'image',
+          options: { hotspot: true },
+          fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+        }),
+      ],
+    }),
   ],
   preview: {
     select: { title: 'email' },

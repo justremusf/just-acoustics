@@ -10,6 +10,7 @@ import { getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { ShopItem } from '@/lib/types'
 import { canonicalPath } from '@/lib/seo'
+import { formatSgd } from '@/lib/shopPricing'
 
 export const metadata: Metadata = {
   title: 'Pricing - Acoustic Treatment Costs in Singapore',
@@ -21,35 +22,35 @@ export const metadata: Metadata = {
 const PRICING_RANGES: PricingRange[] = [
   {
     space: 'Office',
-    range: 'S$1,000 - S$3,000',
+    range: '$1,000 - $3,000',
     detail: 'For regular office rooms, meeting rooms, call rooms, and smaller collaboration spaces.',
     note: 'Best for clearer meetings, less echo, and better speech clarity.',
     image: '/assets/pricing/office.jpg'
   },
   {
     space: 'Home studio',
-    range: 'S$1,000 - S$3,000',
+    range: '$1,000 - $3,000',
     detail: 'For HDB rooms, condo rooms, bedrooms, listening rooms, and creator setups.',
     note: 'Can include acoustic panels, bass traps, and self-install options when useful.',
     image: '/assets/pricing/home-studio.jpg'
   },
   {
     space: 'Church',
-    range: 'From S$1,500',
-    detail: 'Smaller rooms start around S$1,500. Many hall projects range from S$4,000 - S$6,000+.',
+    range: 'From $1,500',
+    detail: 'Smaller rooms start around $1,500. Many hall projects range from $4,000 - $6,000+.',
     note: 'Scoped around speech intelligibility, music clarity, ceiling height, and install access.',
     image: '/assets/pricing/church.jpg'
   },
   {
     space: 'School',
-    range: 'From S$1,000',
+    range: 'From $1,000',
     detail: 'For classrooms, tuition rooms, learning spaces, and multipurpose education areas.',
     note: 'Larger rooms or multi-room rollouts are quoted based on room count and treatment scope.',
     image: '/assets/pricing/school.jpg'
   },
   {
     space: 'Restaurant',
-    range: 'S$2,000 - S$6,000',
+    range: '$2,000 - $6,000',
     detail: 'For cafes, restaurants, bars, and hospitality spaces where conversation comfort matters.',
     note: 'Can include ceiling panels, colour-matched wall panels, or custom printed finishes.',
     image: '/assets/pricing/restaurant.jpg'
@@ -110,7 +111,7 @@ const PRICING_FAQS = [
   },
   {
     q: 'What if my space is not an office, studio, church, school, or restaurant?',
-    a: 'That is fine. Other spaces are quoted as custom projects. Smaller spaces usually start from around S$1,000+, with larger or more complex spaces priced after review.',
+    a: 'That is fine. Other spaces are quoted as custom projects. Smaller spaces usually start from around $1,000+, with larger or more complex spaces priced after review.',
   },
   {
     q: 'Is this soundproofing?',
@@ -227,7 +228,7 @@ export default async function PricingPage() {
                   </div>
                   <div>
                     <h3 className="m-0 text-[16px] font-bold text-[var(--color-dark-100)]">{product.title}</h3>
-                    <p className="m-0 mt-1 text-sm text-[var(--color-gray-100)]">From S${product.price}</p>
+                    {product.price != null && <p className="m-0 mt-1 text-sm text-[var(--color-gray-100)]">From {formatSgd(product.price)}</p>}
                   </div>
                 </Link>
               ))}

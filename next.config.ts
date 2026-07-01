@@ -7,7 +7,7 @@ const securityHeaders = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://va.vercel-scripts.com https://vercel.live https://tally.so",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "img-src 'self' data: blob: https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com",
+      "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://va.vercel-scripts.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://www.facebook.com https://connect.facebook.net https://cdn.sanity.io https://*.api.sanity.io https://tally.so",
       "frame-src 'self' https://tally.so https://www.googletagmanager.com https://www.youtube.com https://www.youtube-nocookie.com",
@@ -37,6 +37,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  outputFileTracingRoot: process.cwd(),
   async headers() {
     return [
       {
@@ -55,6 +56,10 @@ const nextConfig: NextConfig = {
     ]
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    qualities: [62, 70, 72, 75],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+    deviceSizes: [320, 393, 640, 768, 1024, 1280, 1536, 1920],
     remotePatterns: [
       {
         protocol: 'https',

@@ -74,27 +74,26 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
   } = handlers
 
   return (
-    <section className={compact ? 'py-6 md:py-8' : 'py-7 md:py-9'}>
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-5">
-        <div className="home-shell overflow-hidden p-4 sm:p-5 md:p-6">
-            <div
-              ref={containerRef}
-              tabIndex={0}
-              onKeyDown={handleKeyDown}
-              className={[
-                'glass-card relative overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-orange)]',
-                isPseudoFullscreen
-                  ? 'fixed inset-0 z-[9999] flex items-center justify-center rounded-none border-0 bg-black p-0 shadow-none'
-                  : 'rounded-[28px]',
-                '[&:fullscreen]:flex [&:fullscreen]:items-center [&:fullscreen]:justify-center [&:fullscreen]:rounded-none [&:fullscreen]:border-0 [&:fullscreen]:bg-black [&:fullscreen]:p-0 [&:fullscreen]:shadow-none',
-              ].join(' ')}
-            >
+    <section className={compact ? 'px-4 py-6 sm:px-5 md:py-8' : 'px-4 py-7 sm:px-5 md:py-9'}>
+      <div className="site-container">
+        <div
+          ref={containerRef}
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          className={[
+            'relative overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-orange)]',
+            isPseudoFullscreen
+              ? 'fixed inset-0 z-[9999] flex items-center justify-center rounded-none bg-black'
+              : 'rounded-[28px]',
+            '[&:fullscreen]:flex [&:fullscreen]:items-center [&:fullscreen]:justify-center [&:fullscreen]:rounded-none [&:fullscreen]:bg-black',
+          ].join(' ')}
+        >
               <div
                 className={[
                   'relative overflow-hidden bg-[var(--color-dark-100)] bg-center',
                   fullscreenActive
                     ? 'h-[100dvh] w-[100vw] rounded-none bg-black'
-                    : 'aspect-[9/16] rounded-[24px] sm:aspect-video bg-cover',
+                    : 'aspect-[9/16] rounded-[22px] sm:aspect-video bg-cover',
                 ].join(' ')}
                 style={!fullscreenActive ? { backgroundImage: `url("${activeVideo.poster}")` } : undefined}
               >
@@ -225,8 +224,7 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     </Link>
                   </div>
                 )}
-            </div>
-          </div>
+              </div>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import type { Project } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
 import { canonicalPath } from '@/lib/seo'
+import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
 const PROJECTS_FAQS: FaqItem[] = [
   {
@@ -89,25 +90,34 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
             <Link
               key={project._id}
               href={'/projects/' + project.slug.current}
-              className="page-card glass-card group transition-transform duration-300 hover:-translate-y-1"
+              className="deferred-card group relative isolate aspect-[4/3] overflow-hidden rounded-[24px] bg-[#171717] no-underline shadow-[0_18px_48px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_68px_rgba(0,0,0,0.16)]"
             >
               {project.mainImage && (
-                <div className="page-card-image aspect-[4/3]">
-                  <Image
-                    src={urlFor(project.mainImage).width(720).height(540).url()}
-                    alt={project.mainImage.alt || project.title}
-                    width={720}
-                    height={540}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
+                <Image
+                  src={urlFor(project.mainImage).width(720).height(540).url()}
+                  alt={project.mainImage.alt || project.title}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
+                  placeholder="blur"
+                  blurDataURL={IMAGE_BLUR_DATA_URL}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
               )}
-              <div className="page-card-body">
-                {project.category && <p className="page-kicker">{CATEGORY_LABELS[project.category] || project.category}</p>}
-                <h2 className="page-card-title transition-colors group-hover:text-[var(--color-brand-orange)]">{project.title}</h2>
-                {project.location && <p className="page-card-copy">{project.location}</p>}
-                <span className="page-link mt-1">View project <span aria-hidden="true">→</span></span>
-              </div>
+              <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.04),rgba(5,5,5,0.78))]" />
+              <span className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 text-white">
+                <span>
+                  {project.category ? (
+                    <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-white/68">
+                      {CATEGORY_LABELS[project.category] || project.category}
+                    </span>
+                  ) : null}
+                  <span className="block text-[22px] font-medium leading-[1.04] tracking-[-0.025em]" style={{ fontFamily: 'var(--font-heading)' }}>
+                    {project.title}
+                  </span>
+                </span>
+                <span className="shrink-0 text-xl transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
+              </span>
             </Link>
           ))}
         </section>

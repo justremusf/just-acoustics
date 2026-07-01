@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 export const metadata: Metadata = {
   title: 'Link in Bio',
@@ -542,7 +543,7 @@ export default function LinkInBioPage() {
 
           <div className="lib-links">
             {links.map((link) => (
-              <a
+              <TrackedAnchor
                 key={link.href}
                 href={link.href}
                 className={`lib-link${link.primary ? ' lib-link-primary' : ''}`}
@@ -586,7 +587,7 @@ export default function LinkInBioPage() {
                     <polyline points="12 5 19 12 12 19"/>
                   </svg>
                 </div>
-              </a>
+              </TrackedAnchor>
             ))}
           </div>
 

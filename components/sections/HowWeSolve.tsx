@@ -24,11 +24,13 @@ const painPoints = [
 export default function HowWeSolve() {
   return (
     <section className="px-4 py-8 md:px-5 md:py-12">
-      <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
+      <div className="home-shell section-shell-pad mx-auto max-w-[1580px]">
         <div className="grid gap-8 md:gap-10 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,1.32fr)]">
           <div className="max-w-[500px]">
-            <span className="soft-pill">Acoustic pain points</span>
-            <h2 className="home-heading mt-4 max-w-[10ch] text-[var(--color-dark-100)]">
+            <h2
+              className="home-heading mt-4 text-[var(--color-dark-100)]"
+              style={{ width: 'min(100%, 512px)' }}
+            >
               What usually sounds wrong in the room.
             </h2>
             <p className="mt-4 max-w-[38ch] text-[14px] leading-6 text-[var(--color-gray-100)]">

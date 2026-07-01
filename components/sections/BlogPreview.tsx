@@ -52,7 +52,7 @@ export default function BlogPreview({ posts = [] }: Props) {
 
   return (
     <section className="px-4 py-10 md:px-5 md:py-12">
-      <div className="home-shell section-shell-pad mx-auto max-w-[1280px] bg-white" style={{ backdropFilter: 'none' }}>
+      <div className="home-shell section-shell-pad mx-auto max-w-[1580px] bg-white" style={{ backdropFilter: 'none' }}>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-14">
           <div className="max-w-[560px]">
             <span className="soft-pill">Resource Center</span>

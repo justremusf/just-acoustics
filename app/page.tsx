@@ -4,24 +4,22 @@ import Hero from '@/components/sections/Hero'
 import BrandScroller from '@/components/sections/BrandScroller'
 import Solutions from '@/components/sections/Solutions'
 import ProductsGrid from '@/components/sections/ProductsGrid'
-import Applications from '@/components/sections/Applications'
+import Spaces from '@/components/sections/Spaces'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
 import { landingVslConfig } from '@/data/vslConfig'
 import {
   getSiteSettings,
-  getAllProducts,
-  getAllServices,
+  getAllShopItems,
+  getAllSpaces,
   getFeaturedTestimonials,
-  getLatestPosts,
 } from '@/sanity/lib/queries'
 import { canonicalPath } from '@/lib/seo'
 
 const HearTheDifference = dynamic(() => import('@/components/sections/HearTheDifference'))
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'))
 const FAQ = dynamic(() => import('@/components/sections/FAQ'))
-const BlogPreview = dynamic(() => import('@/components/sections/BlogPreview'))
 const InteractiveVSL = dynamic(() => import('@/components/InteractiveVSL'), {
   loading: () => <div className="py-7 md:py-9" aria-hidden="true" />,
 })
@@ -33,12 +31,11 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const [settings, products, services, testimonials, posts] = await Promise.all([
+  const [settings, products, spaces, testimonials] = await Promise.all([
     getSiteSettings().catch(() => null),
-    getAllProducts().catch(() => []),
-    getAllServices().catch(() => []),
+    getAllShopItems().catch(() => []),
+    getAllSpaces().catch(() => []),
     getFeaturedTestimonials().catch(() => []),
-    getLatestPosts(3).catch(() => []),
   ])
 
   return (
@@ -50,19 +47,16 @@ export default async function HomePage() {
         pageLocation="/"
       />
       <BrandScroller logos={settings?.brandLogos} />
-      <Applications services={services} />
-      <HearTheDifference />
       <ProductsGrid products={products} />
+      <HearTheDifference />
+      <Spaces spaces={spaces} />
+      <ProcessSteps />
       <div className="hidden md:block">
         <Solutions />
       </div>
-      <ProcessSteps />
       <Testimonials testimonials={testimonials} />
-      <FAQ />
-      <div className="hidden md:block">
-        <BlogPreview posts={posts} />
-      </div>
-      <ContactCTA />
+      <FAQ showLabel={false} />
+      <ContactCTA showBadge={false} />
     </>
   )
 }
