@@ -17,11 +17,11 @@ const pricingAsset = (name: string) => `/assets/pricing/${name}`
 // ─── Hero slideshow ───────────────────────────────────────────────────────────
 const HERO_SLIDES = [
   {
-    image: pricingAsset('church_hero1.png'),
+    image: pricingAsset('church_hero1.webp'),
     headline: 'Worship with\nAbsolute Clarity.',
   },
   {
-    image: pricingAsset('church_hero2.png'),
+    image: pricingAsset('church_hero2.webp'),
     headline: 'Hear Every\nWord, Clean.',
   },
   {
@@ -42,7 +42,7 @@ const CASE_STUDIES = [
     images: [
       {
         roomName: 'Sanctuary',
-        src: pricingAsset('church_hero1.png'),
+        src: pricingAsset('church_hero1.webp'),
         hotspots: [
           { text: 'Flexi Wall Panels', top: '22%', left: '14%', href: '/shop/standard-flexi-acoustic-panel' },
           { text: 'Ceiling Cloud Grid', top: '8%', left: '52%', href: '/shop/acoustic-ceiling-panels' },
@@ -69,7 +69,7 @@ const CASE_STUDIES = [
     images: [
       {
         roomName: 'Main Sanctuary',
-        src: pricingAsset('church_hero2.png'),
+        src: pricingAsset('church_hero2.webp'),
         hotspots: [
           { text: 'Broadband Ceiling Cloud', top: '14%', left: '40%', href: '/shop/acoustic-ceiling-panels' },
           { text: 'Fabric Wall Panels', top: '34%', left: '18%', href: '/shop/standard-flexi-acoustic-panel' },
@@ -103,14 +103,14 @@ const CASE_STUDIES = [
 const PRODUCTS = [
   {
     title: 'Flexi™ Acoustic Panel',
-    image: '/assets/shop/standard-flexi/standard-flexi-1200x600.png',
+    image: '/assets/shop/standard-flexi/standard-flexi-1200x600.webp',
     badge: 'Best Seller',
     description: 'Slim, fabric-wrapped panels ideal for wall placement at first-reflection points in sanctuaries.',
     href: '/shop/standard-flexi-acoustic-panel',
   },
   {
     title: 'Ceiling Cloud Panels',
-    image: pricingAsset('church_hero2.png'),
+    image: pricingAsset('church_hero2.webp'),
     badge: 'Echo Control',
     description: 'Suspended cloud systems that absorb overhead flutter echoes in high-ceiling worship halls.',
     href: '/shop/acoustic-ceiling-panels',

@@ -97,7 +97,6 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                   src={urlFor(project.mainImage).width(720).height(540).url()}
                   alt={project.mainImage.alt || project.title}
                   fill
-                  unoptimized
                   sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
                   placeholder="blur"
                   blurDataURL={IMAGE_BLUR_DATA_URL}

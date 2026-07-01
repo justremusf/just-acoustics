@@ -35,28 +35,28 @@ const labelProducts: Record<string, LabelProductConfig> = {
     itemSlugs: ['1200x600-studio-acoustic-panel', 'standard-flexi-acoustic-panel'],
     sizeId: '1200x600',
     description: 'Broadband wall reflections treatment.',
-    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
   },
   'first-reflection': {
     title: 'First Reflection',
     itemSlugs: ['1200x600-studio-acoustic-panel', 'standard-flexi-acoustic-panel'],
     sizeId: '1200x600',
     description: 'Treat first reflection side-wall points.',
-    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
   },
   'gobos': {
     title: 'Gobos',
     itemSlugs: ['square-studio-acoustic-panel', 'standard-flexi-acoustic-panel'],
     sizeId: '600x600',
     description: 'Freestanding panels for sound bleed control.',
-    fallbackImage: '/assets/webflow/696a4efb6d770477375c64bd_6.png',
+    fallbackImage: '/assets/webflow/696a4efb6d770477375c64bd_6.webp',
   },
   'ceiling-cloud': {
     title: 'Ceiling Cloud',
     itemSlugs: ['1200x600-studio-acoustic-panel', 'standard-flexi-acoustic-panel'],
     sizeId: '1200x600',
     description: 'Ceiling suspended cloud panels.',
-    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
   },
 }
 
@@ -151,7 +151,7 @@ export default function StudioSolutions({ shopItems }: Props) {
     {
       id: 'condo-mixing',
       title: 'Condo Mixing Room',
-      image: '/assets/webflow/696a4efb255645d4686056e2_7.png',
+      image: '/assets/webflow/696a4efb255645d4686056e2_7.webp',
       problem: 'Unclear low-end, harsh highs, translation issues.',
       result: 'Balanced room, better mixes that translate anywhere.',
       labels: [
@@ -162,7 +162,7 @@ export default function StudioSolutions({ shopItems }: Props) {
     {
       id: 'drum-room',
       title: 'Drum Room + Gobos',
-      image: '/assets/webflow/696a4efb6d770477375c64bd_6.png',
+      image: '/assets/webflow/696a4efb6d770477375c64bd_6.webp',
       problem: 'Excessive reflections, uncontrolled bleed.',
       result: 'Focused drums, tighter sound, more punch.',
       labels: [
@@ -173,7 +173,7 @@ export default function StudioSolutions({ shopItems }: Props) {
     {
       id: 'ceiling-cloud-tight',
       title: 'Ceiling Cloud for Tight Spaces',
-      image: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+      image: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
       problem: 'Low ceiling, flutter echo, no space for thick panels.',
       result: 'Controlled reflections without losing headroom.',
       labels: [

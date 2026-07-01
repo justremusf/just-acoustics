@@ -39,7 +39,7 @@ export default function StudioProcess() {
         'Expert installation',
         'Aftercare support',
       ],
-      image: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+      image: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
     },
   ]
 

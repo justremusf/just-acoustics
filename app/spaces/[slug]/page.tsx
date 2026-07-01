@@ -98,7 +98,6 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
               src={urlFor(space.mainImage).width(1900).height(1100).fit('crop').url()}
               alt={space.mainImage.alt || space.title}
               fill
-              unoptimized
               priority
               sizes="100vw"
               placeholder="blur"
@@ -163,7 +162,6 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
                       src={urlFor(section.image).width(1000).height(800).fit('crop').url()}
                       alt={section.image.alt || section.title || space.title}
                       fill
-                      unoptimized
                       sizes="(max-width: 1023px) 100vw, 50vw"
                       placeholder="blur"
                       blurDataURL={IMAGE_BLUR_DATA_URL}
@@ -230,7 +228,6 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
                         src={urlFor(item.mainImage).width(800).height(600).fit('crop').url()}
                         alt={item.mainImage.alt || item.title}
                         fill
-                        unoptimized
                         sizes="(max-width: 767px) 100vw, 33vw"
                         placeholder="blur"
                         blurDataURL={IMAGE_BLUR_DATA_URL}
@@ -265,7 +262,7 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
               {projectsForSpace.slice(0, 6).map((project) => (
                 <Link key={project._id} href={`/projects/${project.slug.current}`} className="group relative isolate aspect-[4/3] overflow-hidden rounded-[22px] bg-[#171717] no-underline">
                   {project.mainImage ? (
-                    <Image src={urlFor(project.mainImage).width(800).height(600).fit('crop').url()} alt={project.mainImage.alt || project.title} fill unoptimized sizes="(max-width: 767px) 100vw, 33vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <Image src={urlFor(project.mainImage).width(800).height(600).fit('crop').url()} alt={project.mainImage.alt || project.title} fill sizes="(max-width: 767px) 100vw, 33vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   ) : null}
                   <span className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.72))]" />
                   <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 text-white">

@@ -16,7 +16,7 @@ const steps = [
   {
     title: 'Proposal',
     description: 'We design a 3D render of your space',
-    image: '/assets/webflow/696a4efb255645d4686056e2_7.png',
+    image: '/assets/webflow/696a4efb255645d4686056e2_7.webp',
   },
   {
     title: 'Installation',

@@ -92,20 +92,20 @@ async function main() {
 
   console.log('Uploading Standard Flexi size images...')
   const sizeImages = {
-    '600x600': await uploadImage(`${assetRoot}/standard-flexi-600x600.png`, 'standard-flexi-600x600.png', 'Standard Flexi 60 x 60cm panel'),
-    '1200x600': await uploadImage(`${assetRoot}/standard-flexi-1200x600.png`, 'standard-flexi-1200x600.png', 'Standard Flexi 60 x 120cm panel'),
-    '1800x600': await uploadImage(`${assetRoot}/standard-flexi-1800x600.png`, 'standard-flexi-1800x600.png', 'Standard Flexi 60 x 180cm panel'),
+    '600x600': await uploadImage(`${assetRoot}/standard-flexi-600x600.webp`, 'standard-flexi-600x600.webp', 'Standard Flexi 60 x 60cm panel'),
+    '1200x600': await uploadImage(`${assetRoot}/standard-flexi-1200x600.webp`, 'standard-flexi-1200x600.webp', 'Standard Flexi 60 x 120cm panel'),
+    '1800x600': await uploadImage(`${assetRoot}/standard-flexi-1800x600.webp`, 'standard-flexi-1800x600.webp', 'Standard Flexi 60 x 180cm panel'),
   }
 
   console.log('Uploading colour chart...')
-  const colourChart = await uploadImage(`${assetRoot}/source/colour-swatches.png`, 'standard-flexi-colour-swatches.png', 'Standard Flexi colour swatches')
+  const colourChart = await uploadImage(`${assetRoot}/source/colour-swatches.webp`, 'standard-flexi-colour-swatches.webp', 'Standard Flexi colour swatches')
 
   console.log('Uploading in-use gallery images...')
   const inUseGallery = await Promise.all([
-    uploadImage(`${assetRoot}/gallery/flexi-gallery-1.png`, 'standard-flexi-gallery-1.png', 'Standard Flexi installed in living room'),
-    uploadImage(`${assetRoot}/gallery/flexi-gallery-2.png`, 'standard-flexi-gallery-2.png', 'Standard Flexi installed in studio room'),
-    uploadImage(`${assetRoot}/gallery/flexi-gallery-3.png`, 'standard-flexi-gallery-3.png', 'Standard Flexi installed on walls and ceiling'),
-    uploadImage(`${assetRoot}/gallery/flexi-gallery-4.png`, 'standard-flexi-gallery-4.png', 'Standard Flexi installed in workspace'),
+    uploadImage(`${assetRoot}/gallery/flexi-gallery-1.webp`, 'standard-flexi-gallery-1.webp', 'Standard Flexi installed in living room'),
+    uploadImage(`${assetRoot}/gallery/flexi-gallery-2.webp`, 'standard-flexi-gallery-2.webp', 'Standard Flexi installed in studio room'),
+    uploadImage(`${assetRoot}/gallery/flexi-gallery-3.webp`, 'standard-flexi-gallery-3.webp', 'Standard Flexi installed on walls and ceiling'),
+    uploadImage(`${assetRoot}/gallery/flexi-gallery-4.webp`, 'standard-flexi-gallery-4.webp', 'Standard Flexi installed in workspace'),
   ])
 
   console.log('Uploading 38 extracted swatches...')

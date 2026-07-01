@@ -16,7 +16,8 @@ const FEATURED_PRODUCT_PRIORITY = [
   "soothe-tm-bass-trap-panel",
 ];
 
-const SOOTHE_8080_CHART = "/assets/shop/soothe/source/soothe-8080-series.png";
+const FLEXI_HOVER_IMAGE = "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp";
+const SOOTHE_8080_CHART = "/assets/shop/soothe/source/soothe-8080-series.webp";
 const SOOTHE_LISTING_SWATCHES = [
   { name: "Steel 8080-11", x: 145, y: 175 },
   { name: "Aqua 8080-03", x: 622, y: 175 },
@@ -89,6 +90,20 @@ export default function ProductsGrid({ products }: Props) {
             const imgSrc = item.mainImage
               ? urlFor(item.mainImage).width(720).height(900).fit("crop").url()
               : "/placeholder.jpg";
+            const galleryImage = item.gallery?.find(
+              (image) => image.asset?._ref !== item.mainImage?.asset?._ref,
+            );
+            const hoverImageSrc =
+              item.productLine === "flexi-panel"
+                ? FLEXI_HOVER_IMAGE
+                : galleryImage
+                  ? urlFor(galleryImage)
+                      .ignoreImageParams()
+                      .width(720)
+                      .height(900)
+                      .fit("crop")
+                      .url()
+                  : null;
             const availableColours =
               item.colourOptions?.filter(
                 (option) => option.available !== false,
@@ -114,9 +129,20 @@ export default function ProductsGrid({ products }: Props) {
                         item.mainImage ? IMAGE_BLUR_DATA_URL : undefined
                       }
                       quality={72}
-                      loading="lazy"
+                      loading="eager"
                       className="object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                     />
+                    {hoverImageSrc ? (
+                      <Image
+                        src={hoverImageSrc}
+                        alt=""
+                        fill
+                        sizes="(max-width: 639px) calc(50vw - 26px), (max-width: 1279px) calc(50vw - 28px), calc(25vw - 32px)"
+                        quality={72}
+                        loading="lazy"
+                        className="object-cover opacity-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015] group-hover:opacity-100"
+                      />
+                    ) : null}
                   </div>
                   <div className="flex min-h-[138px] flex-1 flex-col border-t border-white/80 bg-[linear-gradient(145deg,rgba(255,255,255,0.94),rgba(237,235,230,0.86))] p-3 text-[#171717] backdrop-blur-2xl sm:min-h-[164px] sm:p-5">
                     <div className="flex items-start justify-between gap-3">
@@ -173,7 +199,6 @@ export default function ProductsGrid({ products }: Props) {
                                   .url()}
                                 alt=""
                                 fill
-                                unoptimized
                                 sizes="16px"
                                 placeholder="blur"
                                 blurDataURL={IMAGE_BLUR_DATA_URL}

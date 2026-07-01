@@ -69,8 +69,8 @@ const SHOP_PRODUCT_ORDER = [
   "accessory",
 ];
 const FLEXI_HOVER_IMAGE =
-  "/assets/shop/standard-flexi/gallery/flexi-gallery-1.png";
-const SOOTHE_8080_CHART = "/assets/shop/soothe/source/soothe-8080-series.png";
+  "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp";
+const SOOTHE_8080_CHART = "/assets/shop/soothe/source/soothe-8080-series.webp";
 const SOOTHE_LISTING_SWATCHES = [
   { name: "Steel 8080-11", x: 145, y: 175 },
   { name: "Aqua 8080-03", x: 622, y: 175 },
@@ -223,7 +223,6 @@ export default async function ShopPage({
                             .url()}
                           alt={item.mainImage?.alt || item.title}
                           fill
-                          unoptimized
                           sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 25vw"
                           priority={index < 2}
                           placeholder="blur"
@@ -237,7 +236,6 @@ export default async function ShopPage({
                           src={hoverImageSrc}
                           alt=""
                           fill
-                          unoptimized
                           sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 25vw"
                           loading="lazy"
                           placeholder="blur"
@@ -297,7 +295,6 @@ export default async function ShopPage({
                                     .url()}
                                   alt=""
                                   fill
-                                  unoptimized
                                   sizes="16px"
                                   placeholder="blur"
                                   blurDataURL={IMAGE_BLUR_DATA_URL}
@@ -338,7 +335,6 @@ export default async function ShopPage({
                         .url()}
                       alt={consultationImage.alt || consultationTitle}
                       fill
-                      unoptimized
                       sizes="(max-width: 1279px) 50vw, 25vw"
                       placeholder="blur"
                       blurDataURL={IMAGE_BLUR_DATA_URL}

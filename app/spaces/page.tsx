@@ -49,7 +49,6 @@ export default async function SpacesPage() {
                     src={urlFor(space.mainImage).width(900).height(675).fit('crop').url()}
                     alt={space.mainImage.alt || space.title}
                     fill
-                    unoptimized
                     priority={index === 0}
                     sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1279px) 48vw, 32vw"
                     placeholder="blur"

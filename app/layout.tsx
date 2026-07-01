@@ -102,15 +102,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <>
                   <Script
                     src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-                    strategy="afterInteractive"
+                    strategy="lazyOnload"
                   />
-                  <Script id="gtag-init" strategy="afterInteractive">
+                  <Script id="gtag-init" strategy="lazyOnload">
                     {`
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       window.gtag = gtag;
                       gtag('js', new Date());
-                      ${gaId ? `gtag('config', '${gaId}', { send_page_view: false });` : ''}
+                      ${gaId ? `gtag('config', '${gaId}');` : ''}
                       ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
                     `}
                   </Script>
@@ -118,7 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               )}
               {metaPixelId && (
                 <>
-                  <Script id="meta-pixel-base" strategy="afterInteractive">
+                  <Script id="meta-pixel-base" strategy="lazyOnload">
                     {`
                       !function(f,b,e,v,n,t,s)
                       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -204,7 +204,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </SiteShell>
           <SpeedInsights />
           <Analytics />
-          <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
+          <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
           </CartProvider>
         </HapticProvider>
       </body>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Space } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
+import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
 const HOME_APPLICATION_ORDER = [
   'churches',
@@ -57,7 +58,7 @@ export default function Spaces({ spaces }: Props) {
       {
         title: space.title,
         href: `/spaces/${space.slug.current}`,
-        img: space.mainImage ? urlFor(space.mainImage).width(700).url() : '',
+        img: space.mainImage ? urlFor(space.mainImage).width(700).height(560).fit('crop').url() : '',
         unoptimized: false,
       },
     ]),
@@ -111,8 +112,10 @@ export default function Spaces({ spaces }: Props) {
                   alt={app.title}
                   fill
                   sizes="(max-width: 639px) calc(50vw - 26px), (max-width: 1279px) calc(50vw - 28px), calc(33vw - 32px)"
+                  placeholder="blur"
+                  blurDataURL={IMAGE_BLUR_DATA_URL}
+                  quality={70}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized={'unoptimized' in app ? app.unoptimized : false}
                 />
               )}
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.02),rgba(1,1,1,0.34)_55%,rgba(1,1,1,0.52))]" />

@@ -69,7 +69,7 @@ const STUDIO_CARD_CONFIGS: StudioCardConfig[] = [
     sizeId: '1200x600',
     quantity: 1,
     badge: 'Starter package',
-    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
     graphData: [20, 50, 96, 99, 98, 96],
     features: [
       'Great first reflection treatment package',
@@ -85,7 +85,7 @@ const STUDIO_CARD_CONFIGS: StudioCardConfig[] = [
     sizeId: '1200x600',
     quantity: 1,
     badge: 'Mix room package',
-    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.png',
+    fallbackImage: '/assets/webflow/696a4efb0907dcf8dacbcd54_2.webp',
     graphData: [25, 60, 98, 100, 99, 97],
     features: [
       'Broadband absorption with wider coverage',
@@ -176,7 +176,7 @@ export default function StudioProducts({ shopItems }: Props) {
 
   const activeImageSrc = activeCard?.item.mainImage?.asset?._ref
     ? urlFor(activeCard.item.mainImage).width(720).height(450).url()
-    : activeCard?.imageSrc || '/assets/webflow/696a4efb30cf5a46b9a7edd3_4.png'
+    : activeCard?.imageSrc || '/assets/webflow/696a4efb30cf5a46b9a7edd3_4.webp'
 
   const handleQuickView = (card: StudioProductCard) => {
     setSelection(card.selection)

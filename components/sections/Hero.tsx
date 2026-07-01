@@ -19,7 +19,7 @@ const HERO_IMAGES = [
     alt: 'Acoustic treatment in an office space',
   },
   {
-    src: '/assets/webflow/696a4efb255645d4686056e2_7.png',
+    src: '/assets/webflow/696a4efb255645d4686056e2_7.webp',
     alt: 'Acoustic treatment in a music studio',
   },
 ] as const
@@ -41,23 +41,17 @@ export default function Hero() {
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
       <div className="absolute inset-0 z-0 rounded-[24px] overflow-hidden">
-        {HERO_IMAGES.map((image, index) => (
-          <Image
-            key={image.src}
-            src={image.src}
-            alt={image.alt}
-            fill
-            priority={index === 0}
-            fetchPriority={index === 0 ? 'high' : undefined}
-            sizes="100vw"
-            className={[
-              'object-cover transition-[opacity,filter,transform] duration-[1400ms] ease-out',
-              index === activeImageIndex
-                ? 'opacity-100 blur-0 scale-100'
-                : 'opacity-0 blur-sm scale-[1.03]',
-            ].join(' ')}
-          />
-        ))}
+        <Image
+          key={HERO_IMAGES[activeImageIndex].src}
+          src={HERO_IMAGES[activeImageIndex].src}
+          alt={HERO_IMAGES[activeImageIndex].alt}
+          fill
+          priority={activeImageIndex === 0}
+          fetchPriority={activeImageIndex === 0 ? 'high' : undefined}
+          quality={72}
+          sizes="(max-width: 1580px) 100vw, 1580px"
+          className="animate-[hero-reveal_900ms_ease-out] object-cover"
+        />
       </div>
       <div className="absolute inset-0 z-0 rounded-[24px] bg-[linear-gradient(115deg,rgba(1,1,1,0.80)_0%,rgba(1,1,1,0.62)_44%,rgba(1,1,1,0.42)_100%)]" />
       <div className="absolute inset-0 z-0 rounded-[24px] bg-[radial-gradient(circle_at_top_right,rgba(255,165,0,0.22),transparent_32%),linear-gradient(to_top,rgba(1,1,1,0.22),transparent_24%)]" />

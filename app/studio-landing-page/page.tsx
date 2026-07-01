@@ -61,7 +61,7 @@ export default async function StudioLandingPage() {
         
         {/* Background image & gradient overlay */}
         <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,165,0,0.12),transparent_60%)] opacity-90" />
-        <div className="absolute inset-0 z-0 opacity-40 bg-[url('/assets/webflow/696a4efb255645d4686056e2_7.png')] bg-cover bg-center mix-blend-overlay" />
+        <div className="absolute inset-0 z-0 opacity-40 bg-[url('/assets/webflow/696a4efb255645d4686056e2_7.webp')] bg-cover bg-center mix-blend-overlay" />
         {/* Gradient fade to bottom and right */}
         <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/30" />
         <div className="absolute inset-y-0 right-0 w-full lg:w-1/2 z-0 bg-gradient-to-l from-transparent to-[#0a0a0a]/80" />

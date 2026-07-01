@@ -51,18 +51,18 @@ const INSTALLATION_OPTIONS = [
 ]
 
 const SIZE_IMAGES: Record<string, string> = {
-  '600x600': '/assets/shop/standard-flexi/standard-flexi-600x600.png',
-  '1200x600': '/assets/shop/standard-flexi/standard-flexi-1200x600.png',
-  '1800x600': '/assets/shop/standard-flexi/standard-flexi-1800x600.png',
+  '600x600': '/assets/shop/standard-flexi/standard-flexi-600x600.webp',
+  '1200x600': '/assets/shop/standard-flexi/standard-flexi-1200x600.webp',
+  '1800x600': '/assets/shop/standard-flexi/standard-flexi-1800x600.webp',
 }
 
-const COLOUR_CHART_SRC = '/assets/shop/standard-flexi/source/colour-swatches.png'
+const COLOUR_CHART_SRC = '/assets/shop/standard-flexi/source/colour-swatches.webp'
 
 const GALLERY_IMAGES = [
-  '/assets/shop/standard-flexi/gallery/flexi-gallery-1.png',
-  '/assets/shop/standard-flexi/gallery/flexi-gallery-2.png',
-  '/assets/shop/standard-flexi/gallery/flexi-gallery-3.png',
-  '/assets/shop/standard-flexi/gallery/flexi-gallery-4.png',
+  '/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp',
+  '/assets/shop/standard-flexi/gallery/flexi-gallery-2.webp',
+  '/assets/shop/standard-flexi/gallery/flexi-gallery-3.webp',
+  '/assets/shop/standard-flexi/gallery/flexi-gallery-4.webp',
 ]
 
 const COLOUR_NAMES = [

@@ -291,7 +291,7 @@ export default function StudioBeforeAfter() {
             {/* After */}
             <div className="relative rounded-[24px] overflow-hidden border border-black/8 shadow-md min-h-[280px]">
               <Image
-                src="/assets/webflow/696a4efb255645d4686056e2_7.png"
+                src="/assets/webflow/696a4efb255645d4686056e2_7.webp"
                 alt="After"
                 fill
                 sizes="(max-width: 768px) 50vw, 25vw"

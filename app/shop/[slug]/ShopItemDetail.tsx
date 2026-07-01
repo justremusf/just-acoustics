@@ -681,21 +681,21 @@ const STANDARD_FLEXI_INSTALLATION_OPTIONS = [
 ];
 
 const STANDARD_FLEXI_SIZE_IMAGE_SRC: Record<string, string> = {
-  "600x600": "/assets/shop/standard-flexi/standard-flexi-600x600.png",
-  "1200x600": "/assets/shop/standard-flexi/standard-flexi-1200x600.png",
-  "1800x600": "/assets/shop/standard-flexi/standard-flexi-1800x600.png",
+  "600x600": "/assets/shop/standard-flexi/standard-flexi-600x600.webp",
+  "1200x600": "/assets/shop/standard-flexi/standard-flexi-1200x600.webp",
+  "1800x600": "/assets/shop/standard-flexi/standard-flexi-1800x600.webp",
 };
 
 const STANDARD_FLEXI_COLOUR_CHART_SRC =
-  "/assets/shop/standard-flexi/source/colour-swatches.png";
+  "/assets/shop/standard-flexi/source/colour-swatches.webp";
 const PRODUCT_PLAY_ICON =
   "/assets/webflow/6967a0f62bd9b7dce9e01040_Play%20icon.png";
 
 const STANDARD_FLEXI_IN_USE_IMAGES = [
-  "/assets/shop/standard-flexi/gallery/flexi-gallery-1.png",
-  "/assets/shop/standard-flexi/gallery/flexi-gallery-2.png",
-  "/assets/shop/standard-flexi/gallery/flexi-gallery-3.png",
-  "/assets/shop/standard-flexi/gallery/flexi-gallery-4.png",
+  "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp",
+  "/assets/shop/standard-flexi/gallery/flexi-gallery-2.webp",
+  "/assets/shop/standard-flexi/gallery/flexi-gallery-3.webp",
+  "/assets/shop/standard-flexi/gallery/flexi-gallery-4.webp",
 ];
 
 const STANDARD_FLEXI_GIK_PERFORMANCE_FREQUENCIES = [
@@ -812,8 +812,8 @@ const STANDARD_FLEXI_COLOURS = [
 });
 
 const SOOTHE_FABRIC_CHARTS = {
-  "8080": "/assets/shop/soothe/source/soothe-8080-series.png",
-  "2020": "/assets/shop/soothe/source/soothe-2020-series.png",
+  "8080": "/assets/shop/soothe/source/soothe-8080-series.webp",
+  "2020": "/assets/shop/soothe/source/soothe-2020-series.webp",
 } as const;
 
 const SOOTHE_FABRIC_GRID_X = [145, 383, 622, 861];
@@ -1046,7 +1046,7 @@ function ProductColourSwatchButton({
       title={option.name}
       aria-label={`Select ${option.name}`}
       className={[
-        "group relative flex h-11 w-11 items-center justify-center rounded-full border p-0 transition-all duration-200 hover:z-50 hover:-translate-y-0.5 focus-visible:z-50",
+        "group relative flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border p-0 transition-all duration-200 hover:z-50 hover:-translate-y-0.5 focus-visible:z-50",
         selected
           ? "border-[var(--color-dark-100)] ring-2 ring-[var(--color-brand-orange)] ring-offset-2"
           : "border-black/10 hover:border-black/25",
@@ -1218,22 +1218,22 @@ function ProductStorySections({ item }: { item: ShopItem }) {
 function ProductInUseGallery() {
   const images = [
     {
-      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-1.png",
+      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp",
       label: "Flexi™ 180 x 60 x 5cm - Colour: Amber 14",
       position: "left-[46%] top-[67px]",
     },
     {
-      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-2.png",
+      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-2.webp",
       label: "Flexi™ 120 x 60 x 5cm - Colour: Black",
       position: "left-[42%] top-[34%]",
     },
     {
-      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-3.png",
+      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-3.webp",
       label: "Flexi™ 120 x 60 x 5cm - Colour: Concrete 27",
       position: "left-[50%] top-[28%]",
     },
     {
-      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-4.png",
+      src: "/assets/shop/standard-flexi/gallery/flexi-gallery-4.webp",
       label: "Flexi™ 120 x 60 x 5cm - Colour: Slate 25",
       position: "right-[10%] top-[72px]",
     },
@@ -2908,7 +2908,7 @@ function ProductConfigurator({
                 )}
               </div>
             ) : (
-              <div className="product-swatch-grid mt-3 grid grid-cols-5 gap-2.5 sm:grid-cols-10">
+              <div className="product-swatch-grid mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                 {visibleColours.map((option) => (
                   <ProductColourSwatchButton
                     key={option.id}
@@ -2924,7 +2924,7 @@ function ProductConfigurator({
                   <button
                     type="button"
                     onClick={() => setIsColourOpen((current) => !current)}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white px-1 text-xs font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:-translate-y-0.5 hover:border-black/25"
+                    className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-black/10 bg-white px-1 text-[10px] sm:text-xs font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:-translate-y-0.5 hover:border-black/25"
                     aria-expanded={isColourOpen}
                     aria-label={`Show ${hiddenColourCount} more colours`}
                   >
@@ -3044,7 +3044,7 @@ function ProductConfigurator({
           configurableItem.thicknessOptions.length > 0 && (
             <div className={optionSectionClass()}>
               <p className="page-kicker">Thickness</p>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid grid-cols-2 gap-3">
                 {configurableItem.thicknessOptions
                   ?.filter((option) => option.available !== false)
                   .map((option) => (
@@ -3586,7 +3586,7 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
               </h1>
               {item.price != null && (
                 <p
-                  className="mt-5 mb-0 font-medium text-[clamp(18px,1.2vw,21px)] leading-none tracking-[-0.1px] text-[var(--color-dark-100)]"
+                  className="mt-4 mb-0 font-semibold text-[clamp(22px,1.6vw,26px)] leading-none tracking-[-0.3px] text-[var(--color-dark-100)]"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
                   {profile.pricePrefix === "From"
