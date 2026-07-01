@@ -1220,22 +1220,22 @@ function ProductInUseGallery() {
     {
       src: "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp",
       label: "Flexi™ 180 x 60 x 5cm - Colour: Amber 14",
-      position: "left-[46%] top-[67px]",
+      position: "md:left-[46%] md:top-[67px] md:-translate-x-1/2",
     },
     {
       src: "/assets/shop/standard-flexi/gallery/flexi-gallery-2.webp",
       label: "Flexi™ 120 x 60 x 5cm - Colour: Black",
-      position: "left-[42%] top-[34%]",
+      position: "md:left-[42%] md:top-[34%] md:-translate-x-1/2",
     },
     {
       src: "/assets/shop/standard-flexi/gallery/flexi-gallery-3.webp",
       label: "Flexi™ 120 x 60 x 5cm - Colour: Concrete 27",
-      position: "left-[50%] top-[28%]",
+      position: "md:left-[50%] md:top-[28%] md:-translate-x-1/2",
     },
     {
       src: "/assets/shop/standard-flexi/gallery/flexi-gallery-4.webp",
       label: "Flexi™ 120 x 60 x 5cm - Colour: Slate 25",
-      position: "right-[10%] top-[72px]",
+      position: "md:right-[10%] md:top-[72px]",
     },
   ];
 
@@ -1263,12 +1263,11 @@ function ProductInUseGallery() {
               className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.28))]" />
-            <button
-              type="button"
-              className={`absolute ${image.position} max-w-[240px] -translate-x-1/2 rounded-[18px] border border-white/40 bg-white/18 px-4 py-3 text-left text-xs font-semibold leading-5 text-white shadow-[0_18px_46px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80`}
+            <div
+              className={`absolute inset-x-4 bottom-4 rounded-[16px] border border-white/40 bg-black/38 px-4 py-3 text-left text-sm font-semibold leading-5 text-white shadow-[0_18px_46px_rgba(0,0,0,0.24)] backdrop-blur-xl md:inset-x-auto md:bottom-auto md:max-w-[240px] md:rounded-[18px] md:bg-white/18 md:text-xs ${image.position}`}
             >
               {image.label}
-            </button>
+            </div>
           </div>
         ))}
       </div>
@@ -2725,6 +2724,11 @@ function ProductConfigurator({
         )
       : colours.slice(0, 9);
   const hiddenColourCount = Math.max(0, colours.length - visibleColours.length);
+  const mobileVisibleColours = visibleColours.slice(0, 6);
+  const mobileHiddenColourCount = Math.max(
+    0,
+    colours.length - mobileVisibleColours.length,
+  );
   const shortDescription =
     configurableItem.shortDescription || profile.shortDescription;
   const requiresReview =
@@ -2908,85 +2912,112 @@ function ProductConfigurator({
                 )}
               </div>
             ) : (
-              <div className="product-swatch-grid mt-3 flex flex-wrap gap-1.5 sm:gap-2">
-                {visibleColours.map((option) => (
-                  <ProductColourSwatchButton
-                    key={option.id}
-                    option={option}
-                    selected={selection.colourId === option.id}
-                    onSelect={() => {
-                      setSelectionValue("colourId", option.id);
-                      onImageModeChange("colour");
-                    }}
-                  />
-                ))}
-                {hiddenColourCount > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setIsColourOpen((current) => !current)}
-                    className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-black/10 bg-white px-1 text-[10px] sm:text-xs font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:-translate-y-0.5 hover:border-black/25"
-                    aria-expanded={isColourOpen}
-                    aria-label={`Show ${hiddenColourCount} more colours`}
-                  >
-                    +{hiddenColourCount}
-                  </button>
-                )}
-              </div>
-            )}
-
-            {isColourOpen && hiddenColourCount > 0 && (
-              <div
-                className={[
-                  "z-20 mt-3 max-h-[min(70vh,680px)] w-full overflow-y-auto rounded-[22px] border border-black/8 bg-white p-4 shadow-[0_24px_48px_rgba(0,0,0,0.12)]",
-                  isSoothe ? "relative" : "absolute left-0 top-full",
-                ].join(" ")}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-gray-200)]">
-                    {isSoothe ? "Soothe fabric collection" : "All Colours"}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setIsColourOpen(false)}
-                    className="text-xs font-semibold text-[var(--color-gray-200)] transition-colors hover:text-[var(--color-dark-100)]"
-                  >
-                    Close
-                  </button>
-                </div>
-                <div className="mt-4 grid gap-5">
-                  {(isSoothe ? (["8080", "2020"] as const) : [null]).map(
-                    (series) => (
-                      <div key={series || "colours"}>
-                        {series && (
-                          <p className="m-0 mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#137e89]">
-                            {series} Series
-                          </p>
-                        )}
-                        <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">
-                          {colours
-                            .filter(
-                              (option) =>
-                                !series || option.fabricSeries === series,
-                            )
-                            .map((option) => (
-                              <ProductColourSwatchButton
-                                key={option.id}
-                                option={option}
-                                selected={selection.colourId === option.id}
-                                showTooltip
-                                onSelect={() => {
-                                  setSelectionValue("colourId", option.id);
-                                  onImageModeChange("colour");
-                                }}
-                              />
-                            ))}
-                        </div>
-                      </div>
-                    ),
+              <>
+                <div className="product-swatch-grid mt-3 grid grid-cols-7 place-items-center gap-1 sm:hidden">
+                  {mobileVisibleColours.map((option) => (
+                    <ProductColourSwatchButton
+                      key={option.id}
+                      option={option}
+                      selected={selection.colourId === option.id}
+                      onSelect={() => {
+                        setSelectionValue("colourId", option.id);
+                        onImageModeChange("colour");
+                      }}
+                    />
+                  ))}
+                  {mobileHiddenColourCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setIsColourOpen((current) => !current)}
+                      className="flex h-9 w-9 items-center justify-center justify-self-center rounded-full border border-black/10 bg-white px-1 text-[10px] font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:border-black/25"
+                      aria-expanded={isColourOpen}
+                      aria-label={`Show ${mobileHiddenColourCount} more colours`}
+                    >
+                      +{mobileHiddenColourCount}
+                    </button>
                   )}
                 </div>
-              </div>
+                <div className="product-swatch-grid mt-3 hidden flex-wrap gap-2 sm:flex">
+                  {visibleColours.map((option) => (
+                    <ProductColourSwatchButton
+                      key={option.id}
+                      option={option}
+                      selected={selection.colourId === option.id}
+                      onSelect={() => {
+                        setSelectionValue("colourId", option.id);
+                        onImageModeChange("colour");
+                      }}
+                    />
+                  ))}
+                  {hiddenColourCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setIsColourOpen((current) => !current)}
+                      className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white px-1 text-xs font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:-translate-y-0.5 hover:border-black/25"
+                      aria-expanded={isColourOpen}
+                      aria-label={`Show ${hiddenColourCount} more colours`}
+                    >
+                      +{hiddenColourCount}
+                    </button>
+                  )}
+                </div>
+              </>
             )}
+
+            {isColourOpen &&
+              (hiddenColourCount > 0 || mobileHiddenColourCount > 0) && (
+                <div
+                  className={[
+                    "z-20 mt-3 max-h-[min(70vh,680px)] w-full overflow-y-auto rounded-[22px] border border-black/8 bg-white p-4 shadow-[0_24px_48px_rgba(0,0,0,0.12)]",
+                    isSoothe ? "relative" : "absolute left-0 top-full",
+                  ].join(" ")}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-gray-200)]">
+                      {isSoothe ? "Soothe fabric collection" : "All Colours"}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setIsColourOpen(false)}
+                      className="text-xs font-semibold text-[var(--color-gray-200)] transition-colors hover:text-[var(--color-dark-100)]"
+                    >
+                      Close
+                    </button>
+                  </div>
+                  <div className="mt-4 grid gap-5">
+                    {(isSoothe ? (["8080", "2020"] as const) : [null]).map(
+                      (series) => (
+                        <div key={series || "colours"}>
+                          {series && (
+                            <p className="m-0 mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#137e89]">
+                              {series} Series
+                            </p>
+                          )}
+                          <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">
+                            {colours
+                              .filter(
+                                (option) =>
+                                  !series || option.fabricSeries === series,
+                              )
+                              .map((option) => (
+                                <ProductColourSwatchButton
+                                  key={option.id}
+                                  option={option}
+                                  selected={selection.colourId === option.id}
+                                  showTooltip
+                                  onSelect={() => {
+                                    setSelectionValue("colourId", option.id);
+                                    onImageModeChange("colour");
+                                  }}
+                                />
+                              ))}
+                          </div>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
           </div>
         )}
 
