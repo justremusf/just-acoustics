@@ -2708,6 +2708,21 @@ function ProductConfigurator({
   const [isCustomSizeOpen, setIsCustomSizeOpen] = useState(false);
   const colourPopoverRef = useRef<HTMLDivElement | null>(null);
 
+  // Dynamic swatch row sizing — measures the actual container width so exactly
+  // one row of swatches is shown regardless of screen width.
+  const swatchRowRef = useRef<HTMLDivElement | null>(null);
+  const [swatchRowWidth, setSwatchRowWidth] = useState(0);
+  useEffect(() => {
+    const el = swatchRowRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setSwatchRowWidth(entry.contentRect.width);
+    });
+    observer.observe(el);
+    setSwatchRowWidth(el.getBoundingClientRect().width);
+    return () => observer.disconnect();
+  }, []);
+
   const configuratorEnabled = configurableItem.configuratorEnabled !== false;
   const colours = (configurableItem.colourOptions || []).filter(
     (option) => option.available !== false,
@@ -2724,7 +2739,20 @@ function ProductConfigurator({
         )
       : colours.slice(0, 9);
   const hiddenColourCount = Math.max(0, colours.length - visibleColours.length);
-  const mobileVisibleColours = visibleColours.slice(0, 6);
+
+  // Swatch = 36px (h-9), gap = 4px (gap-1). Always reserve 1 slot for the
+  // overflow button so it sits in the same single row.
+  const SWATCH_SIZE = 36;
+  const SWATCH_GAP = 4;
+  const swatchsPerRow = swatchRowWidth > 0
+    ? Math.max(1, Math.floor((swatchRowWidth + SWATCH_GAP) / (SWATCH_SIZE + SWATCH_GAP)))
+    : 7; // fallback until measured
+  // If all swatches + overflow btn fit in one row, no need to reserve a slot.
+  const totalMobileItems = colours.length;
+  const mobileMaxVisible = totalMobileItems <= swatchsPerRow
+    ? swatchsPerRow
+    : swatchsPerRow - 1; // last slot = "+N" button
+  const mobileVisibleColours = visibleColours.slice(0, mobileMaxVisible);
   const mobileHiddenColourCount = Math.max(
     0,
     colours.length - mobileVisibleColours.length,
@@ -2913,7 +2941,10 @@ function ProductConfigurator({
               </div>
             ) : (
               <>
-                <div className="product-swatch-grid mt-3 grid grid-cols-7 place-items-center gap-1 sm:hidden">
+                <div
+                  ref={swatchRowRef}
+                  className="product-swatch-grid mt-3 flex flex-nowrap gap-1 sm:hidden"
+                >
                   {mobileVisibleColours.map((option) => (
                     <ProductColourSwatchButton
                       key={option.id}
@@ -2929,7 +2960,7 @@ function ProductConfigurator({
                     <button
                       type="button"
                       onClick={() => setIsColourOpen((current) => !current)}
-                      className="flex h-9 w-9 items-center justify-center justify-self-center rounded-full border border-black/10 bg-white px-1 text-[10px] font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:border-black/25"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white px-1 text-[10px] font-semibold text-[var(--color-dark-100)] transition-all duration-200 hover:border-black/25"
                       aria-expanded={isColourOpen}
                       aria-label={`Show ${mobileHiddenColourCount} more colours`}
                     >
@@ -3481,12 +3512,76 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
     });
   }, [selectedImage]);
 
+  // Hook / state helper for swipe gestures on touchscreens
+  const useSwipe = (onSwipeLeft: () => void, onSwipeRight: () => void, onClick?: () => void) => {
+    const touchStart = useRef<{ x: number; y: number } | null>(null);
+    const touchEnd = useRef<{ x: number; y: number } | null>(null);
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+      touchEnd.current = null;
+      touchStart.current = {
+        x: e.targetTouches[0].clientX,
+        y: e.targetTouches[0].clientY,
+      };
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+      if (!touchStart.current) return;
+      touchEnd.current = {
+        x: e.targetTouches[0].clientX,
+        y: e.targetTouches[0].clientY,
+      };
+    };
+
+    const onTouchEnd = () => {
+      if (!touchStart.current || !touchEnd.current) {
+        // No swipe gesture, treat as a regular tap/click if onClick is provided
+        if (!touchEnd.current && onClick) {
+          onClick();
+        }
+        return;
+      }
+      const distanceX = touchStart.current.x - touchEnd.current.x;
+      const distanceY = touchStart.current.y - touchEnd.current.y;
+      const isHorizontalSwipe = Math.abs(distanceX) > Math.abs(distanceY);
+
+      if (isHorizontalSwipe && Math.abs(distanceX) > minSwipeDistance) {
+        if (distanceX > 0) {
+          onSwipeLeft();
+        } else {
+          onSwipeRight();
+        }
+      } else if (onClick) {
+        // Not a swipe, fallback to click
+        onClick();
+      }
+    };
+
+    return {
+      onTouchStart,
+      onTouchMove,
+      onTouchEnd,
+    };
+  };
+
+  const mainSwipeHandlers = useSwipe(
+    selectNextImage,
+    selectPreviousImage,
+    () => mainSrc && setLightboxOpen(true)
+  );
+
+  const lightboxSwipeHandlers = useSwipe(
+    selectNextImage,
+    selectPreviousImage
+  );
+
   return (
     <div className="page-wrap page-stack">
       <Link href="/shop" className="page-link">
         ← Back to all products
       </Link>
-
+ 
       <section className="product-detail-hero home-shell page-hero-shell">
         <div className="mx-auto grid w-full max-w-[1380px] gap-8 lg:grid-cols-[minmax(0,640px)_minmax(430px,600px)] lg:items-start lg:justify-center lg:gap-16 xl:gap-24">
           <div className="grid w-full max-w-[640px] min-w-0 justify-self-center gap-2 lg:sticky lg:top-28 lg:self-start">
@@ -3494,7 +3589,14 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
               <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[28px] bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(238,240,240,0.92))]">
                 <button
                   type="button"
-                  onClick={() => mainSrc && setLightboxOpen(true)}
+                  onTouchStart={mainSwipeHandlers.onTouchStart}
+                  onTouchMove={mainSwipeHandlers.onTouchMove}
+                  onTouchEnd={mainSwipeHandlers.onTouchEnd}
+                  onClick={(e) => {
+                    // Prevent click handler from triggering twice on touch devices
+                    if (e.detail === 0) return;
+                    mainSrc && setLightboxOpen(true);
+                  }}
                   className="absolute inset-0 block w-full overflow-hidden text-left"
                   aria-label="Open image gallery"
                 >
@@ -3687,7 +3789,12 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
               </button>
             </div>
 
-            <div className="relative min-h-0 flex-1 overflow-hidden rounded-[28px] bg-black">
+            <div
+              onTouchStart={lightboxSwipeHandlers.onTouchStart}
+              onTouchMove={lightboxSwipeHandlers.onTouchMove}
+              onTouchEnd={lightboxSwipeHandlers.onTouchEnd}
+              className="relative min-h-0 flex-1 overflow-hidden rounded-[28px] bg-black"
+            >
               <div
                 className="flex h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{ transform: `translateX(-${selectedImage * 100}%)` }}

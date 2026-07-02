@@ -103,7 +103,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-      <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
+      <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
     </div>
   )
 }

@@ -571,12 +571,12 @@ export default function HeaderClient({
       <Link
         key={item.slug}
         href={`/shop/${item.slug}`}
-        className={`header-shop-card group relative isolate block h-full min-w-0 overflow-hidden border border-white/65 bg-white/76 no-underline shadow-[0_18px_44px_rgba(0,0,0,0.10),0_1px_0_rgba(255,255,255,0.9)_inset] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white hover:shadow-[0_26px_58px_rgba(0,0,0,0.14)] ${
+        className={`header-shop-card group relative isolate flex h-full min-w-0 flex-col overflow-hidden border border-white/65 bg-white/76 no-underline shadow-[0_18px_44px_rgba(0,0,0,0.10),0_1px_0_rgba(255,255,255,0.9)_inset] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white hover:shadow-[0_26px_58px_rgba(0,0,0,0.14)] ${
           compact ? 'rounded-[18px]' : 'rounded-[22px]'
         }`}
         onClick={compact ? closeMobile : closeDesktopMenuImmediate}
       >
-        <div className={`relative aspect-[4/5] w-full overflow-hidden bg-[linear-gradient(145deg,rgba(248,246,242,0.96),rgba(226,224,220,0.9))] ${
+        <div className={`relative min-h-0 flex-1 overflow-hidden bg-[linear-gradient(145deg,rgba(248,246,242,0.96),rgba(226,224,220,0.9))] ${
           compact ? 'rounded-t-[17px]' : 'rounded-t-[21px]'
         }`}>
           {item.image ? (
@@ -593,8 +593,8 @@ export default function HeaderClient({
             />
           ) : null}
         </div>
-        <div className={`overflow-hidden border-t border-white/78 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(239,237,232,0.9))] text-[#171717] backdrop-blur-2xl ${
-          compact ? 'min-h-[92px] rounded-b-[17px] p-3.5' : 'min-h-[108px] rounded-b-[21px] p-4'
+        <div className={`shrink-0 overflow-hidden border-t border-white/78 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(239,237,232,0.9))] text-[#171717] backdrop-blur-2xl ${
+          compact ? 'rounded-b-[17px] p-3.5' : 'rounded-b-[21px] p-4'
         }`}>
           <div className="flex items-start justify-between gap-3">
             <h3

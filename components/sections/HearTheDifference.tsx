@@ -61,6 +61,8 @@ export default function HearTheDifference() {
                 <button
                   key={v.videoId}
                   onClick={() => setActiveVideoId(v.videoId)}
+                  onMouseEnter={prewarmYouTube}
+                  onTouchStart={prewarmYouTube}
                   className={[
                     'group relative w-full overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]',
                     isHiddenOnMobile ? 'hidden md:block' : '',
@@ -74,6 +76,7 @@ export default function HearTheDifference() {
                           src={v.thumbnail}
                           alt={v.label}
                           fill
+                          loading="lazy"
                           sizes="(min-width: 1024px) 320px, (min-width: 768px) 300px, 92vw"
                           className="absolute inset-0 object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                         />
@@ -137,4 +140,36 @@ export default function HearTheDifference() {
       </section>
     </>
   )
+}
+
+// ---------------------------------------------------------------------------
+// YouTube connection pre-warming
+// Injects <link rel="preconnect"> tags for YouTube's domains on first hover so
+// that DNS + TLS are already resolved by the time the user clicks play.
+// ---------------------------------------------------------------------------
+let ytPrewarmed = false
+function prewarmYouTube() {
+  if (ytPrewarmed) return
+  ytPrewarmed = true
+
+  const domains = [
+    { href: 'https://www.youtube-nocookie.com', crossOrigin: true },
+    { href: 'https://i.ytimg.com', crossOrigin: true },
+    { href: 'https://s.ytimg.com', crossOrigin: true },
+  ]
+
+  domains.forEach(({ href, crossOrigin }) => {
+    // dns-prefetch as lightweight fallback
+    const dns = document.createElement('link')
+    dns.rel = 'dns-prefetch'
+    dns.href = href
+    document.head.appendChild(dns)
+
+    // Full preconnect (opens TCP + TLS)
+    const pc = document.createElement('link')
+    pc.rel = 'preconnect'
+    pc.href = href
+    if (crossOrigin) pc.crossOrigin = 'anonymous'
+    document.head.appendChild(pc)
+  })
 }

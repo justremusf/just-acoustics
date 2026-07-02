@@ -576,7 +576,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       {children}
 
       <div
-        className={`fixed inset-0 z-[120] transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[1100] transition-opacity duration-300 ${
           isOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
