@@ -296,7 +296,7 @@ export default function HeaderClient({
     clearDesktopOpenTimer()
     clearDesktopCloseTimer()
 
-    const delay = openMenu ? 150 : 110
+    const delay = openMenu ? 70 : 50
     openTimerRef.current = window.setTimeout(() => {
       setRenderedMenu(menu)
       setOpenMenu(menu)
@@ -311,7 +311,7 @@ export default function HeaderClient({
     closeTimerRef.current = window.setTimeout(() => {
       setRenderedMenu(null)
       closeTimerRef.current = null
-    }, 520)
+    }, 220)
   }
 
   function closeDesktopMenuImmediate() {
@@ -380,8 +380,8 @@ export default function HeaderClient({
       requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
       cancelIdleCallback?: (handle: number) => void
     }
-    const idleHandle = idleWindow.requestIdleCallback?.(warmMenuImages, { timeout: 900 })
-    const timeoutHandle = idleHandle == null ? window.setTimeout(warmMenuImages, 180) : null
+    const idleHandle = idleWindow.requestIdleCallback?.(warmMenuImages, { timeout: 300 })
+    const timeoutHandle = idleHandle == null ? window.setTimeout(warmMenuImages, 80) : null
 
     return () => {
       cancelled = true
@@ -588,7 +588,7 @@ export default function HeaderClient({
               placeholder="blur"
               blurDataURL={IMAGE_BLUR_DATA_URL}
               quality={62}
-              loading="lazy"
+              loading="eager"
               className="object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
             />
           ) : null}
@@ -704,7 +704,7 @@ export default function HeaderClient({
                   placeholder="blur"
                   blurDataURL={IMAGE_BLUR_DATA_URL}
                   quality={62}
-                  loading="lazy"
+                  loading="eager"
                   className="object-cover transition duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                 />
               ) : null}
@@ -727,7 +727,7 @@ export default function HeaderClient({
             onClick={closeDesktopMenuImmediate}
           >
             {spaceMenuItems.featured[0]?.image ? (
-              <Image src={spaceMenuItems.featured[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="lazy" className="object-cover" />
+              <Image src={spaceMenuItems.featured[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="eager" className="object-cover" />
             ) : null}
             <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,165,0,0.28),rgba(106,54,0,0.9))]" />
             <span className="relative z-10">
@@ -850,7 +850,7 @@ export default function HeaderClient({
                 placeholder="blur"
                 blurDataURL={IMAGE_BLUR_DATA_URL}
                 quality={62}
-                loading="lazy"
+                loading="eager"
                 className="object-cover transition duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
               />
               <span
@@ -876,7 +876,7 @@ export default function HeaderClient({
             onClick={closeDesktopMenuImmediate}
           >
             {projectCards[0]?.image && (
-              <Image src={projectCards[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="lazy" className="object-cover" />
+              <Image src={projectCards[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="eager" className="object-cover" />
             )}
             <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,165,0,0.30),rgba(130,66,0,0.88))]" />
             <span className="relative z-10">
@@ -949,7 +949,7 @@ export default function HeaderClient({
         onClick={closeMobile}
         className="group relative isolate h-[118px] overflow-hidden rounded-[18px] bg-[var(--color-dark-100)] no-underline shadow-[0_12px_28px_rgba(0,0,0,0.10)] sm:aspect-[4/3] sm:h-auto"
       >
-        {image && <Image src={image} alt="" fill sizes="50vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="lazy" className="object-cover" />}
+        {image && <Image src={image} alt="" fill sizes="50vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="eager" className="object-cover" />}
         <span aria-hidden="true" className={`absolute inset-0 ${tint}`} />
         <span className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-2 p-3 sm:p-4">
           <span className="min-w-0 text-[15px] font-semibold leading-[1.02] text-white sm:text-[20px]" style={{ fontFamily: 'var(--font-heading)' }}>{label}</span>
@@ -1169,11 +1169,11 @@ export default function HeaderClient({
           will-change: opacity, transform;
           transform-origin: top center;
           transition:
-            opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
-            transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+            opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
         }
         .header-mega-content {
-          animation: headerMegaContentIn 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
+          animation: headerMegaContentIn 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         @keyframes headerMegaContentIn {
           from {
@@ -1187,7 +1187,7 @@ export default function HeaderClient({
         }
         .header-menu-backdrop {
           will-change: opacity;
-          transition: opacity 560ms cubic-bezier(0.22, 1, 0.36, 1);
+          transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
         }
         .header-mega-link {
           transition:
@@ -1231,7 +1231,7 @@ export default function HeaderClient({
 
       {renderedMenu && (
         <div
-          className={`header-menu-backdrop pointer-events-none fixed inset-0 z-0 bg-[rgba(255,255,255,0.08)] backdrop-blur-[10px] ${
+          className={`header-menu-backdrop pointer-events-none fixed inset-0 z-0 bg-[rgba(255,255,255,0.16)] ${
             openMenu ? 'opacity-100' : 'opacity-0'
           }`}
         />
@@ -1332,7 +1332,7 @@ export default function HeaderClient({
           {activeMenuData && (
             <div
               key={activeMenuData.key}
-              className="header-mega-content w-full overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(246,243,237,0.86))] p-6 shadow-[0_38px_110px_rgba(0,0,0,0.18),0_12px_34px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,1)_inset] backdrop-blur-[42px] backdrop-saturate-150 xl:p-7"
+              className="header-mega-content w-full overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(246,243,237,0.95))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.16),0_10px_28px_rgba(0,0,0,0.07),0_1px_0_rgba(255,255,255,1)_inset] backdrop-blur-[18px] xl:p-7"
             >
               {activeMenuData.key === 'spaces' ? (
                 renderSpacesMegaMenu()

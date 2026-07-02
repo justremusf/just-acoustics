@@ -213,7 +213,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
   useEffect(() => {
     setVideoError(false)
     setAutoplayBlocked(false)
-    setIsLoading(Boolean(selectedCategory))
+    setIsLoading(true)
     setIsPlaying(false)
     setProgress(0)
     updateProgressVisual(0)
@@ -225,18 +225,14 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     setHasStartedWithAudio(Boolean(selectedCategory))
     if (selectedCategory) setShowSelector(false)
 
-    const timer = selectedCategory
-      ? window.setTimeout(() => {
-          void playSource({
-            fromBeginning: true,
-            mute: muteRef.current,
-          })
-        }, 80)
-      : null
+    const timer = window.setTimeout(() => {
+      void playSource({
+        fromBeginning: Boolean(selectedCategory),
+        mute: sourceKey === 'intro' ? true : muteRef.current,
+      })
+    }, 80)
 
-    return () => {
-      if (timer !== null) window.clearTimeout(timer)
-    }
+    return () => window.clearTimeout(timer)
   }, [playSource, resetProgressClock, selectedCategory, sourceKey, updateProgressVisual])
 
   useEffect(() => {
