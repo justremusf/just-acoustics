@@ -55,7 +55,6 @@ export default function HearTheDifference() {
             {videos.map((v, index) => {
               const isActive = activeVideoId === v.videoId
               const isHiddenOnMobile = index > 0
-              const previewSrc = `https://www.youtube-nocookie.com/embed/${v.videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${v.videoId}&rel=0&playsinline=1&modestbranding=1&disablekb=1&iv_load_policy=3`
               const activeSrc = `https://www.youtube-nocookie.com/embed/${v.videoId}?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1`
 
               return (
@@ -71,14 +70,6 @@ export default function HearTheDifference() {
                   <div className="relative aspect-[9/16] md:h-[410px] md:aspect-auto lg:h-[430px] xl:h-auto xl:aspect-[5/6]">
                     {!isActive ? (
                       <>
-                        <iframe
-                          className="absolute inset-0 h-full w-full pointer-events-none"
-                          src={previewSrc}
-                          title={`${v.label} preview`}
-                          loading="lazy"
-                          allow="autoplay; encrypted-media; picture-in-picture"
-                          aria-hidden="true"
-                        />
                         <Image
                           src={v.thumbnail}
                           alt={v.label}

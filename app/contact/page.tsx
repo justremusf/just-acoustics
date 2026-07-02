@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import Script from 'next/script'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
 import { canonicalPath } from '@/lib/seo'
@@ -102,6 +103,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
     </div>
   )
 }

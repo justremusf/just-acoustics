@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import type { InteractiveVSLConfig } from '@/data/vslConfig'
 import VSLCardGrid from '@/components/VSLCardGrid'
@@ -16,25 +15,7 @@ type InteractiveVSLProps = {
 }
 
 export default function InteractiveVSL({ config, pageLocation, compact = false }: InteractiveVSLProps) {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const { refs, state, derived, handlers } = useInteractiveVSL(config, pageLocation)
-
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section || shouldLoadVideo) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-        setShouldLoadVideo(true)
-        observer.disconnect()
-      },
-      { threshold: 0.5 },
-    )
-    observer.observe(section)
-    return () => observer.disconnect()
-  }, [shouldLoadVideo])
 
   const {
     videoRef,
@@ -93,7 +74,7 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
   } = handlers
 
   return (
-    <section ref={sectionRef} className={compact ? 'px-4 py-6 sm:px-5 md:py-8' : 'px-4 py-7 sm:px-5 md:py-9'}>
+    <section className={compact ? 'px-4 py-6 sm:px-5 md:py-8' : 'px-4 py-7 sm:px-5 md:py-9'}>
       <div className="site-container">
         <div
           ref={containerRef}
@@ -128,8 +109,8 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     playsInline
                     muted
                   >
-                    {shouldLoadVideo && activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
-                    {shouldLoadVideo && <source src={activeVideo.videoMp4} type="video/mp4" />}
+                    {activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
+                    <source src={activeVideo.videoMp4} type="video/mp4" />
                   </video>
                 )}
 
@@ -144,9 +125,8 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     ].join(' ')}
                     poster={activeVideo.poster}
                     playsInline
-                    autoPlay={shouldLoadVideo}
                     muted={isMuted}
-                    preload={selectedCategory ? 'auto' : 'metadata'}
+                    preload={selectedCategory ? 'metadata' : 'none'}
                     onEnded={handleEnded}
                     onError={() => {
                       state.setVideoError(true)
@@ -178,8 +158,8 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
                     }}
                     onTimeUpdate={handleTimeUpdate}
                   >
-                    {shouldLoadVideo && activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
-                    {shouldLoadVideo && <source src={activeVideo.videoMp4} type="video/mp4" />}
+                    {activeVideo.videoWebm && <source src={activeVideo.videoWebm} type="video/webm" />}
+                    <source src={activeVideo.videoMp4} type="video/mp4" />
                   </video>
                 )}
 

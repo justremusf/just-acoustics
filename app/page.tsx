@@ -8,6 +8,7 @@ import Spaces from '@/components/sections/Spaces'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
+import InteractiveVSL from '@/components/InteractiveVSL'
 import { landingVslConfig } from '@/data/vslConfig'
 import {
   getSiteSettings,
@@ -20,10 +21,6 @@ import { canonicalPath } from '@/lib/seo'
 const HearTheDifference = dynamic(() => import('@/components/sections/HearTheDifference'))
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'))
 const FAQ = dynamic(() => import('@/components/sections/FAQ'))
-const InteractiveVSL = dynamic(() => import('@/components/InteractiveVSL'), {
-  loading: () => <div className="py-7 md:py-9" aria-hidden="true" />,
-})
-
 export const revalidate = 60
 
 export const metadata: Metadata = {

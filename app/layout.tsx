@@ -208,7 +208,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </SiteShell>
           <SpeedInsights />
           <Analytics />
-          <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
           </CartProvider>
         </HapticProvider>
       </body>

@@ -8,8 +8,8 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 const CASE_STUDY_VIDEO_ID = '-1WDATPou2Y'
 const CASE_STUDY_THUMBNAILS = [
-  `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/maxresdefault.jpg`,
   `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/hqdefault.jpg`,
+  `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/maxresdefault.jpg`,
 ]
 
 const FALLBACK_TESTIMONIALS: Omit<Testimonial, '_id' | 'image'>[] = [
@@ -100,7 +100,7 @@ export default function Testimonials({ testimonials }: Props) {
                 {isStoryVideoActive ? (
                   <iframe
                     className="absolute inset-0 h-full w-full"
-                    src={`https://www.youtube.com/embed/${CASE_STUDY_VIDEO_ID}?autoplay=1&rel=0&playsinline=1`}
+                    src={`https://www.youtube-nocookie.com/embed/${CASE_STUDY_VIDEO_ID}?autoplay=1&rel=0&playsinline=1`}
                     title="Client Testimonial Video"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -116,8 +116,7 @@ export default function Testimonials({ testimonials }: Props) {
                       src={CASE_STUDY_THUMBNAILS[storyThumbnailIndex]}
                       alt="Client testimonial preview"
                       className="h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015]"
-                      loading="eager"
-                      fetchPriority="high"
+                      loading="lazy"
                       decoding="async"
                       onError={() => {
                         if (storyThumbnailIndex < CASE_STUDY_THUMBNAILS.length - 1) {
