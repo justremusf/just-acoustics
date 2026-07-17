@@ -1,3 +1,10 @@
-tmp/
+.git
+.next
+.vercel
+node_modules
 outputs/
+tmp/
 .next_stale*/
+.seo-cache
+*.log
+pnpm-lock.yaml
