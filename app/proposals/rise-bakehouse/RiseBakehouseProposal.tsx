@@ -7,10 +7,6 @@ import { useState } from 'react'
 const proposal = '/proposals/rise-bakehouse/'
 const whatsapp = 'https://wa.me/6589301905?text=Hi%20Just%20Acoustics%2C%20I%20would%20like%20to%20proceed%20with%20the%20Rise%20Bakehouse%20acoustic%20proposal%20(QT-000329).'
 
-function Mark({ children }: { children: React.ReactNode }) {
-  return <span className="rb-mark">{children}</span>
-}
-
 export default function RiseBakehouseProposal() {
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [videoOpen, setVideoOpen] = useState(false)

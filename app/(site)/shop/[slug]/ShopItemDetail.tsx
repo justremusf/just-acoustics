@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useCallback,
   useMemo,
   useRef,
   useState,
@@ -12,32 +13,25 @@ import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
-  BadgeCheck,
-  CheckCircle,
   Download,
   FileText,
   Flame,
   HelpCircle,
   Headphones,
   Layers,
-  MessageCircle,
   PackageCheck,
   Palette,
-  Presentation,
   Ruler,
-  ShieldCheck,
   SlidersHorizontal,
-  Sparkles,
   Star,
   Target,
   Truck,
   Wrench,
   X,
-  Zap,
 } from "lucide-react";
 import { PortableText, type PortableTextBlock } from "@portabletext/react";
 import FAQ, { type FaqItem } from "@/components/sections/FAQ";
-import { useCart, type CartItemOption } from "@/components/cart/CartProvider";
+import { useCart, type CartItemOption } from "@/components/cart/CartContext";
 import ShimmerButton from "@/components/ui/shimmer-button";
 import { urlFor } from "@/sanity/lib/image";
 import type { ShopItem } from "@/lib/types";
@@ -65,7 +59,7 @@ const ProductPanelCalculator = dynamic(
   },
 );
 
-const CATEGORY_LABELS: Record<string, string> = {
+const _CATEGORY_LABELS: Record<string, string> = {
   "package-deals": "Package Deals",
   "standard-panels": "Acoustic Panels",
   "ceiling-panels": "Ceiling Panels",
@@ -509,7 +503,7 @@ function parseNumericValue(value: string | number | undefined) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function formatNrcRange(item: ShopItem) {
+function _formatNrcRange(item: ShopItem) {
   if (isFlexiProduct(item)) {
     return "NRC 0.80-1.00";
   }
@@ -1284,7 +1278,7 @@ function ProductInUseGallery() {
   );
 }
 
-function ProductGuidanceSections() {
+function _ProductGuidanceSections() {
   const productFaqs: FaqItem[] = [
     {
       q: "Can these panels soundproof my room?",
@@ -1384,7 +1378,10 @@ function ProductGuidanceSections() {
 
 function ProductPerformanceChart({ item }: { item: ShopItem }) {
   const productLine = resolveProductLine(item);
-  const rows = item.acousticalSpecs?.rows || [];
+  const rows = useMemo(
+    () => item.acousticalSpecs?.rows || [],
+    [item.acousticalSpecs?.rows],
+  );
   const frequencies =
     productLine === "bass-trap" ? BASS_TRAP_FREQUENCIES : ACOUSTIC_FREQUENCIES;
   const parsedRows: PerformanceSeries[] = useMemo(() => {
@@ -2515,7 +2512,7 @@ function MergedConsultationBanner() {
   );
 }
 
-function MergedTestProductSections({ item }: { item: ShopItem }) {
+function _MergedTestProductSections({ item }: { item: ShopItem }) {
   return (
     <div className="grid gap-8">
       <MergedSectionCard
@@ -3215,7 +3212,9 @@ function ProductConfigurator({
   );
 }
 
-function TabContent({ item }: { item: ShopItem }) {
+// Retained as the visual reference for the alternative tab treatment.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function UnusedTabContent({ item }: { item: ShopItem }) {
   const [activeTab, setActiveTab] = useState<
     "details" | "specs" | "acoustical" | "installation"
   >("details");
@@ -3470,12 +3469,17 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
     setSelectedImage(index);
   };
 
-  const selectNextImage = () =>
-    setSelectedImage((current) => (current + 1) % displayImages.length);
-  const selectPreviousImage = () =>
-    setSelectedImage(
-      (current) => (current - 1 + displayImages.length) % displayImages.length,
-    );
+  const selectNextImage = useCallback(
+    () => setSelectedImage((current) => (current + 1) % displayImages.length),
+    [displayImages.length],
+  );
+  const selectPreviousImage = useCallback(
+    () =>
+      setSelectedImage(
+        (current) => (current - 1 + displayImages.length) % displayImages.length,
+      ),
+    [displayImages.length],
+  );
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -3494,7 +3498,7 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
       document.body.style.overflow = "";
       delete document.body.dataset.galleryExpanded;
     };
-  }, [lightboxOpen, displayImages.length]);
+  }, [lightboxOpen, selectNextImage, selectPreviousImage]);
 
   useEffect(() => {
     setSelectedImage(0);

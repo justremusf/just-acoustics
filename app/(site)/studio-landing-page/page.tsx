@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getAllShopItems, getSiteSettings, getFeaturedTestimonials } from '@/sanity/lib/queries'
+import { getAllShopItems, getFeaturedTestimonials } from '@/sanity/lib/queries'
 import { canonicalPath } from '@/lib/seo'
 import Link from 'next/link'
 import StudioProducts from '@/components/sections/StudioProducts'
@@ -20,8 +20,7 @@ export const metadata: Metadata = {
 }
 
 export default async function StudioLandingPage() {
-  const [settings, shopItems, testimonials] = await Promise.all([
-    getSiteSettings().catch(() => null),
+  const [shopItems, testimonials] = await Promise.all([
     getAllShopItems().catch(() => []),
     getFeaturedTestimonials().catch(() => []),
   ])

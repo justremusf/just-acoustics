@@ -5,21 +5,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
-  BadgeCheck,
-  CheckCircle,
   ChevronDown,
   Flame,
   HelpCircle,
-  Headphones,
   Layers,
   Palette,
   Ruler,
-  ShieldCheck,
-  SlidersHorizontal,
-  Sparkles,
   Truck,
   Wrench,
-  Zap,
 } from 'lucide-react'
 import FAQ, { type FaqItem } from '@/components/sections/FAQ'
 import ShimmerButton from '@/components/ui/shimmer-button'

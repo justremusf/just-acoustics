@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown } from 'lucide-react'
 import {
   type RoomType,
   type MainProblem,

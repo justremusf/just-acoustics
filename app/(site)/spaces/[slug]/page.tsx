@@ -220,7 +220,7 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
               </Link>
             </div>
             <div className="mt-8 grid gap-5 md:grid-cols-3">
-              {space.recommendedShopItems.map((item, index) => (
+              {space.recommendedShopItems.map((item) => (
                 <Link key={item._id} href={`/shop/${item.slug.current}`} className="group overflow-hidden rounded-[26px] border border-black/7 bg-white/88 no-underline shadow-[0_18px_50px_rgba(0,0,0,0.07)]">
                   <div className="relative aspect-[4/3] bg-[#f3f3f1]">
                     {item.mainImage ? (

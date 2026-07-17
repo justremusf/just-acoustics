@@ -13,7 +13,8 @@ import {
   ShoppingBag,
   Trash2,
 } from "lucide-react";
-import { CartOptionDetails, useCart } from "@/components/cart/CartProvider";
+import CartOptionDetails from "@/components/cart/CartOptionDetails";
+import { useCart } from "@/components/cart/CartContext";
 import {
   JUST_ACOUSTICS_WHATSAPP_URL,
   PAYNOW_HELP_BODY,

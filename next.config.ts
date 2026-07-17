@@ -38,6 +38,10 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   devIndicators: false,
   outputFileTracingRoot: process.cwd(),
+  // ESLint runs explicitly via `npm run check`; avoid Next 15's legacy ESLint bridge.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async headers() {
     return [
       {

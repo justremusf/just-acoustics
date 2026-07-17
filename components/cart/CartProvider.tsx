@@ -1,9 +1,7 @@
 "use client";
 
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -32,27 +30,14 @@ import {
   PAYNOW_REASSURANCE,
 } from "@/lib/paymentCopy";
 import { formatSgd } from "@/lib/shopPricing";
-
-export type CartItemOption = {
-  label: string;
-  value?: string;
-  swatchSrc?: string;
-  hex?: string;
-};
-
-export type CartItemInput = {
-  slug: string;
-  title: string;
-  imageSrc?: string | null;
-  unitPrice: number;
-  quantity: number;
-  options: CartItemOption[];
-};
-
-export type CartItem = CartItemInput & {
-  id: string;
-  addedAt: string;
-};
+import {
+  CartContext,
+  type CartContextValue,
+  type CartItem,
+  type CartItemInput,
+  type CartItemOption,
+} from "@/components/cart/CartContext";
+import CartOptionDetails from "@/components/cart/CartOptionDetails";
 
 type CheckoutFields = {
   fullName: string;
@@ -72,19 +57,6 @@ type ManualPaymentDetails = {
   instructions: string;
 };
 
-type CartContextValue = {
-  items: CartItem[];
-  itemCount: number;
-  subtotal: number;
-  isOpen: boolean;
-  addItem: (item: CartItemInput) => void;
-  openCart: () => void;
-  closeCart: () => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  removeItem: (id: string) => void;
-  clearCart: () => void;
-};
-
 const CART_STORAGE_KEY = "just-acoustics-cart";
 const CART_COOKIE_KEY = "just-acoustics-cart-v1";
 const CART_STORAGE_VERSION = 1;
@@ -102,8 +74,6 @@ const emptyCheckoutFields: CheckoutFields = {
   postalCode: "",
   deliveryNotes: "",
 };
-
-const CartContext = createContext<CartContextValue | null>(null);
 
 function createPaymentReference() {
   const datePart = new Date().toISOString().slice(2, 10).replaceAll("-", "");
@@ -250,87 +220,6 @@ function CartQuantityControl({
         <Plus className="h-4 w-4" />
       </button>
     </div>
-  );
-}
-
-const CART_COLOUR_FALLBACKS: Record<string, string> = {
-  white: "#f5f5f2",
-  black: "#171717",
-  charcoal: "#41454a",
-  navy: "#243d5a",
-  "sky blue": "#91b6d6",
-  seafoam: "#abc8c1",
-  linen: "#d9cfbf",
-  bone: "#ddd8cc",
-  terracotta: "#b65c43",
-  magenta: "#d6185a",
-};
-
-export function CartOptionDetails({
-  itemId,
-  options,
-  compact = false,
-}: {
-  itemId: string;
-  options: CartItemOption[];
-  compact?: boolean;
-}) {
-  const visibleOptions = options.filter((option) => option.value);
-  if (!visibleOptions.length) return null;
-
-  return (
-    <dl
-      className={`m-0 grid ${compact ? "mt-2 grid-cols-2 gap-1.5" : "mt-3 grid-cols-2 gap-2"}`}
-    >
-      {visibleOptions.map((option) => {
-        const isColour =
-          option.label.toLowerCase().includes("colour") ||
-          option.label.toLowerCase().includes("color");
-        const fallbackHex =
-          isColour && option.value
-            ? CART_COLOUR_FALLBACKS[
-                option.value.toLowerCase().replace(/\s+\d+$/, "")
-              ]
-            : undefined;
-        const swatchHex = option.hex || fallbackHex;
-
-        return (
-          <div
-            key={`${itemId}-${option.label}`}
-            className={`min-w-0 rounded-[12px] border border-black/7 bg-white/68 ${compact ? "px-2.5 py-2" : "px-3 py-2.5"}`}
-          >
-            <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--color-gray-200)]">
-              {option.label}
-            </dt>
-            <dd
-              className={`m-0 mt-1 flex min-w-0 items-center gap-2 font-semibold leading-tight text-[var(--color-dark-100)] ${compact ? "text-[11px]" : "text-[12px]"}`}
-            >
-              {isColour && (option.swatchSrc || swatchHex) ? (
-                <span
-                  className="relative h-4 w-4 shrink-0 overflow-hidden rounded-full border border-black/10 shadow-[0_0_0_1px_rgba(255,255,255,0.8)]"
-                  style={
-                    !option.swatchSrc && swatchHex
-                      ? { backgroundColor: swatchHex }
-                      : undefined
-                  }
-                >
-                  {option.swatchSrc ? (
-                    <Image
-                      src={option.swatchSrc}
-                      alt=""
-                      fill
-                      sizes="16px"
-                      className="object-cover"
-                    />
-                  ) : null}
-                </span>
-              ) : null}
-              <span className="min-w-0 truncate">{option.value}</span>
-            </dd>
-          </div>
-        );
-      })}
-    </dl>
   );
 }
 
@@ -968,44 +857,5 @@ export function CartProvider({ children }: { children: ReactNode }) {
         </aside>
       </div>}
     </CartContext.Provider>
-  );
-}
-
-export function useCart() {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used inside CartProvider");
-  }
-  return context;
-}
-
-export function CartButton({
-  className = "",
-  label = "Cart",
-}: {
-  className?: string;
-  label?: string;
-}) {
-  const { itemCount, openCart } = useCart();
-
-  return (
-    <button
-      type="button"
-      onClick={openCart}
-      className={className}
-      aria-label={
-        itemCount
-          ? `Open cart with ${itemCount} item${itemCount === 1 ? "" : "s"}`
-          : "Open empty cart"
-      }
-    >
-      <ShoppingBag className="h-4 w-4" />
-      <span className="cart-button-label">{label}</span>
-      {itemCount > 0 && (
-        <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-[var(--color-brand-orange)] px-1.5 py-0.5 text-[11px] font-bold leading-none text-white">
-          {itemCount}
-        </span>
-      )}
-    </button>
   );
 }

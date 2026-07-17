@@ -9,7 +9,6 @@ import {
 import { urlFor } from "@/sanity/lib/image";
 import { canonicalPath, SITE_URL, stripBrand } from "@/lib/seo";
 import type { ShopItem } from "@/lib/types";
-import { formatSgd } from "@/lib/shopPricing";
 import { getShopPriceLabel } from "@/lib/shopDisplay";
 import ShopItemDetail from "./ShopItemDetail";
 import RelatedProductsCarousel from "@/components/shop/RelatedProductsCarousel";

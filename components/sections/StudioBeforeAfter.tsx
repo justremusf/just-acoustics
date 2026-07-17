@@ -5,18 +5,40 @@ import Image from 'next/image'
 
 declare global {
   interface Window {
-    YT: any
+    YT: {
+      Player: new (
+        id: string,
+        options: {
+          height: string
+          width: string
+          videoId: string
+          playerVars: Record<string, number>
+          events: {
+            onReady: () => void
+            onStateChange: (event: { data: number }) => void
+          }
+        },
+      ) => YouTubePlayer
+    }
     onYouTubeIframeAPIReady: (() => void) | undefined
   }
+}
+
+type YouTubePlayer = {
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void
+  pauseVideo: () => void
+  playVideo: () => void
+  getCurrentTime: () => number
+  destroy?: () => void
 }
 
 export default function StudioBeforeAfter() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [track, setTrack] = useState<'before' | 'after'>('before')
   const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(20) // 20s total loop track matching 0:20 in mockup
+  const duration = 20 // 20s total loop track matching 0:20 in mockup
   const [apiReady, setApiReady] = useState(false)
-  const playerRef = useRef<any>(null)
+  const playerRef = useRef<YouTubePlayer | null>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const videoId = '8DURhlYt3wQ'
@@ -68,10 +90,10 @@ export default function StudioBeforeAfter() {
       },
       events: {
         onReady: () => {
-          playerRef.current.seekTo(segments.before.start, true)
-          playerRef.current.pauseVideo()
+          playerRef.current?.seekTo(segments.before.start, true)
+          playerRef.current?.pauseVideo()
         },
-        onStateChange: (event: any) => {
+        onStateChange: (event: { data: number }) => {
           if (event.data === 1) {
             setIsPlaying(true)
             startProgressTracker()
@@ -90,6 +112,8 @@ export default function StudioBeforeAfter() {
         playerRef.current = null
       }
     }
+  // The player must be created only when the external API becomes ready.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiReady])
 
   const startProgressTracker = () => {

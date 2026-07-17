@@ -115,7 +115,7 @@ export default function BlogPreview({ posts = [] }: Props) {
                 ref={trackRef}
                 className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden"
               >
-              {visiblePosts.map((post, index) => {
+              {visiblePosts.map((post) => {
                 const topic = RESOURCE_TOPICS.find((item) => item.value === post.category)
 
                 return (

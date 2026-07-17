@@ -13,7 +13,7 @@ import {
   Info,
   MessageCircle,
 } from 'lucide-react'
-import { CartButton } from '@/components/cart/CartProvider'
+import { CartButton } from '@/components/cart/CartContext'
 import ShimmerButton from '@/components/ui/shimmer-button'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 import {
@@ -89,13 +89,6 @@ interface HeaderClientProps {
 const FEATURED_SPACE_SLUGS = ['studios', 'offices', 'churches', 'restaurants']
 const SECONDARY_SPACE_SLUGS = ['education']
 
-function titleize(value: string) {
-  return value
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ')
-}
-
 function chunkArray<T>(items: T[], size: number) {
   if (items.length === 0) return []
   const chunks: T[][] = []
@@ -103,17 +96,6 @@ function chunkArray<T>(items: T[], size: number) {
     chunks.push(items.slice(index, index + size))
   }
   return chunks
-}
-
-function sortCategoryKeys(a: string, b: string, labels: Record<string, string>) {
-  const labelOrder = Object.keys(labels)
-  const aIndex = labelOrder.indexOf(a)
-  const bIndex = labelOrder.indexOf(b)
-
-  if (aIndex === -1 && bIndex === -1) return a.localeCompare(b)
-  if (aIndex === -1) return 1
-  if (bIndex === -1) return -1
-  return aIndex - bIndex
 }
 
 function buildSpaceSections(spaces: SpaceMenuItem[]) {
@@ -332,6 +314,8 @@ export default function HeaderClient({
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  // closeDesktopMenuImmediate only uses stable state setters and refs.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -379,6 +363,8 @@ export default function HeaderClient({
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
+  // closeDesktopMenuImmediate only uses stable state setters and refs.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openMenu])
 
   const megaMenus = useMemo<Record<MenuKey, MenuDefinition>>(
@@ -523,8 +509,6 @@ export default function HeaderClient({
   const mobileHeaderInnerWidth = `${100 - (1 - mobileHeaderDisplayIntensity) * 12}%`
   const mobileHeaderShift = `${(1 - mobileHeaderDisplayIntensity) * 8}px`
   const mobileLogoFilter = mobileHeaderIsSolid ? 'brightness(0) saturate(1) opacity(1)' : 'brightness(0) invert(1)'
-  const mobileBurgerStroke = 'rgba(74,74,74,1)'
-  const mobileBurgerBg = 'rgba(255,255,255,0.92)'
   const mobileHeaderBorderColor = mobileHeaderIsSolid ? 'rgba(255,255,255,0.28)' : 'transparent'
   const mobileHeaderBackground = mobileHeaderIsSolid
     ? 'linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,246,241,0.78))'

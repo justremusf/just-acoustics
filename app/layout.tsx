@@ -4,11 +4,6 @@ import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import { CartProvider } from '@/components/cart/CartProvider'
-import SiteShell from '@/components/layout/SiteShell'
-import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
 import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
 import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
@@ -100,7 +95,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning className="bg-white">
         <HapticProvider>
-          <CartProvider>
           {hasTracking && (
             <>
               {gtagId && (
@@ -209,23 +203,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }),
             }}
           />
-          <SiteShell
-            defaultShell={
-              <>
-                <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                </div>
-                <WhatsAppButton />
-              </>
-            }
-          >
-            {children}
-          </SiteShell>
+          {children}
           <SpeedInsights />
           <Analytics />
-          </CartProvider>
         </HapticProvider>
       </body>
     </html>

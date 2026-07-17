@@ -317,15 +317,16 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
       if (active) setIsPseudoFullscreen(false)
     }
 
+    const video = videoRef.current
     document.addEventListener('fullscreenchange', updateFullscreen)
-    videoRef.current?.addEventListener('webkitbeginfullscreen', updateVideoFullscreen)
-    videoRef.current?.addEventListener('webkitendfullscreen', updateVideoFullscreen)
+    video?.addEventListener('webkitbeginfullscreen', updateVideoFullscreen)
+    video?.addEventListener('webkitendfullscreen', updateVideoFullscreen)
     updateFullscreen()
 
     return () => {
       document.removeEventListener('fullscreenchange', updateFullscreen)
-      videoRef.current?.removeEventListener('webkitbeginfullscreen', updateVideoFullscreen)
-      videoRef.current?.removeEventListener('webkitendfullscreen', updateVideoFullscreen)
+      video?.removeEventListener('webkitbeginfullscreen', updateVideoFullscreen)
+      video?.removeEventListener('webkitendfullscreen', updateVideoFullscreen)
     }
   }, [sourceKey])
 
@@ -428,6 +429,7 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
     hasStartedWithAudio,
     resetProgressClock,
     selectedCategory,
+    startProgressLoop,
     stopProgressLoop,
     updateProgressVisual,
   ])

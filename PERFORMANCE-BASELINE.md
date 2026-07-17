@@ -22,3 +22,16 @@ Captured with `npm run build` after deferred VSL and panel-calculator loading:
 | Shared baseline | 103 kB | 103 kB | no change |
 
 The route table measures JavaScript only. Header image deferral, product-grid loading changes, and video visibility pausing reduce network and background work but are not represented in these totals.
+
+## Structural pass
+
+Captured after route-layout isolation and cart-module separation:
+
+| Route | Original | Current | Total change |
+| --- | ---: | ---: | ---: |
+| Homepage (`/`) | 174 kB | 168 kB | -6 kB |
+| Product detail (`/shop/[slug]`) | 204 kB | 195 kB | -9 kB |
+| Checkout (`/checkout`) | 124 kB | 119 kB | -5 kB |
+| Shared baseline | 103 kB | 103 kB | no change |
+
+Standalone link, proposal, API, and Studio routes now bypass the customer-site header, footer, cart, and WhatsApp layout at the server routing level.

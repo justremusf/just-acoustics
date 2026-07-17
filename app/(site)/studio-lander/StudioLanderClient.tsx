@@ -132,7 +132,7 @@ const colours = [
   ['Red', '#8f2d2d'],
 ]
 
-function Waveform({ active, playing }: { active: 'before' | 'after'; playing: boolean }) {
+function Waveform({ playing }: { active: 'before' | 'after'; playing: boolean }) {
   return (
     <div className="flex h-14 flex-1 items-center justify-between gap-[3px]">
       {Array.from({ length: 44 }).map((_, index) => {

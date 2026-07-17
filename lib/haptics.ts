@@ -82,7 +82,7 @@ export function triggerHaptic(intensity: HapticIntensity = 'light') {
       const pattern = HAPTIC_PATTERNS[intensity] || HAPTIC_PATTERNS.light;
       navigator.vibrate(pattern);
     }
-  } catch (error) {
+  } catch {
     // Silent fail
   }
 }
