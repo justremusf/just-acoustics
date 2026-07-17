@@ -10,6 +10,7 @@ import {
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   BadgeCheck,
   CheckCircle,
@@ -38,7 +39,6 @@ import { PortableText, type PortableTextBlock } from "@portabletext/react";
 import FAQ, { type FaqItem } from "@/components/sections/FAQ";
 import { useCart, type CartItemOption } from "@/components/cart/CartProvider";
 import ShimmerButton from "@/components/ui/shimmer-button";
-import ProductPanelCalculator from "@/components/shop/ProductPanelCalculator";
 import { urlFor } from "@/sanity/lib/image";
 import type { ShopItem } from "@/lib/types";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/imagePlaceholder";
@@ -55,6 +55,15 @@ import {
   resolveShopSelection,
   type ShopQuoteSelection,
 } from "@/lib/shopPricing";
+
+const ProductPanelCalculator = dynamic(
+  () => import("@/components/shop/ProductPanelCalculator"),
+  {
+    loading: () => (
+      <div className="min-h-[420px] animate-pulse rounded-[28px] bg-black/[0.03]" />
+    ),
+  },
+);
 
 const CATEGORY_LABELS: Record<string, string> = {
   "package-deals": "Package Deals",
@@ -3595,7 +3604,7 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
                   onClick={(e) => {
                     // Prevent click handler from triggering twice on touch devices
                     if (e.detail === 0) return;
-                    mainSrc && setLightboxOpen(true);
+                    if (mainSrc) setLightboxOpen(true);
                   }}
                   className="absolute inset-0 block w-full overflow-hidden text-left"
                   aria-label="Open image gallery"

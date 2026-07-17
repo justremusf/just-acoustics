@@ -55,7 +55,7 @@ function ensureDOM() {
 
   const input = document.createElement('input');
   input.type = 'checkbox';
-  // @ts-ignore - 'switch' is a non-standard attribute that triggers native haptics on iOS 17.4+
+  // `switch` is a non-standard attribute that triggers native haptics on iOS 17.4+.
   input.setAttribute('switch', ''); 
   input.id = id;
 
@@ -86,4 +86,3 @@ export function triggerHaptic(intensity: HapticIntensity = 'light') {
     // Silent fail
   }
 }
-

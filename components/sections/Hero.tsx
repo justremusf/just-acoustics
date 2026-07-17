@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
@@ -26,32 +26,77 @@ const HERO_IMAGES = [
 
 export default function Hero() {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [nextImageIndex, setNextImageIndex] = useState<number | null>(null)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+  const isVisibleRef = useRef(true)
+  const activeImageRef = useRef(0)
 
   useEffect(() => {
+    const section = sectionRef.current
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (motionQuery.matches) return
+
+    const observer = section
+      ? new IntersectionObserver(([entry]) => {
+          isVisibleRef.current = entry.isIntersecting
+        }, { threshold: 0.15 })
+      : null
+    if (section && observer) observer.observe(section)
+
+    let transitionTimer: number | undefined
     const interval = window.setInterval(() => {
-      setActiveImageIndex((current) => (current + 1) % HERO_IMAGES.length)
+      if (document.hidden || !isVisibleRef.current) return
+      const candidate = (activeImageRef.current + 1) % HERO_IMAGES.length
+      const preload = new window.Image()
+      preload.decoding = 'async'
+      preload.src = HERO_IMAGES[candidate].src
+      void preload.decode().catch(() => undefined).then(() => {
+        setNextImageIndex(candidate)
+        window.requestAnimationFrame(() => setIsTransitioning(true))
+        transitionTimer = window.setTimeout(() => {
+          activeImageRef.current = candidate
+          setActiveImageIndex(candidate)
+          setNextImageIndex(null)
+          setIsTransitioning(false)
+        }, 900)
+      })
     }, 6000)
 
-    return () => window.clearInterval(interval)
+    return () => {
+      observer?.disconnect()
+      window.clearInterval(interval)
+      if (transitionTimer) window.clearTimeout(transitionTimer)
+    }
   }, [])
 
   return (
     <section
+      ref={sectionRef}
       className="relative mx-auto mt-0 w-[calc(100%-2rem)] max-w-[1580px] overflow-hidden rounded-[24px] px-0 pt-[188px] pb-12 sm:mt-0 sm:pt-[198px] md:mt-[-82px] md:pt-[246px] md:pb-20"
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
       <div className="absolute inset-0 z-0 rounded-[24px] overflow-hidden">
         <Image
-          key={HERO_IMAGES[activeImageIndex].src}
           src={HERO_IMAGES[activeImageIndex].src}
           alt={HERO_IMAGES[activeImageIndex].alt}
           fill
-          priority={activeImageIndex === 0}
-          fetchPriority={activeImageIndex === 0 ? 'high' : undefined}
+          priority
+          fetchPriority="high"
           quality={72}
           sizes="(max-width: 1580px) 100vw, 1580px"
-          className="animate-[hero-reveal_900ms_ease-out] object-cover"
+          className="object-cover"
         />
+        {nextImageIndex !== null && (
+          <Image
+            src={HERO_IMAGES[nextImageIndex].src}
+            alt={HERO_IMAGES[nextImageIndex].alt}
+            fill
+            quality={72}
+            sizes="(max-width: 1580px) 100vw, 1580px"
+            className={`object-cover transition-opacity duration-[900ms] ease-out ${isTransitioning ? 'opacity-100' : 'opacity-0'}`}
+          />
+        )}
       </div>
       <div className="absolute inset-0 z-0 rounded-[24px] bg-[linear-gradient(115deg,rgba(1,1,1,0.80)_0%,rgba(1,1,1,0.62)_44%,rgba(1,1,1,0.42)_100%)]" />
       <div className="absolute inset-0 z-0 rounded-[24px] bg-[radial-gradient(circle_at_top_right,rgba(255,165,0,0.22),transparent_32%),linear-gradient(to_top,rgba(1,1,1,0.22),transparent_24%)]" />

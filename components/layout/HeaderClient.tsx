@@ -359,38 +359,6 @@ export default function HeaderClient({
   }, [mobileMenu])
 
   useEffect(() => {
-    const imageUrls = [
-      ...shopItems.flatMap((item) => item.image ? [item.image] : []),
-      ...spaces.flatMap((space) => space.image ? [space.image] : []),
-      ...projectCards.map((project) => project.image),
-    ]
-    const uniqueUrls = Array.from(new Set(imageUrls))
-    let cancelled = false
-
-    const warmMenuImages = () => {
-      if (cancelled) return
-      uniqueUrls.forEach((src) => {
-        const image = new window.Image()
-        image.decoding = 'async'
-        image.src = src
-      })
-    }
-
-    const idleWindow = window as typeof window & {
-      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
-      cancelIdleCallback?: (handle: number) => void
-    }
-    const idleHandle = idleWindow.requestIdleCallback?.(warmMenuImages, { timeout: 300 })
-    const timeoutHandle = idleHandle == null ? window.setTimeout(warmMenuImages, 80) : null
-
-    return () => {
-      cancelled = true
-      if (idleHandle != null) idleWindow.cancelIdleCallback?.(idleHandle)
-      if (timeoutHandle != null) window.clearTimeout(timeoutHandle)
-    }
-  }, [projectCards, shopItems, spaces])
-
-  useEffect(() => {
     return () => {
       clearDesktopOpenTimer()
       clearDesktopCloseTimer()
@@ -588,7 +556,7 @@ export default function HeaderClient({
               placeholder="blur"
               blurDataURL={IMAGE_BLUR_DATA_URL}
               quality={62}
-              loading="eager"
+              loading="lazy"
               className="object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
             />
           ) : null}
@@ -704,7 +672,7 @@ export default function HeaderClient({
                   placeholder="blur"
                   blurDataURL={IMAGE_BLUR_DATA_URL}
                   quality={62}
-                  loading="eager"
+                  loading="lazy"
                   className="object-cover transition duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                 />
               ) : null}
@@ -727,7 +695,7 @@ export default function HeaderClient({
             onClick={closeDesktopMenuImmediate}
           >
             {spaceMenuItems.featured[0]?.image ? (
-              <Image src={spaceMenuItems.featured[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="eager" className="object-cover" />
+              <Image src={spaceMenuItems.featured[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="lazy" className="object-cover" />
             ) : null}
             <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,165,0,0.28),rgba(106,54,0,0.9))]" />
             <span className="relative z-10">
@@ -850,7 +818,7 @@ export default function HeaderClient({
                 placeholder="blur"
                 blurDataURL={IMAGE_BLUR_DATA_URL}
                 quality={62}
-                loading="eager"
+                loading="lazy"
                 className="object-cover transition duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
               />
               <span
@@ -876,7 +844,7 @@ export default function HeaderClient({
             onClick={closeDesktopMenuImmediate}
           >
             {projectCards[0]?.image && (
-              <Image src={projectCards[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="eager" className="object-cover" />
+              <Image src={projectCards[0].image} alt="" fill sizes="(min-width: 1280px) 28vw, 44vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="lazy" className="object-cover" />
             )}
             <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,165,0,0.30),rgba(130,66,0,0.88))]" />
             <span className="relative z-10">
@@ -949,7 +917,7 @@ export default function HeaderClient({
         onClick={closeMobile}
         className="group relative isolate h-[118px] overflow-hidden rounded-[18px] bg-[var(--color-dark-100)] no-underline shadow-[0_12px_28px_rgba(0,0,0,0.10)] sm:aspect-[4/3] sm:h-auto"
       >
-        {image && <Image src={image} alt="" fill sizes="50vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="eager" className="object-cover" />}
+        {image && <Image src={image} alt="" fill sizes="50vw" placeholder="blur" blurDataURL={IMAGE_BLUR_DATA_URL} quality={62} loading="lazy" className="object-cover" />}
         <span aria-hidden="true" className={`absolute inset-0 ${tint}`} />
         <span className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-2 p-3 sm:p-4">
           <span className="min-w-0 text-[15px] font-semibold leading-[1.02] text-white sm:text-[20px]" style={{ fontFamily: 'var(--font-heading)' }}>{label}</span>

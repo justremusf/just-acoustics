@@ -338,6 +338,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [drawerMounted, setDrawerMounted] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [fields, setFields] = useState<CheckoutFields>(emptyCheckoutFields);
   const [formError, setFormError] = useState<string | null>(null);
@@ -383,6 +384,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [isOpen]);
 
   useEffect(() => {
+    if (isOpen) setDrawerMounted(true);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setIsOpen(false);
@@ -422,7 +427,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
               addedAt: new Date().toISOString(),
             },
           ];
-      persistCartItems(nextItems);
       return nextItems;
     });
     setCheckoutOpen(false);
@@ -445,7 +449,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
             : item,
         )
         .filter((item) => item.quantity > 0);
-      persistCartItems(nextItems);
       return nextItems;
     });
   }, []);
@@ -456,13 +459,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setFormMessage(null);
     setItems((current) => {
       const nextItems = current.filter((item) => item.id !== id);
-      persistCartItems(nextItems);
       return nextItems;
     });
   }, []);
 
   const clearCart = useCallback(() => {
-    persistCartItems([]);
     setItems([]);
     setCheckoutOpen(false);
     setFields(emptyCheckoutFields);
@@ -575,7 +576,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider value={value}>
       {children}
 
-      <div
+      {drawerMounted && <div
         className={`fixed inset-0 z-[1100] transition-opacity duration-300 ${
           isOpen
             ? "pointer-events-auto opacity-100"
@@ -965,7 +966,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             </div>
           )}
         </aside>
-      </div>
+      </div>}
     </CartContext.Provider>
   );
 }

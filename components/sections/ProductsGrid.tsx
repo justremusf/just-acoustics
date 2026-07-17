@@ -86,7 +86,7 @@ export default function ProductsGrid({ products }: Props) {
         </div>
 
         <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-5 xl:grid-cols-4">
-          {items.map((item) => {
+          {items.map((item, index) => {
             const imgSrc = item.mainImage
               ? urlFor(item.mainImage).width(720).height(900).fit("crop").url()
               : "/placeholder.jpg";
@@ -115,7 +115,7 @@ export default function ProductsGrid({ products }: Props) {
               <Link
                 key={item._id}
                 href={`/shop/${item.slug.current}`}
-                className="group h-full overflow-hidden rounded-[18px] border border-white/72 bg-white/72 no-underline shadow-[0_18px_50px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.94)_inset] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white hover:shadow-[0_28px_64px_rgba(0,0,0,0.13)] sm:rounded-[24px]"
+                className="group h-full overflow-hidden rounded-[18px] border border-white/72 bg-white/72 no-underline shadow-[0_18px_50px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.94)_inset] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1 hover:border-white hover:shadow-[0_28px_64px_rgba(0,0,0,0.13)] sm:rounded-[24px]"
               >
                 <article className="flex h-full flex-col">
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-[linear-gradient(145deg,rgba(248,246,242,0.96),rgba(226,224,220,0.9))]">
@@ -129,7 +129,7 @@ export default function ProductsGrid({ products }: Props) {
                         item.mainImage ? IMAGE_BLUR_DATA_URL : undefined
                       }
                       quality={72}
-                      loading="eager"
+                      loading={index < 2 ? "eager" : "lazy"}
                       className="object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                     />
                     {hoverImageSrc ? (
@@ -140,7 +140,7 @@ export default function ProductsGrid({ products }: Props) {
                         sizes="(max-width: 639px) calc(50vw - 26px), (max-width: 1279px) calc(50vw - 28px), calc(25vw - 32px)"
                         quality={72}
                         loading="lazy"
-                        className="object-cover opacity-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015] group-hover:opacity-100"
+                        className="object-cover opacity-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015] group-hover:opacity-100"
                       />
                     ) : null}
                   </div>

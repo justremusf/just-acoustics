@@ -2,13 +2,22 @@
 
 import type { CSSProperties } from 'react'
 import { useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { markLeadTracked, wasSubmissionTracked } from '@/components/analytics/leadTrackingState'
+import { trackEvent } from '@/components/analytics/trackEvent'
 import { buildTallyUrlWithAttribution, captureAttribution } from '@/lib/tallyAttribution'
 
 type TallyWindow = Window & {
   Tally?: {
     loadEmbeds?: () => void
   }
+}
+
+type TallySubmittedPayload = {
+  id?: string
+  formId?: string
+  formName?: string
 }
 
 type TallyAttributionIframeProps = {
@@ -24,6 +33,7 @@ export default function TallyAttributionIframe({
   className,
   style,
 }: TallyAttributionIframeProps) {
+  const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const search = searchParams.toString()
@@ -42,6 +52,45 @@ export default function TallyAttributionIframe({
       tallyWindow.Tally?.loadEmbeds?.()
     })
   }, [baseUrl, routeKey])
+
+  useEffect(() => {
+    function handleMessage(event: MessageEvent) {
+      if (typeof event.data !== 'string' || !event.data.includes('Tally.FormSubmitted')) return
+
+      if (event.origin !== 'https://tally.so') return
+
+      try {
+        const parsed = JSON.parse(event.data) as {
+          event?: string
+          payload?: TallySubmittedPayload
+        }
+
+        if (parsed.event !== 'Tally.FormSubmitted') return
+
+        const submissionId = parsed.payload?.id
+        if (wasSubmissionTracked(submissionId)) return
+
+        trackEvent('generate_lead', {
+          form_name: 'free_acoustic_consultation',
+          page_path: pathname,
+          tally_form_id: parsed.payload?.formId || '',
+          tally_form_name: parsed.payload?.formName || title,
+          tracking_source: 'tally_form_submitted',
+          ...captureAttribution(),
+        })
+        markLeadTracked('tally_form_submitted', submissionId)
+
+        window.setTimeout(() => {
+          router.push('/thank-you')
+        }, 150)
+      } catch {
+        // Ignore malformed postMessage payloads from other scripts.
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [pathname, router, title])
 
   return (
     <iframe

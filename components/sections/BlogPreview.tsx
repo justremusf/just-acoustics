@@ -14,16 +14,32 @@ export default function BlogPreview({ posts = [] }: Props) {
   const visiblePosts = posts.slice(0, 6)
   const [activeIndex, setActiveIndex] = useState(0)
   const trackRef = useRef<HTMLDivElement | null>(null)
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const isVisibleRef = useRef(false)
+  const manualPauseUntilRef = useRef(0)
 
   useEffect(() => {
     if (visiblePosts.length < 2) return
-    if (typeof window === 'undefined' || !window.matchMedia('(min-width: 768px)').matches) return
+    const desktopQuery = window.matchMedia('(min-width: 768px)')
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const section = sectionRef.current
+    if (!section) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting
+    }, { threshold: 0.15 })
+    observer.observe(section)
 
     const interval = window.setInterval(() => {
+      if (!desktopQuery.matches || motionQuery.matches || document.hidden || !isVisibleRef.current) return
+      if (Date.now() < manualPauseUntilRef.current) return
       setActiveIndex((current) => (current + 1) % visiblePosts.length)
     }, 4200)
 
-    return () => window.clearInterval(interval)
+    return () => {
+      observer.disconnect()
+      window.clearInterval(interval)
+    }
   }, [visiblePosts.length])
 
   useEffect(() => {
@@ -43,15 +59,17 @@ export default function BlogPreview({ posts = [] }: Props) {
   if (visiblePosts.length === 0) return null
 
   const goToPrevious = () => {
+    manualPauseUntilRef.current = Date.now() + 12_000
     setActiveIndex((current) => (current - 1 + visiblePosts.length) % visiblePosts.length)
   }
 
   const goToNext = () => {
+    manualPauseUntilRef.current = Date.now() + 12_000
     setActiveIndex((current) => (current + 1) % visiblePosts.length)
   }
 
   return (
-    <section className="px-4 py-10 md:px-5 md:py-12">
+    <section ref={sectionRef} className="px-4 py-10 md:px-5 md:py-12">
       <div className="home-shell section-shell-pad mx-auto max-w-[1580px] bg-white" style={{ backdropFilter: 'none' }}>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-14">
           <div className="max-w-[560px]">
@@ -77,7 +95,7 @@ export default function BlogPreview({ posts = [] }: Props) {
               <button
                 type="button"
                 onClick={goToPrevious}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white text-[var(--color-dark-100)] shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:border-black/14 hover:text-[var(--color-brand-orange)]"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-white text-[var(--color-dark-100)] shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition-[transform,border-color,color] duration-300 hover:-translate-y-0.5 hover:border-black/14 hover:text-[var(--color-brand-orange)]"
                 aria-label="Previous article"
               >
                 ←

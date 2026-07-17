@@ -8,7 +8,7 @@ import Spaces from '@/components/sections/Spaces'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
-import InteractiveVSL from '@/components/InteractiveVSL'
+import LazyInteractiveVSL from '@/components/LazyInteractiveVSL'
 import { landingVslConfig } from '@/data/vslConfig'
 import {
   getSiteSettings,
@@ -39,7 +39,7 @@ export default async function HomePage() {
     <>
       <ScrollToTopOnMount />
       <Hero />
-      <InteractiveVSL
+      <LazyInteractiveVSL
         config={landingVslConfig}
         pageLocation="/"
       />

@@ -18,6 +18,7 @@ type InteractiveVSLProps = {
 export default function InteractiveVSL({ config, pageLocation, compact = false }: InteractiveVSLProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  const resumeAfterVisibilityRef = useRef(false)
   const { refs, state, derived, handlers } = useInteractiveVSL(config, pageLocation)
 
   useEffect(() => {
@@ -26,9 +27,7 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return
-        setShouldLoadVideo(true)
-        observer.disconnect()
+        if (entry.isIntersecting) setShouldLoadVideo(true)
       },
       { rootMargin: '180px 0px', threshold: 0.15 },
     )
@@ -44,6 +43,40 @@ export default function InteractiveVSL({ config, pageLocation, compact = false }
     speedButtonRef,
     progressFillRef,
   } = refs
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section || !shouldLoadVideo) return
+
+    const pauseForVisibility = () => {
+      const video = videoRef.current
+      if (!video || video.paused) return
+      resumeAfterVisibilityRef.current = true
+      video.pause()
+    }
+    const resumeForVisibility = () => {
+      if (!resumeAfterVisibilityRef.current || document.hidden) return
+      resumeAfterVisibilityRef.current = false
+      void videoRef.current?.play().catch(() => undefined)
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) resumeForVisibility()
+      else pauseForVisibility()
+    }, { threshold: 0.05 })
+    const handleVisibilityChange = () => {
+      if (document.hidden) pauseForVisibility()
+      else if (section.getBoundingClientRect().bottom > 0 && section.getBoundingClientRect().top < window.innerHeight) {
+        resumeForVisibility()
+      }
+    }
+
+    observer.observe(section)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [shouldLoadVideo, videoRef])
 
   const {
     selectedCategory,

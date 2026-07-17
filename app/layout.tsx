@@ -10,6 +10,7 @@ import { CartProvider } from '@/components/cart/CartProvider'
 import SiteShell from '@/components/layout/SiteShell'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
+import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
 import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
 import HapticProvider from '@/components/providers/HapticProvider'
 import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
@@ -113,6 +114,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       window.gtag = gtag;
+                      gtag('consent', 'default', {
+                        analytics_storage: 'denied',
+                        ad_storage: 'denied',
+                        ad_user_data: 'denied',
+                        ad_personalization: 'denied',
+                        wait_for_update: 500
+                      });
+                      if (document.cookie.split('; ').includes('ja_analytics_consent=granted')) {
+                        gtag('consent', 'update', {
+                          analytics_storage: 'granted',
+                          ad_storage: 'granted',
+                          ad_user_data: 'granted',
+                          ad_personalization: 'granted'
+                        });
+                      }
                       gtag('js', new Date());
                       ${gaId ? `gtag('config', '${gaId}');` : ''}
                       ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
@@ -157,6 +173,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={null}>
             <AttributionProvider />
           </Suspense>
+          <CookieConsentBanner />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{

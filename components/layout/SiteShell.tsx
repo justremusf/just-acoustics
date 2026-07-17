@@ -10,7 +10,7 @@ export default function SiteShell({
   defaultShell: React.ReactNode
 }) {
   const pathname = usePathname()
-  const isStandalone = pathname.startsWith('/link')
+  const isStandalone = pathname.startsWith('/link') || pathname.startsWith('/proposals/')
 
   if (isStandalone) return <>{children}</>
 
