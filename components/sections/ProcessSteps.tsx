@@ -11,17 +11,17 @@ const steps = [
   {
     title: 'Site Visit',
     description: 'We assess your space and provide consultation',
-    image: '/assets/webflow/6964fb659de42387a7d78754_Image%20from%20TinyPNG%20(4).avif',
+    image: '/assets/process/site-visit.webp',
   },
   {
     title: 'Proposal',
     description: 'We design a 3D render of your space',
-    image: '/assets/webflow/696a4efb255645d4686056e2_7.webp',
+    image: '/assets/process/proposal.webp',
   },
   {
     title: 'Installation',
     description: 'Our licensed team works around your schedule',
-    image: '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
+    image: '/assets/process/installation.webp',
   },
 ]
 
@@ -45,6 +45,7 @@ export default function ProcessSteps() {
                     fill
                     sizes="(max-width: 767px) 100vw, 25vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ objectPosition: step.title === 'Site Visit' ? 'center bottom' : 'center' }}
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.06),rgba(1,1,1,0.32)_54%,rgba(1,1,1,0.66))]" />
                   <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
@@ -81,6 +82,7 @@ export default function ProcessSteps() {
                   fill
                   sizes="100vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ objectPosition: step.title === 'Site Visit' ? 'center bottom' : 'center' }}
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.06),rgba(1,1,1,0.26)_48%,rgba(1,1,1,0.66))]" />
                 <div className="absolute inset-x-0 bottom-0 p-3">

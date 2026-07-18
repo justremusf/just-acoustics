@@ -29,6 +29,7 @@ type ShopMenuItem = {
   title: string
   slug: string
   category?: string
+  productLine?: string
   price?: number
   checkoutMode?: 'quote-only' | 'configurable-quote' | 'payment-ready'
   configuratorEnabled?: boolean
@@ -88,6 +89,23 @@ interface HeaderClientProps {
 
 const FEATURED_SPACE_SLUGS = ['studios', 'offices', 'churches', 'restaurants']
 const SECONDARY_SPACE_SLUGS = ['education']
+const ACOUSTIC_PANEL_PRODUCT_LINES = new Set([
+  'flexi-panel',
+  'custom-print-panels',
+  'gobo',
+  'bass-trap',
+  'pet-panel',
+])
+
+function getShopMenuCategory(item: ShopMenuItem) {
+  if (item.productLine === 'accessory' || item.category === 'accessories') {
+    return 'accessories'
+  }
+  if (item.productLine && ACOUSTIC_PANEL_PRODUCT_LINES.has(item.productLine)) {
+    return 'acoustic-panels'
+  }
+  return item.category
+}
 
 function chunkArray<T>(items: T[], size: number) {
   if (items.length === 0) return []
@@ -469,7 +487,7 @@ export default function HeaderClient({
   const shopCategoryCards = useMemo(
     () =>
       Object.entries(SHOP_CATEGORY_LABELS).flatMap(([value, label]) => {
-        const matchingItems = orderedShopItems.filter((item) => item.category === value)
+        const matchingItems = orderedShopItems.filter((item) => getShopMenuCategory(item) === value)
         if (matchingItems.length === 0) return []
         const imageItem = matchingItems.find((item) => item.image)
         return [{
@@ -484,7 +502,7 @@ export default function HeaderClient({
   const shopFilterCategories = useMemo(
     () =>
       shopCategoryCards.filter((category) =>
-        buyableShopItems.some((item) => item.category === category.value)
+        buyableShopItems.some((item) => getShopMenuCategory(item) === category.value)
       ),
     [buyableShopItems, shopCategoryCards]
   )
@@ -492,7 +510,7 @@ export default function HeaderClient({
     () =>
       shopMenuCategory === 'all'
         ? buyableShopItems
-        : buyableShopItems.filter((item) => item.category === shopMenuCategory),
+        : buyableShopItems.filter((item) => getShopMenuCategory(item) === shopMenuCategory),
     [buyableShopItems, shopMenuCategory]
   )
   const shopMenuDestination =
@@ -524,11 +542,15 @@ export default function HeaderClient({
         key={item.slug}
         href={`/shop/${item.slug}`}
         className={`header-shop-card group relative isolate flex h-full min-w-0 flex-col overflow-hidden border border-white/65 bg-white/76 no-underline shadow-[0_18px_44px_rgba(0,0,0,0.10),0_1px_0_rgba(255,255,255,0.9)_inset] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white hover:shadow-[0_26px_58px_rgba(0,0,0,0.14)] ${
+          compact ? 'min-h-[280px]' : 'min-h-[340px]'
+        } ${
           compact ? 'rounded-[18px]' : 'rounded-[22px]'
         }`}
         onClick={compact ? closeMobile : closeDesktopMenuImmediate}
       >
-        <div className={`relative min-h-0 flex-1 overflow-hidden bg-[linear-gradient(145deg,rgba(248,246,242,0.96),rgba(226,224,220,0.9))] ${
+        <div className={`relative flex-1 overflow-hidden bg-[linear-gradient(145deg,rgba(248,246,242,0.96),rgba(226,224,220,0.9))] ${
+          compact ? 'min-h-[180px]' : 'min-h-[230px]'
+        } ${
           compact ? 'rounded-t-[17px]' : 'rounded-t-[21px]'
         }`}>
           {item.image ? (
@@ -540,8 +562,8 @@ export default function HeaderClient({
               placeholder="blur"
               blurDataURL={IMAGE_BLUR_DATA_URL}
               quality={62}
-              loading="lazy"
-              className="object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+              loading="eager"
+              className="object-contain transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
             />
           ) : null}
         </div>
@@ -728,8 +750,8 @@ export default function HeaderClient({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 items-stretch gap-4 lg:grid-cols-3 xl:grid-cols-5">
-          {visibleShopMenuItems.slice(0, 4).map((item) => renderShopProductCard(item))}
+        <div className="grid grid-cols-4 items-stretch gap-4">
+          {visibleShopMenuItems.slice(0, 3).map((item) => renderShopProductCard(item))}
           <Link
             href={shopMenuDestination}
             className="header-shop-card group relative flex h-full min-h-[340px] flex-col items-center justify-center gap-5 overflow-hidden rounded-[22px] border border-white/60 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.78),transparent_28%),linear-gradient(145deg,rgba(255,182,55,0.70),rgba(255,143,0,0.48))] p-6 text-center text-[#171717] no-underline shadow-[0_24px_56px_rgba(255,165,0,0.18),0_1px_0_rgba(255,255,255,0.76)_inset] backdrop-blur-2xl transition-all duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_30px_64px_rgba(255,165,0,0.22),0_1px_0_rgba(255,255,255,0.88)_inset]"
@@ -950,6 +972,8 @@ export default function HeaderClient({
     }
 
     if (menuKey === 'shop') {
+      const compactShopItems = visibleShopMenuItems.slice(0, 3)
+
       return (
         <div className="grid gap-4">
           <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
@@ -981,12 +1005,14 @@ export default function HeaderClient({
               </button>
             ))}
           </div>
-          <div className="grid grid-cols-2 items-stretch gap-3 sm:grid-cols-3">
-            {visibleShopMenuItems.slice(0, 5).map((item) => renderShopProductCard(item, true))}
+          <div className="grid grid-cols-2 items-stretch gap-3">
+            {compactShopItems.map((item) => renderShopProductCard(item, true))}
             <Link
               href={shopMenuDestination}
               onClick={closeMobile}
-              className="group flex h-full min-h-[250px] flex-col items-center justify-center gap-3 rounded-[18px] border border-[#e89400] bg-[var(--color-brand-orange)] p-4 text-center text-[#171717] no-underline shadow-[0_16px_34px_rgba(255,165,0,0.22)]"
+              className={`group flex h-full min-h-[280px] flex-col items-center justify-center gap-3 rounded-[18px] border border-[#e89400] bg-[var(--color-brand-orange)] p-4 text-center text-[#171717] no-underline shadow-[0_16px_34px_rgba(255,165,0,0.22)] ${
+                compactShopItems.length % 2 === 0 ? 'col-span-2' : ''
+              }`}
             >
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               <span className="text-[20px] font-medium leading-none" style={{ fontFamily: 'var(--font-heading)' }}>See All Products</span>

@@ -32,6 +32,7 @@ type MenuShopItem = {
   title: string
   slug: string
   category?: string
+  productLine?: string
   price?: number
   checkoutMode?: 'quote-only' | 'configurable-quote' | 'payment-ready'
   configuratorEnabled?: boolean
@@ -88,6 +89,7 @@ export default async function Header() {
           title: item.title,
           slug: item.slug,
           category: item.category,
+          productLine: item.productLine,
           price: item.price,
           checkoutMode: item.checkoutMode,
           configuratorEnabled: item.configuratorEnabled,

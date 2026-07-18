@@ -13,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
-  Download,
+  ExternalLink,
   FileText,
   Flame,
   HelpCircle,
@@ -1822,16 +1822,8 @@ function ProductBeforeAfterSection() {
 function ProductInstallationDownloads() {
   const downloads = [
     {
-      title: "Wall Mount Installation Guide.pdf",
-      href: "/assets/shop/standard-flexi/downloads/wall-mount-installation-guide.pdf",
-    },
-    {
-      title: "Ceiling Mount Installation Guide.pdf",
-      href: "/assets/shop/standard-flexi/downloads/ceiling-mount-installation-guide.pdf",
-    },
-    {
-      title: "Flexi Panel NRC Test Report.pdf",
-      href: "/assets/shop/standard-flexi/downloads/flexi-nrc-test-report.pdf",
+      title: "Wall Mount Installation Guide",
+      href: "https://www.youtube.com/watch?v=6Ns6aZgqlZA",
     },
   ];
 
@@ -1846,9 +1838,8 @@ function ProductInstallationDownloads() {
             Installation Made Simple
           </h2>
           <p className="m-0 mt-5 text-base leading-8 text-[var(--color-gray-100)]">
-            Great acoustics start with proper installation. Our guides walk
-            through wall and ceiling mounting so panels are placed securely and
-            effectively.
+            Great acoustics start with proper installation. Our guide walks
+            through wall mounting so panels are placed securely and effectively.
           </p>
         </div>
         <div className="grid gap-4 rounded-[28px] border border-black/6 bg-white/72 p-4 sm:p-5">
@@ -1856,7 +1847,8 @@ function ProductInstallationDownloads() {
             <a
               key={download.href}
               href={download.href}
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-between gap-4 rounded-[18px] px-2 py-3 text-[var(--color-dark-100)] no-underline transition-colors hover:bg-black/4 sm:px-3"
             >
               <span className="flex min-w-0 items-center gap-4">
@@ -1869,8 +1861,8 @@ function ProductInstallationDownloads() {
                 </span>
               </span>
               <span className="inline-flex shrink-0 items-center gap-2 text-sm font-bold uppercase tracking-[0.08em] text-[#3b82f6]">
-                <Download className="h-4 w-4" />
-                Download
+                <ExternalLink className="h-4 w-4" />
+                View
               </span>
             </a>
           ))}

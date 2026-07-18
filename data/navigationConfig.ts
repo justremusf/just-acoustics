@@ -8,6 +8,7 @@ export const LOGO_SRC =
   '/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg'
 
 export const SHOP_CATEGORY_LABELS: Record<string, string> = {
+  'acoustic-panels': 'Acoustic Panels',
   'standard-panels': 'Acoustic Panels',
   'ceiling-panels': 'Ceiling Panels',
   'custom-solutions': 'Custom Solutions',

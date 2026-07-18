@@ -4,6 +4,7 @@
 node_modules
 outputs/
 tmp/
+gpt-sites/
 .next_stale*/
 .seo-cache
 *.log

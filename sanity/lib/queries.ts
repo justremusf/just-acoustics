@@ -280,7 +280,7 @@ export async function getMenuShopItems() {
   try {
     return await serverClient.fetch(`
       *[_type == "shopItem" && !(_id in path("drafts.**"))] | order(_createdAt asc) {
-        _id, title, "slug": slug.current, category, mainImage, price, configuratorEnabled
+        _id, title, "slug": slug.current, category, productLine, mainImage, price, configuratorEnabled
       }
     `)
   } catch (error) {
