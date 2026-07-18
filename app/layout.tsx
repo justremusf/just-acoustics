@@ -6,7 +6,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
 import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
-import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
 import HapticProvider from '@/components/providers/HapticProvider'
 import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
 import './globals.css'
@@ -99,23 +98,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <>
               {gtagId && (
                 <>
-                  <Script
-                    src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-                    strategy="lazyOnload"
-                  />
-                  <Script id="gtag-init" strategy="lazyOnload">
+                  <Script id="gtag-init" strategy="beforeInteractive">
                     {`
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       window.gtag = gtag;
                       gtag('consent', 'default', {
-                        analytics_storage: 'denied',
+                        analytics_storage: 'granted',
                         ad_storage: 'denied',
                         ad_user_data: 'denied',
                         ad_personalization: 'denied',
                         wait_for_update: 500
                       });
-                      if (document.cookie.split('; ').includes('ja_analytics_consent=granted')) {
+                      var consentCookie = document.cookie
+                        .split('; ')
+                        .find(function(item) { return item.indexOf('ja_analytics_consent=') === 0; });
+                      var consentValue = consentCookie ? consentCookie.split('=')[1] : '';
+                      if (consentValue === 'all' || consentValue === 'granted') {
                         gtag('consent', 'update', {
                           analytics_storage: 'granted',
                           ad_storage: 'granted',
@@ -128,6 +127,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
                     `}
                   </Script>
+                  <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
+                    strategy="afterInteractive"
+                  />
                 </>
               )}
               {metaPixelId && (
@@ -156,11 +159,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     />
                   </noscript>
                 </>
-              )}
-              {gaId && (
-                <Suspense fallback={null}>
-                  <GaPageViewTracker gaId={gaId} />
-                </Suspense>
               )}
             </>
           )}

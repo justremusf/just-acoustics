@@ -1,3 +1,5 @@
+import { readAnalyticsConsent } from '@/lib/analyticsConsent'
+
 export const ATTRIBUTION_STORAGE_KEY = 'ja_attribution_v1'
 
 export const ATTRIBUTION_KEYS = [
@@ -55,7 +57,11 @@ function createLeadRef() {
 }
 
 function hasPersistentConsent() {
-  return document.cookie.split('; ').some((value) => value === 'ja_analytics_consent=granted')
+  return readAnalyticsConsent() !== 'unset'
+}
+
+function getConsentState() {
+  return readAnalyticsConsent() === 'all' ? 'all' : 'analytics_only'
 }
 
 function readStoredAttribution(): Attribution | null {
@@ -117,7 +123,7 @@ function attributionFromUrl(url: URL, referrer: string): Attribution {
     referrer,
     first_touch_at: capturedAt,
     last_touch_at: capturedAt,
-    consent_state: hasPersistentConsent() ? 'granted' : 'session_only',
+    consent_state: getConsentState(),
   }
 
   UTM_KEYS.forEach((key) => {
@@ -150,7 +156,7 @@ function attributionFromReferrer(url: URL, referrer: string): Attribution {
       referrer,
       first_touch_at: capturedAt,
       last_touch_at: capturedAt,
-      consent_state: hasPersistentConsent() ? 'granted' : 'session_only',
+      consent_state: getConsentState(),
     }
   }
 
@@ -162,7 +168,7 @@ function attributionFromReferrer(url: URL, referrer: string): Attribution {
     referrer,
     first_touch_at: capturedAt,
     last_touch_at: capturedAt,
-    consent_state: hasPersistentConsent() ? 'granted' : 'session_only',
+    consent_state: getConsentState(),
   }
 }
 
@@ -175,7 +181,7 @@ export function captureAttribution() {
   const shouldReplaceStored = hasExplicitAttribution(currentUrl)
 
   if (stored && !shouldReplaceStored) {
-    stored.consent_state = hasPersistentConsent() ? 'granted' : 'session_only'
+    stored.consent_state = getConsentState()
     writeStoredAttribution(stored)
     return stored
   }

@@ -43,6 +43,17 @@ export async function POST(req: NextRequest) {
       ])
     )
 
+    const responseId = String(body.data?.responseId || body.data?.response_id || body.eventId || '')
+    const formId = String(body.data?.formId || body.data?.form_id || body.formId || '')
+    const consentState = String(normalisedFields.consent_state || 'analytics_only')
+    let attributionForwardingResult: 'not_configured' | 'succeeded' = 'not_configured'
+
+    console.info('Tally webhook received', {
+      responseId,
+      formId,
+      consentState,
+    })
+
     const getName = () => fields.find((f) => f.label.toLowerCase().includes('name'))?.value || 'there'
     const getEmail = () => fields.find((f) => f.label.toLowerCase().includes('email'))?.value || ''
 
@@ -121,8 +132,8 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           schema_version: '1',
           event_type: 'tally_submission',
-          event_id: String(body.data?.responseId || body.data?.response_id || body.eventId || ''),
-          form_id: String(body.data?.formId || body.data?.form_id || body.formId || ''),
+          event_id: responseId,
+          form_id: formId,
           received_at: new Date().toISOString(),
           fields: normalisedFields,
           attribution: {
@@ -142,15 +153,30 @@ export async function POST(req: NextRequest) {
             last_touch_at: normalisedFields.last_touch_at || '',
             landing_page: normalisedFields.landing_page || '',
             first_landing_page: normalisedFields.first_landing_page || '',
-            consent_state: normalisedFields.consent_state || 'session_only',
+            consent_state: consentState,
           },
         }),
       })
       if (!forwardingResult.ok) {
-        console.error('Make attribution forwarding failed', { status: forwardingResult.status })
+        console.error('Make attribution forwarding failed', {
+          responseId,
+          formId,
+          consentState,
+          forwardingResult: 'failed',
+          status: forwardingResult.status,
+        })
         return NextResponse.json({ error: 'Attribution workflow unavailable' }, { status: 502 })
       }
+
+      attributionForwardingResult = 'succeeded'
     }
+
+    console.info('Tally webhook processed', {
+      responseId,
+      formId,
+      consentState,
+      forwardingResult: attributionForwardingResult,
+    })
 
     return NextResponse.json({ success: true })
   } catch (err) {
