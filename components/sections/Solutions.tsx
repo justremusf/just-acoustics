@@ -54,19 +54,19 @@ const solutions = [
 export default function Solutions() {
   return (
     <section className="px-4 py-10 md:px-5 md:py-12">
-      <div className="home-shell section-shell-pad mx-auto max-w-[1280px]">
+      <div className="home-shell section-shell-pad mx-auto max-w-[1580px]">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-10">
           <div className="flex flex-col justify-between gap-6 lg:pr-4">
             <div className="max-w-[560px]">
-              <span className="soft-pill px-3 py-1.5 text-[11px]">Why acoustics matter</span>
               <h2
-                className="mt-5 m-0 max-w-[11ch] text-[var(--color-dark-100)]"
+                className="mt-5 m-0 text-[var(--color-dark-100)]"
                 style={{
                   fontFamily: 'var(--font-heading)',
                   fontSize: 'clamp(28px, 3.5vw, 42px)',
                   lineHeight: '1.02',
                   fontWeight: 500,
                   letterSpacing: '-1px',
+                  width: 'min(100%, 795px)',
                 }}
               >
                 Sound is often overlooked in many spaces

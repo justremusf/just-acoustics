@@ -1,0 +1,11 @@
+.git
+.next
+.vercel
+node_modules
+outputs/
+tmp/
+gpt-sites/
+.next_stale*/
+.seo-cache
+*.log
+pnpm-lock.yaml

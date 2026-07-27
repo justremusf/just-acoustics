@@ -1,3 +1,5 @@
+import { readAnalyticsConsent } from '@/lib/analyticsConsent'
+
 export const ATTRIBUTION_STORAGE_KEY = 'ja_attribution_v1'
 
 export const ATTRIBUTION_KEYS = [
@@ -8,13 +10,23 @@ export const ATTRIBUTION_KEYS = [
   'utm_content',
   'utm_id',
   'gclid',
+  'gbraid',
+  'wbraid',
   'fbclid',
   'ttclid',
+  'campaign_id',
+  'ad_group_id',
+  'ad_id',
   'landing_page',
+  'first_landing_page',
   'referrer',
+  'first_touch_at',
+  'last_touch_at',
+  'consent_state',
 ] as const
 
-const CLICK_ID_KEYS = ['gclid', 'fbclid', 'ttclid'] as const
+const CLICK_ID_KEYS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'ttclid'] as const
+const GOOGLE_ENTITY_KEYS = ['campaign_id', 'ad_group_id', 'ad_id'] as const
 const UTM_KEYS = [
   'utm_source',
   'utm_medium',
@@ -44,11 +56,21 @@ function createLeadRef() {
   return `JA-${random.slice(0, 6).toUpperCase()}`
 }
 
+function hasPersistentConsent() {
+  return readAnalyticsConsent() !== 'unset'
+}
+
+function getConsentState() {
+  return readAnalyticsConsent() === 'all' ? 'all' : 'analytics_only'
+}
+
 function readStoredAttribution(): Attribution | null {
   if (!isBrowser()) return null
 
   try {
-    const raw = window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY)
+    const raw = hasPersistentConsent()
+      ? window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY) || window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY)
+      : window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY)
     return raw ? JSON.parse(raw) : null
   } catch {
     return null
@@ -59,14 +81,16 @@ function writeStoredAttribution(attribution: Attribution) {
   if (!isBrowser()) return
 
   try {
-    window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution))
+    const payload = JSON.stringify(attribution)
+    window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, payload)
+    if (hasPersistentConsent()) window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, payload)
   } catch {
     // Ignore storage failures; attribution should never block navigation.
   }
 }
 
 function hasExplicitAttribution(url: URL) {
-  return [...UTM_KEYS, ...CLICK_ID_KEYS].some((key) => url.searchParams.has(key))
+  return [...UTM_KEYS, ...CLICK_ID_KEYS, ...GOOGLE_ENTITY_KEYS].some((key) => url.searchParams.has(key))
 }
 
 function getKnownReferrerSource(referrer: string) {
@@ -92,9 +116,14 @@ function getKnownReferrerSource(referrer: string) {
 }
 
 function attributionFromUrl(url: URL, referrer: string): Attribution {
+  const capturedAt = new Date().toISOString()
   const attribution: Attribution = {
     landing_page: url.href,
+    first_landing_page: url.href,
     referrer,
+    first_touch_at: capturedAt,
+    last_touch_at: capturedAt,
+    consent_state: getConsentState(),
   }
 
   UTM_KEYS.forEach((key) => {
@@ -107,17 +136,27 @@ function attributionFromUrl(url: URL, referrer: string): Attribution {
     if (value) attribution[key] = value
   })
 
+  GOOGLE_ENTITY_KEYS.forEach((key) => {
+    const value = url.searchParams.get(key)
+    if (value) attribution[key] = value
+  })
+
   return attribution
 }
 
 function attributionFromReferrer(url: URL, referrer: string): Attribution {
+  const capturedAt = new Date().toISOString()
   const detected = getKnownReferrerSource(referrer)
 
   if (detected) {
     return {
       ...detected,
       landing_page: url.href,
+      first_landing_page: url.href,
       referrer,
+      first_touch_at: capturedAt,
+      last_touch_at: capturedAt,
+      consent_state: getConsentState(),
     }
   }
 
@@ -125,7 +164,11 @@ function attributionFromReferrer(url: URL, referrer: string): Attribution {
     utm_source: 'direct',
     utm_medium: 'none',
     landing_page: url.href,
+    first_landing_page: url.href,
     referrer,
+    first_touch_at: capturedAt,
+    last_touch_at: capturedAt,
+    consent_state: getConsentState(),
   }
 }
 
@@ -138,6 +181,8 @@ export function captureAttribution() {
   const shouldReplaceStored = hasExplicitAttribution(currentUrl)
 
   if (stored && !shouldReplaceStored) {
+    stored.consent_state = getConsentState()
+    writeStoredAttribution(stored)
     return stored
   }
 
@@ -150,6 +195,12 @@ export function captureAttribution() {
   } else {
     nextAttribution.lead_ref = createLeadRef()
   }
+
+  if (stored) {
+    nextAttribution.first_touch_at = stored.first_touch_at || nextAttribution.first_touch_at
+    nextAttribution.first_landing_page = stored.first_landing_page || nextAttribution.first_landing_page
+  }
+  nextAttribution.last_touch_at = new Date().toISOString()
 
   writeStoredAttribution(nextAttribution)
   return nextAttribution

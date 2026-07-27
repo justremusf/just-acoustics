@@ -1,5 +1,9 @@
 import { defineField, defineType } from 'sanity'
 
+function formatCurrency(amount: number) {
+  return `$${Math.round(amount).toLocaleString('en-SG')}`
+}
+
 export default defineType({
   name: 'shopItem',
   title: 'Shop Item',
@@ -28,9 +32,28 @@ export default defineType({
           { title: 'Standard Panels', value: 'standard-panels' },
           { title: 'Custom Panels', value: 'custom-panels' },
           { title: 'Ceiling Panels', value: 'ceiling-panels' },
+          { title: 'Custom Solutions', value: 'custom-solutions' },
+          { title: 'Soundproofing', value: 'soundproofing' },
           { title: 'Accessories', value: 'accessories' },
         ],
       },
+    }),
+    defineField({
+      name: 'productLine',
+      title: 'Product Page Template',
+      type: 'string',
+      description: 'Stable template selection. Product names and slugs can change without changing the page layout.',
+      options: {
+        list: [
+          { title: 'Flexi Acoustic Panel', value: 'flexi-panel' },
+          { title: 'Soothe Bass Trap', value: 'bass-trap' },
+          { title: 'Soothe Gobo', value: 'gobo' },
+          { title: 'Flexi Custom Print', value: 'custom-print-panels' },
+          { title: 'Forma PET Panel', value: 'pet-panel' },
+          { title: 'Accessory', value: 'accessory' },
+        ],
+      },
+      validation: (r) => r.required(),
     }),
     defineField({
       name: 'mainImage',
@@ -57,21 +80,173 @@ export default defineType({
       name: 'price',
       title: 'Price (SGD)',
       type: 'number',
-      description: 'Price in Singapore dollars',
+      description: 'Base unit price in Singapore dollars before configurable options.',
     }),
     defineField({
-      name: 'sku',
-      title: 'SKU',
-      type: 'string',
-      description: 'Stock keeping unit / product code',
-    }),
-    defineField({
-      name: 'madeToOrder',
-      title: 'Made to Order',
+      name: 'configuratorEnabled',
+      title: 'Enable Product Configurator',
       type: 'boolean',
       initialValue: true,
-      description: 'All products are made to order by default',
-      readOnly: true,
+    }),
+    defineField({
+      name: 'leadTime',
+      title: 'Lead Time',
+      type: 'string',
+      initialValue: 'Made to order. Final timeline confirmed after quote review.',
+    }),
+    defineField({
+      name: 'defaultQuantity',
+      title: 'Default Quantity',
+      type: 'number',
+      initialValue: 1,
+      validation: (r) => r.min(1),
+    }),
+    defineField({
+      name: 'defaultSizeId',
+      title: 'Default Size ID',
+      type: 'string',
+      description: 'The size option that should be selected by default.',
+    }),
+    defineField({
+      name: 'defaultThicknessId',
+      title: 'Default Thickness ID',
+      type: 'string',
+      description: 'The thickness option that should be selected by default.',
+    }),
+    defineField({
+      name: 'minQuantity',
+      title: 'Minimum Quantity',
+      type: 'number',
+      initialValue: 1,
+      validation: (r) => r.min(1),
+    }),
+    defineField({
+      name: 'maxQuantity',
+      title: 'Maximum Quantity',
+      type: 'number',
+      description: 'Optional. Leave blank if there is no hard online quote limit.',
+      validation: (r) => r.min(1),
+    }),
+    defineField({
+      name: 'sizeOptions',
+      title: 'Size Options',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'sizeOption',
+          title: 'Size Option',
+          type: 'object',
+          fields: [
+            defineField({ name: 'id', title: 'ID', type: 'string', description: 'Stable value, e.g. square-600 or large-1200-600', validation: (r) => r.required() }),
+            defineField({ name: 'label', title: 'Label', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'widthMm', title: 'Width (mm)', type: 'number' }),
+            defineField({ name: 'heightMm', title: 'Height (mm)', type: 'number' }),
+            defineField({ name: 'description', title: 'Description', type: 'string' }),
+            defineField({ name: 'previewImage', title: 'Size Preview Image', type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }] }),
+            defineField({ name: 'priceAdjustment', title: 'Price Adjustment (SGD per panel)', type: 'number', initialValue: 0 }),
+            defineField({ name: 'available', title: 'Available', type: 'boolean', initialValue: true }),
+          ],
+          preview: {
+            select: { title: 'label', subtitle: 'priceAdjustment' },
+            prepare({ title, subtitle }) {
+              return { title, subtitle: subtitle ? `+${formatCurrency(subtitle)}` : 'No adjustment' }
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'thicknessOptions',
+      title: 'Thickness Options',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'thicknessOption',
+          title: 'Thickness Option',
+          type: 'object',
+          fields: [
+            defineField({ name: 'id', title: 'ID', type: 'string', description: 'Stable value, e.g. 25mm or 50mm', validation: (r) => r.required() }),
+            defineField({ name: 'label', title: 'Label', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'millimeters', title: 'Thickness (mm)', type: 'number' }),
+            defineField({ name: 'nrc', title: 'NRC / Acoustic Note', type: 'string' }),
+            defineField({ name: 'description', title: 'Description', type: 'string' }),
+            defineField({ name: 'priceAdjustment', title: 'Price Adjustment (SGD per panel)', type: 'number', initialValue: 0 }),
+            defineField({ name: 'available', title: 'Available', type: 'boolean', initialValue: true }),
+          ],
+          preview: {
+            select: { title: 'label', subtitle: 'priceAdjustment' },
+            prepare({ title, subtitle }) {
+              return { title, subtitle: subtitle ? `+${formatCurrency(subtitle)}` : 'No adjustment' }
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'colourOptions',
+      title: 'Colour / Finish Swatches',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'colourOption',
+          title: 'Colour / Finish',
+          type: 'object',
+          fields: [
+            defineField({ name: 'id', title: 'ID', type: 'string', description: 'Stable value, e.g. ivory or charcoal', validation: (r) => r.required() }),
+            defineField({ name: 'name', title: 'Name', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'hex', title: 'Hex Colour', type: 'string', description: 'Used for the visible swatch when no swatch image is set.' }),
+            defineField({ name: 'description', title: 'Description', type: 'string' }),
+            defineField({ name: 'swatchImage', title: 'Swatch Image', type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }] }),
+            defineField({ name: 'projectPreviewImage', title: 'Real Project Preview Image', type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }] }),
+            defineField({ name: 'priceAdjustment', title: 'Price Adjustment (SGD per panel)', type: 'number', initialValue: 0 }),
+            defineField({ name: 'available', title: 'Available', type: 'boolean', initialValue: true }),
+          ],
+          preview: {
+            select: { title: 'name', media: 'swatchImage', subtitle: 'priceAdjustment' },
+            prepare({ title, media, subtitle }) {
+              return { title, media, subtitle: subtitle ? `+${formatCurrency(subtitle)}` : 'Standard finish' }
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'installationOptions',
+      title: 'Installation Options',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'installationOption',
+          title: 'Installation Option',
+          type: 'object',
+          fields: [
+            defineField({ name: 'id', title: 'ID', type: 'string', description: 'Stable value, e.g. self-install or professional-install', validation: (r) => r.required() }),
+            defineField({ name: 'label', title: 'Label', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'description', title: 'Description', type: 'string' }),
+            defineField({
+              name: 'priceType',
+              title: 'Price Type',
+              type: 'string',
+              initialValue: 'none',
+              options: {
+                list: [
+                  { title: 'No charge', value: 'none' },
+                  { title: 'Fixed charge', value: 'fixed' },
+                  { title: 'Per panel / unit', value: 'perUnit' },
+                ],
+              },
+            }),
+            defineField({ name: 'price', title: 'Price (SGD)', type: 'number', initialValue: 0 }),
+            defineField({ name: 'available', title: 'Available', type: 'boolean', initialValue: true }),
+          ],
+          preview: {
+            select: { title: 'label', priceType: 'priceType', price: 'price' },
+            prepare({ title, priceType, price }) {
+              return { title, subtitle: `${priceType || 'none'} ${price ? formatCurrency(price) : ''}`.trim() }
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'shortDescription',
@@ -79,13 +254,6 @@ export default defineType({
       type: 'text',
       rows: 2,
       description: 'Shown on the shop listing page',
-    }),
-    defineField({
-      name: 'features',
-      title: 'Features / Benefits',
-      type: 'array',
-      of: [{ type: 'string' }],
-      description: 'Key selling points, e.g. "NRC 0.95", "Fire-rated"',
     }),
     defineField({
       name: 'specifications',

@@ -131,21 +131,21 @@ async function loadContextFiles() {
 }
 
 async function loadLiveSlugs() {
-  const [posts, services, products] = await Promise.all([
+  const [posts, spaces, products] = await Promise.all([
     sanity.fetch<{ title: string; slug: string }[]>(
       `*[_type == "post" && !(_id in path("drafts.**"))] { title, "slug": slug.current }`
     ),
     sanity.fetch<{ title: string; slug: string }[]>(
-      `*[_type == "service" && !(_id in path("drafts.**"))] { title, "slug": slug.current }`
+      `*[_type == "space" && !(_id in path("drafts.**"))] { title, "slug": slug.current }`
     ),
     sanity.fetch<{ title: string; slug: string }[]>(
-      `*[_type == "product" && !(_id in path("drafts.**"))] { title, "slug": slug.current }`
+      `*[_type == "shopItem" && !(_id in path("drafts.**"))] { title, "slug": slug.current }`
     ),
   ])
   return {
     posts: posts.map((p) => `  /blog/${p.slug} — ${p.title}`).join('\n'),
-    services: services.map((s) => `  /services/${s.slug} — ${s.title}`).join('\n'),
-    products: products.map((p) => `  /products/${p.slug} — ${p.title}`).join('\n'),
+    spaces: spaces.map((s) => `  /spaces/${s.slug} — ${s.title}`).join('\n'),
+    products: products.map((p) => `  /shop/${p.slug} — ${p.title}`).join('\n'),
   }
 }
 
@@ -272,7 +272,7 @@ const PUBLISH_ARTICLE_TOOL = {
             anchor: { type: 'string', description: 'The text inside the <a>.' },
             targetSlug: {
               type: 'string',
-              description: 'Path like /services/offices-meeting-rooms or /blog/some-post.',
+              description: 'Path like /spaces/offices or /blog/some-post.',
             },
             section: { type: 'string', description: 'Which body section it appears in.' },
           },
@@ -337,8 +337,8 @@ ${contextBlock}
 
 # Live Sanity slugs for internal linking (updated each run)
 
-Services:
-${liveSlugs.services || '  (none)'}
+Spaces:
+${liveSlugs.spaces || '  (none)'}
 
 Products:
 ${liveSlugs.products || '  (none)'}

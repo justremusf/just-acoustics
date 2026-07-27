@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import type { SanityImage } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
+import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
 const FALLBACK_LOGOS = [
   { src: '/assets/webflow/6987425eeaa3c0b1b8e1f078_4.png', alt: 'Brand' },
@@ -23,59 +23,34 @@ interface Props {
 export default function BrandScroller({ logos }: Props) {
   const items =
     logos && logos.length > 0
-      ? logos.map((logo) => ({ src: urlFor(logo).width(234).url(), alt: logo.alt || 'Brand' }))
+      ? logos.map((logo) => ({ src: urlFor(logo).width(360).url(), alt: logo.alt || 'Brand' }))
       : FALLBACK_LOGOS
 
   const doubled = [...items, ...items]
 
   return (
-    <section className="px-4 py-10 md:px-5 md:py-12">
-      <div className="mx-auto max-w-[1280px] border border-[var(--color-white-300)] bg-[var(--color-white-100)] px-4 py-6 shadow-[0_16px_50px_rgba(0,0,0,0.05)] md:px-6 md:py-8" style={{ borderRadius: 'var(--section-radius)' }}>
-        <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-[620px]">
-            <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
-              Trusted by teams who need quieter rooms
-            </p>
-            <h2
-              className="m-0 mt-5 text-[var(--color-dark-100)]"
-              style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(22px, 2.8vw, 32px)',
-                fontWeight: 600,
-                lineHeight: '1.08',
-                letterSpacing: '-0.8px',
-              }}
+    <section className="py-3 md:py-5">
+      <div className="brand-scroll-wrap w-full">
+        <div className="brand-scroll-inner flex w-max px-1.5 sm:px-3 md:px-4">
+          {doubled.map((logo, i) => (
+            <div
+              key={i}
+              className="mr-2 flex h-[82px] min-w-[160px] flex-none items-center justify-center rounded-[14px] border border-black/4 bg-[var(--color-white-200)] px-4 py-2.5 transition-all duration-500 hover:-translate-y-0.5 hover:opacity-95 sm:mr-3 sm:h-[123px] sm:min-w-[320px] sm:px-10 sm:py-4"
             >
-              Successfully transformed spaces all over Singapore
-            </h2>
-          </div>
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--color-dark-100)] no-underline transition-colors hover:text-[var(--color-brand-orange)]"
-          >
-            See project examples
-            <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-
-        <div className="brand-scroll-wrap">
-          <div className="brand-scroll-inner flex">
-            {doubled.map((logo, i) => (
-              <div
-                key={i}
-                className="mr-3 flex min-w-[176px] flex-none items-center justify-center rounded-[14px] border border-black/4 bg-[var(--color-white-200)] px-5 py-4 transition-all duration-500 hover:-translate-y-0.5 hover:opacity-90 sm:min-w-[203px] sm:px-6"
-              >
-                <Image
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={132}
-                  height={63}
-                  sizes="132px"
-                  className="max-h-[63px] object-contain sm:max-h-[73px]"
-                />
-              </div>
-            ))}
-          </div>
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={180}
+                height={63}
+                sizes="(max-width: 639px) 112px, 180px"
+                placeholder="blur"
+                blurDataURL={IMAGE_BLUR_DATA_URL}
+                quality={70}
+                loading="lazy"
+                className="h-[38px] w-auto object-contain sm:h-[63px]"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

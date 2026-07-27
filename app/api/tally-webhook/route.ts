@@ -36,6 +36,24 @@ export async function POST(req: NextRequest) {
     // Tally sends: { formId, responseId, fields: [{ label, value }] }
     const fields: Array<{ label: string; value: string }> = body.data?.fields || []
 
+    const normalisedFields = Object.fromEntries(
+      fields.map((field) => [
+        field.label.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''),
+        field.value,
+      ])
+    )
+
+    const responseId = String(body.data?.responseId || body.data?.response_id || body.eventId || '')
+    const formId = String(body.data?.formId || body.data?.form_id || body.formId || '')
+    const consentState = String(normalisedFields.consent_state || 'analytics_only')
+    let attributionForwardingResult: 'not_configured' | 'succeeded' = 'not_configured'
+
+    console.info('Tally webhook received', {
+      responseId,
+      formId,
+      consentState,
+    })
+
     const getName = () => fields.find((f) => f.label.toLowerCase().includes('name'))?.value || 'there'
     const getEmail = () => fields.find((f) => f.label.toLowerCase().includes('email'))?.value || ''
 
@@ -100,6 +118,65 @@ export async function POST(req: NextRequest) {
       })
       return NextResponse.json({ error: 'Failed to send internal notification email' }, { status: 502 })
     }
+
+    const makeWebhookUrl = process.env.MAKE_ATTRIBUTION_WEBHOOK_URL
+    if (makeWebhookUrl) {
+      const forwardingResult = await fetch(makeWebhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(process.env.MAKE_ATTRIBUTION_WEBHOOK_SECRET
+            ? { Authorization: `Bearer ${process.env.MAKE_ATTRIBUTION_WEBHOOK_SECRET}` }
+            : {}),
+        },
+        body: JSON.stringify({
+          schema_version: '1',
+          event_type: 'tally_submission',
+          event_id: responseId,
+          form_id: formId,
+          received_at: new Date().toISOString(),
+          fields: normalisedFields,
+          attribution: {
+            lead_ref: normalisedFields.lead_ref || '',
+            gclid: normalisedFields.gclid || '',
+            gbraid: normalisedFields.gbraid || '',
+            wbraid: normalisedFields.wbraid || '',
+            utm_source: normalisedFields.utm_source || '',
+            utm_medium: normalisedFields.utm_medium || '',
+            utm_campaign: normalisedFields.utm_campaign || '',
+            utm_term: normalisedFields.utm_term || '',
+            utm_content: normalisedFields.utm_content || '',
+            campaign_id: normalisedFields.campaign_id || '',
+            ad_group_id: normalisedFields.ad_group_id || '',
+            ad_id: normalisedFields.ad_id || '',
+            first_touch_at: normalisedFields.first_touch_at || '',
+            last_touch_at: normalisedFields.last_touch_at || '',
+            landing_page: normalisedFields.landing_page || '',
+            first_landing_page: normalisedFields.first_landing_page || '',
+            consent_state: consentState,
+          },
+        }),
+      })
+      if (!forwardingResult.ok) {
+        console.error('Make attribution forwarding failed', {
+          responseId,
+          formId,
+          consentState,
+          forwardingResult: 'failed',
+          status: forwardingResult.status,
+        })
+        return NextResponse.json({ error: 'Attribution workflow unavailable' }, { status: 502 })
+      }
+
+      attributionForwardingResult = 'succeeded'
+    }
+
+    console.info('Tally webhook processed', {
+      responseId,
+      formId,
+      consentState,
+      forwardingResult: attributionForwardingResult,
+    })
 
     return NextResponse.json({ success: true })
   } catch (err) {

@@ -1,14 +1,14 @@
 import { MetadataRoute } from 'next'
-import { getAllPostSlugs, getAllProductSlugs, getAllServiceSlugs, getAllProjectSlugs } from '@/sanity/lib/queries'
+import { getAllPostSlugs, getAllShopItemSlugs, getAllSpaceSlugs, getAllProjectSlugs } from '@/sanity/lib/queries'
 import { SITE_URL } from '@/lib/seo'
 
 const BASE_URL = SITE_URL
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [postSlugs, productSlugs, serviceSlugs, projectSlugs] = await Promise.all([
+  const [postSlugs, productSlugs, spaceSlugs, projectSlugs] = await Promise.all([
     getAllPostSlugs().catch(() => []),
-    getAllProductSlugs().catch(() => []),
-    getAllServiceSlugs().catch(() => []),
+    getAllShopItemSlugs().catch(() => []),
+    getAllSpaceSlugs().catch(() => []),
     getAllProjectSlugs().catch(() => []),
   ])
 
@@ -16,11 +16,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/products`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${BASE_URL}/services`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE_URL}/spaces`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/projects`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
     { url: `${BASE_URL}/shop`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/studio-lander`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/pricing`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 
@@ -32,14 +32,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const products = productSlugs.map((s: { slug: string }) => ({
-    url: `${BASE_URL}/products/${s.slug}`,
+    url: `${BASE_URL}/shop/${s.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
 
-  const services = serviceSlugs.map((s: { slug: string }) => ({
-    url: `${BASE_URL}/services/${s.slug}`,
+  const spaces = spaceSlugs.map((s: { slug: string }) => ({
+    url: `${BASE_URL}/spaces/${s.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -52,5 +52,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...posts, ...products, ...services, ...projects]
+  return [...staticPages, ...posts, ...products, ...spaces, ...projects]
 }

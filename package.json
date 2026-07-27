@@ -6,7 +6,18 @@
     "dev": "next dev -p 3333",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint app components hooks lib sanity",
+    "check": "npm run lint && tsc --noEmit",
+    "local": "bash scripts/local-dev.sh",
+    "local:install": "bash scripts/install-localhost-launchagent.sh",
+    "local:uninstall": "bash scripts/uninstall-localhost-launchagent.sh",
+    "local:status": "launchctl print gui/$(id -u)/com.remusfung.justacoustics-site.localhost",
+    "local:restart": "launchctl kickstart -k gui/$(id -u)/com.remusfung.justacoustics-site.localhost",
+    "seed-shopability": "node scripts/seed-shopability.mjs",
+    "seed-standard-flexi-assets": "node scripts/seed-standard-flexi-assets.mjs",
+    "migrate-products-to-shop-items": "node scripts/migrate-products-to-shop-items.mjs",
+    "migrate-product-pages": "node scripts/migrate-product-pages.mjs",
+    "migrate-services-to-spaces": "node scripts/migrate-services-to-spaces.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",

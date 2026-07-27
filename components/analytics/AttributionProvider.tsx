@@ -12,6 +12,9 @@ export default function AttributionProvider() {
 
   useEffect(() => {
     captureAttribution()
+    const persistAfterConsent = () => captureAttribution()
+    window.addEventListener('ja-consent-change', persistAfterConsent)
+    return () => window.removeEventListener('ja-consent-change', persistAfterConsent)
   }, [routeKey])
 
   return null

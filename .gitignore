@@ -42,3 +42,9 @@ generated/*.log
 .next_stale_*/
 *.bak
 TODO.md
+
+# Local proposal-generation workspaces and source-media archive
+/gpt-sites/
+/just-acoustics-media-library/
+/outputs/
+/tmp/

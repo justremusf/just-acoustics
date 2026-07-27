@@ -13,8 +13,8 @@ const navGroups = [
   {
     title: 'Solutions',
     links: [
-      { label: 'Products', href: '/products' },
-      { label: 'Services', href: '/services' },
+      { label: 'Shop', href: '/shop' },
+      { label: 'Spaces', href: '/spaces' },
       { label: 'Acoustic Education', href: '/blog' },
     ],
   },
@@ -80,7 +80,7 @@ export default function Footer() {
         <div className="absolute right-[10%] bottom-8 h-52 w-52 rounded-full bg-[rgba(255,245,224,0.9)] blur-[110px]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1280px] px-4 sm:px-5">
+      <div className="page-shell relative">
         <div className="overflow-hidden rounded-[34px] border border-black/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(245,242,236,0.96))] shadow-[0_28px_90px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.88)_inset]">
           <div className="grid gap-4 p-3 lg:grid-cols-[minmax(320px,0.82fr)_minmax(0,1.18fr)] lg:p-4">
             <div className="relative overflow-hidden rounded-[30px] border border-black/8 bg-[linear-gradient(180deg,#ffb62d,#ffa500_52%,#f09b00)] p-5 shadow-[0_26px_70px_rgba(255,165,0,0.28)] sm:p-6">

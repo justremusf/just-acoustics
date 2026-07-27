@@ -4,12 +4,8 @@ import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import SiteShell from '@/components/layout/SiteShell'
-import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
-import GaPageViewTracker from '@/components/analytics/GaPageViewTracker'
+import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
 import HapticProvider from '@/components/providers/HapticProvider'
 import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
 import './globals.css'
@@ -92,31 +88,54 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body suppressHydrationWarning className="bg-white">
         <HapticProvider>
           {hasTracking && (
             <>
               {gtagId && (
                 <>
-                  <Script
-                    src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-                    strategy="afterInteractive"
-                  />
-                  <Script id="gtag-init" strategy="afterInteractive">
+                  <Script id="gtag-init" strategy="beforeInteractive">
                     {`
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       window.gtag = gtag;
+                      gtag('consent', 'default', {
+                        analytics_storage: 'granted',
+                        ad_storage: 'denied',
+                        ad_user_data: 'denied',
+                        ad_personalization: 'denied',
+                        wait_for_update: 500
+                      });
+                      var consentCookie = document.cookie
+                        .split('; ')
+                        .find(function(item) { return item.indexOf('ja_analytics_consent=') === 0; });
+                      var consentValue = consentCookie ? consentCookie.split('=')[1] : '';
+                      if (consentValue === 'all' || consentValue === 'granted') {
+                        gtag('consent', 'update', {
+                          analytics_storage: 'granted',
+                          ad_storage: 'granted',
+                          ad_user_data: 'granted',
+                          ad_personalization: 'granted'
+                        });
+                      }
                       gtag('js', new Date());
-                      ${gaId ? `gtag('config', '${gaId}', { send_page_view: false });` : ''}
+                      ${gaId ? `gtag('config', '${gaId}');` : ''}
                       ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
                     `}
                   </Script>
+                  <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
+                    strategy="afterInteractive"
+                  />
                 </>
               )}
               {metaPixelId && (
                 <>
-                  <Script id="meta-pixel-base" strategy="afterInteractive">
+                  <Script id="meta-pixel-base" strategy="lazyOnload">
                     {`
                       !function(f,b,e,v,n,t,s)
                       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -141,16 +160,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   </noscript>
                 </>
               )}
-              {gaId && (
-                <Suspense fallback={null}>
-                  <GaPageViewTracker gaId={gaId} />
-                </Suspense>
-              )}
             </>
           )}
           <Suspense fallback={null}>
             <AttributionProvider />
           </Suspense>
+          <CookieConsentBanner />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
@@ -186,23 +201,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }),
             }}
           />
-          <SiteShell
-            defaultShell={
-              <>
-                <div className="min-h-screen overflow-x-clip pt-2 md:pt-0">
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                </div>
-                <WhatsAppButton />
-              </>
-            }
-          >
-            {children}
-          </SiteShell>
+          {children}
           <SpeedInsights />
           <Analytics />
-          <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
         </HapticProvider>
       </body>
     </html>

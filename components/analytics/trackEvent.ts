@@ -2,7 +2,6 @@
 
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
 const googleAdsLabels = {
-  generate_lead: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_LEAD,
   whatsapp_click: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_WHATSAPP,
   phone_click: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_PHONE,
   email_click: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_EMAIL,
@@ -48,12 +47,29 @@ function getGaParams(eventName: string, params: object) {
   return params
 }
 
-export function trackEvent(eventName: string, params: object = {}) {
-  if (typeof window === 'undefined') return
+export type TrackEventDeliveryOptions = {
+  eventCallback?: () => void
+  eventTimeoutMs?: number
+}
+
+export function trackEvent(
+  eventName: string,
+  params: object = {},
+  deliveryOptions: TrackEventDeliveryOptions = {}
+) {
+  if (typeof window === 'undefined') return false
   const eventParams = getGaParams(eventName, params)
+  let gaAccepted = false
 
   if (typeof window.gtag === 'function') {
-    window.gtag('event', eventName, eventParams)
+    window.gtag('event', eventName, {
+      ...eventParams,
+      ...(deliveryOptions.eventCallback ? { event_callback: deliveryOptions.eventCallback } : {}),
+      ...(deliveryOptions.eventTimeoutMs
+        ? { event_timeout: deliveryOptions.eventTimeoutMs }
+        : {}),
+    })
+    gaAccepted = true
   }
 
   const adsLabel = googleAdsLabels[eventName as keyof typeof googleAdsLabels]
@@ -67,7 +83,7 @@ export function trackEvent(eventName: string, params: object = {}) {
   if (metaPixelId && typeof window.fbq === 'function') {
     if (eventName === 'generate_lead') {
       window.fbq('track', 'Lead', eventParams)
-      return
+      return gaAccepted
     }
 
     if (
@@ -78,4 +94,6 @@ export function trackEvent(eventName: string, params: object = {}) {
       window.fbq('track', 'Contact', eventParams)
     }
   }
+
+  return gaAccepted
 }

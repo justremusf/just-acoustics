@@ -48,7 +48,7 @@ export default function WhyChooseUs() {
 
   return (
     <section className="overflow-hidden py-14 md:py-24">
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-5">
+      <div className="mx-auto max-w-[1580px] px-4 sm:px-5">
         <div className="mb-10 grid grid-cols-1 items-center gap-6 md:mb-12 md:grid-cols-2 md:gap-16">
           <div>
             <span className="inline-block border border-[var(--color-dark-100)] text-[var(--color-dark-100)] rounded-[100px] px-5 py-2 text-sm">
