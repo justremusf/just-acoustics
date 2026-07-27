@@ -7,7 +7,6 @@ import Spaces from '@/components/sections/Spaces'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
-import HomepageReveal from '@/components/HomepageReveal'
 import LazyInteractiveVSL from '@/components/LazyInteractiveVSL'
 import { landingVslConfig } from '@/data/vslConfig'
 import {
@@ -39,22 +38,20 @@ export default async function HomePage() {
     <>
       <ScrollToTopOnMount />
       <Hero />
-      <HomepageReveal>
-        <div data-home-reveal><BrandScroller logos={settings?.brandLogos} /></div>
-        <div data-home-reveal><Spaces spaces={spaces} /></div>
-        <div data-home-reveal>
-          <LazyInteractiveVSL
-            config={landingVslConfig}
-            pageLocation="/"
-          />
-        </div>
-        <div data-home-reveal><ProductsGrid products={products} /></div>
-        <div data-home-reveal><HearTheDifference /></div>
-        <div data-home-reveal><ProcessSteps /></div>
-        <div data-home-reveal><Testimonials testimonials={testimonials} /></div>
-        <div data-home-reveal><FAQ showLabel={false} /></div>
-        <div data-home-reveal><ContactCTA showBadge={false} /></div>
-      </HomepageReveal>
+      <div data-home-reveal><BrandScroller logos={settings?.brandLogos} /></div>
+      <div data-home-reveal><Spaces spaces={spaces} /></div>
+      <div data-home-reveal>
+        <LazyInteractiveVSL
+          config={landingVslConfig}
+          pageLocation="/"
+        />
+      </div>
+      <div data-home-reveal><ProductsGrid products={products} /></div>
+      <div data-home-reveal><HearTheDifference /></div>
+      <div data-home-reveal><ProcessSteps /></div>
+      <div data-home-reveal><Testimonials testimonials={testimonials} /></div>
+      <div data-home-reveal><FAQ showLabel={false} /></div>
+      <div data-home-reveal><ContactCTA showBadge={false} /></div>
     </>
   )
 }

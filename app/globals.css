@@ -132,7 +132,13 @@ body {
   backdrop-filter: blur(16px);
 }
 
-.homepage-reveal-root.is-ready [data-home-reveal] {
+.site-page-reveal-root.is-ready [data-home-reveal],
+.site-page-reveal-root.is-ready [data-site-reveal],
+.site-page-reveal-root.is-ready > section,
+.site-page-reveal-root.is-ready > main > section,
+.site-page-reveal-root.is-ready > main > div,
+.site-page-reveal-root.is-ready > div:not([data-home-reveal]):not([data-site-reveal]) > section,
+.site-page-reveal-root.is-ready > div:not([data-home-reveal]):not([data-site-reveal]) > main > section {
   opacity: 0;
   transform: translate3d(0, 14px, 0);
   transition:
@@ -140,18 +146,24 @@ body {
     transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.homepage-reveal-root.is-ready [data-home-reveal].is-visible {
+.site-page-reveal-root.is-ready [data-home-reveal].is-visible,
+.site-page-reveal-root.is-ready [data-site-reveal].is-visible,
+.site-page-reveal-root.is-ready > section.is-visible,
+.site-page-reveal-root.is-ready > main > section.is-visible,
+.site-page-reveal-root.is-ready > main > div.is-visible,
+.site-page-reveal-root.is-ready > div:not([data-home-reveal]):not([data-site-reveal]) > section.is-visible,
+.site-page-reveal-root.is-ready > div:not([data-home-reveal]):not([data-site-reveal]) > main > section.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
 @media (max-width: 767px) {
-  .homepage-reveal-root .home-shell,
-  .homepage-reveal-root .glass-card,
-  .homepage-reveal-root .backdrop-blur-sm,
-  .homepage-reveal-root .backdrop-blur-md,
-  .homepage-reveal-root .backdrop-blur-xl,
-  .homepage-reveal-root .backdrop-blur-2xl {
+  .site-page-reveal-root .home-shell,
+  .site-page-reveal-root .glass-card,
+  .site-page-reveal-root .backdrop-blur-sm,
+  .site-page-reveal-root .backdrop-blur-md,
+  .site-page-reveal-root .backdrop-blur-xl,
+  .site-page-reveal-root .backdrop-blur-2xl {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
@@ -794,8 +806,15 @@ body[data-gallery-expanded="true"] header {
     transition: none;
   }
 
-  .homepage-reveal-root.is-ready [data-home-reveal],
-  .homepage-reveal-root.is-ready [data-home-reveal].is-visible {
+  .site-page-reveal-root.is-ready [data-home-reveal],
+  .site-page-reveal-root.is-ready [data-home-reveal].is-visible,
+  .site-page-reveal-root.is-ready [data-site-reveal],
+  .site-page-reveal-root.is-ready [data-site-reveal].is-visible,
+  .site-page-reveal-root.is-ready > section,
+  .site-page-reveal-root.is-ready > main > section,
+  .site-page-reveal-root.is-ready > main > div,
+  .site-page-reveal-root.is-ready > div:not([data-home-reveal]):not([data-site-reveal]) > section,
+  .site-page-reveal-root.is-ready > div:not([data-home-reveal]):not([data-site-reveal]) > main > section {
     opacity: 1;
     transform: none;
     transition: none;
