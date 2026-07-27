@@ -6,8 +6,45 @@ import type { InteractiveVSLConfig } from '@/data/vslConfig'
 
 const InteractiveVSL = dynamic(() => import('@/components/InteractiveVSL'), {
   ssr: false,
-  loading: () => <div className="aspect-[9/16] rounded-[22px] bg-[var(--color-dark-100)] sm:aspect-video" />,
+  loading: () => null,
 })
+
+function VSLPosterPlaceholder({
+  poster,
+  compact,
+  overlay = false,
+  hidden = false,
+}: {
+  poster: string
+  compact: boolean
+  overlay?: boolean
+  hidden?: boolean
+}) {
+  return (
+    <section
+      aria-hidden="true"
+      className={[
+        compact ? 'px-4 py-6 sm:px-5 md:py-8' : 'px-4 py-7 sm:px-5 md:py-9',
+        overlay ? 'pointer-events-none absolute inset-0 z-10 transition-opacity duration-500 ease-out' : '',
+        hidden ? 'opacity-0' : 'opacity-100',
+      ].join(' ')}
+    >
+      <div className="site-container">
+        <div
+          className="relative aspect-[9/16] overflow-hidden rounded-[22px] bg-[var(--color-dark-100)] bg-cover bg-center sm:aspect-video"
+          style={{ backgroundImage: `url("${poster}")` }}
+        >
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.04),rgba(1,1,1,0.66))]" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-black/45 shadow-lg backdrop-blur-sm">
+              <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[13px] border-y-transparent border-l-white" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function LazyInteractiveVSL({
   config,
@@ -20,6 +57,7 @@ export default function LazyInteractiveVSL({
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [shouldRender, setShouldRender] = useState(false)
+  const [interactiveReady, setInteractiveReady] = useState(false)
 
   useEffect(() => {
     const container = containerRef.current
@@ -34,15 +72,26 @@ export default function LazyInteractiveVSL({
   }, [])
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="relative">
       {shouldRender ? (
-        <InteractiveVSL config={config} pageLocation={pageLocation} compact={compact} />
-      ) : (
-        <section className={compact ? 'px-4 py-6 sm:px-5 md:py-8' : 'px-4 py-7 sm:px-5 md:py-9'}>
-          <div className="site-container">
-            <div className="aspect-[9/16] rounded-[22px] bg-[var(--color-dark-100)] sm:aspect-video" />
+        <>
+          <div className={`transition-opacity duration-500 ease-out ${interactiveReady ? 'opacity-100' : 'opacity-0'}`}>
+            <InteractiveVSL
+              config={config}
+              pageLocation={pageLocation}
+              compact={compact}
+              onReady={setInteractiveReady}
+            />
           </div>
-        </section>
+          <VSLPosterPlaceholder
+            poster={config.intro.poster}
+            compact={compact}
+            overlay
+            hidden={interactiveReady}
+          />
+        </>
+      ) : (
+        <VSLPosterPlaceholder poster={config.intro.poster} compact={compact} />
       )}
     </div>
   )

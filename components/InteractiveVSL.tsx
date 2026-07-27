@@ -13,13 +13,24 @@ type InteractiveVSLProps = {
   config: InteractiveVSLConfig
   pageLocation: string
   compact?: boolean
+  onReady?: (ready: true) => void
 }
 
-export default function InteractiveVSL({ config, pageLocation, compact = false }: InteractiveVSLProps) {
+export default function InteractiveVSL({
+  config,
+  pageLocation,
+  compact = false,
+  onReady,
+}: InteractiveVSLProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const resumeAfterVisibilityRef = useRef(false)
   const { refs, state, derived, handlers } = useInteractiveVSL(config, pageLocation)
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => onReady?.(true))
+    return () => window.cancelAnimationFrame(frame)
+  }, [onReady])
 
   useEffect(() => {
     const section = sectionRef.current
