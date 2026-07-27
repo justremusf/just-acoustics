@@ -13,7 +13,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Spaces',
   description:
-    'Explore acoustic treatment strategies for studios, offices, churches, restaurants, education, and activity spaces in Singapore.',
+    'Explore acoustic treatment strategies for homes, studios, offices, churches, restaurants, education, and activity spaces in Singapore.',
   alternates: { canonical: canonicalPath('/spaces') },
 }
 

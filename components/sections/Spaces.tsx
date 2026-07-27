@@ -10,7 +10,7 @@ const HOME_APPLICATION_ORDER = [
   'restaurants',
   'studios',
   'education',
-  'gym-and-activity-spaces',
+  'homes',
 ] as const
 
 type SpaceCard = {
@@ -45,6 +45,12 @@ const FALLBACK_SPACES = [
     href: '/spaces/studios',
     img: '/assets/pricing/home-studio.jpg',
   },
+  {
+    title: 'Homes',
+    description: 'Control echo and improve clarity in hi-fi rooms, home theatres, and home offices.',
+    href: '/spaces/homes',
+    img: '/assets/shop/custom/flexi-studio-room.jpeg',
+  },
 ]
 
 interface Props {
@@ -73,6 +79,7 @@ export default function Spaces({ spaces }: Props) {
     ['offices', FALLBACK_SPACES[1]],
     ['restaurants', FALLBACK_SPACES[2]],
     ['studios', FALLBACK_SPACES[3]],
+    ['homes', FALLBACK_SPACES[4]],
   ])
 
   const items = mappedItems.length > 0

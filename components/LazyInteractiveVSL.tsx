@@ -12,12 +12,10 @@ const InteractiveVSL = dynamic(() => import('@/components/InteractiveVSL'), {
 function VSLPosterPlaceholder({
   poster,
   compact,
-  overlay = false,
   hidden = false,
 }: {
   poster: string
   compact: boolean
-  overlay?: boolean
   hidden?: boolean
 }) {
   return (
@@ -25,7 +23,7 @@ function VSLPosterPlaceholder({
       aria-hidden="true"
       className={[
         compact ? 'px-4 py-6 sm:px-5 md:py-8' : 'px-4 py-7 sm:px-5 md:py-9',
-        overlay ? 'pointer-events-none absolute inset-0 z-10 transition-opacity duration-500 ease-out' : '',
+        'pointer-events-none transition-opacity duration-500 ease-out',
         hidden ? 'opacity-0' : 'opacity-100',
       ].join(' ')}
     >
@@ -73,26 +71,23 @@ export default function LazyInteractiveVSL({
 
   return (
     <div ref={containerRef} className="relative">
+      <VSLPosterPlaceholder
+        poster={config.intro.poster}
+        compact={compact}
+        hidden={interactiveReady}
+      />
       {shouldRender ? (
-        <>
-          <div className={`transition-opacity duration-500 ease-out ${interactiveReady ? 'opacity-100' : 'opacity-0'}`}>
-            <InteractiveVSL
-              config={config}
-              pageLocation={pageLocation}
-              compact={compact}
-              onReady={setInteractiveReady}
-            />
-          </div>
-          <VSLPosterPlaceholder
-            poster={config.intro.poster}
+        <div
+          className={`absolute inset-0 z-10 transition-opacity duration-500 ease-out ${interactiveReady ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        >
+          <InteractiveVSL
+            config={config}
+            pageLocation={pageLocation}
             compact={compact}
-            overlay
-            hidden={interactiveReady}
+            onReady={setInteractiveReady}
           />
-        </>
-      ) : (
-        <VSLPosterPlaceholder poster={config.intro.poster} compact={compact} />
-      )}
+        </div>
+      ) : null}
     </div>
   )
 }

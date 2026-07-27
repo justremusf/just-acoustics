@@ -71,7 +71,7 @@ export default function ProductsGrid({ products }: Props) {
               className="home-heading mt-5 text-[var(--color-dark-100)]"
               style={{ width: "min(100%, 870px)" }}
             >
-              Best Sellers
+              Products for sound clarity
             </h2>
             <p className="home-copy mt-5 max-w-[54ch]">
               Trusted by the pros to solve all of your acoustic issues.
@@ -86,7 +86,7 @@ export default function ProductsGrid({ products }: Props) {
         </div>
 
         <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-5 xl:grid-cols-4">
-          {items.map((item, index) => {
+          {items.map((item) => {
             const imgSrc = item.mainImage
               ? urlFor(item.mainImage).width(720).height(900).fit("crop").url()
               : "/placeholder.jpg";
@@ -129,7 +129,7 @@ export default function ProductsGrid({ products }: Props) {
                         item.mainImage ? IMAGE_BLUR_DATA_URL : undefined
                       }
                       quality={72}
-                      loading={index < 2 ? "eager" : "lazy"}
+                      loading="lazy"
                       className="object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                     />
                     {hoverImageSrc ? (

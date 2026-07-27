@@ -554,17 +554,38 @@ export default function HeaderClient({
           compact ? 'rounded-t-[17px]' : 'rounded-t-[21px]'
         }`}>
           {item.image ? (
-            <Image
-              src={item.image}
-              alt={item.imageAlt || item.title}
-              fill
-              sizes={compact ? '(max-width: 639px) 46vw, 30vw' : '(min-width: 1280px) 17vw, 30vw'}
-              placeholder="blur"
-              blurDataURL={IMAGE_BLUR_DATA_URL}
-              quality={62}
-              loading="eager"
-              className="object-contain transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
-            />
+            <>
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                aria-hidden="true"
+                sizes={compact ? '(max-width: 639px) 46vw, 30vw' : '(min-width: 1280px) 17vw, 30vw'}
+                quality={62}
+                loading="lazy"
+                className="scale-110 object-cover opacity-35 blur-2xl saturate-75"
+              />
+              <div className="absolute inset-0 bg-white/22" />
+              <div
+                className="absolute inset-y-1.5 left-1/2 aspect-[5/6] -translate-x-1/2 overflow-hidden transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015] sm:inset-y-2"
+                style={{
+                  WebkitMaskImage: 'linear-gradient(90deg, transparent, black 8%, black 92%, transparent)',
+                  maskImage: 'linear-gradient(90deg, transparent, black 8%, black 92%, transparent)',
+                }}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.imageAlt || item.title}
+                  fill
+                  sizes={compact ? '(max-width: 639px) 38vw, 25vw' : '(min-width: 1280px) 14vw, 25vw'}
+                  placeholder="blur"
+                  blurDataURL={IMAGE_BLUR_DATA_URL}
+                  quality={70}
+                  loading="eager"
+                  className="object-cover"
+                />
+              </div>
+            </>
           ) : null}
         </div>
         <div className={`shrink-0 overflow-hidden border-t border-white/78 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(239,237,232,0.9))] text-[#171717] backdrop-blur-2xl ${

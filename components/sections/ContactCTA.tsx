@@ -23,8 +23,15 @@ export default function ContactCTA({ showBadge = true }: { showBadge?: boolean }
             </span>
           ) : null}
           <h2 className="mt-7 text-white home-heading">We are ready to transform your space</h2>
-          <p className="mx-auto mt-6 max-w-[29ch] text-[15px] leading-7 text-white/78 sm:max-w-[56ch] sm:text-base">
-            Our acoustic engineers and team are on standby
+          <p className="mx-auto mt-6 max-w-[29ch] text-[15px] leading-7 text-white/78 sm:max-w-[62ch] sm:text-base">
+            Need a FREE acoustic survey or expert advice? Call us on{' '}
+            <a
+              href="tel:+6589301905"
+              className="font-semibold text-white underline decoration-white/45 underline-offset-4 transition-colors hover:text-[var(--color-brand-orange)]"
+            >
+              +65 8930 1905
+            </a>{' '}
+            or request a free quote below — our team will respond promptly.
           </p>
           <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/contact" className="w-full no-underline sm:w-auto">

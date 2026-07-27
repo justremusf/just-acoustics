@@ -6,6 +6,10 @@ export type FaqItem = { q: string; a: string };
 
 const DEFAULT_FAQS: FaqItem[] = [
   {
+    q: "How much do acoustic panels cost?",
+    a: "Costs depend on your room and treatment scope. Smaller spaces usually start from around $1,000; office and home-studio projects commonly range from $1,000 to $3,000. We confirm the right treatment and final quote after reviewing your space.",
+  },
+  {
     q: "What are acoustic panels?",
     a: "Acoustic panels absorb sound reflections so a room feels calmer, clearer, and easier to speak in. They improve the way a space sounds rather than blocking all sound entirely.",
   },

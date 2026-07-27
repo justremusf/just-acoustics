@@ -40,6 +40,7 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
 
   const projectCategoryBySpace: Record<string, string> = {
     studios: 'studios-homes',
+    homes: 'studios-homes',
     offices: 'office-spaces',
     churches: 'churches',
     restaurants: 'restaurants',

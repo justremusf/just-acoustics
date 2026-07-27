@@ -31,7 +31,7 @@ export default function ProcessSteps() {
       <div className="home-shell section-shell-pad mx-auto max-w-[1580px]">
         <div className="mb-10 text-center md:mb-12">
           <h2 className="home-heading text-[var(--color-dark-100)]">How to get started?</h2>
-          <p className="home-copy mx-auto mt-5 max-w-[48ch]">We guide the process from diagnosis to installation.</p>
+          <p className="home-copy mx-auto mt-5 max-w-[48ch]">We are there from diagnosis to installation.</p>
         </div>
 
         <div className="hidden md:grid md:grid-cols-2 md:gap-5 2xl:grid-cols-4">

@@ -92,7 +92,7 @@ export default function Testimonials({ testimonials }: Props) {
                   width: 'min(100%, 588px)',
                 }}
               >
-                Watch a case study on how we transformed a Yoga Studio&apos;s space.
+                Case Study: Noisy Yoga Studio
               </h3>
             </div>
             <div className="min-h-[220px] border-t border-black/6 lg:border-t-0 lg:border-l lg:border-black/6">
