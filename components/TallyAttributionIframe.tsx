@@ -145,6 +145,8 @@ export default function TallyAttributionIframe({
         </div>
       )}
       <iframe
+        // The inline script below may set src/opacity before hydration; that difference is intentional.
+        suppressHydrationWarning
         ref={iframeRef}
         id={iframeId}
         src={presetByScript ? undefined : (src ?? undefined)}
