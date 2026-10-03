@@ -1,10 +1,11 @@
 'use client'
 
 import type { CSSProperties } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { createPendingLead } from '@/components/analytics/leadTrackingState'
 import { buildTallyUrlWithAttribution, captureAttribution } from '@/lib/tallyAttribution'
+import { TALLY_URL_STORAGE_KEY, readStoredTallyUrl, tallyFormPrefix } from '@/lib/tally'
 
 type TallyWindow = Window & {
   Tally?: {
@@ -62,15 +63,31 @@ export default function TallyAttributionIframe({
 }: TallyAttributionIframeProps) {
   const router = useRouter()
   const pathname = usePathname()
-  // The iframe is rendered on the server without a src and loaded exactly once, on mount, with
-  // attribution already attached. Swapping src after a first load made the form load twice.
+  const iframeId = `tally-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
+  const iframeRef = useRef<HTMLIFrameElement | null>(null)
+  // The form loads exactly once. On a full page load, the inline script below sets the src before
+  // React hydrates, using the URL TallyPreloader stored (and already warmed in the cache) earlier in
+  // the visit. Otherwise it is set on mount. React then leaves an already-set src alone, because
+  // re-assigning an iframe src reloads it.
   const [src, setSrc] = useState<string | null>(null)
   const [loaded, setLoaded] = useState(false)
+  const [presetByScript, setPresetByScript] = useState(false)
 
   useEffect(() => {
     captureAttribution()
+    if (iframeRef.current?.getAttribute('src')) {
+      setPresetByScript(true)
+      setLoaded(true)
+      return
+    }
+    const url = readStoredTallyUrl(baseUrl) ?? buildTallyUrlWithAttribution(baseUrl)
+    try {
+      window.sessionStorage.setItem(TALLY_URL_STORAGE_KEY, url)
+    } catch {
+      // Storage unavailable; nothing to reuse next time.
+    }
     setLoaded(false)
-    setSrc(buildTallyUrlWithAttribution(baseUrl))
+    setSrc(url)
   }, [baseUrl, pathname])
 
   useEffect(() => {
@@ -115,7 +132,7 @@ export default function TallyAttributionIframe({
 
   return (
     <div className="relative">
-      {!loaded && (
+      {!loaded && !presetByScript && (
         <div aria-hidden="true" className="absolute inset-0 flex flex-col gap-4 p-1">
           {[0, 1, 2, 3].map((row) => (
             <div key={row} className="flex flex-col gap-2">
@@ -127,7 +144,9 @@ export default function TallyAttributionIframe({
         </div>
       )}
       <iframe
-        src={src ?? undefined}
+        ref={iframeRef}
+        id={iframeId}
+        src={presetByScript ? undefined : (src ?? undefined)}
         width="100%"
         height="640"
         frameBorder="0"
@@ -137,6 +156,12 @@ export default function TallyAttributionIframe({
           if (src) setLoaded(true)
         }}
         style={{ ...style, opacity: loaded ? 1 : 0, transition: 'opacity 200ms ease' }}
+      />
+      <script
+        // Runs during the initial HTML parse, before hydration, so a returning visitor's form starts loading immediately.
+        dangerouslySetInnerHTML={{
+          __html: `(function(){try{var u=sessionStorage.getItem(${JSON.stringify(TALLY_URL_STORAGE_KEY)});var f=document.getElementById(${JSON.stringify(iframeId)});if(u&&f&&!f.getAttribute('src')&&u.indexOf(${JSON.stringify(tallyFormPrefix(baseUrl))})===0){f.src=u;f.style.opacity='1';var k=f.previousElementSibling;if(k&&k.getAttribute('aria-hidden')==='true')k.style.display='none'}}catch(e){}})()`,
+        }}
       />
     </div>
   )

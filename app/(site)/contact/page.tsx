@@ -10,11 +10,10 @@ import { getFeaturedTestimonials, getSiteSettings } from '@/sanity/lib/queries'
 import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import type { Testimonial } from '@/lib/types'
 import { canonicalPath } from '@/lib/seo'
+import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 
 export const revalidate = 60
 
-const TALLY_CONSULTATION_FORM_URL =
-  'https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1'
 
 const NEXT_STEPS = ['Send us the form. It takes about two minutes.', 'We reach out within 1 hour.', 'We give you a free consultation on your space.']
 
@@ -71,7 +70,7 @@ export default async function ContactPage() {
           <div className="flex flex-col gap-4 lg:sticky lg:top-24">
             <span className="soft-pill self-start">Free consultation</span>
             <h1 className="page-title !text-[clamp(32px,4vw,52px)]">Get your free acoustic consultation.</h1>
-            <p className="page-subtitle m-0">Find out what is causing the echo or noise in your room, what will fix it and what it will cost, before you spend a cent. We reach out within 1 hour.</p>
+            <p className="page-subtitle m-0">Find out what your room needs and what it will cost, for free. We will reach out within 1 hour.</p>
 
             <div className="hidden flex-col gap-4 lg:flex">
               <NextSteps />
