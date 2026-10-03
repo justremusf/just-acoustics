@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
+import { getPaidSearchData } from '@/lib/paidSearchData'
 import { canonicalPath } from '@/lib/seo'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Acoustic Panels Singapore — Supply & Installation',
@@ -9,27 +12,38 @@ export const metadata: Metadata = {
 }
 
 const config: PaidSearchPageConfig = {
-  eyebrow: 'Acoustic Panels Singapore',
-  title: 'Choose panels for the room—not just the wall.',
-  summary: 'We help you select the right panel type, coverage and placement to reduce echo without making the space look improvised.',
-  heroImage: '/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp',
-  heroAlt: 'Fabric acoustic panels installed on a wall',
-  problemTitle: 'Panels work when placement and coverage match the room.',
-  problems: ['Speech sounds blurred because reflections arrive after the original voice.', 'Hard walls, glass and ceilings keep sound energy circulating.', 'Buying too few decorative panels produces little audible change.', 'Treating random areas can miss the strongest reflection paths.'],
+  eyebrow: 'Homes & Home Studios',
+  title: 'Room sounds echoey? Get the right panels, placed properly.',
+  summary: 'Acoustic panels for HDB and condo rooms, home studios and home offices in Singapore. Supply only, or supply and install.',
+  projectCategory: 'studios-homes',
+  spaceLabel: 'room',
+  whatsappText: 'Hi Just Acoustics, I would like a free consultation on acoustic panels for my home / home studio.',
+  heroImage: '/assets/process/installation.webp',
+  heroAlt: 'Just Acoustics team installing fabric wall panels on site',
+  problemTitle: 'Panels only work when coverage and placement suit the room.',
+  problems: [
+    'Your voice sounds hollow on calls, podcasts or recordings.',
+    'Mixes sound different in your room than everywhere else.',
+    'Bare walls, tiles and windows keep sound bouncing around.',
+    'A few panels bought online made little audible change.',
+  ],
   approachTitle: 'From room photos to a treatment layout.',
   approach: [
-    { title: 'Review the room', copy: 'We assess dimensions, surfaces, use case and the sound problem you actually notice.' },
+    { title: 'Review the room', copy: 'We look at size, surfaces, how you use the room and the sound problem you notice.' },
     { title: 'Select treatment', copy: 'We recommend wall panels, ceiling treatment or bass control in suitable sizes and finishes.' },
-    { title: 'Supply or install', copy: 'Choose self-install guidance or professional installation with a documented layout.' },
+    { title: 'Supply or install', copy: 'Install it yourself with our guidance, or let our team install it to a set layout.' },
   ],
-  pricing: 'Most smaller room and office projects start around S$1,000–S$3,000. Larger spaces and ceiling installations are scoped separately.',
-  proof: ['Fabric, PET, custom print and ceiling options', 'Room-specific coverage guidance', 'Professional Singapore installation', 'Acoustic treatment explained separately from soundproofing'],
+  pricing: 'Home studios and rooms in HDB flats and condos commonly fall around S$1,000–S$3,000. Larger spaces and ceiling installations are scoped separately.',
+  proof: ['Acoustic panels and bass traps', 'Self-install option when useful', 'Room-specific coverage guidance', 'Professional Singapore installation'],
   faq: [
-    { question: 'How many acoustic panels do I need?', answer: 'It depends on room volume, reflective surfaces and use. Photos and dimensions are enough for an initial coverage recommendation.' },
-    { question: 'Do acoustic panels soundproof a room?', answer: 'No. They reduce reflections and echo inside the room. Soundproofing requires changes to walls, doors, windows or ceilings.' },
-    { question: 'Can the panels match our interior?', answer: 'Yes. Fabric colours, sizes, print finishes and ceiling formats can be selected around the interior.' },
+    { q: 'How many acoustic panels do I need?', a: 'It depends on room size, hard surfaces and how the room is used. Photos and dimensions are enough for a first coverage recommendation.' },
+    { q: 'Do acoustic panels soundproof a room?', a: 'No. They reduce echo inside the room. Soundproofing needs changes to walls, doors, windows or ceilings.' },
+    { q: 'Can the panels match my interior?', a: 'Yes. Fabric colours, sizes, print finishes and ceiling formats can be chosen to suit the interior.' },
+    { q: 'How long does it take?', a: 'Panels are made to order, with a standard lead time of 4 to 6 weeks. Most installs are completed in one to two days.' },
   ],
 }
 
-export default function Page() { return <PaidSearchLandingPage config={config} /> }
-
+export default async function Page() {
+  const data = await getPaidSearchData()
+  return <PaidSearchLandingPage config={config} {...data} />
+}
