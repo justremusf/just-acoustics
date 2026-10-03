@@ -8,7 +8,6 @@ import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
 import { canonicalPath } from '@/lib/seo'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
-import { PROJECT_CATEGORY_LABELS as CATEGORY_LABELS } from '@/lib/contentView'
 
 const PROJECTS_FAQS: FaqItem[] = [
   {
@@ -43,6 +42,16 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     alternates: { canonical: canonicalPath('/projects') },
     robots: category ? { index: false, follow: true } : undefined,
   }
+}
+
+const CATEGORY_LABELS: Record<string, string> = {
+  restaurants: 'Restaurants',
+  'office-spaces': 'Office Spaces',
+  schools: 'Schools',
+  'studios-homes': 'Studios & Homes',
+  churches: 'Churches',
+  'gym-leisure': 'Gym & Leisure',
+  cinema: 'Cinema',
 }
 
 export default async function ProjectsPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
