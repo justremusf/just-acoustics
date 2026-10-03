@@ -490,6 +490,31 @@ body {
   text-align: left;
 }
 
+/* Long-form article column: a little larger and airier than card copy. */
+.article-body {
+  font-size: 17px;
+  line-height: 1.78;
+}
+.article-body h2,
+.article-body h3 {
+  scroll-margin-top: 110px;
+}
+@media (min-width: 1024px) {
+  .article-body h2,
+  .article-body h3 {
+    scroll-margin-top: 184px;
+  }
+}
+.article-body > div:first-child > :first-child {
+  margin-top: 0;
+}
+.article-body blockquote {
+  margin-left: 0;
+  padding-left: 1.1em;
+  border-left: 3px solid var(--color-brand-orange);
+  color: var(--color-dark-100);
+}
+
 @keyframes scroll-brands {
   from {
     transform: translateX(0);
