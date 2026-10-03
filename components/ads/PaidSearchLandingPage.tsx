@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 import { ArrowRight, Check, MessageCircle, ShieldCheck } from 'lucide-react'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
 
-const TALLY_FORM = 'https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1'
+import { TALLY_CONSULTATION_FORM_URL as TALLY_FORM } from '@/lib/tally'
 
 export type PaidSearchPageConfig = {
   eyebrow: string
