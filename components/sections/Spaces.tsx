@@ -4,12 +4,13 @@ import type { Space } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
+// Highest-value spaces first (see lib/spaceOrder.ts).
 const HOME_APPLICATION_ORDER = [
-  'churches',
   'offices',
-  'restaurants',
-  'studios',
   'education',
+  'restaurants',
+  'churches',
+  'studios',
   'homes',
 ] as const
 

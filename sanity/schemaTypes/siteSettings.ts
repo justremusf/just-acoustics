@@ -58,6 +58,20 @@ export default defineType({
       description: 'Link to your Google Business reviews',
     }),
     defineField({
+      name: 'googleRating',
+      title: 'Google Rating',
+      type: 'number',
+      description: 'Your current Google star rating, e.g. 4.9. Shown next to consultation buttons. Leave empty to hide.',
+      validation: (r) => r.min(1).max(5),
+    }),
+    defineField({
+      name: 'googleReviewCount',
+      title: 'Google Review Count',
+      type: 'number',
+      description: 'Number of Google reviews, e.g. 48. Shown with the rating.',
+      validation: (r) => r.min(0).integer(),
+    }),
+    defineField({
       name: 'shopPage',
       title: 'Shop Page',
       type: 'object',

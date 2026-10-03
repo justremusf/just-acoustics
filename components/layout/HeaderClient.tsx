@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { sortBySpacePriority } from '@/lib/spaceOrder'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -117,7 +118,7 @@ function chunkArray<T>(items: T[], size: number) {
 }
 
 function buildSpaceSections(spaces: SpaceMenuItem[]) {
-  const links = spaces.map((space) => ({
+  const links = sortBySpacePriority(spaces, (space) => space.slug).map((space) => ({
     label: space.title,
     href: `/spaces/${space.slug}`,
     meta: space.shortDescription ? 'Space' : undefined,

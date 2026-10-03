@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
+import RatingBadge from '@/components/ui/RatingBadge'
+import type { GoogleRating } from '@/lib/rating'
 
 const HERO_IMAGES = [
   {
@@ -24,7 +26,7 @@ const HERO_IMAGES = [
   },
 ] as const
 
-export default function Hero() {
+export default function Hero({ rating }: { rating?: GoogleRating | null } = {}) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [nextImageIndex, setNextImageIndex] = useState<number | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -129,6 +131,7 @@ export default function Hero() {
                   Free Acoustic Consultation
                 </ShimmerButton>
               </Link>
+              <RatingBadge rating={rating} tone="dark" />
             </div>
           </div>
         </div>
