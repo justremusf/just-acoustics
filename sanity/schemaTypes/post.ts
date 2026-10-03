@@ -67,6 +67,13 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'pinned',
+      title: 'Pin to top of blog',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Pinned posts lead the blog feed. The first pinned post gets the large "Latest" tile.',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',
