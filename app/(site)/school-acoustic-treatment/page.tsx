@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
+import PriceEstimator from '@/components/estimator/PriceEstimator'
 import { getPaidSearchData } from '@/lib/paidSearchData'
 import { canonicalPath } from '@/lib/seo'
 
@@ -45,5 +46,5 @@ const config: PaidSearchPageConfig = {
 
 export default async function Page() {
   const data = await getPaidSearchData()
-  return <PaidSearchLandingPage config={config} {...data} />
+  return <PaidSearchLandingPage config={config} {...data} estimator={<PriceEstimator defaultSpace="school" compact id="estimator" />} />
 }
