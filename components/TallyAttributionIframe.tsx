@@ -1,9 +1,8 @@
 'use client'
 
 import type { CSSProperties } from 'react'
-import { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import { createPendingLead } from '@/components/analytics/leadTrackingState'
 import { buildTallyUrlWithAttribution, captureAttribution } from '@/lib/tallyAttribution'
 
@@ -63,29 +62,30 @@ export default function TallyAttributionIframe({
 }: TallyAttributionIframeProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const search = searchParams.toString()
-  const [src, setSrc] = useState(baseUrl)
-
-  const routeKey = useMemo(() => `${pathname}?${search}`, [pathname, search])
+  // The iframe is rendered on the server without a src and loaded exactly once, on mount, with
+  // attribution already attached. Swapping src after a first load made the form load twice.
+  const [src, setSrc] = useState<string | null>(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     captureAttribution()
-    const nextSrc = buildTallyUrlWithAttribution(baseUrl)
+    setLoaded(false)
+    setSrc(buildTallyUrlWithAttribution(baseUrl))
+  }, [baseUrl, pathname])
 
-    setSrc(nextSrc)
-
-    window.requestAnimationFrame(() => {
-      const tallyWindow = window as TallyWindow
-      tallyWindow.Tally?.loadEmbeds?.()
-    })
-  }, [baseUrl, routeKey])
+  useEffect(() => {
+    if (!src) return
+    // embed.js handles dynamic height; make sure it picks up this iframe once it exists.
+    const tallyWindow = window as TallyWindow
+    tallyWindow.Tally?.loadEmbeds?.()
+  }, [src])
 
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
       if (event.origin !== 'https://tally.so') return
 
       const message = parseTallySubmittedMessage(event.data)
+      const search = window.location.search.replace(/^\?/, '')
       if (!message) return
 
       const submissionId =
@@ -111,17 +111,33 @@ export default function TallyAttributionIframe({
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [pathname, router, search, title])
+  }, [pathname, router, title])
 
   return (
-    <iframe
-      src={src}
-      width="100%"
-      height="640"
-      frameBorder="0"
-      title={title}
-      className={className}
-      style={style}
-    />
+    <div className="relative">
+      {!loaded && (
+        <div aria-hidden="true" className="absolute inset-0 flex flex-col gap-4 p-1">
+          {[0, 1, 2, 3].map((row) => (
+            <div key={row} className="flex flex-col gap-2">
+              <div className="h-3 w-32 animate-pulse rounded-full bg-black/8" />
+              <div className="h-12 w-full animate-pulse rounded-[14px] bg-black/5" />
+            </div>
+          ))}
+          <div className="mt-2 h-12 w-40 animate-pulse rounded-full bg-black/10" />
+        </div>
+      )}
+      <iframe
+        src={src ?? undefined}
+        width="100%"
+        height="640"
+        frameBorder="0"
+        title={title}
+        className={className}
+        onLoad={() => {
+          if (src) setLoaded(true)
+        }}
+        style={{ ...style, opacity: loaded ? 1 : 0, transition: 'opacity 200ms ease' }}
+      />
+    </div>
   )
 }
