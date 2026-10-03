@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import CookieSettings from '@/components/analytics/CookieSettings'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy',
@@ -12,7 +13,11 @@ export default function CookiePolicyPage() {
       <section className="home-shell page-hero-shell flex flex-col gap-5">
         <span className="soft-pill">Legal</span>
         <h1 className="page-title">Cookie Policy</h1>
-        <p className="page-subtitle">Last updated: March 2025</p>
+        <p className="page-subtitle">Last updated: 3 October 2026</p>
+      </section>
+
+      <section id="settings" className="scroll-mt-28">
+        <CookieSettings />
       </section>
 
       <section className="home-shell page-hero-shell">
@@ -39,10 +44,31 @@ export default function CookiePolicyPage() {
                 <td>Google Analytics, distinguishes users</td>
                 <td>24 hours</td>
               </tr>
+              <tr>
+                <td>_gcl_*</td>
+                <td>Google Ads, measures which ads lead to enquiries (advertising)</td>
+                <td>90 days</td>
+              </tr>
+              <tr>
+                <td>_fbp</td>
+                <td>Meta (Facebook/Instagram) Pixel, measures ad performance (advertising)</td>
+                <td>90 days</td>
+              </tr>
+              <tr>
+                <td>ja_analytics_consent</td>
+                <td>Remembers your cookie choice</td>
+                <td>180 days</td>
+              </tr>
+              <tr>
+                <td>ja_consent_region</td>
+                <td>Remembers which cookie rules apply in your country</td>
+                <td>30 days</td>
+              </tr>
             </tbody>
           </table>
           <h2>Managing cookies</h2>
-          <p>You can control cookies through your browser settings. Disabling analytics cookies will not affect your ability to use this website.</p>
+          <p>In Singapore and most countries, cookies are on by default and you can turn advertising cookies off at any time using the setting at the top of this page. In the EU, UK and Switzerland, advertising cookies are only used if you accept them.</p>
+          <p>You can also control cookies through your browser settings. Turning cookies off will not affect your ability to use this website.</p>
           <h2>Contact</h2>
           <p>Questions? Email <TrackedAnchor href="mailto:info@justacoustics.co">info@justacoustics.co</TrackedAnchor>.</p>
         </div>
