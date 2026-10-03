@@ -842,3 +842,43 @@ body[data-gallery-expanded="true"] header {
     animation: none;
   }
 }
+
+/* About page: equaliser bars and scrolling project wall. */
+@keyframes about-eq {
+  0%,
+  100% {
+    height: 12%;
+  }
+  50% {
+    height: var(--eq-peak, 70%);
+  }
+}
+
+.about-eq-bar {
+  height: 12%;
+  animation: about-eq 1.1s ease-in-out infinite;
+  animation-delay: var(--eq-delay, 0ms);
+}
+
+.about-wall-track {
+  animation: scroll-brands 60s linear infinite;
+}
+
+.about-wall-reverse {
+  animation-direction: reverse;
+}
+
+.about-wall:hover .about-wall-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-eq-bar,
+  .about-wall-track {
+    animation: none;
+  }
+
+  .about-eq-bar {
+    height: var(--eq-peak, 50%);
+  }
+}
