@@ -25,33 +25,6 @@ export default async function StudioLandingPage() {
     getFeaturedTestimonials().catch(() => []),
   ])
 
-  // Custom high-quality studio testimonials
-  const studioTestimonials = testimonials.length > 0 
-    ? testimonials 
-    : [
-        {
-          _id: 't-1',
-          authorName: 'Alex Tan',
-          company: 'Redroom Studios',
-          review: 'The bass response in my mixing room was completely out of control. Just Acoustics recommended the 150mm bass traps and wall panels. The difference is night and day—my mixes now translate perfectly.',
-          rating: 5,
-        },
-        {
-          _id: 't-2',
-          authorName: 'Sarah Lim',
-          company: 'Bedroom Producer',
-          review: 'Living in an HDB, I was terrified of noise complaints. The 6-Panel kit completely cleaned up the flutter echo in my room, and the team helped me place them exactly where they were needed.',
-          rating: 5,
-        },
-        {
-          _id: 't-3',
-          authorName: 'Marcus Wong',
-          company: 'Recording Engineer',
-          review: 'Super professional service. From the 3D studio proposal to clean, dust-free installation. Highly recommend their studio kits.',
-          rating: 5,
-        }
-      ]
-
   return (
     <div className="overflow-x-hidden bg-white">
       
@@ -148,7 +121,8 @@ export default async function StudioLandingPage() {
       <StudioProcess />
 
       {/* 6. TESTIMONIALS */}
-      <Testimonials testimonials={studioTestimonials} />
+      {/* Testimonials falls back to real client reviews when Sanity has none. */}
+      <Testimonials testimonials={testimonials} />
 
       {/* 7. FAQ */}
       <FAQ />

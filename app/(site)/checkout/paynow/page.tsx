@@ -9,6 +9,7 @@ const PAYNOW_QR_SRC = '/assets/paynow/just-acoustics-paynow-qr.png'
 export const metadata: Metadata = {
   title: 'PayNow QR | Just Acoustics',
   description: 'View the Just Acoustics PayNow QR code and payment instructions.',
+  robots: { index: false, follow: false },
 }
 
 export default function PayNowPage() {
@@ -79,7 +80,7 @@ export default function PayNowPage() {
               <div className="rounded-[20px] border border-black/8 bg-white/76 p-4 text-sm leading-6 text-[var(--color-gray-100)]">
                 <p className="m-0 font-semibold text-[var(--color-dark-100)]">Payment reference</p>
                 <p className="m-0 mt-2">
-                  Use your name or order reference from checkout. On localhost, this page is provided as a direct preview so you don’t need to submit the delivery form first.
+                  Use your name or the order reference from checkout so we can match your payment.
                 </p>
               </div>
             </div>
