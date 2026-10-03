@@ -94,6 +94,7 @@ export interface Post {
   mainImage?: SanityImage
   excerpt?: string
   publishedAt?: string
+  readingTime?: number
   body?: unknown[]
   seo?: { metaTitle?: string; metaDescription?: string }
   faqs?: FaqItem[]
