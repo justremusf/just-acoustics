@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import ShimmerButton from '@/components/ui/shimmer-button'
-import RatingBadge from '@/components/ui/RatingBadge'
-import type { GoogleRating } from '@/lib/rating'
 
-export default function ContactCTA({ showBadge = true, rating }: { showBadge?: boolean; rating?: GoogleRating | null } = {}) {
+export default function ContactCTA({ showBadge = true }: { showBadge?: boolean } = {}) {
   return (
     <section className="px-4 py-10 md:px-6 md:py-14">
       <div className="relative mx-auto max-w-[1580px] overflow-hidden rounded-[26px] border border-white/16 py-20 shadow-[0_28px_80px_rgba(0,0,0,0.22)] md:rounded-[30px] md:py-[112px]">
@@ -39,7 +37,6 @@ export default function ContactCTA({ showBadge = true, rating }: { showBadge?: b
             <Link href="/contact" className="w-full no-underline sm:w-auto">
               <ShimmerButton className="h-auto w-full px-8 py-4 text-sm">Free Consultation</ShimmerButton>
             </Link>
-            <RatingBadge rating={rating} tone="dark" />
           </div>
         </div>
       </div>

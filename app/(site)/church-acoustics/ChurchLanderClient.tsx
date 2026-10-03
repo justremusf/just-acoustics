@@ -194,7 +194,7 @@ const FAQS = [
   },
   {
     q: 'How much does church acoustic treatment cost?',
-    a: 'A basic wall panel package for small halls starts around SGD 1,500. Full design, simulation, and professional installation for large main sanctuaries typically ranges between SGD 5,000 and SGD 25,000.',
+    a: 'A basic wall panel package for small halls starts around SGD 1,500. Full design, simulation, and professional installation for large main sanctuaries typically ranges from SGD 15,000 to SGD 40,000+.',
   },
 ]
 

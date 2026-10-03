@@ -10,8 +10,6 @@ import { getFeaturedTestimonials, getSiteSettings } from '@/sanity/lib/queries'
 import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import type { Testimonial } from '@/lib/types'
 import { canonicalPath } from '@/lib/seo'
-import { getGoogleRating } from '@/lib/rating'
-import RatingBadge from '@/components/ui/RatingBadge'
 import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 
 export const revalidate = 60
@@ -73,7 +71,6 @@ export default async function ContactPage() {
             <span className="soft-pill self-start">Free consultation</span>
             <h1 className="page-title !text-[clamp(32px,4vw,52px)]">Get your free acoustic consultation.</h1>
             <p className="page-subtitle m-0">Find out what your room needs and what it will cost, for free. We will reach out within 1 hour.</p>
-            <RatingBadge rating={getGoogleRating(settings)} />
 
             <div className="hidden flex-col gap-4 lg:flex">
               <NextSteps />

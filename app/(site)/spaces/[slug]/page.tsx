@@ -10,6 +10,8 @@ import FAQ from '@/components/sections/FAQ'
 import { canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
 import { formatSgd } from '@/lib/shopPricing'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
+import PriceEstimator from '@/components/estimator/PriceEstimator'
+import { estimatorSpaceForPage } from '@/lib/priceGuide'
 
 export const revalidate = 60
 
@@ -82,6 +84,8 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
       { '@type': 'ListItem', position: 3, name: space.title, item: canonicalPath(`/spaces/${slug}`) },
     ],
   }
+
+  const estimatorSpace = estimatorSpaceForPage(slug)
 
   const faqItems = (space.faqs || []).flatMap((item) =>
     item.question && item.answer ? [{ q: item.question, a: item.answer }] : []
@@ -202,6 +206,22 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
                 </li>
               ))}
             </ul>
+          </section>
+        ) : null}
+
+        {estimatorSpace ? (
+          <section className="site-container mt-16 grid gap-8 rounded-[32px] border border-black/8 bg-white/72 p-6 shadow-[0_24px_60px_rgba(0,0,0,0.07)] backdrop-blur-2xl sm:mt-20 sm:p-8 lg:grid-cols-[0.8fr_1.2fr] lg:p-12">
+            <div>
+              <h2 className="m-0 text-[clamp(36px,5vw,64px)] font-medium leading-[0.94] tracking-[-0.045em]" style={{ fontFamily: 'var(--font-heading)' }}>
+                What does it cost?
+              </h2>
+              <p className="mb-0 mt-5 max-w-[48ch] text-[15px] leading-7 text-[var(--color-gray-100)]">
+                Pick your room size to see what similar projects typically cost in Singapore, including supply and installation.
+              </p>
+            </div>
+            <div className="min-w-0">
+              <PriceEstimator defaultSpace={estimatorSpace} compact id="estimator" />
+            </div>
           </section>
         ) : null}
 

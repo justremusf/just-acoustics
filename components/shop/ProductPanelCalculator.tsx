@@ -11,6 +11,7 @@ import {
   type RoomType,
 } from "@/lib/panel-calculator";
 import type { ShopProductLine } from "@/lib/shopProductProfiles";
+import { formatPriceSgd, installedPriceForCalculatorRoom } from "@/lib/priceGuide";
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -149,6 +150,8 @@ export default function ProductPanelCalculator({
     setError("");
     setStep(4);
   };
+
+  const installed = results ? installedPriceForCalculatorRoom(roomType, results.floorArea) : null;
 
   const whatsappHref = results
     ? generateWhatsAppUrl(
@@ -325,7 +328,12 @@ export default function ProductPanelCalculator({
           {step === 4 && results ? (
             <div className="grid gap-5 md:grid-cols-[0.85fr_1.15fr] md:items-center">
               <div>
-                <p className="page-kicker m-0">Ballpark range</p>
+                <p className="page-kicker m-0 flex flex-wrap items-center gap-2">
+                  Ballpark range
+                  <span className="rounded-full border border-black/10 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-[var(--color-gray-100)]">
+                    Panels only
+                  </span>
+                </p>
                 <p className="m-0 mt-2 text-[clamp(42px,6vw,64px)] font-semibold leading-none tracking-[-0.05em] text-[var(--color-dark-100)]">
                   {results.recommendedMin}–{results.recommendedMax}
                 </p>
@@ -335,6 +343,16 @@ export default function ProductPanelCalculator({
                 <p className="m-0 mt-3 text-sm leading-6 text-[var(--color-gray-100)]">
                   {copy.resultNote}
                 </p>
+                {installed ? (
+                  <p className="m-0 mt-3 text-sm leading-6 text-[var(--color-dark-100)]">
+                    Want it installed? Typical installed price for this room:{" "}
+                    <Link href={installed.href} className="font-semibold text-[var(--color-brand-orange-dark)] underline-offset-2 hover:underline">
+                      {installed.entry.display === "range" && installed.entry.high != null
+                        ? `${formatPriceSgd(installed.entry.low)}–${formatPriceSgd(installed.entry.high)}`
+                        : `from ${formatPriceSgd(installed.entry.low)}`}
+                    </Link>
+                  </p>
+                ) : null}
               </div>
               <div className="rounded-[18px] border border-black/7 bg-white/72 p-4">
                 <p className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">

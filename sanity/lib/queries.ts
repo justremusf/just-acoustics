@@ -239,7 +239,7 @@ export async function getSiteSettings() {
   try {
     return await client.fetch(`
       *[_type == "siteSettings" && !(_id in path("drafts.**"))][0] {
-        phone, whatsapp, email, address, socialLinks, brandLogos, googleReviewLink, googleRating, googleReviewCount,
+        phone, whatsapp, email, address, socialLinks, brandLogos, googleReviewLink,
         shopPage
       }
     `)
