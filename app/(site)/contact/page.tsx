@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import Link from 'next/link'
 import { preconnect, preload } from 'react-dom'
-import { ChevronDown, Mail, MessageCircle, Phone } from 'lucide-react'
+import { Mail, MessageCircle, Phone } from 'lucide-react'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
 import BrandScroller from '@/components/sections/BrandScroller'
+import FAQ, { type FaqItem } from '@/components/sections/FAQ'
 import { getFeaturedTestimonials, getSiteSettings } from '@/sanity/lib/queries'
 import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import type { Testimonial } from '@/lib/types'
@@ -25,7 +25,7 @@ const DIRECT_CONTACT = [
 ]
 
 // Answers mirror what the site already states in its FAQ and pricing pages.
-const OBJECTIONS = [
+const OBJECTIONS: FaqItem[] = [
   {
     q: 'Is the consultation really free?',
     a: 'Yes. We look at the problem you are trying to solve, how the room is used and the likely treatment options, so you have a clear next step before you commit to anything.',
@@ -37,7 +37,6 @@ const OBJECTIONS = [
   {
     q: 'How much will it cost?',
     a: 'It depends on the room and how much treatment it needs. Smaller spaces usually start from around $1,000, and office and home-studio projects commonly range from $1,000 to $3,000. We confirm the final quote after reviewing your space.',
-    link: { href: '/pricing', label: 'See pricing' },
   },
   {
     q: 'Will installation disrupt us?',
@@ -71,8 +70,8 @@ export default async function ContactPage() {
         <section className="grid gap-6 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:items-start">
           <div className="flex flex-col gap-4 lg:sticky lg:top-24">
             <span className="soft-pill self-start">Free consultation</span>
-            <h1 className="page-title !text-[clamp(32px,4vw,52px)]">Tell us about your space.</h1>
-            <p className="page-subtitle m-0">Two minutes to fill in. We reach out within 1 hour.</p>
+            <h1 className="page-title !text-[clamp(32px,4vw,52px)]">Get your free acoustic consultation.</h1>
+            <p className="page-subtitle m-0">Find out what is causing the echo or noise in your room, what will fix it and what it will cost, before you spend a cent. We reach out within 1 hour.</p>
 
             <div className="hidden flex-col gap-4 lg:flex">
               <NextSteps />
@@ -90,34 +89,7 @@ export default async function ContactPage() {
           </div>
         </section>
 
-        {/* Objections */}
-        <section className="home-shell page-hero-shell grid gap-6 md:!p-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-10">
-          <div className="flex flex-col gap-3">
-            <span className="soft-pill self-start">Before you ask</span>
-            <h2 className="page-title !text-[clamp(26px,3vw,40px)]">Questions people have before reaching out.</h2>
-            <Link href="#form" className="page-link mt-1">
-              Back to the form <span aria-hidden="true">↑</span>
-            </Link>
-          </div>
-          <div className="flex flex-col divide-y divide-black/8">
-            {OBJECTIONS.map((item) => (
-              <details key={item.q} className="group py-4 first:pt-0">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold text-[var(--color-dark-100)] [&::-webkit-details-marker]:hidden">
-                  {item.q}
-                  <ChevronDown size={18} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-open:rotate-180" />
-                </summary>
-                <p className="page-card-copy mb-0 mt-3 max-w-[64ch]">
-                  {item.a}{' '}
-                  {item.link && (
-                    <Link href={item.link.href} className="font-semibold text-[var(--color-dark-100)] underline underline-offset-4">
-                      {item.link.label}
-                    </Link>
-                  )}
-                </p>
-              </details>
-            ))}
-          </div>
-        </section>
+        <FAQ items={OBJECTIONS} title="Questions before you reach out" subtitle="Quick answers to what most people ask us first." flush />
 
         {/* Proof */}
         <section className="flex flex-col gap-4">
