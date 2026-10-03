@@ -15,6 +15,10 @@ import RelatedProductsCarousel from "@/components/shop/RelatedProductsCarousel";
 
 export const revalidate = 60;
 
+// Override for the flagship product's meta / JSON-LD description.
+const STANDARD_FLEXI_DESCRIPTION =
+  "Best-selling broadband acoustic panels built to reduce echo and improve clarity in any type of space.";
+
 export async function generateStaticParams() {
   const slugs = await getAllShopItemSlugs().catch(() => []);
   return slugs.map((s: { slug: string }) => ({ slug: s.slug }));
@@ -30,7 +34,7 @@ export async function generateMetadata({
   if (!item) return {};
   const description =
     slug === "standard-flexi-acoustic-panel"
-      ? "Best-selling broadband acoustic panels built to reduce echo and improve clarity in any type of space."
+      ? STANDARD_FLEXI_DESCRIPTION
       : item.shortDescription || item.seo?.metaDescription;
   return {
     title: stripBrand(item.seo?.metaTitle) || item.title,
@@ -99,7 +103,7 @@ export default async function ShopItemPage({
     name: item.title,
     description:
       slug === "standard-flexi-acoustic-panel"
-        ? "Best-selling broadband acoustic panels built to reduce echo and improve clarity in any type of space."
+        ? STANDARD_FLEXI_DESCRIPTION
         : item.shortDescription,
     ...(item.mainImage && {
       image: urlFor(item.mainImage).width(1200).height(900).url(),
