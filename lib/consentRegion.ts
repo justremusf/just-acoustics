@@ -6,7 +6,7 @@ const STRICT_COUNTRIES = new Set([
   'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH',
 ])
 
-/** Unknown country (e.g. no geo header) is treated as strict, the safe default. */
+/** Only countries we positively identify as opt-in regions are strict; unknown stays standard. */
 export function isStrictConsentCountry(country: string | null | undefined) {
-  return !country || STRICT_COUNTRIES.has(country.toUpperCase())
+  return Boolean(country && STRICT_COUNTRIES.has(country.toUpperCase()))
 }

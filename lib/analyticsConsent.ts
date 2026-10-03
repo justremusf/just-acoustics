@@ -19,9 +19,9 @@ function readCookie(name: string) {
     ?.split('=')[1]
 }
 
-/** True for visitors who need opt-in (EEA/UK/CH, or unknown). Set by middleware.ts. */
+/** True only when middleware.ts has positively placed the visitor in an opt-in region (EEA/UK/CH). */
 export function isStrictConsentRegion() {
-  return readCookie(CONSENT_REGION_COOKIE) !== 'standard'
+  return readCookie(CONSENT_REGION_COOKIE) === 'strict'
 }
 
 /** The choice the visitor actually made, if any. */

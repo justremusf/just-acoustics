@@ -81,7 +81,7 @@ const CONSENT_SNIPPET = `
       return match ? match.split('=')[1] : '';
     }
     var choice = readCookie('ja_analytics_consent');
-    var strict = readCookie('ja_consent_region') !== 'standard';
+    var strict = readCookie('ja_consent_region') === 'strict';
     window.__jaAdsAllowed = choice === 'all' || choice === 'granted' || (!strict && choice !== 'analytics_only' && choice !== 'denied');
   })();
 `

@@ -24,6 +24,7 @@ const navGroups = [
       { label: 'About', href: '/about' },
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
       { label: 'Terms & Conditions', href: '/terms-of-service' },
     ],
   },
