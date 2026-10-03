@@ -5,6 +5,7 @@ import { FileText, MessageSquare, Ruler, Wrench, Search, MapPin, LayoutDashboard
 import FAQ from '@/components/sections/FAQ'
 import ContactCTA from '@/components/sections/ContactCTA'
 import FadeUp from '@/components/ui/FadeUp'
+import PriceEstimator from '@/components/estimator/PriceEstimator'
 import PricingRangeAccordion, { type PricingRange } from './PricingRangeAccordion'
 import { getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
@@ -137,6 +138,10 @@ export default async function PricingPage() {
           <p className="page-subtitle max-w-[64ch]">
             Let us make the numbers clearer. Your price depends on the room, the treatment type, and how the space is used.
           </p>
+        </section>
+
+        <section className="home-shell page-hero-shell p-[clamp(22px,4vw,42px)]">
+          <PriceEstimator id="estimator" />
         </section>
 
         <FadeUp>
