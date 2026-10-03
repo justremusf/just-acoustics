@@ -150,8 +150,11 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
         <div aria-live="polite" aria-atomic="true" className="flex flex-col gap-3">
           {space && size && entry && priceText ? (
             <>
-              <p className="page-kicker">
+              <p className="page-kicker flex flex-wrap items-center gap-2">
                 {space.label} · {size.label} ({size.area})
+                <span className="rounded-full border border-black/10 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-[var(--color-gray-100)]">
+                  Supply + installation
+                </span>
               </p>
               <p
                 className="m-0 text-[clamp(26px,3.4vw,38px)] font-medium leading-[1.05] tracking-[-0.8px] text-[var(--color-dark-100)]"
@@ -211,6 +214,9 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
             Ask on WhatsApp
           </a>
         </div>
+        <Link href="/shop" className="m-0 w-fit text-sm font-semibold text-[var(--color-gray-100)] underline-offset-2 hover:underline">
+          Installing yourself? See panel prices →
+        </Link>
       </div>
     </div>
   )

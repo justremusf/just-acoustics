@@ -229,8 +229,6 @@ export interface SiteSettings {
   }
   brandLogos?: SanityImage[]
   googleReviewLink?: string
-  googleRating?: number
-  googleReviewCount?: number
   shopPage?: {
     heroTitle?: string
     heroDescription?: string

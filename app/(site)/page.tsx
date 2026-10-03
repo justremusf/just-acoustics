@@ -16,7 +16,6 @@ import {
   getFeaturedTestimonials,
 } from '@/sanity/lib/queries'
 import { canonicalPath } from '@/lib/seo'
-import { getGoogleRating } from '@/lib/rating'
 
 const HearTheDifference = dynamic(() => import('@/components/sections/HearTheDifference'))
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'))
@@ -38,7 +37,7 @@ export default async function HomePage() {
   return (
     <>
       <ScrollToTopOnMount />
-      <Hero rating={getGoogleRating(settings)} />
+      <Hero />
       <div data-home-reveal><BrandScroller logos={settings?.brandLogos} /></div>
       <div data-home-reveal><Spaces spaces={spaces} /></div>
       <div data-home-reveal>
@@ -52,7 +51,7 @@ export default async function HomePage() {
       <div data-home-reveal><ProcessSteps /></div>
       <div data-home-reveal><Testimonials testimonials={testimonials} /></div>
       <div data-home-reveal><FAQ showLabel={false} /></div>
-      <div data-home-reveal><ContactCTA showBadge={false} rating={getGoogleRating(settings)} /></div>
+      <div data-home-reveal><ContactCTA showBadge={false} /></div>
     </>
   )
 }
