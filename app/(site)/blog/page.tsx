@@ -4,7 +4,8 @@ import { urlFor } from '@/sanity/lib/image'
 import type { Post } from '@/lib/types'
 import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
 import { canonicalPath } from '@/lib/seo'
-import BlogExplorer, { CONTENT_TYPES, type ExplorerPost } from '@/components/blog/BlogExplorer'
+import BlogExplorer from '@/components/blog/BlogExplorer'
+import { CONTENT_TYPES, type ExplorerPost } from '@/lib/blogContent'
 
 export const revalidate = 60
 
