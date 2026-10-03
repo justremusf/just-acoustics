@@ -35,7 +35,14 @@ function toExplorerPost(post: Post): ExplorerPost {
     publishedAt: post.publishedAt,
     readingTime: post.readingTime,
     image: post.mainImage?.asset
-      ? { src: urlFor(post.mainImage).width(960).height(600).url(), alt: post.mainImage.alt || post.title }
+      ? {
+          src: urlFor(post.mainImage).width(1600).fit('max').url(),
+          alt: post.mainImage.alt || post.title,
+          // Respect the editor's hotspot so crops keep the subject in frame.
+          position: post.mainImage.hotspot
+            ? `${Math.round(post.mainImage.hotspot.x * 100)}% ${Math.round(post.mainImage.hotspot.y * 100)}%`
+            : undefined,
+        }
       : undefined,
   }
 }
@@ -51,14 +58,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   return (
     <div className="page-wrap page-stack">
-      <section className="home-shell page-hero-shell flex flex-col gap-5">
-        <span className="soft-pill">Resource Center</span>
-        <h1 className="page-title">Acoustic Education</h1>
-        <p className="page-subtitle">
-          Pick a topic, search a problem, or just start with the latest. Every guide is written from real installs across Singapore.
-        </p>
-      </section>
-
       <BlogExplorer
         posts={posts.filter((post) => post.slug?.current).map(toExplorerPost)}
         initialTopic={initialTopic}
