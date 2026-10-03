@@ -146,7 +146,7 @@ export default async function ShopPage({
   const consultationImage = shopPage?.consultationImage;
 
   return (
-    <main className="px-4 pb-16 pt-6 sm:px-5 sm:pb-20 lg:pt-8">
+    <div className="px-4 pb-16 pt-6 sm:px-5 sm:pb-20 lg:pt-8">
       <section className="site-container rounded-[32px] border border-black/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(245,245,245,0.76))] p-6 shadow-[0_24px_60px_rgba(0,0,0,0.09),0_8px_24px_rgba(0,0,0,0.04),0_1px_0_rgba(255,255,255,0.8)_inset] backdrop-blur-2xl sm:p-9 lg:p-12">
         <div className="max-w-[820px]">
           <h1
@@ -381,6 +381,6 @@ export default async function ShopPage({
         title="Shop Questions"
         subtitle="Everything you need to know before ordering."
       />
-    </main>
+    </div>
   );
 }
