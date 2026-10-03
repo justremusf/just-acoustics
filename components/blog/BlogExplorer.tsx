@@ -15,6 +15,7 @@ export interface ExplorerPost {
   excerpt?: string
   publishedAt?: string
   readingTime?: number
+  pinned?: boolean
   image?: { src: string; alt: string; position?: string }
 }
 
@@ -137,7 +138,7 @@ function FeatureTile({ post, className = '' }: { post: ExplorerPost; className?:
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/0 transition-opacity duration-500 group-hover:from-black/90" />
 
       <span className="absolute left-5 top-5 z-10 rounded-full bg-[var(--color-brand-orange)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-dark-100)]">
-        Latest
+        {post.pinned ? 'Featured' : 'Latest'}
       </span>
 
       <div className="relative z-10 mt-auto flex w-full items-end gap-4 p-6 md:p-8">
@@ -279,6 +280,8 @@ export default function BlogExplorer({ posts, initialTopic = '', initialType = '
     .filter((post) => (!topic || post.category === topic) && (!type || post.contentType === type))
     .sort((a, b) => {
       if (sort === 'quickest') return (a.readingTime ?? 99) - (b.readingTime ?? 99)
+      // Pinned posts lead the default view.
+      if (sort === 'newest' && Boolean(a.pinned) !== Boolean(b.pinned)) return a.pinned ? -1 : 1
       const diff = new Date(a.publishedAt ?? 0).getTime() - new Date(b.publishedAt ?? 0).getTime()
       return sort === 'oldest' ? diff : -diff
     })

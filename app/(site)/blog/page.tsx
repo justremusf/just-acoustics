@@ -34,6 +34,7 @@ function toExplorerPost(post: Post): ExplorerPost {
     excerpt: post.excerpt,
     publishedAt: post.publishedAt,
     readingTime: post.readingTime,
+    pinned: post.pinned,
     image: post.mainImage?.asset
       ? {
           src: urlFor(post.mainImage).width(1600).fit('max').url(),

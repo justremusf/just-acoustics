@@ -7,7 +7,7 @@ export async function getAllPosts() {
   try {
     return await client.fetch(`
       *[_type == "post" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
-        _id, title, slug, category, contentType, mainImage, excerpt, publishedAt,
+        _id, title, slug, category, contentType, mainImage, excerpt, publishedAt, pinned,
         "readingTime": round(length(pt::text(body)) / 5 / 200)
       }
     `)

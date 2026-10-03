@@ -95,6 +95,7 @@ export interface Post {
   excerpt?: string
   publishedAt?: string
   readingTime?: number
+  pinned?: boolean
   body?: unknown[]
   seo?: { metaTitle?: string; metaDescription?: string }
   faqs?: FaqItem[]
