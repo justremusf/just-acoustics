@@ -6,6 +6,7 @@ import { getAllSpaces } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Space } from '@/lib/types'
 import { canonicalPath } from '@/lib/seo'
+import { sortBySpacePriority } from '@/lib/spaceOrder'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
 export const revalidate = 60
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 export default async function SpacesPage() {
-  const spaces: Space[] = await getAllSpaces().catch(() => [])
+  const spaces: Space[] = sortBySpacePriority(await getAllSpaces().catch(() => []), (space: Space) => space.slug?.current)
 
   return (
     <div className="px-4 pb-16 pt-6 sm:px-5 sm:pb-20 lg:pt-8">

@@ -4,6 +4,7 @@ import { CartProvider } from '@/components/cart/CartProvider'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import { SitePageReveal } from '@/components/SitePageReveal'
 import TallyPreloader from '@/components/TallyPreloader'
+import MobileActionBar from '@/components/ui/MobileActionBar'
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <Footer />
       </div>
       <WhatsAppButton />
+      <MobileActionBar />
       <TallyPreloader />
     </CartProvider>
   )

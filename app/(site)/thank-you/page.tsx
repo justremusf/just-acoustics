@@ -1,8 +1,14 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight, Camera, Check, MessageCircle, Phone } from 'lucide-react'
 import LeadConversionTracker from '@/components/analytics/LeadConversionTracker'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
-import ShimmerButton from '@/components/ui/shimmer-button'
+import { getAllProjects } from '@/sanity/lib/queries'
+import { urlFor } from '@/sanity/lib/image'
+import type { Project } from '@/lib/types'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Thank You',
@@ -13,63 +19,110 @@ export const metadata: Metadata = {
   },
 }
 
-const nextSteps = [
-  'We will review your room details and contact you shortly.',
-  'If needed, we may ask for a few more photos or measurements.',
-  'We will recommend the right acoustic approach for your space.',
+const WHATSAPP_PHOTOS_URL = `https://wa.me/6589301905?text=${encodeURIComponent(
+  'Hi Just Acoustics, I just sent the consultation form on your website. Here are some photos of my room:'
+)}`
+
+const PHOTO_TIPS = ['The whole room, taken from a corner', 'The ceiling', 'Rough room size, if you know it']
+
+const NEXT_STEPS = [
+  'We reach out within 1 hour.',
+  'We look at your photos and ask anything we still need to know.',
+  'You get a clear recommendation and quote for your space.',
 ]
 
-export default function ThankYouPage() {
+export default async function ThankYouPage() {
+  const projects: Project[] = await getAllProjects().catch(() => [])
+  const recent = projects.filter((project) => project.mainImage?.asset && project.slug?.current).slice(0, 3)
+
   return (
     <div className="page-wrap page-stack">
       <LeadConversionTracker />
-      <section className="home-shell page-hero-shell flex flex-col items-center gap-5 text-center">
-        <span className="soft-pill mx-auto">Thank You</span>
-        <h1 className="page-title max-w-[14ch] text-center">
-          Your consultation request has been received
-        </h1>
-        <p className="page-subtitle max-w-[50ch] text-center">
-          Thanks for reaching out to Just Acoustics. We have received your form submission and will get in touch soon to help you take the next step for your space.
-        </p>
-        <div className="mt-3">
-          <Link href="/projects" className="inline-block no-underline">
-            <ShimmerButton className="h-auto px-8 py-4 text-sm">
-              Check out our projects
-            </ShimmerButton>
-          </Link>
-        </div>
+
+      <section className="home-shell page-hero-shell flex flex-col items-center gap-4 text-center md:!py-12">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-orange)] text-[var(--color-dark-100)]">
+          <Check size={24} aria-hidden="true" />
+        </span>
+        <h1 className="page-title max-w-[18ch] text-center">Got it. We will reach out within 1 hour.</h1>
+        <p className="page-subtitle m-0 max-w-[48ch] text-center">Your consultation request is in. Want a faster, more accurate answer? Send us a few photos now.</p>
       </section>
 
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <div className="home-shell page-hero-shell">
-          <span className="soft-pill">What Happens Next</span>
-          <ol className="mt-5 flex list-decimal flex-col gap-4 pl-5 text-sm leading-7 text-[var(--color-gray-100)]">
-            {nextSteps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="glass-card p-6">
-          <span className="soft-pill">Need Direct Help</span>
-          <div className="mt-5 flex flex-col gap-4 text-sm leading-6 text-[var(--color-gray-100)]">
+      <section className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+        <div className="home-shell page-hero-shell flex flex-col gap-5 md:!p-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
+              <Camera size={18} aria-hidden="true" />
+            </span>
             <div>
-              <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Hotline</p>
-              <TrackedAnchor href="tel:+6589301905" className="page-link mt-2">+65 8930 1905</TrackedAnchor>
-            </div>
-            <div>
-              <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">WhatsApp</p>
-              <TrackedAnchor href="https://wa.me/6589301905" target="_blank" rel="noopener noreferrer" className="page-link mt-2">
-                Start chat directly
-              </TrackedAnchor>
-            </div>
-            <div>
-              <p className="m-0 text-sm font-semibold text-[var(--color-dark-100)]">Explore Projects</p>
-              <Link href="/projects" className="page-link mt-2">Check out our projects</Link>
+              <p className="page-kicker">Speed it up</p>
+              <h2 className="page-card-title m-0">WhatsApp us 2–3 photos of the room</h2>
             </div>
           </div>
+          <p className="page-card-copy m-0">Photos let us spot the problem and quote you faster, often without a site visit. Helpful shots:</p>
+          <ul className="m-0 flex list-none flex-col gap-2 p-0">
+            {PHOTO_TIPS.map((tip) => (
+              <li key={tip} className="flex items-center gap-2 text-sm text-[var(--color-gray-100)]">
+                <Check size={15} aria-hidden="true" className="shrink-0 text-[var(--color-brand-orange)]" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+          <TrackedAnchor
+            href={WHATSAPP_PHOTOS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-12 items-center justify-center gap-2 self-start rounded-full px-6 text-sm font-semibold text-white no-underline transition-transform hover:-translate-y-0.5"
+            style={{ backgroundColor: '#25D366' }}
+          >
+            <MessageCircle size={17} aria-hidden="true" /> Send photos on WhatsApp
+          </TrackedAnchor>
+        </div>
+
+        <div className="glass-card flex flex-col gap-4 p-6">
+          <p className="page-kicker">What happens next</p>
+          <ol className="m-0 flex list-none flex-col gap-3 p-0">
+            {NEXT_STEPS.map((step, index) => (
+              <li key={step} className="flex items-start gap-3 text-sm leading-6 text-[var(--color-gray-100)]">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-dark-100)] text-xs font-semibold text-white">{index + 1}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
+          <TrackedAnchor href="tel:+6589301905" className="page-link mt-auto pt-2">
+            <Phone size={14} aria-hidden="true" /> Prefer to talk? +65 8930 1905
+          </TrackedAnchor>
         </div>
       </section>
+
+      {recent.length === 3 && (
+        <section className="home-shell page-hero-shell flex flex-col gap-5 md:!p-8">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="page-kicker">While you wait</p>
+              <h2 className="page-card-title mt-1.5">Rooms we have treated</h2>
+            </div>
+            <Link href="/projects" className="page-link whitespace-nowrap">
+              All projects <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {recent.map((project) => (
+              <Link key={project._id} href={`/projects/${project.slug.current}`} className="group flex flex-col gap-2 no-underline">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-[var(--color-white-200)]">
+                  <Image
+                    src={urlFor(project.mainImage!).width(700).height(525).url()}
+                    alt={project.mainImage?.alt || project.title}
+                    fill
+                    sizes="(min-width: 640px) 30vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <span className="px-1 text-[15px] font-semibold text-[var(--color-dark-100)] transition-colors group-hover:text-[var(--color-brand-orange)]">{project.title}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

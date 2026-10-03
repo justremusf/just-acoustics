@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
+import PriceEstimator from '@/components/estimator/PriceEstimator'
+import { getPaidSearchData } from '@/lib/paidSearchData'
 import { canonicalPath } from '@/lib/seo'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Restaurant Echo Reduction Singapore',
@@ -9,27 +13,38 @@ export const metadata: Metadata = {
 }
 
 const config: PaidSearchPageConfig = {
-  eyebrow: 'Restaurants & Venues',
-  title: 'A lively room should not feel exhausting.',
-  summary: 'Acoustic treatment reduces reflections so guests can hold a conversation without the room becoming harsh as occupancy increases.',
-  heroImage: '/assets/pricing/restaurant.jpg',
-  heroAlt: 'Restaurant dining space with hard reflective finishes',
-  problemTitle: 'Noise builds when every conversation reflects around the venue.',
-  problems: ['Sound levels rise as guests speak over the existing noise.', 'Concrete, glass, tile and exposed ceilings reflect energy.', 'Music and speech become harsh instead of adding atmosphere.', 'Decorative fixes often lack enough coverage to change the room.'],
-  approachTitle: 'Control reflections while protecting the venue design.',
+  eyebrow: 'Restaurants, Cafés & Bars',
+  title: 'Restaurant too loud? Bring the noise down, keep the buzz.',
+  summary: 'Discreet ceiling and wall acoustic treatment for Singapore restaurants, cafés and bars, installed around your service hours.',
+  projectCategory: 'restaurants',
+  spaceLabel: 'restaurant',
+  whatsappText: 'Hi Just Acoustics, I would like a free consultation for echo and noise in our restaurant / café.',
+  heroImage: '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
+  heroAlt: 'Acoustic ceiling clouds installed by Just Acoustics in a Singapore café',
+  problemTitle: 'Noise builds when every conversation bounces around the room.',
+  problems: [
+    'Guests talk louder and louder to be heard over each other.',
+    'Concrete, glass, tile and exposed ceilings reflect sound everywhere.',
+    'Music and chatter turn harsh instead of adding atmosphere.',
+    'Guests leave early or do not come back because it is too loud.',
+  ],
+  approachTitle: 'Cut the echo while keeping your interior design.',
   approach: [
-    { title: 'Review operating conditions', copy: 'Assess layout, occupancy, finishes, ceiling access and the times when noise is worst.' },
-    { title: 'Find discreet coverage', copy: 'Use ceiling, wall or custom-print treatments that contribute enough absorption without dominating the interior.' },
-    { title: 'Schedule practical installation', copy: 'Coordinate access, protection and work timing around service hours.' },
+    { title: 'Review the venue', copy: 'Look at the layout, finishes, ceiling access and the times when noise is worst.' },
+    { title: 'Find discreet coverage', copy: 'Use ceiling clouds, wall panels or custom prints that absorb enough sound without dominating the space.' },
+    { title: 'Install outside service', copy: 'Coordinate access, protection and work timing around your opening hours.' },
   ],
   pricing: 'Restaurant and hospitality projects commonly range from S$2,000–S$6,000. Larger venues, custom finishes and difficult access are quoted separately.',
   proof: ['Discreet ceiling and wall options', 'Custom colours and prints', 'After-hours installation planning', 'Coverage designed around occupancy'],
   faq: [
-    { question: 'Will acoustic panels make the restaurant silent?', answer: 'No. The aim is to reduce excessive reflections while keeping the room energetic and comfortable.' },
-    { question: 'Can treatment be hidden?', answer: 'Often. Ceiling clouds, colour-matched panels and custom prints can integrate with the interior.' },
-    { question: 'Can you install outside operating hours?', answer: 'Yes. Installation timing and access requirements are agreed during quoting.' },
+    { q: 'Will acoustic panels make the restaurant silent?', a: 'No. The aim is to cut excessive echo while keeping the room lively and comfortable.' },
+    { q: 'Can the treatment be hidden?', a: 'Often. Ceiling clouds, colour-matched panels and custom prints can blend into the interior.' },
+    { q: 'Can you install outside operating hours?', a: 'Yes. Installation timing and access requirements are agreed during quoting.' },
+    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
   ],
 }
 
-export default function Page() { return <PaidSearchLandingPage config={config} /> }
-
+export default async function Page() {
+  const data = await getPaidSearchData()
+  return <PaidSearchLandingPage config={config} {...data} estimator={<PriceEstimator defaultSpace="restaurant" compact id="estimator" />} />
+}

@@ -1,117 +1,287 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
-import { Suspense } from 'react'
-import { ArrowRight, Check, MessageCircle, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Check, MessageCircle, TriangleAlert } from 'lucide-react'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
+import FAQ, { type FaqItem } from '@/components/sections/FAQ'
+import BrandScroller from '@/components/sections/BrandScroller'
+import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
+import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
+import type { LandingTestimonial } from '@/lib/paidSearchData'
+import type { Project, SanityImage } from '@/lib/types'
+import { urlFor } from '@/sanity/lib/image'
 
-import { TALLY_CONSULTATION_FORM_URL as TALLY_FORM } from '@/lib/tally'
+const WHATSAPP_NUMBER = '6589301905'
 
 export type PaidSearchPageConfig = {
   eyebrow: string
+  /** Hero headline: name the pain and the outcome. */
   title: string
+  /** One-line hero subhead. */
   summary: string
+  /** Sanity project `category` used for the hero photo and the project strip, e.g. 'office-spaces'. */
+  projectCategory: string
+  /** Short plural label for the space type, used in headings, e.g. 'office'. */
+  spaceLabel: string
+  /** Pre-filled WhatsApp message. */
+  whatsappText: string
+  /** Real local photo used when Sanity has no project photo for this space type. */
   heroImage: string
   heroAlt: string
   problemTitle: string
   problems: string[]
   approachTitle: string
   approach: Array<{ title: string; copy: string }>
+  /** Price sentence. Only figures already published on the site. */
   pricing: string
   proof: string[]
-  faq: Array<{ question: string; answer: string }>
+  faq: FaqItem[]
 }
 
-export default function PaidSearchLandingPage({ config }: { config: PaidSearchPageConfig }) {
+type Props = {
+  config: PaidSearchPageConfig
+  projects?: Project[]
+  testimonials?: LandingTestimonial[]
+  brandLogos?: SanityImage[]
+  /** Optional price estimator, rendered just above the price guide card. */
+  estimator?: ReactNode
+}
+
+function whatsappHref(text: string) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+}
+
+function CtaButtons({ whatsappText, dark = false }: { whatsappText: string; dark?: boolean }) {
   return (
-    <div className="page-wrap page-stack gap-10 md:gap-14">
-      <section className="home-shell overflow-hidden rounded-[32px] p-0">
-        <div className="grid lg:grid-cols-[1.02fr_.98fr] lg:items-stretch">
-          <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-14">
-            <span className="soft-pill w-fit">{config.eyebrow}</span>
-            <h1 className="mt-6 mb-0 max-w-[13ch] text-[clamp(42px,6vw,76px)] font-medium leading-[.96] tracking-[-.045em] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
-              {config.title}
-            </h1>
-            <p className="mt-6 mb-0 max-w-[54ch] text-[17px] leading-8 text-[var(--color-gray-100)]">{config.summary}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="#consultation" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--color-brand-orange)] px-6 text-sm font-bold text-black no-underline">
-                Get a room recommendation <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="https://wa.me/6589301905" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-black/15 px-6 text-sm font-bold text-black no-underline">
-                <MessageCircle className="h-4 w-4" /> WhatsApp photos
-              </Link>
-            </div>
-            <p className="mt-5 mb-0 text-xs font-semibold uppercase tracking-[.12em] text-black/45">Singapore · Supply, design and installation</p>
-          </div>
-          <div className="relative min-h-[360px] lg:min-h-[650px]">
-            <Image src={config.heroImage} alt={config.heroAlt} fill priority className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-          </div>
-        </div>
-      </section>
-
-      <section className="grid gap-6 lg:grid-cols-[.85fr_1.15fr]">
-        <div className="home-shell p-7 sm:p-10">
-          <span className="soft-pill w-fit">What is happening</span>
-          <h2 className="page-card-title mt-6 max-w-[16ch]">{config.problemTitle}</h2>
-          <p className="mt-5 mb-0 text-base leading-7 text-[var(--color-gray-100)]">
-            Acoustic treatment reduces reflections inside a room. It does not block sound travelling through walls, doors or ceilings.
-          </p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {config.problems.map((problem) => (
-            <div className="glass-card flex items-start gap-4 p-6" key={problem}>
-              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-orange-100 text-orange-700"><Check className="h-4 w-4" /></span>
-              <p className="m-0 text-sm leading-6 text-black/70">{problem}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="home-shell p-7 sm:p-10 lg:p-12">
-        <div className="max-w-2xl">
-          <span className="soft-pill w-fit">Treatment approach</span>
-          <h2 className="page-title mt-6 text-[clamp(30px,4vw,50px)]">{config.approachTitle}</h2>
-        </div>
-        <div className="mt-9 grid gap-5 md:grid-cols-3">
-          {config.approach.map((item, index) => (
-            <article className="border-t border-black/10 pt-6" key={item.title}>
-              <span className="text-xs font-bold text-[var(--color-brand-orange)]">0{index + 1}</span>
-              <h3 className="mt-3 mb-0 text-xl font-semibold text-black">{item.title}</h3>
-              <p className="mt-3 mb-0 text-sm leading-6 text-black/60">{item.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-[30px] bg-black p-8 text-white sm:p-10">
-          <ShieldCheck className="h-8 w-8 text-[var(--color-brand-orange)]" />
-          <h2 className="mt-6 mb-0 text-[clamp(30px,4vw,48px)] font-medium leading-none" style={{ fontFamily: 'var(--font-heading)' }}>Practical scope and transparent pricing.</h2>
-          <p className="mt-5 mb-0 text-lg leading-8 text-white/70">{config.pricing}</p>
-          <ul className="mt-8 grid gap-3 p-0">
-            {config.proof.map((item) => <li className="flex gap-3 text-sm text-white/80" key={item}><Check className="h-4 w-4 shrink-0 text-[var(--color-brand-orange)]" />{item}</li>)}
-          </ul>
-        </div>
-        <div id="consultation" className="home-shell overflow-hidden p-3 sm:p-6">
-          <Suspense fallback={<div className="min-h-[640px]" />}>
-            <TallyAttributionIframe baseUrl={TALLY_FORM} title={`${config.eyebrow} consultation`} className="min-h-[640px]" />
-          </Suspense>
-        </div>
-      </section>
-
-      <section className="home-shell p-7 sm:p-10 lg:p-12">
-        <span className="soft-pill w-fit">Common questions</span>
-        <div className="mt-8 divide-y divide-black/10">
-          {config.faq.map((item) => (
-            <details className="group py-6" key={item.question}>
-              <summary className="cursor-pointer list-none text-lg font-semibold text-black">{item.question}</summary>
-              <p className="mt-4 mb-0 max-w-3xl text-sm leading-7 text-black/60">{item.answer}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-      <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <a
+        href="#consultation"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--color-brand-orange)] px-6 text-sm font-bold text-black no-underline"
+      >
+        Get a free consultation <ArrowRight className="h-4 w-4" aria-hidden="true" />
+      </a>
+      <a
+        href={whatsappHref(whatsappText)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full border px-6 text-sm font-bold no-underline ${
+          dark ? 'border-white/25 text-white' : 'border-black/15 text-black'
+        }`}
+      >
+        <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp us
+      </a>
     </div>
   )
 }
 
+function TrustLine({ dark = false }: { dark?: boolean }) {
+  return <p className={`m-0 text-sm ${dark ? 'text-white/60' : 'text-[var(--color-gray-100)]'}`}>Free consultation. We reply within 1 hour.</p>
+}
+
+export default function PaidSearchLandingPage({ config, projects = [], testimonials = [], brandLogos, estimator }: Props) {
+  const withImage = projects.filter((project) => project?.mainImage?.asset && project.slug?.current)
+  const matching = withImage.filter((project) => project.category === config.projectCategory)
+  const others = withImage.filter((project) => project.category !== config.projectCategory)
+
+  // Hero: a real project photo of this space type, otherwise a real local photo.
+  const heroProject = matching[0]
+  const heroSrc = heroProject?.mainImage ? urlFor(heroProject.mainImage).width(1400).height(1050).url() : config.heroImage
+  const heroAlt = heroProject
+    ? heroProject.mainImage?.alt || `${heroProject.title}${heroProject.location ? `, ${heroProject.location}` : ''}`
+    : config.heroAlt
+
+  // Proof strip: this space type first, topped up with other recent work.
+  const strip = [...matching, ...others].slice(0, 3)
+  const stripAllMatching = strip.length > 0 && strip.every((project) => project.category === config.projectCategory)
+
+  return (
+    <>
+      <div className="page-wrap page-stack !pb-6">
+        {/* Hero */}
+        <section className="home-shell overflow-hidden p-0">
+          <div className="grid lg:grid-cols-[1.05fr_.95fr] lg:items-stretch">
+            <div className="flex flex-col justify-center gap-4 p-5 sm:gap-5 sm:p-10 lg:p-12">
+              <span className="soft-pill w-fit">{config.eyebrow}</span>
+              <h1 className="page-title !text-[clamp(34px,4.6vw,60px)] max-w-[18ch]">{config.title}</h1>
+              <p className="page-subtitle !text-[16px] sm:!text-[17px]">{config.summary}</p>
+              <CtaButtons whatsappText={config.whatsappText} />
+              <TrustLine />
+            </div>
+            <div className="relative h-[190px] sm:h-[320px] lg:h-auto lg:min-h-[520px]">
+              <Image
+                src={heroSrc}
+                alt={heroAlt}
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 48vw"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Form first on mobile; sticky right column on desktop. */}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-start">
+          <aside
+            id="consultation"
+            className="home-shell scroll-mt-28 overflow-hidden rounded-[28px] p-4 sm:p-6 lg:sticky lg:top-24 lg:col-start-2 lg:row-start-1 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"
+          >
+            <p className="page-kicker">Free consultation</p>
+            <h2 className="page-card-title mt-2">Tell us about your {config.spaceLabel}</h2>
+            <p className="page-card-copy mt-2 !text-sm">Takes about two minutes. We reply within 1 hour.</p>
+            <div className="mt-4">
+              <TallyAttributionIframe
+                baseUrl={TALLY_CONSULTATION_FORM_URL}
+                title={`${config.eyebrow} consultation`}
+                style={{ overflow: 'hidden', display: 'block' }}
+              />
+            </div>
+          </aside>
+
+          <div className="flex min-w-0 flex-col gap-6 lg:col-start-1 lg:row-start-1">
+            {/* Problems */}
+            <section className="home-shell page-hero-shell">
+              <span className="soft-pill w-fit">Sound familiar?</span>
+              <h2 className="page-card-title mt-5 max-w-[24ch]">{config.problemTitle}</h2>
+              <ul className="m-0 mt-6 grid list-none gap-3 p-0 sm:grid-cols-2">
+                {config.problems.map((problem) => (
+                  <li className="flex items-start gap-3 rounded-[18px] border border-black/8 bg-white/70 p-4" key={problem}>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-amber-100 text-amber-700">
+                      <TriangleAlert className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                    <span className="text-sm leading-6 text-black/70">{problem}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="page-card-copy mt-5 !text-sm">
+                Acoustic panels reduce echo inside the room. They do not stop sound passing through walls, doors or ceilings.
+              </p>
+            </section>
+
+            {/* How we fix it */}
+            <section className="home-shell page-hero-shell">
+              <span className="soft-pill w-fit">How we fix it</span>
+              <h2 className="page-card-title mt-5 max-w-[26ch]">{config.approachTitle}</h2>
+              <ol className="m-0 mt-6 grid list-none gap-5 p-0 md:grid-cols-3">
+                {config.approach.map((item, index) => (
+                  <li className="border-t border-black/10 pt-5" key={item.title}>
+                    <span className="text-xs font-bold text-[var(--color-brand-orange)]">Step {index + 1}</span>
+                    <h3 className="mt-2 mb-0 text-lg font-semibold text-[var(--color-dark-100)]">{item.title}</h3>
+                    <p className="mt-2 mb-0 text-sm leading-6 text-[var(--color-gray-100)]">{item.copy}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            {/* Proof: real projects */}
+            {strip.length > 0 ? (
+              <section className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-end justify-between gap-3 px-1">
+                  <h2 className="page-card-title">{stripAllMatching ? `Recent ${config.spaceLabel} projects` : 'Recent projects'}</h2>
+                  <Link href="/projects" className="page-link">
+                    See all projects <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {strip.map((project) => (
+                    <Link
+                      key={project._id}
+                      href={`/projects/${project.slug.current}`}
+                      className="glass-card group overflow-hidden no-underline"
+                    >
+                      <span className="relative block aspect-[4/3] bg-black/5">
+                        <Image
+                          src={urlFor(project.mainImage!).width(640).height(480).url()}
+                          alt={project.mainImage?.alt || project.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 30vw"
+                          placeholder="blur"
+                          blurDataURL={IMAGE_BLUR_DATA_URL}
+                          className="object-cover"
+                        />
+                      </span>
+                      <span className="flex flex-col gap-1 p-4">
+                        <span className="text-[17px] font-medium leading-tight text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
+                          {project.title}
+                        </span>
+                        {project.location ? <span className="text-xs text-[var(--color-gray-200)]">{project.location}</span> : null}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {/* Proof: testimonials */}
+            {testimonials.length > 0 ? (
+              <section className="flex flex-col gap-4">
+                <h2 className="page-card-title px-1">What clients say</h2>
+                <div className="grid gap-4 md:grid-cols-3">
+                  {testimonials.slice(0, 3).map((item) => (
+                    <figure key={`${item.authorName}-${item.company ?? ''}`} className="glass-card m-0 flex flex-col gap-3 p-5">
+                      <span className="text-sm text-[var(--color-brand-orange)]" aria-label={`${item.rating ?? 5} out of 5 stars`}>
+                        {'★'.repeat(Math.min(5, Math.max(1, item.rating ?? 5)))}
+                      </span>
+                      <blockquote className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">“{item.review}”</blockquote>
+                      <figcaption className="mt-auto text-sm">
+                        <span className="font-semibold text-[var(--color-dark-100)]">{item.authorName}</span>
+                        {item.company ? <span className="text-[var(--color-gray-200)]"> · {item.company}</span> : null}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {estimator ? <div>{estimator}</div> : null}
+
+            {/* Price guide */}
+            <section className="rounded-[28px] bg-[var(--color-dark-100)] p-6 text-white sm:p-8">
+              <p className="page-kicker !text-white/50">Price guide</p>
+              <h2 className="mt-3 mb-0 text-[clamp(24px,2.4vw,32px)] font-medium leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
+                What it usually costs
+              </h2>
+              <p className="mt-4 mb-0 max-w-[60ch] text-base leading-7 text-white/75">{config.pricing}</p>
+              <ul className="m-0 mt-6 grid list-none gap-3 p-0 sm:grid-cols-2">
+                {[...config.proof, 'Installs usually take 1–2 days', '1-year warranty on panels'].map((item) => (
+                  <li className="flex gap-3 text-sm text-white/80" key={item}>
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-brand-orange)]" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 mb-0 text-sm text-white/55">Your exact price comes after a free consultation. No obligation.</p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <BrandScroller logos={brandLogos} />
+
+      <div className="page-wrap page-stack !pt-6">
+        <FAQ items={config.faq} title="Common questions" subtitle="Quick answers before you get in touch." flush />
+
+        {/* Final CTA */}
+        <section className="rounded-[28px] bg-[var(--color-dark-100)] p-6 text-white sm:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-col gap-3">
+              <h2 className="m-0 text-[clamp(26px,3vw,40px)] font-medium leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
+                Ready to fix the echo?
+              </h2>
+              <p className="m-0 max-w-[52ch] text-base leading-7 text-white/70">
+                Send us a few details or photos of your {config.spaceLabel}. We will recommend what it needs and what it will cost.
+              </p>
+              <TrustLine dark />
+            </div>
+            <div className="shrink-0">
+              <CtaButtons whatsappText={config.whatsappText} dark />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
+    </>
+  )
+}
