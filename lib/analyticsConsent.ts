@@ -1,3 +1,5 @@
+import { CONSENT_REGION_COOKIE } from '@/lib/consentRegion'
+
 export const ANALYTICS_CONSENT_COOKIE = 'ja_analytics_consent'
 export type AnalyticsConsent = 'analytics_only' | 'all' | 'unset'
 
@@ -9,13 +11,32 @@ function normaliseAnalyticsConsent(value?: string): AnalyticsConsent {
   return 'unset'
 }
 
-export function readAnalyticsConsent(): AnalyticsConsent {
-  if (typeof document === 'undefined') return 'unset'
-  const value = document.cookie
+function readCookie(name: string) {
+  if (typeof document === 'undefined') return undefined
+  return document.cookie
     .split('; ')
-    .find((item) => item.startsWith(`${ANALYTICS_CONSENT_COOKIE}=`))
+    .find((item) => item.startsWith(`${name}=`))
     ?.split('=')[1]
-  return normaliseAnalyticsConsent(value)
+}
+
+/** True for visitors who need opt-in (EEA/UK/CH, or unknown). Set by middleware.ts. */
+export function isStrictConsentRegion() {
+  return readCookie(CONSENT_REGION_COOKIE) !== 'standard'
+}
+
+/** The choice the visitor actually made, if any. */
+export function readConsentChoice(): AnalyticsConsent {
+  return normaliseAnalyticsConsent(readCookie(ANALYTICS_CONSENT_COOKIE))
+}
+
+/**
+ * The consent in effect. Outside opt-in regions, cookies are on by default (consent by notification)
+ * until the visitor opts out.
+ */
+export function readAnalyticsConsent(): AnalyticsConsent {
+  const choice = readConsentChoice()
+  if (choice !== 'unset') return choice
+  return isStrictConsentRegion() ? 'unset' : 'all'
 }
 
 export function saveAnalyticsConsent(consent: Exclude<AnalyticsConsent, 'unset'>) {
@@ -29,6 +50,8 @@ export function saveAnalyticsConsent(consent: Exclude<AnalyticsConsent, 'unset'>
     ad_user_data: advertisingConsent,
     ad_personalization: advertisingConsent,
   })
+  const fbq = (window as Window & { fbq?: (...args: unknown[]) => void }).fbq
+  fbq?.('consent', consent === 'all' ? 'grant' : 'revoke')
   window.dispatchEvent(new CustomEvent('ja-consent-change', { detail: consent }))
 }
 

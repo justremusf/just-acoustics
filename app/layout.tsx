@@ -72,6 +72,20 @@ export const metadata: Metadata = {
   },
 }
 
+// Decides, before any tag fires, whether ad cookies are allowed: an explicit choice wins; otherwise
+// they are on outside opt-in regions (see middleware.ts) and off inside them.
+const CONSENT_SNIPPET = `
+  (function () {
+    function readCookie(name) {
+      var match = document.cookie.split('; ').find(function (item) { return item.indexOf(name + '=') === 0; });
+      return match ? match.split('=')[1] : '';
+    }
+    var choice = readCookie('ja_analytics_consent');
+    var strict = readCookie('ja_consent_region') !== 'standard';
+    window.__jaAdsAllowed = choice === 'all' || choice === 'granted' || (!strict && choice !== 'analytics_only' && choice !== 'denied');
+  })();
+`
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
@@ -100,25 +114,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       window.gtag = gtag;
+                      ${CONSENT_SNIPPET}
+                      var adConsent = window.__jaAdsAllowed ? 'granted' : 'denied';
                       gtag('consent', 'default', {
                         analytics_storage: 'granted',
-                        ad_storage: 'denied',
-                        ad_user_data: 'denied',
-                        ad_personalization: 'denied',
+                        ad_storage: adConsent,
+                        ad_user_data: adConsent,
+                        ad_personalization: adConsent,
                         wait_for_update: 500
                       });
-                      var consentCookie = document.cookie
-                        .split('; ')
-                        .find(function(item) { return item.indexOf('ja_analytics_consent=') === 0; });
-                      var consentValue = consentCookie ? consentCookie.split('=')[1] : '';
-                      if (consentValue === 'all' || consentValue === 'granted') {
-                        gtag('consent', 'update', {
-                          analytics_storage: 'granted',
-                          ad_storage: 'granted',
-                          ad_user_data: 'granted',
-                          ad_personalization: 'granted'
-                        });
-                      }
                       gtag('js', new Date());
                       ${gaId ? `gtag('config', '${gaId}');` : ''}
                       ${googleAdsId ? `gtag('config', '${googleAdsId}');` : ''}
@@ -142,19 +146,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       t.src=v;s=b.getElementsByTagName(e)[0];
                       s.parentNode.insertBefore(t,s)}(window, document,'script',
                       'https://connect.facebook.net/en_US/fbevents.js');
+                      ${CONSENT_SNIPPET}
+                      if (!window.__jaAdsAllowed) fbq('consent', 'revoke');
                       fbq('init', '${metaPixelId}');
                       fbq('track', 'PageView');
                     `}
                   </Script>
-                  <noscript>
-                    <img
-                      height="1"
-                      width="1"
-                      style={{ display: 'none' }}
-                      src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
-                      alt=""
-                    />
-                  </noscript>
                 </>
               )}
             </>
