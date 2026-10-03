@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { z } from 'zod'
 import { getShopItemBySlug } from '@/sanity/lib/queries'
 import type { ShopItem } from '@/lib/types'
+import { STANDARD_LEAD_TIME } from '@/lib/shopDisplay'
 import {
   calculateShopPrice,
   formatSgd,
@@ -97,7 +98,7 @@ export async function POST(req: NextRequest) {
       ['Custom print', selection.customPrint || item.productLine === 'custom-print-panels' ? item.customPrintLabel || 'Yes' : 'No'],
       ['Estimated total', formatSgd(price.total)],
       ['Review needed', price.requiresReview ? 'Yes' : 'No'],
-      ['Lead time', item.leadTime || 'To be confirmed'],
+      ['Lead time', STANDARD_LEAD_TIME],
       ['Payment status', 'Quote first. Stripe PayNow/payment link can be sent after confirmation.'],
     ]
 

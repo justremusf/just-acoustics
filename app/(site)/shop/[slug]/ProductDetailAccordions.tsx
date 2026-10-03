@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import type { ShopItem } from "@/lib/types";
 import { resolveProductLine } from "@/lib/shopProductProfiles";
 import { getSpecValue, isFlexiProduct } from "./productHelpers";
+import { STANDARD_LEAD_TIME } from "@/lib/shopDisplay";
 
 export function ProductDetailAccordions({ item }: { item: ShopItem }) {
   const [openPanel, setOpenPanel] = useState<string | null>(null);
@@ -40,7 +41,7 @@ export function ProductDetailAccordions({ item }: { item: ShopItem }) {
     ? [
         {
           title: "Shipping & Lead Time",
-          body: "Flexi™ Acoustic Panels are made to order based on your selected size, colour, and quantity.\n\nStandard orders usually take 4 weeks to prepare. Larger custom orders may require additional lead time.\n\nDelivery and installation are available across Singapore. Timeline will be confirmed before production begins.",
+          body: "Flexi™ Acoustic Panels are made to order based on your selected size, colour, and quantity.\n\nStandard orders take 4 to 6 weeks. Larger custom orders may need a little longer, and we will tell you upfront.\n\nDelivery and installation are available across Singapore. Timeline will be confirmed before production begins.",
         },
         {
           title: "Specifications",
@@ -56,15 +57,13 @@ export function ProductDetailAccordions({ item }: { item: ShopItem }) {
         },
         {
           title: "Warranty",
-          body: "All panels include a 1-year limited warranty covering defects in materials and workmanship under normal indoor use.\n\nDamage from misuse, water exposure, incorrect installation, or normal wear and tear is not covered.",
+          body: "Every panel comes with a 1-year warranty covering defects in materials and workmanship. If anything happens, let us know and we'll make it right.",
         },
       ]
     : [
         {
           title: "Lead time",
-          body:
-            item.leadTime ||
-            "Made-to-order products are confirmed after we review your selected quantity, finish, and delivery requirements in Singapore.",
+          body: `${STANDARD_LEAD_TIME} We confirm your exact timeline once we review your quantity, finish, and delivery requirements in Singapore.`,
         },
         {
           title: "Specifications",
@@ -92,7 +91,7 @@ export function ProductDetailAccordions({ item }: { item: ShopItem }) {
         },
         {
           title: "Warranty",
-          body: "Most acoustic products are made to order. We confirm dimensions, colours, and installation requirements before production so the final order matches your room and use case.",
+          body: "Every panel comes with a 1-year warranty covering defects in materials and workmanship. If anything happens, let us know and we'll make it right.",
         },
       ];
 

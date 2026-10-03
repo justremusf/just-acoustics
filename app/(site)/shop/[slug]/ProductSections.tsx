@@ -581,7 +581,7 @@ export function ProductInfoFaqSection({ item }: { item: ShopItem }) {
       },
       {
         q: "How long is the lead time?",
-        a: "Flexi panels are made to order. Typical production is about four weeks, with final timing confirmed when the colour, size, quantity, and installation scope are approved.",
+        a: "Flexi panels are made to order. Standard lead time is 4 to 6 weeks, with final timing confirmed when the colour, size, quantity, and installation scope are approved.",
       },
       {
         q: "Can I see fabric colours before ordering?",

@@ -195,8 +195,8 @@ function SummaryTotal() {
         </span>
       </div>
       <p className="m-0 mt-2 text-xs leading-5 text-[var(--color-gray-100)]">
-        Delivery or installation details will be confirmed after payment if
-        required.
+        Made to order: standard lead time is 4 to 6 weeks. We confirm
+        delivery or installation timing after payment.
       </p>
     </div>
   );

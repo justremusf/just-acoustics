@@ -15,7 +15,7 @@ import { IMAGE_BLUR_DATA_URL } from "@/lib/imagePlaceholder";
 const SHOP_FAQS: FaqItem[] = [
   {
     q: "What is the typical lead time for panels?",
-    a: "Standard panels are usually ready within 5–7 business days. Custom panels and made-to-order sizes take 2–3 weeks from confirmation.",
+    a: "Our panels are made to order. Standard lead time is 4 to 6 weeks from order confirmation, and we will confirm your exact timeline before production.",
   },
   {
     q: "Do you deliver and install, or is this self-install?",
