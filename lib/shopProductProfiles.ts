@@ -76,7 +76,7 @@ const profiles: Record<ShopProductLine, ProductProfile> = {
       {
         icon: "truck",
         title: "Made to order",
-        copy: "Typical production lead time is 3-4 weeks.",
+        copy: "Standard lead time is 4 to 6 weeks.",
       },
       {
         icon: "wrench",

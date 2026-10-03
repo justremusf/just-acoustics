@@ -53,3 +53,6 @@ export function getPackageSummary(option?: ShopPackageOption | null) {
   const countLabel = `${option.panelCount || 0} panel${option.panelCount === 1 ? "" : "s"}`;
   return option.bestFor ? `${countLabel} · ${option.bestFor}` : countLabel;
 }
+
+// One lead time for every made-to-order product. Overrides older per-product values stored in Sanity.
+export const STANDARD_LEAD_TIME = 'Made to order. Standard lead time is 4 to 6 weeks from order confirmation.'

@@ -92,7 +92,7 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <main className="space-page px-4 pb-16 pt-6 sm:px-5 sm:pb-20 lg:pt-8">
+      <div className="space-page px-4 pb-16 pt-6 sm:px-5 sm:pb-20 lg:pt-8">
         <section className="site-container relative min-h-[480px] overflow-hidden rounded-[32px] bg-[#151515] sm:min-h-[560px]">
           {space.mainImage ? (
             <Image
@@ -295,7 +295,7 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
             </Link>
           </div>
         </section>
-      </main>
+      </div>
     </>
   )
 }

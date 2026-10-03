@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { getAllPosts } from '@/sanity/lib/queries'
-import { urlFor } from '@/sanity/lib/image'
+import { toExplorerPost } from '@/sanity/lib/views'
 import type { Post } from '@/lib/types'
 import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
 import { canonicalPath } from '@/lib/seo'
 import BlogExplorer from '@/components/blog/BlogExplorer'
-import { CONTENT_TYPES, type ExplorerPost } from '@/lib/blogContent'
+import { CONTENT_TYPES } from '@/lib/blogContent'
 
 export const revalidate = 60
 
@@ -22,30 +22,6 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
       'Read acoustic treatment guides, buying advice, room-specific tips, comparisons, videos, and case studies from the Just Acoustics team.',
     alternates: { canonical: canonicalPath('/blog') },
     robots: isFiltered ? { index: false, follow: true } : undefined,
-  }
-}
-
-function toExplorerPost(post: Post): ExplorerPost {
-  return {
-    _id: post._id,
-    title: post.title,
-    slug: post.slug.current,
-    category: post.category,
-    contentType: post.contentType,
-    excerpt: post.excerpt,
-    publishedAt: post.publishedAt,
-    readingTime: post.readingTime,
-    pinned: post.pinned,
-    image: post.mainImage?.asset
-      ? {
-          src: urlFor(post.mainImage).width(1600).fit('max').url(),
-          alt: post.mainImage.alt || post.title,
-          // Respect the editor's hotspot so crops keep the subject in frame.
-          position: post.mainImage.hotspot
-            ? `${Math.round(post.mainImage.hotspot.x * 100)}% ${Math.round(post.mainImage.hotspot.y * 100)}%`
-            : undefined,
-        }
-      : undefined,
   }
 }
 
