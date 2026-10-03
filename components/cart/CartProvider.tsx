@@ -1,20 +1,9 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type FormEvent,
-  type ReactNode,
-} from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowLeft,
-  Check,
-  Copy,
-  Download,
   LockKeyhole,
   Minus,
   Plus,
@@ -22,14 +11,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import {
-  JUST_ACOUSTICS_WHATSAPP_URL,
-  PAYNOW_HELP_BODY,
-  PAYNOW_HELP_TITLE,
-  PAYNOW_INSTRUCTIONS,
-  PAYNOW_REASSURANCE,
-} from "@/lib/paymentCopy";
-import { formatSgd } from "@/lib/shopPricing";
+import { formatPayable, lineTotal, roundCents } from "@/lib/checkout";
 import {
   CartContext,
   type CartContextValue,
@@ -39,47 +21,12 @@ import {
 } from "@/components/cart/CartContext";
 import CartOptionDetails from "@/components/cart/CartOptionDetails";
 
-type CheckoutFields = {
-  fullName: string;
-  email: string;
-  phone: string;
-  company: string;
-  addressLine1: string;
-  addressLine2: string;
-  postalCode: string;
-  deliveryNotes: string;
-};
-
-type ManualPaymentDetails = {
-  method: string;
-  currency: string;
-  amount: number;
-  instructions: string;
-};
-
 const CART_STORAGE_KEY = "just-acoustics-cart";
 const CART_COOKIE_KEY = "just-acoustics-cart-v1";
 const CART_STORAGE_VERSION = 1;
 const CART_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
-const PAYNOW_VPA = "UEN202336944WA00#XNAP";
-const PAYNOW_QR_SRC = "/assets/paynow/just-acoustics-paynow-qr.png";
-
-const emptyCheckoutFields: CheckoutFields = {
-  fullName: "",
-  email: "",
-  phone: "",
-  company: "",
-  addressLine1: "",
-  addressLine2: "",
-  postalCode: "",
-  deliveryNotes: "",
-};
-
-function createPaymentReference() {
-  const datePart = new Date().toISOString().slice(2, 10).replaceAll("-", "");
-  const randomPart = Math.random().toString(36).slice(2, 7).toUpperCase();
-  return `JA-${datePart}-${randomPart}`;
-}
+// Browsers drop cookies over ~4KB; only mirror small carts into the cookie.
+const CART_COOKIE_MAX_BYTES = 3800;
 
 function getCartItemId(item: CartItemInput) {
   const optionKey = item.options
@@ -183,7 +130,11 @@ function persistCartItems(items: CartItem[]) {
     // Keep the in-memory cart usable when storage is unavailable or full.
   }
   try {
-    document.cookie = `${CART_COOKIE_KEY}=${encodeURIComponent(payload)}; Path=/; Max-Age=${CART_COOKIE_MAX_AGE}; SameSite=Lax`;
+    const encoded = encodeURIComponent(payload);
+    document.cookie =
+      encoded.length <= CART_COOKIE_MAX_BYTES
+        ? `${CART_COOKIE_KEY}=${encoded}; Path=/; Max-Age=${CART_COOKIE_MAX_AGE}; SameSite=Lax`
+        : `${CART_COOKIE_KEY}=; Path=/; Max-Age=0; SameSite=Lax`;
   } catch {
     // Cookie fallback is best-effort; localStorage remains the primary store.
   }
@@ -203,12 +154,17 @@ function CartQuantityControl({
       <button
         type="button"
         onClick={onDecrease}
-        className="inline-flex h-full w-12 items-center justify-center text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
+        disabled={value <= 1}
+        className="inline-flex h-full w-12 items-center justify-center text-[var(--color-dark-100)] transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-transparent"
         aria-label="Decrease quantity"
       >
         <Minus className="h-4 w-4" />
       </button>
-      <div className="flex h-full min-w-12 items-center justify-center border-x border-black/8 px-3 text-base font-semibold text-[var(--color-dark-100)]">
+      <div
+        className="flex h-full min-w-12 items-center justify-center border-x border-black/8 px-3 text-base font-semibold text-[var(--color-dark-100)]"
+        aria-live="polite"
+        aria-label={`Quantity ${value}`}
+      >
         {value}
       </div>
       <button
@@ -228,18 +184,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [drawerMounted, setDrawerMounted] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [fields, setFields] = useState<CheckoutFields>(emptyCheckoutFields);
-  const [formError, setFormError] = useState<string | null>(null);
-  const [formMessage, setFormMessage] = useState<string | null>(null);
-  const [paymentDetails, setPaymentDetails] =
-    useState<ManualPaymentDetails | null>(null);
-  const [paymentReference, setPaymentReference] = useState(() =>
-    createPaymentReference(),
-  );
-  const [copiedValue, setCopiedValue] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-
   useEffect(() => {
     try {
       const storedValue =
@@ -286,7 +230,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [isOpen]);
 
   const subtotal = useMemo(
-    () => items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0),
+    () =>
+      roundCents(
+        items.reduce(
+          (sum, item) => sum + lineTotal(item.unitPrice, item.quantity),
+          0,
+        ),
+      ),
     [items],
   );
   const itemCount = useMemo(
@@ -310,7 +260,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
             {
               ...input,
               quantity,
-              unitPrice: Math.max(0, Math.round(input.unitPrice)),
+              // Keep full precision: rounding here made line totals drift
+              // (e.g. a $1,000 bundle of 3 became 3 x $333 = $999).
+              unitPrice: Math.max(0, input.unitPrice),
               imageSrc: input.imageSrc || null,
               id,
               addedAt: new Date().toISOString(),
@@ -318,127 +270,34 @@ export function CartProvider({ children }: { children: ReactNode }) {
           ];
       return nextItems;
     });
-    setCheckoutOpen(false);
-    setFormError(null);
-    setFormMessage(null);
-    setPaymentDetails(null);
-    setPaymentReference(createPaymentReference());
     setIsOpen(true);
   }, []);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {
-    setPaymentDetails(null);
-    setPaymentReference(createPaymentReference());
-    setFormMessage(null);
-    setItems((current) => {
-      const nextItems = current
-        .map((item) =>
-          item.id === id
-            ? { ...item, quantity: Math.max(1, Math.floor(quantity)) }
-            : item,
-        )
-        .filter((item) => item.quantity > 0);
-      return nextItems;
-    });
+    setItems((current) =>
+      current.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, Math.floor(quantity)) }
+          : item,
+      ),
+    );
   }, []);
 
   const removeItem = useCallback((id: string) => {
-    setPaymentDetails(null);
-    setPaymentReference(createPaymentReference());
-    setFormMessage(null);
-    setItems((current) => {
-      const nextItems = current.filter((item) => item.id !== id);
-      return nextItems;
-    });
+    setItems((current) => current.filter((item) => item.id !== id));
   }, []);
 
-  const clearCart = useCallback(() => {
-    setItems([]);
-    setCheckoutOpen(false);
-    setFields(emptyCheckoutFields);
-    setFormError(null);
-    setFormMessage(null);
-    setPaymentDetails(null);
-    setPaymentReference(createPaymentReference());
-  }, []);
+  const clearCart = useCallback(() => setItems([]), []);
 
   const closeCart = useCallback(() => setIsOpen(false), []);
   const openCart = useCallback(() => setIsOpen(true), []);
-
-  const checkoutPayload = useMemo(
-    () => ({
-      items: items.map((item) => ({
-        id: item.id,
-        slug: item.slug,
-        title: item.title,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-        lineTotal: item.quantity * item.unitPrice,
-        options: item.options,
-      })),
-      subtotal,
-      customer: fields,
-      paymentReference,
-      timestamp: new Date().toISOString(),
-    }),
-    [fields, items, paymentReference, subtotal],
-  );
-
-  const copyToClipboard = async (value: string, key: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopiedValue(key);
-      window.setTimeout(
-        () => setCopiedValue((current) => (current === key ? null : current)),
-        1600,
-      );
-    } catch {
-      setCopiedValue(null);
-    }
-  };
-
-  const submitCheckout = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setFormError(null);
-    setFormMessage(null);
-    setPaymentDetails(null);
-    setSubmitting(true);
-
-    try {
-      const response = await fetch("/api/cart-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(checkoutPayload),
-      });
-      const body = await response.json().catch(() => null);
-      if (!response.ok) {
-        setFormError(body?.error || "Checkout could not be prepared.");
-      } else {
-        setFormMessage(
-          body?.message ||
-            "Order details received. Please complete the PayNow payment below. Once payment is received, you will receive a confirmation email and our team will reach out to schedule delivery and/or installation.",
-        );
-        setPaymentDetails(
-          body?.payment || {
-            method: "PayNow QR",
-            currency: "SGD",
-            amount: subtotal,
-            instructions: PAYNOW_INSTRUCTIONS,
-          },
-        );
-      }
-    } catch {
-      setFormError("Checkout could not be prepared. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   const value = useMemo<CartContextValue>(
     () => ({
       items,
       itemCount,
       subtotal,
+      hydrated,
       isOpen,
       addItem,
       openCart,
@@ -451,6 +310,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       addItem,
       closeCart,
       clearCart,
+      hydrated,
       isOpen,
       itemCount,
       items,
@@ -472,6 +332,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             : "pointer-events-none opacity-0"
         }`}
         aria-hidden={!isOpen}
+        inert={!isOpen}
       >
         <div
           role="presentation"
@@ -512,7 +373,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             </button>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-7">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-7">
             {items.length === 0 ? (
               <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
                 <ShoppingBag
@@ -580,7 +441,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                           />
                         </div>
                         <p className="m-0 shrink-0 text-sm font-semibold text-[var(--color-dark-100)]">
-                          {formatSgd(item.unitPrice * item.quantity)}
+                          {formatPayable(lineTotal(item.unitPrice, item.quantity))}
                         </p>
                       </div>
                       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -606,233 +467,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
                   </div>
                 ))}
 
-                {checkoutOpen && (
-                  <form
-                    onSubmit={submitCheckout}
-                    className="mt-2 grid gap-4 rounded-[24px] border border-black/8 bg-white/70 p-4"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <h3 className="m-0 text-xl font-semibold text-[var(--color-dark-100)]">
-                        Delivery details
-                      </h3>
-                      <button
-                        type="button"
-                        onClick={() => setCheckoutOpen(false)}
-                        className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-gray-100)] hover:text-[var(--color-dark-100)]"
-                      >
-                        <ArrowLeft className="h-4 w-4" />
-                        Cart
-                      </button>
-                    </div>
-
-                    {[
-                      ["fullName", "Full name", "text", true],
-                      ["email", "Email", "email", true],
-                      ["phone", "Phone number", "tel", true],
-                      ["company", "Company name (optional)", "text", false],
-                      ["addressLine1", "Delivery address", "text", true],
-                      ["addressLine2", "Unit / address line 2", "text", false],
-                      ["postalCode", "Postal code", "text", true],
-                    ].map(([name, label, type, required]) => {
-                      const inputId = `cart-checkout-${name}`;
-                      return (
-                        <div key={name as string} className="grid gap-2">
-                          <label
-                            htmlFor={inputId}
-                            className="text-sm font-semibold text-[var(--color-dark-100)]"
-                          >
-                            {label}
-                          </label>
-                          <input
-                            id={inputId}
-                            required={Boolean(required)}
-                            type={type as string}
-                            value={fields[name as keyof CheckoutFields]}
-                            onChange={(event) =>
-                              setFields((current) => ({
-                                ...current,
-                                [name as string]: event.target.value,
-                              }))
-                            }
-                            className="h-12 rounded-[14px] border border-black/10 bg-white px-4 text-sm font-medium outline-none transition-colors focus:border-[var(--color-brand-orange)]"
-                          />
-                        </div>
-                      );
-                    })}
-
-                    <div className="grid gap-2">
-                      <label
-                        htmlFor="cart-checkout-delivery-notes"
-                        className="text-sm font-semibold text-[var(--color-dark-100)]"
-                      >
-                        Delivery notes
-                      </label>
-                      <textarea
-                        id="cart-checkout-delivery-notes"
-                        value={fields.deliveryNotes}
-                        onChange={(event) =>
-                          setFields((current) => ({
-                            ...current,
-                            deliveryNotes: event.target.value,
-                          }))
-                        }
-                        className="min-h-[96px] rounded-[14px] border border-black/10 bg-white px-4 py-3 text-sm font-medium outline-none transition-colors focus:border-[var(--color-brand-orange)]"
-                      />
-                    </div>
-
-                    {formError && (
-                      <p className="m-0 rounded-[14px] bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
-                        {formError}
-                      </p>
-                    )}
-                    {formMessage && (
-                      <p className="m-0 rounded-[14px] bg-[rgba(19,126,137,0.12)] px-4 py-3 text-sm font-semibold text-[#137e89]">
-                        {formMessage}
-                      </p>
-                    )}
-                    {paymentDetails && (
-                      <div className="grid gap-4 rounded-[22px] border border-[rgba(19,126,137,0.18)] bg-[linear-gradient(180deg,rgba(19,126,137,0.10),rgba(255,255,255,0.72))] p-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <p className="m-0 text-[11px] font-bold uppercase tracking-[0.16em] text-[#137e89]">
-                              {paymentDetails.method}
-                            </p>
-                            <h4 className="m-0 mt-2 text-xl font-semibold text-[var(--color-dark-100)]">
-                              Pay {formatSgd(paymentDetails.amount)}
-                            </h4>
-                          </div>
-                          <span className="rounded-full bg-white/80 px-3 py-1 text-xs font-bold text-[#137e89]">
-                            Manual payment
-                          </span>
-                        </div>
-                        <div className="grid gap-4 sm:grid-cols-[170px_minmax(0,1fr)] sm:items-center">
-                          <div className="grid gap-3">
-                            <div className="flex aspect-square items-center justify-center rounded-[20px] border border-black/8 bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
-                              <img
-                                src={PAYNOW_QR_SRC}
-                                alt="PayNow QR placeholder"
-                                className="h-full w-full rounded-[14px] object-contain"
-                              />
-                            </div>
-                            <a
-                              href={PAYNOW_QR_SRC}
-                              download="just-acoustics-paynow-qr.png"
-                              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-black/8 bg-white px-4 text-sm font-semibold text-[var(--color-dark-100)] no-underline shadow-[0_10px_24px_rgba(15,23,42,0.05)]"
-                            >
-                              <Download className="h-4 w-4" />
-                              Save QR
-                            </a>
-                          </div>
-                          <div className="text-sm leading-6 text-[var(--color-gray-100)]">
-                            <p className="m-0 font-semibold text-[var(--color-dark-100)]">
-                              Use PayNow in any Singapore banking app.
-                            </p>
-                            <p className="m-0 mt-2">
-                              {paymentDetails.instructions}
-                            </p>
-                            <p className="m-0 mt-3 text-[var(--color-dark-100)]">
-                              {PAYNOW_REASSURANCE}
-                            </p>
-                            <div className="mt-4 grid gap-3">
-                              <div className="rounded-[16px] border border-black/8 bg-white/72 p-3">
-                                <p className="m-0 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-gray-200)]">
-                                  VPA
-                                </p>
-                                <div className="mt-2 flex items-center justify-between gap-2">
-                                  <code className="min-w-0 break-all text-sm font-bold text-[var(--color-dark-100)]">
-                                    {PAYNOW_VPA}
-                                  </code>
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      copyToClipboard(PAYNOW_VPA, "vpa")
-                                    }
-                                    className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[rgba(19,126,137,0.12)] px-3 text-xs font-bold text-[#137e89]"
-                                  >
-                                    {copiedValue === "vpa" ? (
-                                      <Check className="h-3.5 w-3.5" />
-                                    ) : (
-                                      <Copy className="h-3.5 w-3.5" />
-                                    )}
-                                    {copiedValue === "vpa" ? "Copied" : "Copy"}
-                                  </button>
-                                </div>
-                              </div>
-                              <div className="rounded-[16px] border border-black/8 bg-white/72 p-3">
-                                <p className="m-0 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-gray-200)]">
-                                  Payment reference
-                                </p>
-                                <div className="mt-2 flex items-center justify-between gap-2">
-                                  <code className="min-w-0 break-all text-sm font-bold text-[var(--color-dark-100)]">
-                                    {paymentReference}
-                                  </code>
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      copyToClipboard(
-                                        paymentReference,
-                                        "reference",
-                                      )
-                                    }
-                                    className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[rgba(255,165,0,0.16)] px-3 text-xs font-bold text-[rgba(180,106,0,0.95)]"
-                                  >
-                                    {copiedValue === "reference" ? (
-                                      <Check className="h-3.5 w-3.5" />
-                                    ) : (
-                                      <Copy className="h-3.5 w-3.5" />
-                                    )}
-                                    {copiedValue === "reference"
-                                      ? "Copied"
-                                      : "Copy"}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="mt-4 rounded-[18px] border border-[rgba(19,126,137,0.18)] bg-[rgba(19,126,137,0.08)] p-4">
-                              <p className="m-0 text-sm font-semibold text-[#137e89]">
-                                {PAYNOW_HELP_TITLE}
-                              </p>
-                              <p className="m-0 mt-2 text-sm leading-6 text-[var(--color-gray-100)]">
-                                {PAYNOW_HELP_BODY}
-                              </p>
-                              <a
-                                href={JUST_ACOUSTICS_WHATSAPP_URL}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="mt-3 inline-flex min-h-11 items-center justify-center rounded-full border border-[rgba(19,126,137,0.18)] bg-white/84 px-4 text-sm font-semibold text-[#137e89] no-underline shadow-[0_10px_24px_rgba(15,23,42,0.05)]"
-                              >
-                                Contact our team
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="page-cta add-to-cart inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full text-base disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      <LockKeyhole className="h-5 w-5" />
-                      {submitting
-                        ? "Preparing payment..."
-                        : paymentDetails
-                          ? "Update PayNow details"
-                          : "Show PayNow QR"}
-                    </button>
-                  </form>
-                )}
               </div>
             )}
           </div>
 
-          {items.length > 0 && !checkoutOpen && (
+          {items.length > 0 && (
             <div className="border-t border-black/8 bg-white/66 px-5 py-5 sm:px-7">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <p className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">
-                    Shipping calculated at checkout
+                  <p className="m-0 max-w-[220px] text-sm leading-6 text-[var(--color-gray-100)]">
+                    Add delivery details next, then pay by PayNow.
                   </p>
                 </div>
                 <div className="text-right">
@@ -840,7 +484,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                     Subtotal
                   </p>
                   <p className="m-0 mt-1 text-[30px] font-semibold leading-none text-[var(--color-dark-100)]">
-                    {formatSgd(subtotal)}
+                    {formatPayable(subtotal)}
                   </p>
                 </div>
               </div>

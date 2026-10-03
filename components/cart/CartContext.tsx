@@ -28,6 +28,8 @@ export type CartContextValue = {
   items: CartItem[];
   itemCount: number;
   subtotal: number;
+  /** False until the cart has been read from storage on the client. */
+  hydrated: boolean;
   isOpen: boolean;
   addItem: (item: CartItemInput) => void;
   openCart: () => void;
