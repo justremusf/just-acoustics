@@ -268,3 +268,31 @@ export function buildTallyUrlWithAttribution(baseTallyUrl: string) {
 
   return tallyUrl.toString()
 }
+
+/** Estimator context the contact page passes on to the form (e.g. /contact?space=office&size=medium). */
+export const QUOTE_CONTEXT_KEYS = ['space', 'size'] as const
+
+const QUOTE_CONTEXT_VALUE = /^[a-z0-9-]{1,40}$/
+
+/** Copies safe estimator params from the current page URL onto a Tally URL. Not stored, so they never go stale. */
+export function withQuoteContext(tallyUrlString: string) {
+  if (!isBrowser()) return tallyUrlString
+
+  try {
+    const pageParams = new URLSearchParams(window.location.search)
+    const tallyUrl = new URL(tallyUrlString)
+    let changed = false
+
+    QUOTE_CONTEXT_KEYS.forEach((key) => {
+      const value = pageParams.get(key)?.toLowerCase()
+      if (value && QUOTE_CONTEXT_VALUE.test(value)) {
+        tallyUrl.searchParams.set(key, value)
+        changed = true
+      }
+    })
+
+    return changed ? tallyUrl.toString() : tallyUrlString
+  } catch {
+    return tallyUrlString
+  }
+}

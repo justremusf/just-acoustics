@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react'
 import { useEffect, useId, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { createPendingLead } from '@/components/analytics/leadTrackingState'
-import { buildTallyUrlWithAttribution, captureAttribution } from '@/lib/tallyAttribution'
+import { buildTallyUrlWithAttribution, captureAttribution, withQuoteContext } from '@/lib/tallyAttribution'
 import { TALLY_URL_STORAGE_KEY, readStoredTallyUrl, tallyFormPrefix } from '@/lib/tally'
 
 type TallyWindow = Window & {
@@ -87,7 +87,8 @@ export default function TallyAttributionIframe({
       // Storage unavailable; nothing to reuse next time.
     }
     setLoaded(false)
-    setSrc(url)
+    // Estimator params (?space=&size=) ride along on this load only; the stored URL stays generic.
+    setSrc(withQuoteContext(url))
   }, [baseUrl, pathname])
 
   useEffect(() => {
@@ -160,7 +161,7 @@ export default function TallyAttributionIframe({
       <script
         // Runs during the initial HTML parse, before hydration, so a returning visitor's form starts loading immediately.
         dangerouslySetInnerHTML={{
-          __html: `(function(){try{var u=sessionStorage.getItem(${JSON.stringify(TALLY_URL_STORAGE_KEY)});var f=document.getElementById(${JSON.stringify(iframeId)});if(u&&f&&!f.getAttribute('src')&&u.indexOf(${JSON.stringify(tallyFormPrefix(baseUrl))})===0){f.src=u;f.style.opacity='1';var k=f.previousElementSibling;if(k&&k.getAttribute('aria-hidden')==='true')k.style.display='none'}}catch(e){}})()`,
+          __html: `(function(){try{var u=sessionStorage.getItem(${JSON.stringify(TALLY_URL_STORAGE_KEY)});var f=document.getElementById(${JSON.stringify(iframeId)});if(u&&f&&!f.getAttribute('src')&&!/[?&](space|size)=/.test(location.search)&&u.indexOf(${JSON.stringify(tallyFormPrefix(baseUrl))})===0){f.src=u;f.style.opacity='1';var k=f.previousElementSibling;if(k&&k.getAttribute('aria-hidden')==='true')k.style.display='none'}}catch(e){}})()`,
         }}
       />
     </div>
