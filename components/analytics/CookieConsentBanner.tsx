@@ -55,7 +55,7 @@ export default function CookieConsentBanner() {
   return (
     <aside
       aria-label="Cookie notice"
-      className="fixed bottom-4 left-4 z-[100] flex items-center gap-2.5 rounded-full border border-black/10 bg-white/95 py-1.5 pl-3.5 pr-1.5 text-[12px] text-black/70 shadow-[0_10px_28px_rgba(0,0,0,0.12)] backdrop-blur"
+      className="cookie-pill fixed bottom-4 left-4 z-[100] flex items-center gap-2.5 rounded-full border border-black/10 bg-white/95 py-1.5 pl-3.5 pr-1.5 text-[12px] text-black/70 shadow-[0_10px_28px_rgba(0,0,0,0.12)] backdrop-blur"
     >
       <span>We use cookies.</span>
       {mode === 'optin' && (
