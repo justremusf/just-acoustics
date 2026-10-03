@@ -42,6 +42,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  async redirects() {
+    return [
+      // Retired test landing pages.
+      { source: '/studio-lander', destination: '/spaces/studios', permanent: true },
+      { source: '/studio-landing-page', destination: '/spaces/studios', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {
