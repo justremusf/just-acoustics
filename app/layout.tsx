@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/next'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
 import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
 import HapticProvider from '@/components/providers/HapticProvider'
-import { SITE_LOGO_URL, SITE_URL } from '@/lib/seo'
+import { SITE_LOGO_URL, SITE_PREVIEW_IMAGE, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -28,9 +28,6 @@ const leagueSpartan = League_Spartan({
   weight: ['800'],
   display: 'swap',
 })
-
-const SITE_PREVIEW_IMAGE =
-  '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp'
 
 export const viewport: Viewport = {
   width: 'device-width',

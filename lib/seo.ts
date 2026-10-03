@@ -5,6 +5,9 @@ export const SITE_LOGO_PATH =
 
 export const SITE_LOGO_URL = `${SITE_URL}${SITE_LOGO_PATH}`
 
+/** Default social preview image (a real install photo). */
+export const SITE_PREVIEW_IMAGE = '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp'
+
 export function canonicalPath(path = '/') {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return `${SITE_URL}${normalizedPath === '/' ? '' : normalizedPath}`

@@ -1,51 +1,12 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
-import Link from 'next/link'
-import { PortableText } from '@portabletext/react'
-import { getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
+import { getAllPosts, getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { canonicalPath, SITE_LOGO_URL, SITE_URL, stripBrand } from '@/lib/seo'
+import { toArticleView, toExplorerPost } from '@/sanity/lib/views'
+import { canonicalPath, SITE_LOGO_URL, SITE_PREVIEW_IMAGE, SITE_URL, stripBrand } from '@/lib/seo'
+import { buildArticleNav } from '@/lib/contentView'
 import type { Post } from '@/lib/types'
-import FAQ from '@/components/sections/FAQ'
-import type { FaqItem } from '@/components/sections/FAQ'
-
-const BLOG_FAQS: FaqItem[] = [
-  {
-    q: 'How do I know if my room needs acoustic treatment?',
-    a: 'If speech is unclear, music sounds muddy, or you notice a noticeable echo after sounds stop, the room likely has too much reverb. A free consultation can confirm this.',
-  },
-  {
-    q: 'What is the difference between acoustic treatment and soundproofing?',
-    a: 'Acoustic treatment controls sound quality inside a room by absorbing reflections. Soundproofing reduces how much sound travels between rooms or from outside.',
-  },
-  {
-    q: 'Do acoustic panels work for home offices?',
-    a: 'Yes. Even a small number of panels placed on the walls behind and beside you can noticeably improve call clarity and reduce echo.',
-  },
-  {
-    q: 'How many panels do I need?',
-    a: 'It depends on room size, ceiling height, and hard surface coverage. We typically recommend treating 20–30% of total wall area as a starting point.',
-  },
-]
-
-const portableTextComponents = {
-  types: {
-    imagePlaceholder: () => null,
-    image: ({ value }: { value?: Post['mainImage'] }) =>
-      value?.asset ? (
-        <div className="my-8 overflow-hidden rounded-[24px]">
-          <Image
-            src={urlFor(value).width(1000).height(600).url()}
-            alt={value.alt || ''}
-            width={1000}
-            height={600}
-            className="h-full w-full object-cover"
-          />
-        </div>
-      ) : null,
-  },
-}
+import ArticleDetail from '@/components/blog/ArticleDetail'
 
 export const revalidate = 60
 
@@ -58,20 +19,36 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post: Post | null = await getPostBySlug(slug).catch(() => null)
   if (!post) return {}
+  const title = stripBrand(post.seo?.metaTitle) || post.title
+  const description = post.seo?.metaDescription || post.excerpt
   return {
-    title: stripBrand(post.seo?.metaTitle) || post.title,
-    description: post.seo?.metaDescription || post.excerpt,
+    title,
+    description,
     alternates: { canonical: canonicalPath(`/blog/${slug}`) },
-    openGraph: post.mainImage
-      ? { images: [{ url: urlFor(post.mainImage).width(1200).height(630).url() }] }
-      : undefined,
+    openGraph: {
+      type: 'article',
+      title,
+      description,
+      url: canonicalPath(`/blog/${slug}`),
+      ...(post.publishedAt && { publishedTime: post.publishedAt }),
+      siteName: 'Just Acoustics',
+      locale: 'en_SG',
+      images: [{ url: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : SITE_PREVIEW_IMAGE, width: 1200, height: 630 }],
+    },
   }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post: Post | null = await getPostBySlug(slug).catch(() => null)
+  const [post, allPosts]: [Post | null, Post[]] = await Promise.all([
+    getPostBySlug(slug).catch(() => null),
+    getAllPosts().catch(() => [] as Post[]),
+  ])
   if (!post) notFound()
+
+  const article = toArticleView(post)
+  const listed = (Array.isArray(allPosts) ? allPosts : []).filter((p) => p?.slug?.current).map(toExplorerPost)
+  const nav = buildArticleNav(listed, slug, post.category)
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -80,6 +57,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     description: post.excerpt,
     ...(post.publishedAt && { datePublished: post.publishedAt }),
     ...(post.mainImage && { image: urlFor(post.mainImage).width(1200).height(630).url() }),
+    articleSection: article.topicLabel,
+    inLanguage: 'en-SG',
+    timeRequired: `PT${article.readingTime}M`,
     author: { '@type': 'Organization', name: 'Just Acoustics' },
     publisher: {
       '@type': 'Organization',
@@ -103,57 +83,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-    <div className="page-wrap page-stack max-w-[940px]">
-      <Link href="/blog" className="page-link">← Back to Resource Center</Link>
-
-      <article className="home-shell page-hero-shell flex flex-col gap-6">
-        <div className="flex flex-col gap-4">
-          {post.publishedAt && (
-            <span className="soft-pill">
-              {new Date(post.publishedAt).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </span>
-          )}
-          <h1 className="page-title">{post.title}</h1>
-          {post.excerpt && <p className="page-subtitle">{post.excerpt}</p>}
-        </div>
-
-        {post.mainImage && (
-          <div className="glass-card overflow-hidden rounded-[28px]">
-            <Image
-              src={urlFor(post.mainImage).width(1200).height(720).url()}
-              alt={post.mainImage.alt || post.title}
-              width={1200}
-              height={720}
-              className="h-full w-full object-cover"
-              priority
-            />
-          </div>
-        )}
-
-        {post.body && (
-          <div className="rich-content max-w-none">
-            <PortableText value={post.body as Parameters<typeof PortableText>[0]['value']} components={portableTextComponents} />
-          </div>
-        )}
-      </article>
-
-      <FAQ
-        items={
-          post.faqs?.length
-            ? post.faqs.map((f) => ({ q: f.question, a: f.answer }))
-            : BLOG_FAQS
-        }
-        title="Common Questions"
-        subtitle="Quick answers about acoustic treatment."
-      />
-
-      <section className="glass-card p-6 text-center">
-        <p className="page-card-copy mx-auto max-w-[48ch]">
-          Want help applying this to your room? Send us the space details and we will recommend the right next step.
-        </p>
-        <Link href="/contact" className="page-cta mt-5">Free Consultation</Link>
-      </section>
-    </div>
+      <ArticleDetail article={article} nav={nav} />
     </>
   )
 }
