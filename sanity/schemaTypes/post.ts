@@ -62,6 +62,24 @@ export default defineType({
       description: 'Short summary shown on blog listing page',
     }),
     defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'object',
+      description: 'Optional. When a name is set, the article shows a byline and an author box.',
+      fields: [
+        defineField({ name: 'name', type: 'string', title: 'Name' }),
+        defineField({ name: 'role', type: 'string', title: 'Role', description: 'e.g. "Founder, Just Acoustics"' }),
+        defineField({ name: 'bio', type: 'text', title: 'Bio', rows: 3 }),
+        defineField({
+          name: 'image',
+          type: 'image',
+          title: 'Image',
+          options: { hotspot: true },
+          fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+        }),
+      ],
+    }),
+    defineField({
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
