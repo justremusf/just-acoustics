@@ -7,9 +7,10 @@ import {
   getAllShopItems,
 } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
-import { canonicalPath, SITE_URL, stripBrand } from "@/lib/seo";
+import { pageMetadata, serializeJsonLd, canonicalPath, SITE_URL, stripBrand } from "@/lib/seo";
 import type { ShopItem } from "@/lib/types";
 import { getShopPriceLabel } from "@/lib/shopDisplay";
+import { getProductProfile } from "@/lib/shopProductProfiles";
 import ShopItemDetail from "./ShopItemDetail";
 import RelatedProductsCarousel from "@/components/shop/RelatedProductsCarousel";
 
@@ -31,12 +32,13 @@ export async function generateMetadata({
   const description =
     slug === "standard-flexi-acoustic-panel"
       ? "Best-selling broadband acoustic panels built to reduce echo and improve clarity in any type of space."
-      : item.shortDescription || item.seo?.metaDescription;
-  return {
+      : item.seo?.metaDescription || item.shortDescription || getProductProfile(item).shortDescription;
+  return pageMetadata({
     title: stripBrand(item.seo?.metaTitle) || item.title,
     description,
-    alternates: { canonical: canonicalPath(`/shop/${slug}`) },
-  };
+    path: `/shop/${slug}`,
+    image: item.mainImage ? urlFor(item.mainImage).width(1200).height(630).url() : undefined,
+  });
 }
 
 export default async function ShopItemPage({
@@ -100,7 +102,7 @@ export default async function ShopItemPage({
     description:
       slug === "standard-flexi-acoustic-panel"
         ? "Best-selling broadband acoustic panels built to reduce echo and improve clarity in any type of space."
-        : item.shortDescription,
+        : item.shortDescription || item.seo?.metaDescription || getProductProfile(item).shortDescription,
     ...(item.mainImage && {
       image: urlFor(item.mainImage).width(1200).height(900).url(),
     }),
@@ -142,11 +144,11 @@ export default async function ShopItemPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
       />
       <ShopItemDetail item={item} />
       {relatedItems.length > 0 && (

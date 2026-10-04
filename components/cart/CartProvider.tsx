@@ -37,6 +37,7 @@ import {
   type CartItemInput,
   type CartItemOption,
 } from "@/components/cart/CartContext";
+import InstallationEnquiry from "./InstallationEnquiry";
 import CartOptionDetails from "@/components/cart/CartOptionDetails";
 
 type CheckoutFields = {
@@ -117,6 +118,7 @@ function parseStoredItems(value: string | null): CartItem[] {
         )
           return null;
         return {
+          selection: candidate.selection as CartItem["selection"],
           id: candidate.id,
           slug: candidate.slug,
           title: candidate.title,
@@ -142,6 +144,7 @@ function parseStoredItems(value: string | null): CartItem[] {
                     typeof option.swatchSrc === "string"
                       ? option.swatchSrc
                       : undefined,
+                  swatchRegion: option.swatchRegion,
                   hex: typeof option.hex === "string" ? option.hex : undefined,
                 }))
             : [],
@@ -310,7 +313,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             {
               ...input,
               quantity,
-              unitPrice: Math.max(0, Math.round(input.unitPrice)),
+              unitPrice: Math.max(0, Math.round(input.unitPrice * 100) / 100),
               imageSrc: input.imageSrc || null,
               id,
               addedAt: new Date().toISOString(),
@@ -832,7 +835,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <p className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">
-                    Shipping calculated at checkout
+                    S$50 flat-rate islandwide delivery, added after your address
                   </p>
                 </div>
                 <div className="text-right">
@@ -852,6 +855,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 <LockKeyhole className="h-5 w-5" />
                 Check out
               </Link>
+              <InstallationEnquiry />
             </div>
           )}
         </aside>

@@ -1,0 +1,10 @@
+'use client'
+import { useState } from 'react'
+import { useCart } from './CartContext'
+import { JUST_ACOUSTICS_WHATSAPP_URL } from '@/lib/paymentCopy'
+export default function InstallationEnquiry({reference,summary}:{reference?:string;summary?:string}) {
+  const {items}=useCart(), [open,setOpen]=useState(false),[name,setName]=useState(''),[message,setMessage]=useState('');
+  const panels=summary || items.map(i=>`${i.quantity} × ${i.title}\n${i.options.filter(o=>o.value).map(o=>`${o.label}: ${o.value}`).join(' · ')}`).join('\n\n');
+  const body=`Hi Just Acoustics, I'd like help installing these panels.${reference?`\nOrder: ${reference}`:''}\n\n${panels}\n\n${name?`Name: ${name}\n`:''}${message?`About my space: ${message}`:''}`;
+  return <div className="mt-6 rounded-2xl bg-[#edf6f5] p-4"><button type="button" onClick={()=>setOpen(!open)} aria-expanded={open} className="w-full text-left font-semibold text-[#137e89]">Want it installed for me? <span aria-hidden="true">{open?'−':'+'}</span></button><p className="mt-2 text-sm leading-6">Send your panel selections to our team. We’ll help you plan installation for your space.</p>{open&&<div className="mt-4 grid gap-3"><p className="text-xs whitespace-pre-line rounded-xl bg-white p-3">{panels}</p><label className="text-sm grid gap-1">Your name (optional)<input value={name} onChange={e=>setName(e.target.value)} maxLength={100} className="rounded-xl border p-3 bg-white"/></label><label className="text-sm grid gap-1">Tell us about your space<textarea value={message} onChange={e=>setMessage(e.target.value)} maxLength={1000} placeholder="Home, office or studio? Wall or ceiling?" className="rounded-xl border p-3 bg-white"/></label><a href={`${JUST_ACOUSTICS_WHATSAPP_URL}?text=${encodeURIComponent(body)}`} target="_blank" rel="noreferrer" className="page-cta min-h-12 justify-center">Send enquiry on WhatsApp</a><p className="text-xs leading-5">Opens a prepared message for you to review and send. No payment or installation booking is made.</p></div>}</div>;
+}

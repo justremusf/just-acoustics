@@ -5,10 +5,11 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { canonicalPath, SITE_LOGO_URL, SITE_URL, stripBrand } from '@/lib/seo'
+import { pageMetadata, serializeJsonLd, canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
 import type { Post } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
 import type { FaqItem } from '@/components/sections/FAQ'
+import PageEngagementTracker from '@/components/analytics/PageEngagementTracker'
 
 const BLOG_FAQS: FaqItem[] = [
   {
@@ -58,14 +59,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post: Post | null = await getPostBySlug(slug).catch(() => null)
   if (!post) return {}
-  return {
+  return pageMetadata({
     title: stripBrand(post.seo?.metaTitle) || post.title,
     description: post.seo?.metaDescription || post.excerpt,
-    alternates: { canonical: canonicalPath(`/blog/${slug}`) },
-    openGraph: post.mainImage
-      ? { images: [{ url: urlFor(post.mainImage).width(1200).height(630).url() }] }
-      : undefined,
-  }
+    path: `/blog/${slug}`,
+    image: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined,
+    article: { publishedTime: post.publishedAt },
+  })
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -80,13 +80,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     description: post.excerpt,
     ...(post.publishedAt && { datePublished: post.publishedAt }),
     ...(post.mainImage && { image: urlFor(post.mainImage).width(1200).height(630).url() }),
-    author: { '@type': 'Organization', name: 'Just Acoustics' },
+    author: { '@id': `${SITE_URL}/#organization` },
     publisher: {
-      '@type': 'Organization',
-      name: 'Just Acoustics',
-      logo: { '@type': 'ImageObject', url: SITE_LOGO_URL },
+      '@id': `${SITE_URL}/#organization`,
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalPath(`/blog/${slug}`) },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    inLanguage: 'en-SG',
   }
 
   const breadcrumbJsonLd = {
@@ -101,8 +101,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <PageEngagementTracker pageType="blog" contentName={slug} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
     <div className="page-wrap page-stack max-w-[940px]">
       <Link href="/blog" className="page-link">← Back to Resource Center</Link>
 
@@ -151,7 +152,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <p className="page-card-copy mx-auto max-w-[48ch]">
           Want help applying this to your room? Send us the space details and we will recommend the right next step.
         </p>
-        <Link href="/contact" className="page-cta mt-5">Free Consultation</Link>
+        <Link href="/contact" className="page-cta mt-5" data-insight-cta="blog_consultation">Free Consultation</Link>
       </section>
     </div>
     </>

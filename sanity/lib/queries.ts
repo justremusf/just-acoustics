@@ -48,7 +48,7 @@ export async function getPostBySlug(slug: string) {
 
 export async function getAllPostSlugs() {
   try {
-    return await client.fetch(`*[_type == "post" && !(_id in path("drafts.**"))] { "slug": slug.current }`)
+    return await client.fetch(`*[_type == "post" && !(_id in path("drafts.**"))] { "slug": slug.current, _updatedAt }`)
   } catch (error) {
     console.error('Error fetching all post slugs:', error)
     return []
@@ -99,7 +99,7 @@ export async function getSpaceBySlug(slug: string) {
 
 export async function getAllSpaceSlugs() {
   try {
-    return await serverClient.fetch(`*[_type == "space" && !(_id in path("drafts.**"))] { "slug": slug.current }`)
+    return await serverClient.fetch(`*[_type == "space" && !(_id in path("drafts.**"))] { "slug": slug.current, _updatedAt }`)
   } catch (error) {
     console.error('Error fetching all space slugs:', error)
     return []
@@ -141,7 +141,7 @@ export async function getProjectBySlug(slug: string) {
 
 export async function getAllProjectSlugs() {
   try {
-    return await client.fetch(`*[_type == "project" && !(_id in path("drafts.**"))] { "slug": slug.current }`)
+    return await client.fetch(`*[_type == "project" && !(_id in path("drafts.**"))] { "slug": slug.current, _updatedAt }`)
   } catch (error) {
     console.error('Error fetching all project slugs:', error)
     return []
@@ -209,7 +209,7 @@ export async function getShopItemBySlug(slug: string) {
 export async function getAllShopItemSlugs() {
   try {
     return await serverClient.fetch(
-      `*[_type == "shopItem" && !(_id in path("drafts.**"))] { "slug": slug.current }`
+      `*[_type == "shopItem" && !(_id in path("drafts.**"))] { "slug": slug.current, _updatedAt }`
     )
   } catch (error) {
     console.error('Error fetching all shop item slugs:', error)

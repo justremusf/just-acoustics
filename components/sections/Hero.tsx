@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image, { getImageProps } from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
 const HERO_IMAGES = [
@@ -45,27 +45,56 @@ export default function Hero() {
     if (section && observer) observer.observe(section)
 
     let transitionTimer: number | undefined
+    let frame: number | undefined
+    let cancelled = false
+    let pending = false
     const interval = window.setInterval(() => {
-      if (document.hidden || !isVisibleRef.current) return
+      if (pending || document.hidden || !isVisibleRef.current || motionQuery.matches) return
+      pending = true
       const candidate = (activeImageRef.current + 1) % HERO_IMAGES.length
+      // Decode the same responsive resource that Next Image will display.
+      // Preloading the original asset downloads a second file during the fade.
+      const { props } = getImageProps({
+        ...HERO_IMAGES[candidate],
+        fill: true,
+        quality: 72,
+        sizes: '(max-width: 1580px) 100vw, 1580px',
+      })
       const preload = new window.Image()
       preload.decoding = 'async'
-      preload.src = HERO_IMAGES[candidate].src
-      void preload.decode().catch(() => undefined).then(() => {
+      preload.sizes = props.sizes ?? ''
+      preload.srcset = props.srcSet ?? ''
+      preload.src = props.src
+      void preload.decode().then(() => {
+        if (cancelled || document.hidden || !isVisibleRef.current || motionQuery.matches) {
+          pending = false
+          return
+        }
         setNextImageIndex(candidate)
-        window.requestAnimationFrame(() => setIsTransitioning(true))
-        transitionTimer = window.setTimeout(() => {
-          activeImageRef.current = candidate
-          setActiveImageIndex(candidate)
-          setNextImageIndex(null)
-          setIsTransitioning(false)
-        }, 900)
+        // Give the transparent layer a painted frame before starting its fade.
+        frame = window.requestAnimationFrame(() => {
+          frame = window.requestAnimationFrame(() => {
+            setIsTransitioning(true)
+            transitionTimer = window.setTimeout(() => {
+              activeImageRef.current = candidate
+              setActiveImageIndex(candidate)
+              setNextImageIndex(null)
+              setIsTransitioning(false)
+              pending = false
+            }, 900)
+          })
+        })
+      }).catch(() => {
+        // Keep the current image if the next resource cannot be decoded.
+        pending = false
       })
     }, 6000)
 
     return () => {
+      cancelled = true
       observer?.disconnect()
       window.clearInterval(interval)
+      if (frame !== undefined) window.cancelAnimationFrame(frame)
       if (transitionTimer) window.clearTimeout(transitionTimer)
     }
   }, [])
@@ -92,6 +121,7 @@ export default function Hero() {
             src={HERO_IMAGES[nextImageIndex].src}
             alt={HERO_IMAGES[nextImageIndex].alt}
             fill
+            loading="eager"
             quality={72}
             sizes="(max-width: 1580px) 100vw, 1580px"
             className={`object-cover transition-opacity duration-[900ms] ease-out ${isTransitioning ? 'opacity-100' : 'opacity-0'}`}

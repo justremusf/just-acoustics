@@ -1,4 +1,8 @@
 "use client";
+import { FLEXI_COLOUR_CHART_SRC as STANDARD_FLEXI_COLOUR_CHART_SRC, FLEXI_VISIBLE_COLOUR_IDS as STANDARD_FLEXI_VISIBLE_COLOUR_IDS } from "@/lib/flexiColours";
+import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
+import { isFlexiProduct, isSootheProduct, getSizeShapeLabel, getSizeDimensionLabel, getConfigurableItem, SOOTHE_FABRIC_CHARTS } from "@/lib/shopCatalogue";
+import { ORDER_LEAD_TIME, DELIVERY_DISCLOSURE } from "@/lib/paymentCopy";
 
 import {
   useEffect,
@@ -49,6 +53,7 @@ import {
   resolveShopSelection,
   type ShopQuoteSelection,
 } from "@/lib/shopPricing";
+import { trackEvent } from "@/components/analytics/trackEvent";
 
 const ProductPanelCalculator = dynamic(
   () => import("@/components/shop/ProductPanelCalculator"),
@@ -80,15 +85,6 @@ function getImageSrc(
   return image && "asset" in image && image.asset._ref
     ? urlFor(image).width(width).height(height).url()
     : null;
-}
-
-function isFlexiProduct(item: ShopItem) {
-  return resolveProductLine(item) === "flexi-panel";
-}
-
-function isSootheProduct(item: ShopItem) {
-  const line = resolveProductLine(item);
-  return line === "bass-trap" || line === "gobo";
 }
 
 const shopPortableTextComponents = {
@@ -124,26 +120,6 @@ function optionButtonClass(active: boolean) {
 
 function optionSectionClass() {
   return "border-t border-black/8 pt-5";
-}
-
-function getSizeShapeLabel(option: { id?: string; label?: string }) {
-  const id = option.id || "";
-  if (id === "600x600") return "Square";
-  if (id === "1200x600") return "Standard";
-  if (id === "1800x600") return "Tall";
-  return option.label || "Panel";
-}
-
-function getSizeDimensionLabel(option: {
-  widthMm?: number;
-  heightMm?: number;
-  description?: string;
-  label?: string;
-}) {
-  if (option.widthMm && option.heightMm) {
-    return `${option.widthMm / 10} x ${option.heightMm / 10}cm`;
-  }
-  return option.description || option.label || "";
 }
 
 function getSpecValue(item: ShopItem, label: string) {
@@ -614,83 +590,12 @@ const GOBO_REFERENCE_SERIES: PerformanceSeries[] = [
   },
 ];
 
-const STANDARD_FLEXI_SIZE_OPTIONS = [
-  {
-    id: "600x600",
-    label: "Square",
-    widthMm: 600,
-    heightMm: 600,
-    description: "60 x 60cm",
-    priceAdjustment: -45,
-    available: true,
-  },
-  {
-    id: "1200x600",
-    label: "Standard",
-    widthMm: 1200,
-    heightMm: 600,
-    description: "60 x 120cm",
-    priceAdjustment: 0,
-    available: true,
-  },
-  {
-    id: "1800x600",
-    label: "Tall",
-    widthMm: 1800,
-    heightMm: 600,
-    description: "60 x 180cm",
-    priceAdjustment: 60,
-    available: true,
-  },
-];
-
-const STANDARD_FLEXI_THICKNESS_OPTIONS = [
-  {
-    id: "25mm",
-    label: "25 mm",
-    millimeters: 25,
-    nrc: "NRC 0.80",
-    priceAdjustment: 0,
-    available: true,
-  },
-  {
-    id: "50mm",
-    label: "50 mm",
-    millimeters: 50,
-    nrc: "NRC 1.00",
-    priceAdjustment: 20,
-    available: true,
-  },
-];
-
-const STANDARD_FLEXI_INSTALLATION_OPTIONS = [
-  {
-    id: "self-install",
-    label: "Self-install",
-    description: "Panels are supplied for your own installation.",
-    priceType: "none",
-    price: 0,
-    available: true,
-  },
-  {
-    id: "professional-install",
-    label: "Professional installation",
-    description:
-      "Just Acoustics installs the panels. Final access requirements are reviewed before payment.",
-    priceType: "perUnit",
-    price: 45,
-    available: true,
-  },
-];
-
 const STANDARD_FLEXI_SIZE_IMAGE_SRC: Record<string, string> = {
   "600x600": "/assets/shop/standard-flexi/standard-flexi-600x600.webp",
   "1200x600": "/assets/shop/standard-flexi/standard-flexi-1200x600.webp",
   "1800x600": "/assets/shop/standard-flexi/standard-flexi-1800x600.webp",
 };
 
-const STANDARD_FLEXI_COLOUR_CHART_SRC =
-  "/assets/shop/standard-flexi/source/colour-swatches.webp";
 const PRODUCT_PLAY_ICON =
   "/assets/webflow/6967a0f62bd9b7dce9e01040_Play%20icon.png";
 
@@ -749,159 +654,6 @@ const STANDARD_FLEXI_GIK_PERFORMANCE_SERIES = [
   },
 ];
 
-const STANDARD_FLEXI_VISIBLE_COLOUR_IDS = [
-  "white",
-  "pearl-05",
-  "terracotta-16",
-  "magenta-18",
-  "seafoam-22",
-  "sky-blue-23",
-  "linen-26",
-  "bone-34",
-  "black",
-];
-
-const STANDARD_FLEXI_COLOURS = [
-  "White",
-  "Egg White 01",
-  "Stone Grey 02",
-  "Sand 03",
-  "Ash 04",
-  "Pearl 05",
-  "Silver Mist 06",
-  "Frost 07",
-  "Dove Grey 08",
-  "Cement 09",
-  "Steel 10",
-  "Moss 11",
-  "Olive 12",
-  "Blush 13",
-  "Amber 14",
-  "Walnut 15",
-  "Terracotta 16",
-  "Crimson 17",
-  "Magenta 18",
-  "Rose 19",
-  "Plum 20",
-  "Fog 21",
-  "Seafoam 22",
-  "Sky Blue 23",
-  "Charcoal 24",
-  "Slate 25",
-  "Linen 26",
-  "Concrete 27",
-  "Ocean Blue 28",
-  "Powder Blue 29",
-  "Graphite 30",
-  "Navy 31",
-  "Oat 32",
-  "Mocha 33",
-  "Bone 34",
-  "Anchor Grey 35",
-  "Espresso 36",
-  "Black",
-].map((name, index) => {
-  const id = name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  return {
-    id,
-    name,
-    swatchSrc: `/assets/shop/standard-flexi/swatches/${String(index + 1).padStart(2, "0")}-${id}.png`,
-    priceAdjustment: 0,
-    available: true,
-  };
-});
-
-const SOOTHE_FABRIC_CHARTS = {
-  "8080": "/assets/shop/soothe/source/soothe-8080-series.webp",
-  "2020": "/assets/shop/soothe/source/soothe-2020-series.webp",
-} as const;
-
-const SOOTHE_FABRIC_GRID_X = [145, 383, 622, 861];
-const SOOTHE_FABRIC_GRID_Y = [175, 400, 625, 850, 1075, 1275, 1430];
-
-function createSootheFabricSeries(
-  series: keyof typeof SOOTHE_FABRIC_CHARTS,
-  fabrics: Array<[name: string, code: string]>,
-) {
-  return fabrics.map(([name, code], index) => ({
-    id: code.toLowerCase(),
-    name: `${name} ${code}`,
-    description: `${series} Series fabric`,
-    fabricSeries: series,
-    swatchSrc: SOOTHE_FABRIC_CHARTS[series],
-    swatchCrop: {
-      x: SOOTHE_FABRIC_GRID_X[index % 4],
-      y: SOOTHE_FABRIC_GRID_Y[Math.floor(index / 4)],
-    },
-    priceAdjustment: 0,
-    available: true,
-  }));
-}
-
-const SOOTHE_8080_FABRICS = createSootheFabricSeries("8080", [
-  ["Steel", "8080-11"],
-  ["Moonstone", "8080-12"],
-  ["Aqua", "8080-03"],
-  ["Illume Green", "8080-29"],
-  ["Winter", "8080-25"],
-  ["Haze", "8080-23"],
-  ["Blue Lagoon", "8080-05"],
-  ["Mango", "8080-06"],
-  ["Champagne", "8080-26"],
-  ["Heather", "8080-15"],
-  ["Teal Blue", "8080-19"],
-  ["Rose", "8080-08"],
-  ["Bright Orange", "8080-30"],
-  ["Buttercup", "8080-27"],
-  ["Iris", "8080-13"],
-  ["Flame", "8080-10"],
-  ["Ash", "8080-28"],
-  ["Espresso", "8080-24"],
-  ["Ocean Deep", "8080-18"],
-  ["Cherry", "8080-09"],
-  ["Neon Red", "8080-31"],
-  ["Bamboo", "8080-02"],
-  ["Carbon", "8080-17"],
-  ["Royal Purple", "8080-21"],
-  ["Rust", "8080-20"],
-  ["Butternut", "8080-01"],
-]);
-
-const SOOTHE_2020_FABRICS = createSootheFabricSeries("2020", [
-  ["Milky Way", "2020-14"],
-  ["Lemon Peel", "2020-12"],
-  ["Sorbet Lime", "2020-11"],
-  ["Glacier", "2020-13"],
-  ["Mica", "2020-07"],
-  ["Desert", "2020-16"],
-  ["Wheat", "2020-03"],
-  ["Moss", "2020-15"],
-  ["Sky", "2020-25"],
-  ["Sea Breeze", "2020-18"],
-  ["Rattan", "2020-19"],
-  ["Golden Dust", "2020-22"],
-  ["Green Field", "2020-06"],
-  ["Marine Blue", "2020-05"],
-  ["Stone", "2020-04"],
-  ["Chestnut", "2020-09"],
-  ["Freezy Orange", "2020-17"],
-  ["Green Brier", "2020-08"],
-  ["Blueridge", "2020-02"],
-  ["Dark Grey", "2020-26"],
-  ["Tearose", "2020-01"],
-  ["Carrot", "2020-27"],
-  ["Royal", "2020-28"],
-  ["Capuccino", "2020-23"],
-  ["Cherry", "2020-29"],
-  ["Cardinal Red", "2020-24"],
-  ["Baltic", "2020-30"],
-  ["Black", "2020-21"],
-]);
-
-const SOOTHE_FABRICS = [...SOOTHE_8080_FABRICS, ...SOOTHE_2020_FABRICS];
 const SOOTHE_VISIBLE_FABRIC_IDS = [
   "8080-11",
   "8080-25",
@@ -912,48 +664,6 @@ const SOOTHE_VISIBLE_FABRIC_IDS = [
   "2020-15",
   "2020-21",
 ];
-
-function getConfigurableItem(item: ShopItem) {
-  const line = resolveProductLine(item);
-
-  if (isSootheProduct(item)) {
-    return {
-      ...item,
-      configuratorEnabled: true,
-      colourOptions: SOOTHE_FABRICS,
-    } as ShopItem;
-  }
-
-  if (line === "custom-print-panels") {
-    return {
-      ...item,
-      price: 120,
-      defaultSizeId: "1200x600",
-      defaultThicknessId: "25mm",
-      sizeOptions: STANDARD_FLEXI_SIZE_OPTIONS,
-      thicknessOptions: STANDARD_FLEXI_THICKNESS_OPTIONS,
-      colourOptions: [],
-      installationOptions: item.installationOptions?.length
-        ? item.installationOptions
-        : STANDARD_FLEXI_INSTALLATION_OPTIONS,
-    } as ShopItem;
-  }
-
-  if (!isFlexiProduct(item)) return item;
-
-  return {
-    ...item,
-    price: 100,
-    defaultSizeId: "1200x600",
-    defaultThicknessId: item.defaultThicknessId || "25mm",
-    sizeOptions: STANDARD_FLEXI_SIZE_OPTIONS,
-    thicknessOptions: STANDARD_FLEXI_THICKNESS_OPTIONS,
-    colourOptions: STANDARD_FLEXI_COLOURS,
-    installationOptions: item.installationOptions?.length
-      ? item.installationOptions
-      : STANDARD_FLEXI_INSTALLATION_OPTIONS,
-  } as ShopItem;
-}
 
 function getSizePreviewSrc(
   item: ShopItem,
@@ -985,28 +695,12 @@ function getColourSwatchSrc(
   );
 }
 
-function getSootheFabricSwatchStyle(
-  option: ReturnType<typeof resolveShopSelection>["colourOption"] | undefined,
-) {
-  if (!option?.swatchSrc || !option.swatchCrop) return undefined;
-  // Crop tightly into the photographed panel so labels and white chart space never enter the swatch.
-  const renderedWidth = 760;
-  const renderedHeight = 1140;
-  const swatchCenter = 22;
-  return {
-    backgroundImage: `url("${option.swatchSrc}")`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: `${renderedWidth}px ${renderedHeight}px`,
-    backgroundPosition: `${swatchCenter - (option.swatchCrop.x * renderedWidth) / 1024}px ${swatchCenter - (option.swatchCrop.y * renderedHeight) / 1536}px`,
-  };
-}
-
 function ProductColourSwatch({
   option,
 }: {
   option: ReturnType<typeof resolveShopSelection>["colourOption"];
 }) {
-  const sootheStyle = getSootheFabricSwatchStyle(option);
+  const sootheStyle = colourSwatchStyle(option?.swatchSrc, option?.swatchRegion);
   const swatchSrc = getColourSwatchSrc(option, 120, 120);
 
   if (sootheStyle)
@@ -1722,13 +1416,6 @@ function ProductBeforeAfterSection() {
       category: "Restaurant",
       note: "Comfortable dining",
     },
-    {
-      videoId: "Y9b0NNTRnFw",
-      thumbnail: "/assets/webflow/69687c96d1feff52c5d91be4_3.avif",
-      label: "Function Room",
-      category: "Church",
-      note: "Comfortable event space",
-    },
   ];
 
   return (
@@ -2072,10 +1759,6 @@ function ProductInfoFaqSection({ item }: { item: ShopItem }) {
         a: "Yes. We provide supply-only or delivery and installation, subject to site access, surface condition, mounting requirements, and working height.",
       },
       {
-        q: "How long is the lead time?",
-        a: "Flexi panels are made to order. Typical production is about four weeks, with final timing confirmed when the colour, size, quantity, and installation scope are approved.",
-      },
-      {
         q: "Can I see fabric colours before ordering?",
         a: "Yes. Contact us to review the available fabric collection or request help choosing a finish that suits the room.",
       },
@@ -2143,7 +1826,6 @@ function ProductInfoFaqSection({ item }: { item: ShopItem }) {
     <FAQ
       items={items}
       title="Product Info"
-      subtitle="Common questions before selecting size, placement, and installation."
       flush
     />
   );
@@ -2426,7 +2108,7 @@ function MergedAlternatingSections() {
     },
     {
       title: "Custom finish and fit",
-      copy: "Choose from 38 colour textures and three core sizes so the treatment fits the room visually as well as acoustically.",
+      copy: "Choose from 39 colour textures and three core sizes so the treatment fits the room visually as well as acoustically.",
       image: STANDARD_FLEXI_COLOUR_CHART_SRC,
       reverse: false,
     },
@@ -2445,7 +2127,7 @@ function MergedAlternatingSections() {
               alt={section.title}
               fill
               sizes="(max-width: 767px) 100vw, 50vw"
-              className="object-cover"
+              className={section.image === STANDARD_FLEXI_COLOUR_CHART_SRC ? "object-contain bg-[#f4f2e8]" : "object-cover"}
             />
           </div>
           <div className="flex flex-1 items-center p-6 sm:p-8 lg:p-12">
@@ -2773,12 +2455,19 @@ function ProductConfigurator({
     value: ShopQuoteSelection[K],
   ) => {
     setSelection((current) => ({ ...current, [key]: value }));
+    trackEvent("product_option_selected", {
+      product_slug: configurableItem.slug.current,
+      option: key,
+      option_value: String(value),
+    });
   };
 
   useEffect(() => {
     if (!isColourOpen) return;
 
     const onPointerDown = (event: MouseEvent) => {
+      // The Soothe collection is inline; collapsing on mousedown moves the clicked control.
+      if (isSoothe) return;
       if (
         colourPopoverRef.current &&
         !colourPopoverRef.current.contains(event.target as Node)
@@ -2797,7 +2486,15 @@ function ProductConfigurator({
       document.removeEventListener("mousedown", onPointerDown);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [isColourOpen]);
+  }, [isColourOpen, isSoothe]);
+
+  useEffect(() => {
+    trackEvent("product_view", {
+      product_slug: configurableItem.slug.current,
+      product_name: configurableItem.title,
+      product_line: resolveProductLine(configurableItem),
+    });
+  }, [configurableItem]);
 
   const handleAddToCart = () => {
     const quantity = normaliseQuantity(configurableItem, selection.quantity);
@@ -2819,10 +2516,9 @@ function ProductConfigurator({
       {
         label: isSoothe ? "Fabric" : "Colour",
         value: profile.artworkReview ? undefined : resolved.colourOption?.name,
-        swatchSrc: isSoothe
-          ? undefined
-          : getColourSwatchSrc(resolved.colourOption, 64, 64) || undefined,
+        swatchSrc: getColourSwatchSrc(resolved.colourOption, 64, 64) || undefined,
         hex: resolved.colourOption?.hex,
+        swatchRegion: resolved.colourOption?.swatchRegion,
       },
     ].filter((option) => Boolean(option.value));
 
@@ -2833,8 +2529,16 @@ function ProductConfigurator({
         getSizePreviewSrc(configurableItem, selection, 640, 640) ||
         getImageSrc(configurableItem.mainImage, 640, 640),
       unitPrice,
+      selection: { ...selection, installationId: "self-install", packageId: undefined },
       quantity,
       options,
+    });
+    trackEvent("add_to_cart", {
+      product_slug: configurableItem.slug.current,
+      product_name: configurableItem.title,
+      quantity,
+      value: price.total,
+      currency: "SGD",
     });
   };
 
@@ -2941,7 +2645,7 @@ function ProductConfigurator({
               <>
                 <div
                   ref={swatchRowRef}
-                  className="product-swatch-grid mt-3 flex flex-nowrap gap-1 sm:hidden"
+                  className="product-swatch-grid mt-3 flex flex-wrap gap-2 sm:hidden"
                 >
                   {mobileVisibleColours.map((option) => (
                     <ProductColourSwatchButton
@@ -3128,8 +2832,8 @@ function ProductConfigurator({
           )}
 
         <div className={`${optionSectionClass()} grid gap-4`}>
-          <div className="product-action-row grid grid-cols-[132px_minmax(0,1fr)] items-center gap-3">
-            <div className="inline-flex h-14 overflow-hidden rounded-full border border-black/8 bg-white/86">
+          <div className="product-action-row grid min-w-0 grid-cols-[132px_minmax(0,1fr)] items-center gap-3">
+            <div className="product-quantity-control inline-flex h-[52px] w-[132px] justify-self-start overflow-hidden rounded-full border border-black/8 bg-white/86">
               <button
                 type="button"
                 onClick={() =>
@@ -3138,12 +2842,12 @@ function ProductConfigurator({
                     normaliseQuantity(configurableItem, selection.quantity - 1),
                   )
                 }
-                className="inline-flex h-full w-11 items-center justify-center text-2xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
+                className="inline-flex h-full flex-1 items-center justify-center text-xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
                 aria-label="Decrease quantity"
               >
                 -
               </button>
-              <div className="flex h-full w-11 items-center justify-center border-x border-black/8 text-base font-semibold text-[var(--color-dark-100)]">
+              <div className="flex h-full flex-1 items-center justify-center border-x border-black/8 text-sm font-semibold text-[var(--color-dark-100)]">
                 {selection.quantity}
               </div>
               <button
@@ -3154,7 +2858,7 @@ function ProductConfigurator({
                     normaliseQuantity(configurableItem, selection.quantity + 1),
                   )
                 }
-                className="inline-flex h-full w-11 items-center justify-center text-2xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
+                className="inline-flex h-full flex-1 items-center justify-center text-xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
                 aria-label="Increase quantity"
               >
                 +
@@ -3179,6 +2883,7 @@ function ProductConfigurator({
             )}
           </div>
 
+          <p className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">{DELIVERY_DISCLOSURE}<br />{ORDER_LEAD_TIME}</p>
           <Link
             href="/contact"
             className="grid grid-cols-[42px_minmax(0,1fr)] items-center gap-4 rounded-[18px] bg-[rgba(19,126,137,0.12)] px-4 py-4 text-[#137e89] no-underline transition-colors hover:bg-[rgba(19,126,137,0.16)]"
@@ -3432,8 +3137,10 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
           }))
       : [];
   const baseImages = [item.mainImage, ...(item.gallery || [])]
+    .filter((image) => !(isSoothe && image && "_key" in image && ["1f0374981776", "8aac81e8e0db", "soothe-weave-8080", "soothe-weave-2020"].includes(String(image._key))))
     .map((image, index) => {
-      const src = getImageSrc(image, 1200, 1500);
+      const src = isStandardFlexi && image && "_key" in image && image._key === "standard-flexi-colour-chart"
+        ? STANDARD_FLEXI_COLOUR_CHART_SRC : getImageSrc(image, 1200, 1500);
       return src ? { src, alt: `${item.title} ${index + 1}` } : null;
     })
     .filter((image): image is { src: string; alt: string } => Boolean(image));
@@ -3634,7 +3341,7 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
                               quality={72}
                               loading={index === 0 ? "eager" : "lazy"}
                               className={
-                                isSootheFabricChart
+                                isSootheFabricChart || image.src === STANDARD_FLEXI_COLOUR_CHART_SRC
                                   ? "object-contain bg-white"
                                   : "object-cover"
                               }

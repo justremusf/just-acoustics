@@ -2,7 +2,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "regions": ["sin1"],
+  "regions": [
+    "sin1"
+  ],
   "headers": [
     {
       "source": "/studio/(.*)",
@@ -12,6 +14,12 @@
           "value": "noindex"
         }
       ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/orders/reconcile",
+      "schedule": "0 22 * * *"
     }
   ]
 }

@@ -16,15 +16,22 @@ const FALLBACK_LOGOS = [
   { src: '/assets/webflow/6987425e54111c126a709545_14.png', alt: 'Brand' },
 ]
 
+const AMAZON_LOGO = { src: '/assets/brands/amazon.webp', alt: 'Amazon' }
+
 interface Props {
   logos?: SanityImage[]
 }
 
 export default function BrandScroller({ logos }: Props) {
-  const items =
+  const configuredLogos =
     logos && logos.length > 0
       ? logos.map((logo) => ({ src: urlFor(logo).width(360).url(), alt: logo.alt || 'Brand' }))
       : FALLBACK_LOGOS
+  const items = [
+    ...configuredLogos.slice(0, 2),
+    AMAZON_LOGO,
+    ...configuredLogos.slice(2),
+  ]
 
   const doubled = [...items, ...items]
 
@@ -47,7 +54,11 @@ export default function BrandScroller({ logos }: Props) {
                 blurDataURL={IMAGE_BLUR_DATA_URL}
                 quality={70}
                 loading="lazy"
-                className="h-[38px] w-auto object-contain sm:h-[63px]"
+                className={
+                  logo.alt === 'Amazon'
+                    ? 'h-[26px] w-auto max-w-[132px] object-contain grayscale brightness-50 contrast-125 sm:h-[41px] sm:max-w-[162px]'
+                    : 'h-[38px] w-auto object-contain sm:h-[63px]'
+                }
               />
             </div>
           ))}

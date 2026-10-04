@@ -1,3 +1,5 @@
+import { SOOTHE_FABRICS } from "@/lib/sootheFabrics";
+import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -70,14 +72,9 @@ const SHOP_PRODUCT_ORDER = [
 ];
 const FLEXI_HOVER_IMAGE =
   "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp";
-const SOOTHE_8080_CHART = "/assets/shop/soothe/source/soothe-8080-series.webp";
-const SOOTHE_LISTING_SWATCHES = [
-  { name: "Steel 8080-11", x: 145, y: 175 },
-  { name: "Aqua 8080-03", x: 622, y: 175 },
-  { name: "Winter 8080-25", x: 145, y: 400 },
-  { name: "Carbon 8080-17", x: 622, y: 1275 },
-  { name: "Cherry 8080-09", x: 861, y: 1275 },
-];
+const SOOTHE_LISTING_SWATCHES = ["8080-11", "8080-03", "8080-25", "8080-17", "8080-09"].map(
+  (id) => SOOTHE_FABRICS.find((fabric) => fabric.id === id)!,
+);
 
 function getShopCategory(item: ShopItem) {
   if (item.productLine === "accessory" || item.category === "accessories")
@@ -87,17 +84,7 @@ function getShopCategory(item: ShopItem) {
   return item.category;
 }
 
-function getSootheListingSwatchStyle(x: number, y: number) {
-  const width = 280;
-  const height = 420;
-  const center = 8;
-  return {
-    backgroundImage: `url("${SOOTHE_8080_CHART}")`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: `${width}px ${height}px`,
-    backgroundPosition: `${center - (x * width) / 1024}px ${center - (y * height) / 1536}px`,
-  };
-}
+
 
 export default async function ShopPage({
   searchParams,
@@ -276,11 +263,8 @@ export default async function ShopPage({
                               title={option.name || "Colour option"}
                               className="relative h-4 w-4 overflow-hidden rounded-[4px] border border-black/8 shadow-[0_0_0_1px_rgba(255,255,255,0.72)]"
                               style={
-                                isSoothe && "x" in option
-                                  ? getSootheListingSwatchStyle(
-                                      option.x,
-                                      option.y,
-                                    )
+                                isSoothe
+                                  ? colourSwatchStyle(option.swatchSrc, option.swatchRegion)
                                   : "hex" in option && option.hex
                                     ? { backgroundColor: option.hex }
                                     : undefined

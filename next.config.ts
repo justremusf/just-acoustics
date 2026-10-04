@@ -36,11 +36,27 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // Allow verification builds without overwriting a running dev server.
+  distDir: process.env.NEXT_OUTPUT_DIR || ".next",
   devIndicators: false,
   outputFileTracingRoot: process.cwd(),
   // ESLint runs explicitly via `npm run check`; avoid Next 15's legacy ESLint bridge.
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  async redirects() {
+    // Preserve inbound links to retired slugs without adding or moving pages.
+    return [
+      { source: '/shop/standard-flexi-acoustic-panel', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/shop/custom-print-acoustic-panel', destination: '/shop/flexi-custom-print-panels', permanent: true },
+      { source: '/shop/acoustic-ceiling-panels', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/acoustic-ceiling-panels', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/acoustic-wall-panels', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/custom-print-acoustic-panels', destination: '/shop/flexi-custom-print-panels', permanent: true },
+      { source: '/services/churches-event-spaces', destination: '/spaces/churches', permanent: true },
+      { source: '/services/offices-meeting-rooms', destination: '/spaces/offices', permanent: true },
+      { source: '/services/restaurants-cafes-bars', destination: '/spaces/restaurants', permanent: true },
+    ]
   },
   async headers() {
     return [

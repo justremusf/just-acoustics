@@ -64,19 +64,9 @@ const profiles: Record<ShopProductLine, ProductProfile> = {
         copy: "Fire safe, formaldehyde safe, and emissions safe.",
       },
       {
-        icon: "palette",
-        title: "30+ colours",
-        copy: "Texture-backed swatches make it easier to choose a finish.",
-      },
-      {
         icon: "ruler",
         title: "Custom sizes",
         copy: "Standard formats plus custom sizes for real rooms.",
-      },
-      {
-        icon: "truck",
-        title: "Made to order",
-        copy: "Typical production lead time is 3-4 weeks.",
       },
       {
         icon: "wrench",

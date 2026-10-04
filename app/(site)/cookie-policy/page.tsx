@@ -39,6 +39,11 @@ export default function CookiePolicyPage() {
                 <td>Google Analytics, distinguishes users</td>
                 <td>24 hours</td>
               </tr>
+              <tr>
+                <td>_clck, _clsk</td>
+                <td>Microsoft Clarity, anonymous heatmaps and session analytics</td>
+                <td>Up to 1 year</td>
+              </tr>
             </tbody>
           </table>
           <h2>Managing cookies</h2>

@@ -6,6 +6,7 @@ import FAQ from '@/components/sections/FAQ'
 import ContactCTA from '@/components/sections/ContactCTA'
 import FadeUp from '@/components/ui/FadeUp'
 import PricingRangeAccordion, { type PricingRange } from './PricingRangeAccordion'
+import PageEngagementTracker from '@/components/analytics/PageEngagementTracker'
 import { getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { ShopItem } from '@/lib/types'
@@ -128,6 +129,7 @@ export default async function PricingPage() {
 
   return (
     <>
+      <PageEngagementTracker pageType="pricing" />
       <div className="page-wrap page-stack gap-10 md:gap-14">
         <section className="home-shell page-hero-shell flex flex-col gap-7 p-[clamp(30px,4.6vw,52px)]">
           <span className="soft-pill">Acoustic Treatment Pricing</span>
@@ -276,7 +278,7 @@ export default async function PricingPage() {
                     })}
                   </div>
                 </div>
-                <Link href="/contact" className="page-cta mx-auto w-fit">
+                <Link href="/contact" className="page-cta mx-auto w-fit" data-insight-cta="pricing_consultation">
                   Get Free Consultation
                 </Link>
               </div>

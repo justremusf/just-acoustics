@@ -1,5 +1,7 @@
 'use client'
 
+import { trackFirstPartyEvent, type InsightProperties } from '@/lib/insights/client'
+
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
 const googleAdsLabels = {
   whatsapp_click: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_WHATSAPP,
@@ -59,6 +61,7 @@ export function trackEvent(
 ) {
   if (typeof window === 'undefined') return false
   const eventParams = getGaParams(eventName, params)
+  trackFirstPartyEvent(eventName, eventParams as InsightProperties)
   let gaAccepted = false
 
   if (typeof window.gtag === 'function') {

@@ -1,0 +1,10 @@
+{
+  "dynamic_content_pages_verified": 129,
+  "excluded_noindex_404_pages": [
+    "/shop/test-product"
+  ],
+  "page_specific_preview_metadata": "pass",
+  "lint_typescript_build": "pass",
+  "hardening_regressions": "3 passed",
+  "deployment": "not deployed"
+}

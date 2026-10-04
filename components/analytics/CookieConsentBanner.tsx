@@ -31,7 +31,7 @@ export default function CookieConsentBanner() {
       className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-3xl rounded-2xl border border-black/10 bg-white p-5 shadow-[0_24px_70px_rgba(0,0,0,0.2)] md:flex md:items-center md:gap-6"
     >
       <p className="m-0 flex-1 text-sm leading-6 text-black/70">
-        We use analytics to understand site visits and enquiries. You can also allow advertising
+        We use analytics, including Google Analytics and Microsoft Clarity, to understand site visits and enquiries. You can also allow advertising
         cookies to help us measure and improve campaigns. Read our{' '}
         <Link href="/cookie-policy" className="font-semibold text-black underline">cookie policy</Link>.
       </p>

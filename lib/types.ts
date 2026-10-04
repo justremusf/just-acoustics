@@ -46,11 +46,14 @@ export interface ShopThicknessOption extends ShopConfigOption {
   nrc?: string
 }
 
+export type SwatchRegion = { x: number; y: number; width: number; height: number; imageWidth: number; imageHeight: number }
+
 export interface ShopColourOption extends ShopConfigOption {
   name?: string
   hex?: string
   swatchImage?: SanityImage
   projectPreviewImage?: SanityImage
+  swatchRegion?: SwatchRegion
   swatchSrc?: string
   fabricSeries?: '8080' | '2020'
   swatchCrop?: { x: number; y: number }

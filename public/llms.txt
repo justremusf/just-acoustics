@@ -14,14 +14,15 @@
 - [Contact](https://www.justacoustics.co/contact): Free consultation request form.
 - [Pricing](https://www.justacoustics.co/pricing): Pricing structure for commercial acoustic projects.
 
-## Services
-- [All services](https://www.justacoustics.co/services): Overview of every acoustic service we offer.
-- [Offices & Meeting Rooms](https://www.justacoustics.co/services/offices-meeting-rooms): Echo control and call clarity for workplaces.
-- [Restaurants, Cafes & Bars](https://www.justacoustics.co/services/restaurants-cafes-bars): Noise reduction for hospitality venues.
-- [Churches & Event Spaces](https://www.justacoustics.co/services/churches-event-spaces): Speech intelligibility for worship and event halls.
-- [Education Spaces](https://www.justacoustics.co/services/education-spaces): Acoustic treatment for classrooms and learning environments.
-- [Gym & Leisure Spaces](https://www.justacoustics.co/services/gym-leisure-spaces): Sound dampening for high-impact activity rooms.
-- [Cinema & Music Studios](https://www.justacoustics.co/services/cinema-music-studios): Studio-grade acoustic environments.
+## Acoustic treatment by space
+- [All spaces](https://www.justacoustics.co/spaces): Overview of acoustic treatment for different room types.
+- [Offices & Meeting Rooms](https://www.justacoustics.co/spaces/offices): Echo control and call clarity for workplaces.
+- [Restaurants, Cafes & Bars](https://www.justacoustics.co/spaces/restaurants): Noise reduction for hospitality venues.
+- [Churches & Event Spaces](https://www.justacoustics.co/spaces/churches): Speech intelligibility for worship and event halls.
+- [Education Spaces](https://www.justacoustics.co/spaces/education): Acoustic treatment for classrooms and learning environments.
+- [Gym & Activity Spaces](https://www.justacoustics.co/spaces/gym-and-activity-spaces): Sound control for high-impact activity rooms.
+- [Music & Home Studios](https://www.justacoustics.co/spaces/studios): Acoustic treatment for recording, mixing, and listening spaces.
+- [Homes](https://www.justacoustics.co/spaces/homes): Echo reduction for living rooms, home offices, and residential spaces.
 
 ## Shop
 - [Shop home](https://www.justacoustics.co/shop): Browse acoustic panels and accessories online.
@@ -32,6 +33,15 @@
 
 ## Resources
 - [Resource Center / Blog](https://www.justacoustics.co/blog): Acoustic education, buying guides, comparisons, videos, and case studies.
+- [Acoustic panels in Singapore](https://www.justacoustics.co/acoustic-panels-singapore): What acoustic panels solve, how they differ from soundproofing, and how to start a project.
+- [Office acoustic treatment](https://www.justacoustics.co/office-acoustic-treatment): Practical echo reduction for meeting rooms, call rooms, and workplaces.
+- [Restaurant echo reduction](https://www.justacoustics.co/restaurant-echo-reduction): Acoustic treatment planning for Singapore F&B spaces.
+- [Church acoustics](https://www.justacoustics.co/church-acoustics): Speech clarity and reverberation control for worship spaces.
+
+## Key facts
+- Acoustic treatment improves sound quality inside a room by absorbing and managing reflections. It does not by itself stop sound travelling through walls, floors, doors, or windows.
+- Just Acoustics provides consultation, acoustic panel supply, custom design, and installation across Singapore.
+- Product performance, fire requirements, final dimensions, and installation methods are confirmed for the individual product and site before production or installation.
 
 ## Sitemaps
 - https://www.justacoustics.co/sitemap.xml

@@ -1,0 +1,1285 @@
+{
+  "base": "http://localhost:3333",
+  "pages": [
+    {
+      "path": "",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/spaces",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/projects",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/blog",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/shop",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/studio-lander",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/pricing",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/acoustic-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/office-acoustic-treatment",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/restaurant-echo-reduction",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/church-acoustics",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 1,
+      "noindex": false
+    },
+    {
+      "path": "/blog/do-acoustic-panels-really-work",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-hdb-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-for-offices-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-panels-condo-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/office-acoustic-treatment-cost-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-vs-soundproofing-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/why-is-my-office-so-noisy",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-church-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/what-is-rt60-acoustic-treatment",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/restaurant-too-loud-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/gym-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/custom-print-acoustic-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-many-acoustic-panels-do-i-need",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/room-too-echoey-for-video-calls",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-for-restaurants-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/church-hall-echo-solution-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/home-studio-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/why-singapore-restaurants-need-acoustic-treatment",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-houses-of-worship-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/restaurant-acoustic-panel-cost-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/church-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-panel-colours-for-home-office-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-panels-without-drilling-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-panels-without-false-ceiling-restaurant",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/are-acoustic-panel-installations-included-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/are-acoustic-panels-fire-safe-commercial-buildings-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/can-acoustic-panels-be-installed-on-glass-walls",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/can-acoustic-panels-be-moved-to-new-office",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/choose-acoustic-panel-colours-office-studio-cafe",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/do-rugs-mats-acoustic-foam-help-piano-echo",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/hear-acoustic-panel-effect-before-buying-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/high-ceiling-acoustic-installation-scaffolding-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-long-acoustic-panel-installation-takes",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-many-acoustic-panels-for-meeting-room",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/measurements-needed-for-acoustic-treatment-quote",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/meeting-room-sound-leakage-acoustic-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/minimum-order-quantity-custom-acoustic-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/piano-room-acoustic-treatment-singapore-home",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/quote-acoustic-treatment-from-photos-videos-floor-plan",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/rental-home-acoustic-panels-no-drilling",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/restaurant-ceiling-panels-suspended-vs-flat-mounted",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/small-meeting-room-acoustic-panel-cost-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/treating-only-two-walls-meeting-room-acoustic-panels",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/wall-panels-vs-ceiling-panels-studio-acoustic-treatment",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/what-happens-during-acoustic-site-visit",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/why-high-ceiling-cafes-are-echoey-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-to-reduce-echo-in-office-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-panels-tuition-centres-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/sound-absorbing-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-to-fix-bad-acoustics-in-a-room",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-panels-singapore-price",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/ceiling-panels-vs-wall-panels-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-acoustic-panels-improve-office-productivity",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-foam-vs-acoustic-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-renovation-projects-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/acoustic-treatment-vs-noise-control",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/are-thicker-acoustic-panels-better",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/building-management-acoustic-panel-installation",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/can-acoustic-panels-help-neighbour-noise",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/can-acoustic-panels-match-interior-design",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/custom-acoustic-panel-lead-time-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/do-i-need-bass-traps-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/echo-problem-vs-soundproofing-problem",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/first-reflection-points-acoustic-treatment",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/home-office-sound-better-for-calls",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-acoustic-panels-affect-restaurant-atmosphere",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/improve-speech-clarity-conference-room",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/nrc-rating-acoustic-panels-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/plan-acoustic-treatment-before-interior-design",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/podcast-room-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/prepare-space-before-acoustic-panel-installation",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/reduce-echo-training-room-classroom-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/video-call-room-acoustic-treatment-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/what-are-sound-diffusers",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/where-to-place-acoustic-panels-first",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/why-cheap-acoustic-foam-disappoints",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/why-restaurants-get-noisy-before-full",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/why-small-rooms-sound-boxy-boomy",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-much-acoustic-treatment-does-a-restaurant-usually-need",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/how-to-reduce-echo-in-glass-walled-meeting-rooms",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/what-acoustic-panels-actually-do-before-you-buy-them",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/blog/what-to-prepare-before-an-acoustic-site-visit",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/shop/flexi-ceiling-mount-kit",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 3,
+      "noindex": false
+    },
+    {
+      "path": "/shop/forma-pet-panels",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/shop/flexi-wall-mounting-accessories",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 3,
+      "noindex": false
+    },
+    {
+      "path": "/shop/flexi-custom-print-panels",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/shop/soothe-wall-mount-kit",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 3,
+      "noindex": false
+    },
+    {
+      "path": "/shop/soothe-gobos",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/shop/flexi-acoustic-panels",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/shop/soothe-tm-bass-trap-panel",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/churches",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/education",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/gym-and-activity-spaces",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/homes",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/offices",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/restaurants",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/spaces/studios",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 4,
+      "noindex": false
+    },
+    {
+      "path": "/projects/mortgage-hub",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/ymca-metropolitan",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/proteus-design-tech",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/workforce-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/franklin-offshore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/pei-school-of-dance",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/mixing-recording-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/music-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/podcast-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/home-theatre-2",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/pasir-pajang-church-of-christ",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/leng-kwang-baptist-church",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/ppp-coffee-new-bahru",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/capital-asia-investments",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/shimano-singapore",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/the-nuggets-academy",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/concentricheal",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/vibratone-academy",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/mixing-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/drum-practice-room",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/home-office",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/home-double-office",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/rubiks-material-lab",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/acqua-e-farina",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/dough-cafe",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/hoogwegt",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/bhaskars-arts-academy",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/jam-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/home-office-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/home-theatre",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/podcast-office",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    },
+    {
+      "path": "/projects/guitar-practice-studio",
+      "status": 200,
+      "h1": 1,
+      "canonical_match": true,
+      "description": true,
+      "jsonld": 2,
+      "noindex": false
+    }
+  ],
+  "count": 142,
+  "failures": []
+}
