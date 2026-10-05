@@ -7,7 +7,7 @@ import { getAllProjects, getAllSpaceSlugs, getSpaceBySlug } from '@/sanity/lib/q
 import { urlFor } from '@/sanity/lib/image'
 import type { Project, Space } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
-import { canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
+import { pageMetadata, serializeJsonLd, canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
 import { formatSgd } from '@/lib/shopPricing'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 import PriceEstimator from '@/components/estimator/PriceEstimator'
@@ -25,11 +25,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const space: Space | null = await getSpaceBySlug(slug).catch(() => null)
   if (!space) return {}
 
-  return {
-    title: stripBrand(space.seo?.metaTitle) || space.title,
+  return pageMetadata({
+    title: stripBrand(space.seo?.metaTitle) || `${space.title} Acoustic Treatment Singapore`,
     description: space.seo?.metaDescription || space.shortDescription,
-    alternates: { canonical: canonicalPath(`/spaces/${slug}`) },
-  }
+    path: `/spaces/${slug}`,
+    image: space.mainImage ? urlFor(space.mainImage).width(1200).height(630).url() : undefined,
+  })
 }
 
 export default async function SpacePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -64,13 +65,7 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
     '@type': 'Service',
     name: `${space.title} acoustic treatment`,
     description: space.shortDescription,
-    provider: {
-      '@type': 'LocalBusiness',
-      name: 'Just Acoustics',
-      url: SITE_URL,
-      telephone: '+65 8930 1905',
-      areaServed: { '@type': 'Country', name: 'Singapore' },
-    },
+    provider: { '@id': `${SITE_URL}/#organization` },
     areaServed: { '@type': 'Country', name: 'Singapore' },
     url: canonicalPath(`/spaces/${slug}`),
   }
@@ -93,8 +88,8 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(serviceJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
 
       <div className="space-page px-4 pb-16 pt-6 sm:px-5 sm:pb-20 lg:pt-8">
         <section className="site-container relative min-h-[480px] overflow-hidden rounded-[32px] bg-[#151515] sm:min-h-[560px]">

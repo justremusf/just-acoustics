@@ -1,5 +1,7 @@
 "use client";
 
+import { serializeJsonLd } from "@/lib/seo";
+
 import { useEffect, useRef, useState } from "react";
 
 export type FaqItem = { q: string; a: string };
@@ -146,7 +148,7 @@ export default function FAQ({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <section
         id="faq"

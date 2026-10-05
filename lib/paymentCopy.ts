@@ -1,7 +1,11 @@
-export const PAYNOW_INSTRUCTIONS =
-  'Scan the PayNow QR code or paste the VPA into your Singapore banking app, then use the generated payment reference.'
-
-export const PAYNOW_REASSURANCE =
-  'Once payment is received, you will receive a confirmation email and our team will reach out to schedule delivery and/or installation.'
-
+export const DELIVERY_FEE = 50
+export const DELIVERY_DISCLOSURE = 'S$50 flat-rate islandwide delivery, added after you enter your address.'
+export const ORDER_LEAD_TIME = 'Made to order. Standard lead time is 4 to 6 weeks from payment confirmation to delivery.'
+export const ORDER_FOLLOW_UP = 'Our sales team will reach out within one business day of order confirmation to confirm your delivery address and keep you updated on progress.'
+export const PAYNOW_INSTRUCTIONS = 'Pay the exact total and include your order reference in your banking app. Save the QR to import it from your photo library, or scan it using another device.'
+export const PAYNOW_REASSURANCE = 'We check incoming payments and email your order confirmation once payment is matched. You can return to your order page to check its status.'
+export const PAYNOW_HELP_TITLE = 'Questions about your payment?'
+export const PAYNOW_HELP_BODY = 'Contact our team with your order reference. If you have already paid, please do not pay again while confirmation is pending.'
 export const JUST_ACOUSTICS_WHATSAPP_URL = 'https://wa.me/6589301905'
+export const PAYNOW_VPA = 'UEN202336944WA00#XNAP'
+export const PAYNOW_QR_URL = '/assets/paynow/just-acoustics-paynow-qr.png'

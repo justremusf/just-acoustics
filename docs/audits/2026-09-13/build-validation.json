@@ -1,0 +1,10 @@
+{
+  "htmlPages": 153,
+  "jsonLdBlocks": 473,
+  "parseErrors": [],
+  "homepageFontPreloads": [
+    "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+    "/_next/static/media/4c9affa5bc8f420e-s.p.woff2"
+  ],
+  "validation": "Generated production HTML; not browser or Google Rich Results validation"
+}

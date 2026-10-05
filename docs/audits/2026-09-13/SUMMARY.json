@@ -1,0 +1,88 @@
+{
+  "analyzed_at": "2026-09-13T04:54:04.575200+00:00",
+  "url": "https://www.justacoustics.co",
+  "status": "local changes verified by build and static checks; visual verification blocked; not deployed",
+  "coverage": {
+    "sitemap_urls": 142,
+    "sitemap_http_200": 141,
+    "robots_blocked": 1,
+    "additional_links": 12,
+    "additional_404": 9,
+    "generated_html_pages": 153,
+    "generated_jsonld_blocks": 473,
+    "jsonld_parse_errors": 0
+  },
+  "core_web_vitals": {
+    "lcp": null,
+    "inp": null,
+    "cls": null,
+    "source": "Unavailable: PageSpeed API 429; browser preview permission declined"
+  },
+  "issues": [
+    {
+      "severity": "high",
+      "issue": "Client-controlled checkout pricing and possible acknowledgement without internal delivery",
+      "status": "documented, unchanged"
+    },
+    {
+      "severity": "high",
+      "issue": "Nine broken internal destinations",
+      "status": "fixed locally via exact redirects; generated destinations verified"
+    },
+    {
+      "severity": "medium",
+      "issue": "Hero preload downloads original instead of displayed responsive asset",
+      "status": "fixed locally; visual verification pending"
+    },
+    {
+      "severity": "medium",
+      "issue": "Robots prefix blocks public studio landing page",
+      "status": "fixed locally"
+    },
+    {
+      "severity": "medium",
+      "issue": "Unsafe JSON-LD serialization of CMS text",
+      "status": "fixed locally and round-trip tested"
+    }
+  ],
+  "checks": {
+    "lint": "passed",
+    "typescript": "passed",
+    "production_build": "passed",
+    "git_diff_check": "passed",
+    "visual_mobile": "blocked",
+    "deployment": "not attempted"
+  },
+  "bundle_kb": {
+    "homepage_before": 166,
+    "homepage_after": 166,
+    "product_before": 194,
+    "product_after": 195,
+    "pricing_before": 125,
+    "pricing_after": 125,
+    "shared_before": 102,
+    "shared_after": 102
+  },
+  "limitations": [
+    "No measured speedup or Core Web Vitals claim",
+    "No production deployment",
+    "No end-to-end forms, email, payment, or database tests",
+    "Audit covers sitemap and one-hop links, not unlinked pages"
+  ],
+  "implementation_follow_up": {
+    "timestamp": "2026-09-13T06:00:10.205866+00:00",
+    "browser": "User approved; saved permission setting still blocks localhost preview",
+    "implemented": [
+      "Nine permanent legacy redirects",
+      "Church direct product links including bass trap",
+      "Analytics initialization retry after transient failure",
+      "Tally email HTML escaping"
+    ],
+    "isolated_tests": {
+      "passed": 3,
+      "failed": 0
+    },
+    "redirect_build_manifest_checks": 9,
+    "deployment": "not attempted"
+  }
+}

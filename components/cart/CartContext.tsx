@@ -2,15 +2,18 @@
 
 import { createContext, useContext } from "react";
 import { ShoppingBag } from "lucide-react";
+import { trackEvent } from "@/components/analytics/trackEvent";
 
 export type CartItemOption = {
   label: string;
   value?: string;
   swatchSrc?: string;
+  swatchRegion?: import("@/lib/types").SwatchRegion;
   hex?: string;
 };
 
 export type CartItemInput = {
+  selection?: import("@/lib/shopPricing").ShopQuoteSelection;
   slug: string;
   title: string;
   imageSrc?: string | null;
@@ -59,7 +62,10 @@ export function CartButton({
   return (
     <button
       type="button"
-      onClick={openCart}
+      onClick={() => {
+        openCart();
+        trackEvent("cart_opened", { item_count: itemCount });
+      }}
       className={className}
       aria-label={
         itemCount

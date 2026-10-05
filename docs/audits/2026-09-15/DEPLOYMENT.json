@@ -1,0 +1,16 @@
+{
+  "deployment": "dpl_5s5z3fS3nFguFxgqpWEpSjGgDK3G",
+  "url": "https://www.justacoustics.co",
+  "deployment_url": "https://just-acoustics-2m38ag26j-justremusfs-projects.vercel.app",
+  "state": "READY",
+  "target": "production",
+  "source": "current local working tree; includes uncommitted changes",
+  "previous_deployment": "dpl_3omp7JXkvcYMrVpcNX9J93DuBXHp",
+  "build": "passed remote production build and TypeScript",
+  "redirects": "9/9 pass",
+  "robots": "narrow Studio exclusions verified live",
+  "consultation_form": "embedded fields render on production desktop and 390px mobile; no submission",
+  "browser_console_errors": "none observed on contact page",
+  "runtime_error_scan": "no matching error/fatal logs for new deployment in queried 10-minute window",
+  "sitemap_crawl": "142/142 HTTP 200; single H1, canonical and description checks pass; 466 JSON-LD blocks parse"
+}

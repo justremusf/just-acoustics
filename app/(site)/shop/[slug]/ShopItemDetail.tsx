@@ -99,8 +99,10 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
           }))
       : [];
   const baseImages = [item.mainImage, ...(item.gallery || [])]
+    .filter((image) => !(isSoothe && image && "_key" in image && ["1f0374981776", "8aac81e8e0db", "soothe-weave-8080", "soothe-weave-2020"].includes(String(image._key))))
     .map((image, index) => {
-      const src = getImageSrc(image, 1200, 1500);
+      const src = isStandardFlexi && image && "_key" in image && image._key === "standard-flexi-colour-chart"
+        ? STANDARD_FLEXI_COLOUR_CHART_SRC : getImageSrc(image, 1200, 1500);
       return src ? { src, alt: `${item.title} ${index + 1}` } : null;
     })
     .filter((image): image is { src: string; alt: string } => Boolean(image));
@@ -248,7 +250,7 @@ export default function ShopItemDetail({ item }: { item: ShopItem }) {
                               quality={72}
                               loading={index === 0 ? "eager" : "lazy"}
                               className={
-                                isSootheFabricChart
+                                isSootheFabricChart || image.src === STANDARD_FLEXI_COLOUR_CHART_SRC
                                   ? "object-contain bg-white"
                                   : "object-cover"
                               }

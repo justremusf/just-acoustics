@@ -129,7 +129,7 @@ export default function Spaces({ spaces }: Props) {
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.02),rgba(1,1,1,0.34)_55%,rgba(1,1,1,0.52))]" />
               <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3.5 md:p-5">
                 <div className="flex min-h-[58px] items-center justify-between gap-2 rounded-[14px] border border-white/12 bg-[rgba(20,18,16,0.28)] p-3 backdrop-blur-sm transition-transform duration-300 group-hover:-translate-y-1 sm:min-h-[76px] sm:gap-4 sm:rounded-[20px] sm:p-4 md:p-5">
-                  <h3 className="m-0 text-[15px] leading-[1.04] font-medium tracking-[-0.4px] text-white sm:text-[26px] sm:tracking-[-0.8px]" style={{ fontFamily: 'var(--font-heading)' }}>
+                  <h3 className="m-0 text-[20px] leading-[1.04] font-medium tracking-[-0.4px] text-white sm:text-[26px] sm:tracking-[-0.8px]" style={{ fontFamily: 'var(--font-heading)' }}>
                     {app.title}
                   </h3>
                   <span className="shrink-0 text-base text-white transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--color-brand-orange)] sm:text-xl" aria-hidden="true">→</span>

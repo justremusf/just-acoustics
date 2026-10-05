@@ -1,4 +1,6 @@
 'use client'
+import { FLEXI_COLOUR_CHART_SRC as COLOUR_CHART_SRC, STANDARD_FLEXI_COLOURS as COLOURS, FLEXI_VISIBLE_COLOUR_IDS as VISIBLE_COLOUR_IDS } from '@/lib/flexiColours'
+import { colourSwatchStyle } from '@/lib/colourSwatchStyle'
 
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 import Image from 'next/image'
@@ -49,77 +51,11 @@ const SIZE_IMAGES: Record<string, string> = {
   '1800x600': '/assets/shop/standard-flexi/standard-flexi-1800x600.webp',
 }
 
-const COLOUR_CHART_SRC = '/assets/shop/standard-flexi/source/colour-swatches.webp'
-
 const GALLERY_IMAGES = [
   '/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp',
   '/assets/shop/standard-flexi/gallery/flexi-gallery-2.webp',
   '/assets/shop/standard-flexi/gallery/flexi-gallery-3.webp',
   '/assets/shop/standard-flexi/gallery/flexi-gallery-4.webp',
-]
-
-const COLOUR_NAMES = [
-  'White',
-  'Egg White 01',
-  'Stone Grey 02',
-  'Sand 03',
-  'Ash 04',
-  'Pearl 05',
-  'Silver Mist 06',
-  'Frost 07',
-  'Dove Grey 08',
-  'Cement 09',
-  'Steel 10',
-  'Moss 11',
-  'Olive 12',
-  'Blush 13',
-  'Amber 14',
-  'Walnut 15',
-  'Terracotta 16',
-  'Crimson 17',
-  'Magenta 18',
-  'Rose 19',
-  'Plum 20',
-  'Fog 21',
-  'Seafoam 22',
-  'Sky Blue 23',
-  'Charcoal 24',
-  'Slate 25',
-  'Linen 26',
-  'Concrete 27',
-  'Ocean Blue 28',
-  'Powder Blue 29',
-  'Graphite 30',
-  'Navy 31',
-  'Oat 32',
-  'Mocha 33',
-  'Bone 34',
-  'Anchor Grey 35',
-  'Espresso 36',
-  'Black',
-]
-
-const COLOURS = COLOUR_NAMES.map((name, index) => {
-  const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-  return {
-    id,
-    name,
-    swatchSrc: `/assets/shop/standard-flexi/swatches/${String(index + 1).padStart(2, '0')}-${id}.png`,
-    priceAdjustment: 0,
-    available: true,
-  }
-})
-
-const VISIBLE_COLOUR_IDS = [
-  'white',
-  'pearl-05',
-  'terracotta-16',
-  'magenta-18',
-  'seafoam-22',
-  'sky-blue-23',
-  'linen-26',
-  'bone-34',
-  'black',
 ]
 
 const PERFORMANCE_FREQUENCIES = [
@@ -166,7 +102,7 @@ const PERFORMANCE_SERIES = [
 const HIGHLIGHTS = [
   { icon: Layers, title: 'Broadband absorption', copy: 'Controls echo across highs, mids, and low-mid reflections.' },
   { icon: Flame, title: 'High safety rating', copy: 'Fire safe, formaldehyde safe, and emissions safe.' },
-  { icon: Palette, title: '38 colour finishes', copy: 'Texture-backed swatches make it easier to choose a finish.' },
+  { icon: Palette, title: '39 colour finishes', copy: 'Texture-backed swatches make it easier to choose a finish.' },
   { icon: Ruler, title: 'Three sizes', copy: 'Compact, standard, and long-format panels for real rooms.' },
   { icon: Truck, title: 'Made to order', copy: 'Typical lead time is 3-4 weeks after confirmation.' },
   { icon: Wrench, title: 'Install support', copy: 'Licensed team installation for walls, ceilings, and full-wall options.' },
@@ -446,7 +382,7 @@ export default function TestProductClient({ item }: { item: ShopItem }) {
                           fill
                           priority={index === 0}
                           sizes="(max-width: 1023px) 100vw, 52vw"
-                          className="object-cover"
+                          className={image.src === COLOUR_CHART_SRC ? "object-contain" : "object-cover"}
                         />
                       </div>
                     ))}
@@ -578,7 +514,7 @@ export default function TestProductClient({ item }: { item: ShopItem }) {
                         ].join(' ')}
                         style={!swatchSrc ? { backgroundColor: option.hex || '#f5f5f5' } : undefined}
                       >
-                        {swatchSrc && <Image src={swatchSrc} alt={option.name || 'Colour swatch'} width={96} height={96} className="h-full w-full rounded-full object-cover" />}
+                        {option.swatchRegion ? <span className="block h-full w-full rounded-full" style={colourSwatchStyle(swatchSrc || undefined, option.swatchRegion)} /> : swatchSrc && <Image src={swatchSrc} alt={option.name || 'Colour swatch'} width={96} height={96} className="h-full w-full rounded-full object-cover" />}
                         <span className="pointer-events-none absolute left-1/2 top-full z-[80] mt-2 w-max max-w-[150px] -translate-x-1/2 rounded-full border border-black/8 bg-white px-3 py-1.5 text-[11px] font-semibold text-[var(--color-dark-100)] opacity-0 shadow-[0_12px_26px_rgba(15,23,42,0.14)] transition-opacity group-hover:opacity-100">
                           {option.name}
                         </span>
@@ -626,7 +562,7 @@ export default function TestProductClient({ item }: { item: ShopItem }) {
                             ].join(' ')}
                             style={!swatchSrc ? { backgroundColor: option.hex || '#f5f5f5' } : undefined}
                           >
-                            {swatchSrc && <Image src={swatchSrc} alt={option.name || 'Colour swatch'} width={72} height={72} className="h-full w-full rounded-full object-cover" />}
+                            {option.swatchRegion ? <span className="block h-full w-full rounded-full" style={colourSwatchStyle(swatchSrc || undefined, option.swatchRegion)} /> : swatchSrc && <Image src={swatchSrc} alt={option.name || 'Colour swatch'} width={72} height={72} className="h-full w-full rounded-full object-cover" />}
                             <span className="pointer-events-none absolute left-1/2 top-full z-[80] mt-2 w-max max-w-[150px] -translate-x-1/2 rounded-full border border-black/8 bg-white px-3 py-1.5 text-[11px] font-semibold text-[var(--color-dark-100)] opacity-0 shadow-[0_12px_26px_rgba(15,23,42,0.14)] transition-opacity group-hover:opacity-100">
                               {option.name}
                             </span>
@@ -720,7 +656,7 @@ export default function TestProductClient({ item }: { item: ShopItem }) {
                     <ul className="m-0 grid gap-2 pl-5">
                       <li>Available sizes: 60 x 60cm, 60 x 120cm, and 60 x 180cm.</li>
                       <li>Available thickness: 25 mm and 50 mm.</li>
-                      <li>Available finishes: 38 colour options.</li>
+                      <li>Available finishes: 39 colour options.</li>
                       <li>Lead time: 3-4 weeks after order confirmation.</li>
                     </ul>
                   </TestAccordion>
@@ -799,14 +735,14 @@ export default function TestProductClient({ item }: { item: ShopItem }) {
             },
             {
               title: 'Custom finish and fit',
-              copy: 'Choose from 38 colour textures and three core sizes so the treatment fits the room visually as well as acoustically.',
+              copy: 'Choose from 39 colour textures and three core sizes so the treatment fits the room visually as well as acoustically.',
               image: COLOUR_CHART_SRC,
               reverse: false,
             },
           ].map((section) => (
             <div key={section.title} className={`overflow-hidden rounded-[28px] border border-black/8 bg-white/82 shadow-[0_22px_70px_rgba(15,23,42,0.06)] lg:flex ${section.reverse ? 'lg:flex-row-reverse' : ''}`}>
               <div className="relative min-h-[320px] flex-1 lg:min-h-[560px]">
-                <Image src={section.image} alt={section.title} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
+                <Image src={section.image} alt={section.title} fill sizes="(max-width: 767px) 100vw, 50vw" className={section.image === COLOUR_CHART_SRC ? "object-contain" : "object-cover"} />
               </div>
               <div className="flex flex-1 items-center p-6 sm:p-8 lg:p-12">
                 <div>

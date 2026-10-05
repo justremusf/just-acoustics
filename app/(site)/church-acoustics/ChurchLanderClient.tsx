@@ -44,16 +44,16 @@ const CASE_STUDIES = [
         roomName: 'Sanctuary',
         src: pricingAsset('church_hero1.webp'),
         hotspots: [
-          { text: 'Flexi Wall Panels', top: '22%', left: '14%', href: '/shop/standard-flexi-acoustic-panel' },
-          { text: 'Ceiling Cloud Grid', top: '8%', left: '52%', href: '/shop/acoustic-ceiling-panels' },
+          { text: 'Flexi Wall Panels', top: '22%', left: '14%', href: '/shop/flexi-acoustic-panels' },
+          { text: 'Ceiling Cloud Grid', top: '8%', left: '52%', href: '/shop/flexi-acoustic-panels' },
         ],
       },
       {
         roomName: 'Fellowship Hall',
         src: pricingAsset('church.jpg'),
         hotspots: [
-          { text: 'Custom Print Panels', top: '36%', left: '20%', href: '/shop/custom-print-acoustic-panel' },
-          { text: 'Broadband Absorbers', top: '44%', left: '72%', href: '/shop/standard-flexi-acoustic-panel' },
+          { text: 'Custom Print Panels', top: '36%', left: '20%', href: '/shop/flexi-custom-print-panels' },
+          { text: 'Broadband Absorbers', top: '44%', left: '72%', href: '/shop/flexi-acoustic-panels' },
         ],
       },
     ],
@@ -71,8 +71,8 @@ const CASE_STUDIES = [
         roomName: 'Main Sanctuary',
         src: pricingAsset('church_hero2.webp'),
         hotspots: [
-          { text: 'Broadband Ceiling Cloud', top: '14%', left: '40%', href: '/shop/acoustic-ceiling-panels' },
-          { text: 'Fabric Wall Panels', top: '34%', left: '18%', href: '/shop/standard-flexi-acoustic-panel' },
+          { text: 'Broadband Ceiling Cloud', top: '14%', left: '40%', href: '/shop/flexi-acoustic-panels' },
+          { text: 'Fabric Wall Panels', top: '34%', left: '18%', href: '/shop/flexi-acoustic-panels' },
         ],
       },
     ],
@@ -90,8 +90,8 @@ const CASE_STUDIES = [
         roomName: 'Auditorium',
         src: pricingAsset('church.jpg'),
         hotspots: [
-          { text: 'Corner Bass Traps', top: '30%', left: '12%', href: '/shop/150mm-studio-bass-trap' },
-          { text: 'Ceiling Baffles', top: '8%', left: '64%', href: '/shop/acoustic-ceiling-panels' },
+          { text: 'Corner Bass Traps', top: '30%', left: '12%', href: '/shop/soothe-tm-bass-trap-panel' },
+          { text: 'Ceiling Baffles', top: '8%', left: '64%', href: '/shop/forma-pet-panels' },
         ],
       },
     ],
@@ -106,21 +106,21 @@ const PRODUCTS = [
     image: '/assets/shop/standard-flexi/standard-flexi-1200x600.webp',
     badge: 'Best Seller',
     description: 'Slim, fabric-wrapped panels ideal for wall placement at first-reflection points in sanctuaries.',
-    href: '/shop/standard-flexi-acoustic-panel',
+    href: '/shop/flexi-acoustic-panels',
   },
   {
     title: 'Ceiling Cloud Panels',
     image: pricingAsset('church_hero2.webp'),
     badge: 'Echo Control',
     description: 'Suspended cloud systems that absorb overhead flutter echoes in high-ceiling worship halls.',
-    href: '/shop/acoustic-ceiling-panels',
+    href: '/shop/flexi-acoustic-panels',
   },
   {
     title: 'Custom Print Panels',
     image: pricingAsset('church.jpg'),
     badge: 'Aesthetic Fit',
     description: 'Print scripture, logos, or artwork directly onto high-performance acoustic surfaces.',
-    href: '/shop/custom-print-acoustic-panel',
+    href: '/shop/flexi-custom-print-panels',
   },
 ]
 

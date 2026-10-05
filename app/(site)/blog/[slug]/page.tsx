@@ -3,10 +3,11 @@ import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { toArticleView, toExplorerPost } from '@/sanity/lib/views'
-import { canonicalPath, SITE_LOGO_URL, SITE_PREVIEW_IMAGE, SITE_URL, stripBrand } from '@/lib/seo'
+import { canonicalPath, serializeJsonLd, SITE_PREVIEW_IMAGE, SITE_URL, stripBrand } from '@/lib/seo'
 import { buildArticleNav } from '@/lib/contentView'
 import type { Post } from '@/lib/types'
 import ArticleDetail from '@/components/blog/ArticleDetail'
+import PageEngagementTracker from '@/components/analytics/PageEngagementTracker'
 
 export const revalidate = 60
 
@@ -60,13 +61,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     articleSection: article.topicLabel,
     inLanguage: 'en-SG',
     timeRequired: `PT${article.readingTime}M`,
-    author: { '@type': 'Organization', name: 'Just Acoustics' },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Just Acoustics',
-      logo: { '@type': 'ImageObject', url: SITE_LOGO_URL },
-    },
+    author: { '@id': `${SITE_URL}/#organization` },
+    publisher: { '@id': `${SITE_URL}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalPath(`/blog/${slug}`) },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
   }
 
   const breadcrumbJsonLd = {
@@ -81,8 +79,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <PageEngagementTracker pageType="blog" contentName={slug} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
       <ArticleDetail article={article} nav={nav} />
     </>
   )

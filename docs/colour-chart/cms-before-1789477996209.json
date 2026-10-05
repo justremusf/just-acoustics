@@ -1,0 +1,997 @@
+[
+  {
+    "_createdAt": "2026-03-30T16:26:46Z",
+    "_id": "f3dac121-9bdc-407c-97d1-31cff180e55c",
+    "_rev": "Y4MoCWE48z3YVugUBE3tbY",
+    "_system": {
+      "base": {
+        "id": "f3dac121-9bdc-407c-97d1-31cff180e55c",
+        "rev": "OKe7VGkjYW0rSaFrD9pBAu"
+      }
+    },
+    "_type": "shopItem",
+    "_updatedAt": "2026-07-01T03:11:31Z",
+    "acousticalSpecs": {
+      "_type": "object",
+      "rows": [
+        {
+          "_key": "567513d59abd4501dd46b26bfc5a448f",
+          "_type": "acousticalSpecRow",
+          "hz1000": "0.98",
+          "hz125": "0.00",
+          "hz2000": "1.00",
+          "hz250": "0.25",
+          "hz4000": "0.80",
+          "hz500": "0.85",
+          "nrc": "0.75",
+          "thickness": "25mm"
+        },
+        {
+          "_key": "41cd098153fa4c7f7c6c3fdbaf0e681a",
+          "_type": "acousticalSpecRow",
+          "hz1000": "0.96",
+          "hz125": "0.22",
+          "hz2000": "0.98",
+          "hz250": "0.76",
+          "hz4000": "0.87",
+          "hz500": "0.92",
+          "nrc": "0.90",
+          "thickness": "50mm"
+        }
+      ],
+      "subtitle": "ASTM C423 - Mounting A as per ASTM E795",
+      "title": "Acoustic Performance"
+    },
+    "body": [
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDgJd",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "OLyCyVCuqsPNnGPAgZDgMn",
+            "_type": "span",
+            "marks": [],
+            "text": "Acoustic treatment that actually works. Our in-house manufactured Flexi panels are flexible enough to handle offices, restaurants, music studios, church halls, and other rooms that need clearer sound."
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDgPx",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "OLyCyVCuqsPNnGPAgZDgT7",
+            "_type": "span",
+            "marks": [],
+            "text": "They deliver broadband absorption across all frequencies, not just the highs, and come in multiple paintable and fabric-wrapped finishes, colours, and sizes, so the treatment can fit the space visually as well as acoustically."
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "ef96c9e43863",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "9c51d26c81f5",
+            "_type": "span",
+            "marks": [],
+            "text": "It can be installed on the walls or ceilings at all angles."
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "category": "standard-panels",
+    "colourOptions": [
+      {
+        "_key": "white",
+        "available": true,
+        "description": "Colour code: White",
+        "id": "white",
+        "name": "White",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "White Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-94e170b2c7aaf2854dcb975a68225c124fab74fe-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "egg-white-01",
+        "available": true,
+        "description": "Colour code: 01",
+        "id": "egg-white-01",
+        "name": "Egg White 01",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Egg White 01 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-ed1b3c6fba8a6833e890c6aa1fb890e547d263f5-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "stone-grey-02",
+        "available": true,
+        "description": "Colour code: 02",
+        "id": "stone-grey-02",
+        "name": "Stone Grey 02",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Stone Grey 02 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-4db858a20996f9268eeb7cfd691f555247447f85-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "sand-03",
+        "available": true,
+        "description": "Colour code: 03",
+        "id": "sand-03",
+        "name": "Sand 03",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Sand 03 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-d6da1b9d1f369ef75922bf76b034e5d68c04f7fb-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "ash-04",
+        "available": true,
+        "description": "Colour code: 04",
+        "id": "ash-04",
+        "name": "Ash 04",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Ash 04 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-d4be274a1cacd1a6530439ba4332c936434dc628-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "pearl-05",
+        "available": true,
+        "description": "Colour code: 05",
+        "id": "pearl-05",
+        "name": "Pearl 05",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Pearl 05 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-669fb9201530dc0396e6b7f328f12877695b7011-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "silver-mist-06",
+        "available": true,
+        "description": "Colour code: 06",
+        "id": "silver-mist-06",
+        "name": "Silver Mist 06",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Silver Mist 06 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-9b57e136191c8762fb21ce184ec119a9f3a24fcb-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "frost-07",
+        "available": true,
+        "description": "Colour code: 07",
+        "id": "frost-07",
+        "name": "Frost 07",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Frost 07 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-30a7ba49f3275e8ba494f782f22904038eee5157-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "dove-grey-08",
+        "available": true,
+        "description": "Colour code: 08",
+        "id": "dove-grey-08",
+        "name": "Dove Grey 08",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Dove Grey 08 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-f9b998f29fd3c633207a427fa7a3919689fed387-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "cement-09",
+        "available": true,
+        "description": "Colour code: 09",
+        "id": "cement-09",
+        "name": "Cement 09",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Cement 09 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-3df25ab2436fd07f96a5b20980455c6bd92997f1-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "steel-10",
+        "available": true,
+        "description": "Colour code: 10",
+        "id": "steel-10",
+        "name": "Steel 10",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Steel 10 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-9ad9d137e17c9e64b729802511cae048bbab109e-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "moss-11",
+        "available": true,
+        "description": "Colour code: 11",
+        "id": "moss-11",
+        "name": "Moss 11",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Moss 11 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-408b69bd5d6a95b0fca95508ec31cdecb5079375-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "olive-12",
+        "available": true,
+        "description": "Colour code: 12",
+        "id": "olive-12",
+        "name": "Olive 12",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Olive 12 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-fbff599306f623a1c907c24103648c42eb11ff7d-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "blush-13",
+        "available": true,
+        "description": "Colour code: 13",
+        "id": "blush-13",
+        "name": "Blush 13",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Blush 13 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-46cf63f9671b491ac5a95bc335782db8ecdb9c87-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "amber-14",
+        "available": true,
+        "description": "Colour code: 14",
+        "id": "amber-14",
+        "name": "Amber 14",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Amber 14 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-21068e17b3a2937ae3d1b7139cf2ec1ce2e3b555-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "walnut-15",
+        "available": true,
+        "description": "Colour code: 15",
+        "id": "walnut-15",
+        "name": "Walnut 15",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Walnut 15 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-efff6df3ba2f82c39eaab6915504662a83d8ebfb-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "terracotta-16",
+        "available": true,
+        "description": "Colour code: 16",
+        "id": "terracotta-16",
+        "name": "Terracotta 16",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Terracotta 16 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-9e79e95d1f9167fdfca70ffd1f0e6854c12a205d-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "crimson-17",
+        "available": true,
+        "description": "Colour code: 17",
+        "id": "crimson-17",
+        "name": "Crimson 17",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Crimson 17 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-0fa0354b56546d54e6f88d411241684493917252-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "magenta-18",
+        "available": true,
+        "description": "Colour code: 18",
+        "id": "magenta-18",
+        "name": "Magenta 18",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Magenta 18 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-ace529270211158eac79f57705ee0ed7b332bc72-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "rose-19",
+        "available": true,
+        "description": "Colour code: 19",
+        "id": "rose-19",
+        "name": "Rose 19",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Rose 19 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-71bb9715342e4810d762bc95cf1e720480f6afb4-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "plum-20",
+        "available": true,
+        "description": "Colour code: 20",
+        "id": "plum-20",
+        "name": "Plum 20",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Plum 20 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-eb2cf1a195a4cb0bd253301227b2ffc1905cf28c-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "fog-21",
+        "available": true,
+        "description": "Colour code: 21",
+        "id": "fog-21",
+        "name": "Fog 21",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Fog 21 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-11c6234a2d18ed597137cb4d37df3511dd54c5b4-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "seafoam-22",
+        "available": true,
+        "description": "Colour code: 22",
+        "id": "seafoam-22",
+        "name": "Seafoam 22",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Seafoam 22 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-decbe42260355c466f9d5d7b71dca9d783f2a670-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "sky-blue-23",
+        "available": true,
+        "description": "Colour code: 23",
+        "id": "sky-blue-23",
+        "name": "Sky Blue 23",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Sky Blue 23 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-4ccb8a71047865326a10e761dc9ed318f7f0ffbc-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "charcoal-24",
+        "available": true,
+        "description": "Colour code: 24",
+        "id": "charcoal-24",
+        "name": "Charcoal 24",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Charcoal 24 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-c82a52d8562d52e9ae0be16edd4e0de47fa7e786-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "slate-25",
+        "available": true,
+        "description": "Colour code: 25",
+        "id": "slate-25",
+        "name": "Slate 25",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Slate 25 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-727b582873241466c98189d4ea73ddd985e7ad3c-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "linen-26",
+        "available": true,
+        "description": "Colour code: 26",
+        "id": "linen-26",
+        "name": "Linen 26",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Linen 26 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-7ea03cbc5daba41f401965d188bd5b0e5f022002-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "concrete-27",
+        "available": true,
+        "description": "Colour code: 27",
+        "id": "concrete-27",
+        "name": "Concrete 27",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Concrete 27 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-7fca06a5acf74853376fe7babd3f1685ca8c4698-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "ocean-blue-28",
+        "available": true,
+        "description": "Colour code: 28",
+        "id": "ocean-blue-28",
+        "name": "Ocean Blue 28",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Ocean Blue 28 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-f4a44f4a2ef8dcc1a4ffc218785730903df0555c-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "powder-blue-29",
+        "available": true,
+        "description": "Colour code: 29",
+        "id": "powder-blue-29",
+        "name": "Powder Blue 29",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Powder Blue 29 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-ef946f6aa655ad0b2edb5d28632165c68b479995-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "graphite-30",
+        "available": true,
+        "description": "Colour code: 30",
+        "id": "graphite-30",
+        "name": "Graphite 30",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Graphite 30 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-f22340360c3433f537a96c03f11a5be2e94549e7-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "navy-31",
+        "available": true,
+        "description": "Colour code: 31",
+        "id": "navy-31",
+        "name": "Navy 31",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Navy 31 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-fb794be7d8ba639aa8faa3043e3567c46cdf9e64-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "oat-32",
+        "available": true,
+        "description": "Colour code: 32",
+        "id": "oat-32",
+        "name": "Oat 32",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Oat 32 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-64b87727422baa3e1cd4f188ed7b48da1dab203c-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "mocha-33",
+        "available": true,
+        "description": "Colour code: 33",
+        "id": "mocha-33",
+        "name": "Mocha 33",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Mocha 33 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-c356af22e930e1e73525c1ab43f025318fcb3a34-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "bone-34",
+        "available": true,
+        "description": "Colour code: 34",
+        "id": "bone-34",
+        "name": "Bone 34",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Bone 34 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-652ce4b3963a62ff15620634513d71e51961572a-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "anchor-grey-35",
+        "available": true,
+        "description": "Colour code: 35",
+        "id": "anchor-grey-35",
+        "name": "Anchor Grey 35",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Anchor Grey 35 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-f91b4938f2e25b0a4bfcca0fa58bc9cb1ae8cf7d-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "espresso-36",
+        "available": true,
+        "description": "Colour code: 36",
+        "id": "espresso-36",
+        "name": "Espresso 36",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Espresso 36 Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-1278d76b6cade2579d2991ce6cc39804754ae09e-180x180-png",
+            "_type": "reference"
+          }
+        }
+      },
+      {
+        "_key": "black",
+        "available": true,
+        "description": "Colour code: Black",
+        "id": "black",
+        "name": "Black",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Black Flexi panel texture swatch",
+          "asset": {
+            "_ref": "image-b0ef647e308a3609ff1e4311a6ea128620c24178-180x180-png",
+            "_type": "reference"
+          }
+        }
+      }
+    ],
+    "configuratorEnabled": true,
+    "defaultQuantity": 1,
+    "defaultSizeId": "1200x600",
+    "defaultThicknessId": "25mm",
+    "gallery": [
+      {
+        "_key": "standard-flexi-1200x600",
+        "_type": "image",
+        "alt": "Standard Flexi 1200 mm x 600 mm panel",
+        "asset": {
+          "_ref": "image-37d7c9c923fcec24c3fb0ad57f4bdf69b566f43f-1122x1402-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-600x600",
+        "_type": "image",
+        "alt": "Standard Flexi 600 mm x 600 mm panel",
+        "asset": {
+          "_ref": "image-85b9312e23a3eee047022583ae484697f0390dcc-1122x1402-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-1800x600",
+        "_type": "image",
+        "alt": "Standard Flexi 1800 mm x 600 mm panel",
+        "asset": {
+          "_ref": "image-e1223ea89f3e9e41789f623a024d8da049918077-1122x1402-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-colour-chart",
+        "_type": "image",
+        "alt": "Standard Flexi colour swatches",
+        "asset": {
+          "_ref": "image-1ada20eac8476752ff260af62107f6dfe21c2049-1024x1536-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-in-use-1",
+        "_type": "image",
+        "alt": "Standard Flexi installed in living room",
+        "asset": {
+          "_ref": "image-83d5c6381ed8314b71355f7acfd00e419e375eb8-1086x1448-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-in-use-2",
+        "_type": "image",
+        "alt": "Standard Flexi installed in studio room",
+        "asset": {
+          "_ref": "image-1aa38627273bcd607b8d9184b61c53e4cc00f8ca-1086x1448-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-in-use-3",
+        "_type": "image",
+        "alt": "Standard Flexi installed on walls and ceiling",
+        "asset": {
+          "_ref": "image-7df037dbaa50f0b2a40a5f2f5a56d5f09e081f34-1122x1402-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "standard-flexi-in-use-4",
+        "_type": "image",
+        "alt": "Standard Flexi installed in workspace",
+        "asset": {
+          "_ref": "image-0217a5b39cacdb117ea9f42c558dfe3312953e19-1448x1086-png",
+          "_type": "reference"
+        }
+      }
+    ],
+    "installation": [
+      {
+        "_key": "b8631e669410",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "47938ac625f5",
+            "_type": "span",
+            "marks": [],
+            "text": "Flexi panels can be installed on walls using either 3M mounting tape or a drilled wall-mount attachment, depending on the surface, panel size, and the level of permanence required."
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "247c8ead26a2",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "fc4b872e7c3a",
+            "_type": "span",
+            "marks": [],
+            "text": "For ceiling applications, panels can be installed using suspended wires for a dropped baffle-style look, or mounted flush to the ceiling with our dedicated ceiling-mount attachments."
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "7e7e6e076ac5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "257e9e8575a2",
+            "_type": "span",
+            "marks": [],
+            "text": "Installation can be done as a self-install using our guides and videos, or handled professionally by the Just Acoustics team for a faster, cleaner setup."
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "installationOptions": [
+      {
+        "_key": "jOCtSpWch7UC6QC30ENoUn",
+        "available": true,
+        "description": "Panels are supplied for your own installation.",
+        "id": "self-install",
+        "label": "Self-install",
+        "price": 0,
+        "priceType": "none"
+      },
+      {
+        "_key": "jOCtSpWch7UC6QC30ENoZL",
+        "available": true,
+        "description": "Just Acoustics installs the panels. Final access requirements are reviewed before payment.",
+        "id": "professional-install",
+        "label": "Professional installation",
+        "price": 45,
+        "priceType": "perUnit"
+      }
+    ],
+    "leadTime": "Made to order. Typical production lead time is 3-4 weeks after order confirmation.",
+    "mainImage": {
+      "_type": "image",
+      "alt": "Standard Flexi 1200 mm x 600 mm panel",
+      "asset": {
+        "_ref": "image-37d7c9c923fcec24c3fb0ad57f4bdf69b566f43f-1122x1402-png",
+        "_type": "reference"
+      }
+    },
+    "minQuantity": 1,
+    "price": 55,
+    "productLine": "flexi-panel",
+    "seo": {
+      "metaDescription": "Flexible broadband acoustic panels with NRC up to 1.00, available in fabric-wrapped or paintable finishes for offices, restaurants, music studios, and church spaces.",
+      "metaTitle": "Standard Flexi Acoustic Panel | Just Acoustics"
+    },
+    "shortDescription": "Flexible broadband acoustic panels built to reduce echo and improve clarity across offices, restaurants, music studios, and church spaces.",
+    "sizeOptions": [
+      {
+        "_key": "600x600",
+        "available": true,
+        "description": "Compact panel size",
+        "heightMm": 600,
+        "id": "600x600",
+        "label": "600 mm x 600 mm",
+        "previewImage": {
+          "_type": "image",
+          "alt": "Standard Flexi 600 mm x 600 mm panel",
+          "asset": {
+            "_ref": "image-85b9312e23a3eee047022583ae484697f0390dcc-1122x1402-png",
+            "_type": "reference"
+          }
+        },
+        "priceAdjustment": -45,
+        "widthMm": 600
+      },
+      {
+        "_key": "1200x600",
+        "available": true,
+        "description": "Bestseller",
+        "heightMm": 600,
+        "id": "1200x600",
+        "label": "1200 mm x 600 mm",
+        "previewImage": {
+          "_type": "image",
+          "alt": "Standard Flexi 1200 mm x 600 mm panel",
+          "asset": {
+            "_ref": "image-37d7c9c923fcec24c3fb0ad57f4bdf69b566f43f-1122x1402-png",
+            "_type": "reference"
+          }
+        },
+        "priceAdjustment": 0,
+        "widthMm": 1200
+      },
+      {
+        "_key": "1800x600",
+        "available": true,
+        "description": "Long format panel",
+        "heightMm": 600,
+        "id": "1800x600",
+        "label": "1800 mm x 600 mm",
+        "previewImage": {
+          "_type": "image",
+          "alt": "Standard Flexi 1800 mm x 600 mm panel",
+          "asset": {
+            "_ref": "image-e1223ea89f3e9e41789f623a024d8da049918077-1122x1402-png",
+            "_type": "reference"
+          }
+        },
+        "priceAdjustment": 60,
+        "widthMm": 1800
+      }
+    ],
+    "slug": {
+      "_type": "slug",
+      "current": "flexi-acoustic-panels"
+    },
+    "specifications": [
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDgsP",
+        "_type": "specification",
+        "label": "Acoustic Performance",
+        "value": "NRC 0.80 (25mm), NRC 1.00 (50mm)"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDh8D",
+        "_type": "specification",
+        "label": "Standard Size",
+        "value": "1200 x 600mm"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDh53",
+        "_type": "specification",
+        "label": "Thickness",
+        "value": "25mm, 50mm, 100mm"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDgyj",
+        "_type": "specification",
+        "label": "Core Material",
+        "value": "Formed, high-density, semi-rigid glass wool"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDh1t",
+        "_type": "specification",
+        "label": "Density",
+        "value": "96kg/m3"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDhBN",
+        "_type": "specification",
+        "label": "Finish Options",
+        "value": "Acoustically transparent polyester fabric or custom-print synthetic leather"
+      },
+      {
+        "_key": "OLyCyVCuqsPNnGPAgZDhEX",
+        "_type": "specification",
+        "label": "Edge Profile",
+        "value": "Square edge or bevel edge"
+      }
+    ],
+    "thicknessOptions": [
+      {
+        "_key": "jOCtSpWch7UC6QC30ENngl",
+        "available": true,
+        "id": "25mm",
+        "label": "25mm",
+        "millimeters": 25,
+        "nrc": "Slim profile for lighter reflection control",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "jOCtSpWch7UC6QC30ENnlJ",
+        "available": true,
+        "id": "50mm",
+        "label": "50mm",
+        "millimeters": 50,
+        "nrc": "Recommended for stronger broadband absorption",
+        "priceAdjustment": 35
+      }
+    ],
+    "title": "Flexi™ Acoustic Panels"
+  }
+]

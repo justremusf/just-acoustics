@@ -1,0 +1,1533 @@
+[
+  {
+    "_createdAt": "2026-05-30T13:29:17Z",
+    "_id": "shopItem.bass-trap-150mm",
+    "_rev": "l2CcpFE6FL6so3nO1SKJJN",
+    "_system": {
+      "base": {
+        "id": "shopItem.bass-trap-150mm",
+        "rev": "jIwg3X3cZFUaTrI3KJ3ACD"
+      }
+    },
+    "_type": "shopItem",
+    "_updatedAt": "2026-09-15T13:26:40Z",
+    "acousticalSpecs": {
+      "_type": "object",
+      "rows": [
+        {
+          "_key": "studio-150-mm-0",
+          "_type": "acousticalSpecRow",
+          "hz1000": "1.00",
+          "hz125": "0.42",
+          "hz2000": "1.02",
+          "hz250": "0.79",
+          "hz4000": "1.00",
+          "hz500": "0.92",
+          "nrc": "Indicative",
+          "thickness": "Studio 150 mm"
+        },
+        {
+          "_key": "maxx-300-mm-1",
+          "_type": "acousticalSpecRow",
+          "hz1000": "1.04",
+          "hz125": "0.72",
+          "hz2000": "1.02",
+          "hz250": "1.03",
+          "hz4000": "1.00",
+          "hz500": "1.05",
+          "nrc": "Indicative",
+          "thickness": "Maxx 300 mm"
+        }
+      ],
+      "subtitle": "Comparable construction reference only - not a Just Acoustics laboratory test",
+      "title": "Indicative Reference Performance"
+    },
+    "category": "standard-panels",
+    "colourOptions": [
+      {
+        "_key": "8080-11",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-11",
+        "name": "Steel 8080-11",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Steel 8080-11",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.862124898621249,
+            "left": 0.0962962962962963,
+            "right": 0.7925925925925926,
+            "top": 0.040551500405515
+          }
+        }
+      },
+      {
+        "_key": "8080-12",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-12",
+        "name": "Moonstone 8080-12",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Moonstone 8080-12",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.862124898621249,
+            "left": 0.2796296296296296,
+            "right": 0.6092592592592593,
+            "top": 0.040551500405515
+          }
+        }
+      },
+      {
+        "_key": "8080-03",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-03",
+        "name": "Aqua 8080-03",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Aqua 8080-03",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.862124898621249,
+            "left": 0.4638888888888889,
+            "right": 0.42500000000000004,
+            "top": 0.040551500405515
+          }
+        }
+      },
+      {
+        "_key": "8080-29",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-29",
+        "name": "Illume Green 8080-29",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Illume Green 8080-29",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.862124898621249,
+            "left": 0.6472222222222223,
+            "right": 0.2416666666666667,
+            "top": 0.040551500405515
+          }
+        }
+      },
+      {
+        "_key": "8080-25",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-25",
+        "name": "Winter 8080-25",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Winter 8080-25",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.862124898621249,
+            "left": 0.8305555555555556,
+            "right": 0.05833333333333335,
+            "top": 0.040551500405515
+          }
+        }
+      },
+      {
+        "_key": "8080-23",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-23",
+        "name": "Haze 8080-23",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Haze 8080-23",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7007299270072993,
+            "left": 0.0962962962962963,
+            "right": 0.7925925925925926,
+            "top": 0.20194647201946472
+          }
+        }
+      },
+      {
+        "_key": "8080-05",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-05",
+        "name": "Blue Lagoon 8080-05",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Blue Lagoon 8080-05",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7007299270072993,
+            "left": 0.4638888888888889,
+            "right": 0.42500000000000004,
+            "top": 0.20194647201946472
+          }
+        }
+      },
+      {
+        "_key": "8080-06",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-06",
+        "name": "Mango 8080-06",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Mango 8080-06",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7007299270072993,
+            "left": 0.6472222222222223,
+            "right": 0.2416666666666667,
+            "top": 0.20194647201946472
+          }
+        }
+      },
+      {
+        "_key": "8080-26",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-26",
+        "name": "Champagne 8080-26",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Champagne 8080-26",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7007299270072993,
+            "left": 0.8305555555555556,
+            "right": 0.05833333333333335,
+            "top": 0.20194647201946472
+          }
+        }
+      },
+      {
+        "_key": "8080-15",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-15",
+        "name": "Heather 8080-15",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Heather 8080-15",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5393349553933495,
+            "left": 0.0962962962962963,
+            "right": 0.7925925925925926,
+            "top": 0.3633414436334144
+          }
+        }
+      },
+      {
+        "_key": "8080-19",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-19",
+        "name": "Teal Blue 8080-19",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Teal Blue 8080-19",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5393349553933495,
+            "left": 0.2796296296296296,
+            "right": 0.6092592592592593,
+            "top": 0.3633414436334144
+          }
+        }
+      },
+      {
+        "_key": "8080-08",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-08",
+        "name": "Rose 8080-08",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Rose 8080-08",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5393349553933495,
+            "left": 0.4638888888888889,
+            "right": 0.42500000000000004,
+            "top": 0.3633414436334144
+          }
+        }
+      },
+      {
+        "_key": "8080-30",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-30",
+        "name": "Bright Orange 8080-30",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Bright Orange 8080-30",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5393349553933495,
+            "left": 0.6472222222222223,
+            "right": 0.2416666666666667,
+            "top": 0.3633414436334144
+          }
+        }
+      },
+      {
+        "_key": "8080-27",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-27",
+        "name": "Buttercup 8080-27",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Buttercup 8080-27",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5393349553933495,
+            "left": 0.8305555555555556,
+            "right": 0.05833333333333335,
+            "top": 0.3633414436334144
+          }
+        }
+      },
+      {
+        "_key": "8080-13",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-13",
+        "name": "Iris 8080-13",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Iris 8080-13",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.3787510137875101,
+            "left": 0.2796296296296296,
+            "right": 0.6092592592592593,
+            "top": 0.5239253852392538
+          }
+        }
+      },
+      {
+        "_key": "8080-10",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-10",
+        "name": "Flame 8080-10",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Flame 8080-10",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.3787510137875101,
+            "left": 0.4638888888888889,
+            "right": 0.42500000000000004,
+            "top": 0.5239253852392538
+          }
+        }
+      },
+      {
+        "_key": "8080-28",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-28",
+        "name": "Ash 8080-28",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Ash 8080-28",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.3787510137875101,
+            "left": 0.8305555555555556,
+            "right": 0.05833333333333335,
+            "top": 0.5239253852392538
+          }
+        }
+      },
+      {
+        "_key": "8080-24",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-24",
+        "name": "Espresso 8080-24",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Espresso 8080-24",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21654501216545008,
+            "left": 0.0962962962962963,
+            "right": 0.7925925925925926,
+            "top": 0.6861313868613139
+          }
+        }
+      },
+      {
+        "_key": "8080-18",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-18",
+        "name": "Ocean Deep 8080-18",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Ocean Deep 8080-18",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21654501216545008,
+            "left": 0.2796296296296296,
+            "right": 0.6092592592592593,
+            "top": 0.6861313868613139
+          }
+        }
+      },
+      {
+        "_key": "8080-09",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-09",
+        "name": "Cherry 8080-09",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Cherry 8080-09",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21654501216545008,
+            "left": 0.4638888888888889,
+            "right": 0.42500000000000004,
+            "top": 0.6861313868613139
+          }
+        }
+      },
+      {
+        "_key": "8080-31",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-31",
+        "name": "Neon Red 8080-31",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Neon Red 8080-31",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21654501216545008,
+            "left": 0.6472222222222223,
+            "right": 0.2416666666666667,
+            "top": 0.6861313868613139
+          }
+        }
+      },
+      {
+        "_key": "8080-02",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-02",
+        "name": "Bamboo 8080-02",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Bamboo 8080-02",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21654501216545008,
+            "left": 0.8305555555555556,
+            "right": 0.05833333333333335,
+            "top": 0.6861313868613139
+          }
+        }
+      },
+      {
+        "_key": "8080-17",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-17",
+        "name": "Carbon 8080-17",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Carbon 8080-17",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.05515004055150041,
+            "left": 0.0962962962962963,
+            "right": 0.7925925925925926,
+            "top": 0.8475263584752636
+          }
+        }
+      },
+      {
+        "_key": "8080-21",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-21",
+        "name": "Royal Purple 8080-21",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Royal Purple 8080-21",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.05515004055150041,
+            "left": 0.2796296296296296,
+            "right": 0.6092592592592593,
+            "top": 0.8475263584752636
+          }
+        }
+      },
+      {
+        "_key": "8080-20",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-20",
+        "name": "Rust 8080-20",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Rust 8080-20",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.05515004055150041,
+            "left": 0.6472222222222223,
+            "right": 0.2416666666666667,
+            "top": 0.8475263584752636
+          }
+        }
+      },
+      {
+        "_key": "8080-01",
+        "_type": "colourOption",
+        "available": true,
+        "description": "8080 Series fabric",
+        "id": "8080-01",
+        "name": "Butternut 8080-01",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Butternut 8080-01",
+          "asset": {
+            "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.05515004055150041,
+            "left": 0.8305555555555556,
+            "right": 0.05833333333333335,
+            "top": 0.8475263584752636
+          }
+        }
+      },
+      {
+        "_key": "2020-14",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-14",
+        "name": "Milky Way 2020-14",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Milky Way 2020-14",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.8777038269550749,
+            "left": 0.10277777777777777,
+            "right": 0.7861111111111111,
+            "top": 0.022462562396006656
+          }
+        }
+      },
+      {
+        "_key": "2020-12",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-12",
+        "name": "Lemon Peel 2020-12",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Lemon Peel 2020-12",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.8777038269550749,
+            "left": 0.28703703703703703,
+            "right": 0.6018518518518519,
+            "top": 0.022462562396006656
+          }
+        }
+      },
+      {
+        "_key": "2020-11",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-11",
+        "name": "Sorbet Lime 2020-11",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Sorbet Lime 2020-11",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.8777038269550749,
+            "left": 0.46944444444444444,
+            "right": 0.4194444444444444,
+            "top": 0.022462562396006656
+          }
+        }
+      },
+      {
+        "_key": "2020-13",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-13",
+        "name": "Glacier 2020-13",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Glacier 2020-13",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.8777038269550749,
+            "left": 0.6527777777777778,
+            "right": 0.23611111111111116,
+            "top": 0.022462562396006656
+          }
+        }
+      },
+      {
+        "_key": "2020-07",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-07",
+        "name": "Mica 2020-07",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Mica 2020-07",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.8777038269550749,
+            "left": 0.8361111111111111,
+            "right": 0.05277777777777781,
+            "top": 0.022462562396006656
+          }
+        }
+      },
+      {
+        "_key": "2020-16",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-16",
+        "name": "Desert 2020-16",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Desert 2020-16",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7121464226289518,
+            "left": 0.10277777777777777,
+            "right": 0.7861111111111111,
+            "top": 0.18801996672212978
+          }
+        }
+      },
+      {
+        "_key": "2020-03",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-03",
+        "name": "Wheat 2020-03",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Wheat 2020-03",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7121464226289518,
+            "left": 0.28703703703703703,
+            "right": 0.6018518518518519,
+            "top": 0.18801996672212978
+          }
+        }
+      },
+      {
+        "_key": "2020-15",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-15",
+        "name": "Moss 2020-15",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Moss 2020-15",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7121464226289518,
+            "left": 0.46944444444444444,
+            "right": 0.4194444444444444,
+            "top": 0.18801996672212978
+          }
+        }
+      },
+      {
+        "_key": "2020-25",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-25",
+        "name": "Sky 2020-25",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Sky 2020-25",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7121464226289518,
+            "left": 0.6527777777777778,
+            "right": 0.23611111111111116,
+            "top": 0.18801996672212978
+          }
+        }
+      },
+      {
+        "_key": "2020-18",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-18",
+        "name": "Sea Breeze 2020-18",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Sea Breeze 2020-18",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.7121464226289518,
+            "left": 0.8361111111111111,
+            "right": 0.05277777777777781,
+            "top": 0.18801996672212978
+          }
+        }
+      },
+      {
+        "_key": "2020-19",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-19",
+        "name": "Rattan 2020-19",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Rattan 2020-19",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5474209650582362,
+            "left": 0.10277777777777777,
+            "right": 0.7861111111111111,
+            "top": 0.3527454242928453
+          }
+        }
+      },
+      {
+        "_key": "2020-22",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-22",
+        "name": "Golden Dust 2020-22",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Golden Dust 2020-22",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5474209650582362,
+            "left": 0.28703703703703703,
+            "right": 0.6018518518518519,
+            "top": 0.3527454242928453
+          }
+        }
+      },
+      {
+        "_key": "2020-06",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-06",
+        "name": "Green Field 2020-06",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Green Field 2020-06",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5474209650582362,
+            "left": 0.46944444444444444,
+            "right": 0.4194444444444444,
+            "top": 0.3527454242928453
+          }
+        }
+      },
+      {
+        "_key": "2020-05",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-05",
+        "name": "Marine Blue 2020-05",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Marine Blue 2020-05",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5474209650582362,
+            "left": 0.6527777777777778,
+            "right": 0.23611111111111116,
+            "top": 0.3527454242928453
+          }
+        }
+      },
+      {
+        "_key": "2020-04",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-04",
+        "name": "Stone 2020-04",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Stone 2020-04",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.5474209650582362,
+            "left": 0.8361111111111111,
+            "right": 0.05277777777777781,
+            "top": 0.3527454242928453
+          }
+        }
+      },
+      {
+        "_key": "2020-09",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-09",
+        "name": "Chestnut 2020-09",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Chestnut 2020-09",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.38186356073211314,
+            "left": 0.10277777777777777,
+            "right": 0.7861111111111111,
+            "top": 0.5183028286189684
+          }
+        }
+      },
+      {
+        "_key": "2020-17",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-17",
+        "name": "Freezy Orange 2020-17",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Freezy Orange 2020-17",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.38186356073211314,
+            "left": 0.28703703703703703,
+            "right": 0.6018518518518519,
+            "top": 0.5183028286189684
+          }
+        }
+      },
+      {
+        "_key": "2020-08",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-08",
+        "name": "Green Brier 2020-08",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Green Brier 2020-08",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.38186356073211314,
+            "left": 0.46944444444444444,
+            "right": 0.4194444444444444,
+            "top": 0.5183028286189684
+          }
+        }
+      },
+      {
+        "_key": "2020-02",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-02",
+        "name": "Blueridge 2020-02",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Blueridge 2020-02",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.38186356073211314,
+            "left": 0.6527777777777778,
+            "right": 0.23611111111111116,
+            "top": 0.5183028286189684
+          }
+        }
+      },
+      {
+        "_key": "2020-26",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-26",
+        "name": "Dark Grey 2020-26",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Dark Grey 2020-26",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.38186356073211314,
+            "left": 0.8361111111111111,
+            "right": 0.05277777777777781,
+            "top": 0.5183028286189684
+          }
+        }
+      },
+      {
+        "_key": "2020-01",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-01",
+        "name": "Tearose 2020-01",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Tearose 2020-01",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21630615640599005,
+            "left": 0.10277777777777777,
+            "right": 0.7861111111111111,
+            "top": 0.6838602329450915
+          }
+        }
+      },
+      {
+        "_key": "2020-27",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-27",
+        "name": "Carrot 2020-27",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Carrot 2020-27",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21630615640599005,
+            "left": 0.28703703703703703,
+            "right": 0.6018518518518519,
+            "top": 0.6838602329450915
+          }
+        }
+      },
+      {
+        "_key": "2020-28",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-28",
+        "name": "Royal 2020-28",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Royal 2020-28",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21630615640599005,
+            "left": 0.6527777777777778,
+            "right": 0.23611111111111116,
+            "top": 0.6838602329450915
+          }
+        }
+      },
+      {
+        "_key": "2020-23",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-23",
+        "name": "Capuccino 2020-23",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Capuccino 2020-23",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.21630615640599005,
+            "left": 0.8361111111111111,
+            "right": 0.05277777777777781,
+            "top": 0.6838602329450915
+          }
+        }
+      },
+      {
+        "_key": "2020-29",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-29",
+        "name": "Cherry 2020-29",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Cherry 2020-29",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.04991680532445919,
+            "left": 0.10277777777777777,
+            "right": 0.7861111111111111,
+            "top": 0.8502495840266223
+          }
+        }
+      },
+      {
+        "_key": "2020-24",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-24",
+        "name": "Cardinal Red 2020-24",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Cardinal Red 2020-24",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.04991680532445919,
+            "left": 0.28703703703703703,
+            "right": 0.6018518518518519,
+            "top": 0.8502495840266223
+          }
+        }
+      },
+      {
+        "_key": "2020-30",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-30",
+        "name": "Baltic 2020-30",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Baltic 2020-30",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.04991680532445919,
+            "left": 0.6527777777777778,
+            "right": 0.23611111111111116,
+            "top": 0.8502495840266223
+          }
+        }
+      },
+      {
+        "_key": "2020-21",
+        "_type": "colourOption",
+        "available": true,
+        "description": "2020 Series fabric",
+        "id": "2020-21",
+        "name": "Black 2020-21",
+        "priceAdjustment": 0,
+        "swatchImage": {
+          "_type": "image",
+          "alt": "Black 2020-21",
+          "asset": {
+            "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+            "_type": "reference"
+          },
+          "crop": {
+            "_type": "sanity.imageCrop",
+            "bottom": 0.04991680532445919,
+            "left": 0.8361111111111111,
+            "right": 0.05277777777777781,
+            "top": 0.8502495840266223
+          }
+        }
+      }
+    ],
+    "configuratorEnabled": true,
+    "defaultQuantity": 1,
+    "defaultSizeId": "1200x600",
+    "defaultThicknessId": "150mm",
+    "gallery": [
+      {
+        "_key": "c77167eb963d",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 1",
+        "asset": {
+          "_ref": "image-b8a8e0ebf10db56ccc384dfafd204ecd74d6b103-1536x2048-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "3ed6ea07ca1f",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 2",
+        "asset": {
+          "_ref": "image-f20a688144f8b824d58b407d1afc1c30596b9ea2-1536x2048-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "999d2db8cad7",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 3",
+        "asset": {
+          "_ref": "image-9abb4c4f60ae8c39da38a6d577ebda658141c105-3024x4032-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "b4988c159b86",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 4",
+        "asset": {
+          "_ref": "image-6ccaac4f192482b5a32c185c55c1f24ed2a9a337-1448x1086-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "a0432265a748",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 5",
+        "asset": {
+          "_ref": "image-db710c67c036fb52843c54b5c8a0825358bb8f74-1122x1402-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "soothe-weave-2020",
+        "_type": "image",
+        "alt": "Soothe Weave 2020 original fabric chart",
+        "asset": {
+          "_ref": "image-465eb6533713089c05e98f371a581ca2ea288b2a-1080x1202-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "soothe-weave-8080",
+        "_type": "image",
+        "alt": "Soothe Weave 8080 original fabric chart",
+        "asset": {
+          "_ref": "image-f5d3cac4fc65013cd8611d74158959d8f2f2b614-1080x1233-jpg",
+          "_type": "reference"
+        }
+      }
+    ],
+    "installationOptions": [
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv5J",
+        "available": true,
+        "description": "Panels are supplied for your own installation.",
+        "id": "self-install",
+        "label": "Self-install",
+        "price": 0,
+        "priceType": "none"
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv65",
+        "available": true,
+        "description": "Just Acoustics installs the panels. Final access requirements are reviewed before payment.",
+        "id": "professional-install",
+        "label": "Professional installation",
+        "price": 45,
+        "priceType": "perUnit"
+      }
+    ],
+    "leadTime": "Made to order. Typical production is 3-4 weeks after size, finish, placement, and installation requirements are confirmed.",
+    "mainImage": {
+      "_type": "image",
+      "alt": "Soothe™ Bass Traps product image",
+      "asset": {
+        "_ref": "image-97b33ea0aae3b240f8eb2b60b19249a9fe648e24-1122x1402-png",
+        "_type": "reference"
+      }
+    },
+    "minQuantity": 1,
+    "price": 240,
+    "productLine": "bass-trap",
+    "shortDescription": "Deep porous bass treatment designed to reduce low-frequency buildup, modal ringing, and long decay times in studios and critical listening rooms.",
+    "sizeOptions": [
+      {
+        "_key": "1200x600-0",
+        "_type": "sizeOption",
+        "available": true,
+        "description": "120 x 60 cm",
+        "heightMm": 600,
+        "id": "1200x600",
+        "label": "Standard",
+        "priceAdjustment": 0,
+        "widthMm": 1200
+      }
+    ],
+    "sku": "JA-BASS-150",
+    "slug": {
+      "_type": "slug",
+      "current": "soothe-tm-bass-trap-panel"
+    },
+    "specifications": [
+      {
+        "_key": "standard-size-0",
+        "_type": "specification",
+        "label": "Standard Size",
+        "value": "120 x 60 cm"
+      },
+      {
+        "_key": "thickness-1",
+        "_type": "specification",
+        "label": "Thickness",
+        "value": "15 cm Studio / 30 cm Maxx"
+      },
+      {
+        "_key": "core-material-2",
+        "_type": "specification",
+        "label": "Core Material",
+        "value": "Rockwool acoustic absorption core"
+      },
+      {
+        "_key": "studio-construction-3",
+        "_type": "specification",
+        "label": "Studio Construction",
+        "value": "Two rockwool layers"
+      },
+      {
+        "_key": "maxx-construction-4",
+        "_type": "specification",
+        "label": "Maxx Construction",
+        "value": "Four rockwool layers with built-in air gap"
+      },
+      {
+        "_key": "primary-use-5",
+        "_type": "specification",
+        "label": "Primary Use",
+        "value": "Low-frequency control below 200 Hz, modal decay, corners and critical studio positions"
+      },
+      {
+        "_key": "finish-6",
+        "_type": "specification",
+        "label": "Finish",
+        "value": "Acoustically transparent fabric"
+      }
+    ],
+    "thicknessOptions": [
+      {
+        "_key": "150mm-0",
+        "_type": "thicknessOption",
+        "available": true,
+        "description": "15 cm depth",
+        "id": "150mm",
+        "label": "Soothe™ Studio Bass Trap",
+        "millimeters": 150,
+        "nrc": "Two-layer rockwool build for practical upper-bass control",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "300mm-1",
+        "_type": "thicknessOption",
+        "available": true,
+        "description": "30 cm depth · Quote required",
+        "id": "300mm",
+        "label": "Soothe™ Maxx Bass Trap",
+        "millimeters": 300,
+        "nrc": "Four-layer rockwool build with an internal air gap for deeper low-frequency control"
+      }
+    ],
+    "title": "Soothe™ Bass Traps"
+  }
+]

@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Just Acoustics order payments every five minutes
+
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=5min
+AccuracySec=15s
+Unit=ja-order-payments.service
+
+[Install]
+WantedBy=timers.target

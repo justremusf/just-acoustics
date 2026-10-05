@@ -40,9 +40,9 @@ export function SitePageReveal({ children }: { children: ReactNode }) {
     }
 
     const viewportCutoff = window.innerHeight * 0.94
-    items.forEach((item) => {
-      if (item.getBoundingClientRect().top < viewportCutoff) item.classList.add('is-visible')
-    })
+    // Read layout together before writing classes to avoid forced layout per section.
+    const initiallyVisible = items.filter((item) => item.getBoundingClientRect().top < viewportCutoff)
+    initiallyVisible.forEach((item) => item.classList.add('is-visible'))
     root.classList.add('is-ready')
 
     const observer = new IntersectionObserver(

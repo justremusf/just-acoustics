@@ -1,8 +1,12 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 export default function WhatsAppButton() {
+  const pathname = usePathname()
+  // Checkout has inline help so the floating button cannot cover form fields.
+  if (pathname?.startsWith("/checkout") || pathname?.startsWith("/orders/")) return null
   return (
     <TrackedAnchor
       href="https://wa.me/6589301905"

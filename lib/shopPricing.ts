@@ -41,8 +41,9 @@ export function formatSgd(amount: number) {
     style: 'currency',
     currency: 'SGD',
     currencyDisplay: 'narrowSymbol',
-    maximumFractionDigits: 0,
-  }).format(Math.round(amount))
+    minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(amount)
 }
 
 export function availableOptions<T extends AvailableOption>(options?: T[]) {

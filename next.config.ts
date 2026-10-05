@@ -5,11 +5,11 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://va.vercel-scripts.com https://vercel.live https://tally.so",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://va.vercel-scripts.com https://vercel.live https://tally.so https://www.clarity.ms https://*.clarity.ms",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://pagead2.googlesyndication.com https://www.facebook.com",
+      "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://pagead2.googlesyndication.com https://www.facebook.com https://*.clarity.ms https://c.bing.com",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://va.vercel-scripts.com https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://www.facebook.com https://connect.facebook.net https://cdn.sanity.io https://*.api.sanity.io https://tally.so",
+      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://va.vercel-scripts.com https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://www.facebook.com https://connect.facebook.net https://cdn.sanity.io https://*.api.sanity.io https://tally.so https://*.clarity.ms",
       "frame-src 'self' https://tally.so https://www.googletagmanager.com https://www.youtube.com https://www.youtube-nocookie.com",
       "frame-ancestors 'self'",
       "form-action 'self' https://tally.so",
@@ -36,6 +36,8 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // Allow verification builds without overwriting a running dev server.
+  distDir: process.env.NEXT_OUTPUT_DIR || ".next",
   devIndicators: false,
   outputFileTracingRoot: process.cwd(),
   // ESLint runs explicitly via `npm run check`; avoid Next 15's legacy ESLint bridge.
@@ -47,6 +49,16 @@ const nextConfig: NextConfig = {
       // Retired test landing pages.
       { source: '/studio-lander', destination: '/spaces/studios', permanent: true },
       { source: '/studio-landing-page', destination: '/spaces/studios', permanent: true },
+      // Preserve inbound links to retired slugs without adding or moving pages.
+      { source: '/shop/standard-flexi-acoustic-panel', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/shop/custom-print-acoustic-panel', destination: '/shop/flexi-custom-print-panels', permanent: true },
+      { source: '/shop/acoustic-ceiling-panels', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/acoustic-ceiling-panels', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/acoustic-wall-panels', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/custom-print-acoustic-panels', destination: '/shop/flexi-custom-print-panels', permanent: true },
+      { source: '/services/churches-event-spaces', destination: '/spaces/churches', permanent: true },
+      { source: '/services/offices-meeting-rooms', destination: '/spaces/offices', permanent: true },
+      { source: '/services/restaurants-cafes-bars', destination: '/spaces/restaurants', permanent: true },
     ]
   },
   async headers() {

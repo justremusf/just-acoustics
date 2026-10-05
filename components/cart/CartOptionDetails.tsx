@@ -1,5 +1,6 @@
 "use client";
 
+import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
 import Image from "next/image";
 import type { CartItemOption } from "@/components/cart/CartContext";
 
@@ -33,12 +34,14 @@ export default function CartOptionDetails({
       {visibleOptions.map((option) => {
         const isColour =
           option.label.toLowerCase().includes("colour") ||
-          option.label.toLowerCase().includes("color");
+          option.label.toLowerCase().includes("color") ||
+          option.label.toLowerCase().includes("fabric");
         const fallbackHex =
           isColour && option.value
             ? CART_COLOUR_FALLBACKS[option.value.toLowerCase().replace(/\s+\d+$/, "")]
             : undefined;
         const swatchHex = option.hex || fallbackHex;
+        const imageStyle = colourSwatchStyle(option.swatchSrc, option.swatchRegion);
 
         return (
           <div
@@ -52,9 +55,9 @@ export default function CartOptionDetails({
               {isColour && (option.swatchSrc || swatchHex) ? (
                 <span
                   className="relative h-4 w-4 shrink-0 overflow-hidden rounded-full border border-black/10 shadow-[0_0_0_1px_rgba(255,255,255,0.8)]"
-                  style={!option.swatchSrc && swatchHex ? { backgroundColor: swatchHex } : undefined}
+                  style={imageStyle || (!option.swatchSrc && swatchHex ? { backgroundColor: swatchHex } : undefined)}
                 >
-                  {option.swatchSrc ? (
+                  {option.swatchSrc && !imageStyle ? (
                     <Image src={option.swatchSrc} alt="" fill sizes="16px" className="object-cover" />
                   ) : null}
                 </span>
