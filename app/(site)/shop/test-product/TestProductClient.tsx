@@ -101,7 +101,7 @@ const PERFORMANCE_SERIES = [
 
 const HIGHLIGHTS = [
   { icon: Layers, title: 'Broadband absorption', copy: 'Controls echo across highs, mids, and low-mid reflections.' },
-  { icon: Flame, title: 'High safety rating', copy: 'Fire safe, formaldehyde safe, and emissions safe.' },
+  { icon: Flame, title: 'High safety rating', copy: 'Fire safe and formaldehyde safe.' },
   { icon: Palette, title: '39 colour finishes', copy: 'Texture-backed swatches make it easier to choose a finish.' },
   { icon: Ruler, title: 'Three sizes', copy: 'Compact, standard, and long-format panels for real rooms.' },
   { icon: Truck, title: 'Made to order', copy: 'Typical lead time is 3-4 weeks after confirmation.' },
@@ -662,7 +662,7 @@ export default function TestProductClient({ item }: { item: ShopItem }) {
                   </TestAccordion>
                   <TestAccordion title="Materials & Safety">
                     <p className="m-0">
-                      Fire safe, formaldehyde safe, and emissions safe. Project-specific requirements can be confirmed before production.
+                      Fire safe and formaldehyde safe. Project-specific requirements can be confirmed before production.
                     </p>
                   </TestAccordion>
                 </div>

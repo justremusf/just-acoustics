@@ -61,7 +61,7 @@ const profiles: Record<ShopProductLine, ProductProfile> = {
       {
         icon: "flame",
         title: "High safety rating",
-        copy: "Fire safe, formaldehyde safe, and emissions safe.",
+        copy: "Fire safe and formaldehyde safe.",
       },
       {
         icon: "ruler",

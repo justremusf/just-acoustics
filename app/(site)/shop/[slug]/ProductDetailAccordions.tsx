@@ -45,7 +45,7 @@ export function ProductDetailAccordions({ item }: { item: ShopItem }) {
         },
         {
           title: "Specifications",
-          body: "Thickness: 2.5cm or 5cm\nStandard sizes: 60 x 60cm, 30 x 120cm, 60 x 90cm, and 60 x 120cm\nCustom sizes: Available upon request\nMounting: Wall or ceiling\nCore density: 96kg/m3\nNRC: Up to 1.00\nAverage weight: 60 x 120 x 5cm is approximately 4kg",
+          body: "Thickness: 2.5cm or 5cm\nStandard sizes: 60 x 60cm, 60 x 120cm and 60 x 180cm\nCustom sizes: Available upon request\nMounting: Wall or ceiling\nCore density: 96kg/m3\nNRC: Up to 1.00\nAverage weight: 60 x 120 x 5cm is approximately 4kg",
         },
         {
           title: "Installation",
