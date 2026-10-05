@@ -1,0 +1,408 @@
+[
+  {
+    "_createdAt": "2026-06-29T09:57:44Z",
+    "_id": "f190ba86-4bf8-4aae-b03c-85b04a08fb61",
+    "_rev": "ozCyOlBi58GE7eckjfklLp",
+    "_system": {
+      "base": {
+        "id": "f190ba86-4bf8-4aae-b03c-85b04a08fb61",
+        "rev": "hW5DV1JXtq90EFbs5eRVXa"
+      }
+    },
+    "_type": "shopItem",
+    "_updatedAt": "2026-06-30T11:11:53Z",
+    "acousticalSpecs": {
+      "subtitle": "ASTM C423 - Mounting A as per ASTM E795",
+      "title": "Acoustic Performance"
+    },
+    "category": "custom-panels",
+    "configuratorEnabled": false,
+    "defaultQuantity": 1,
+    "gallery": [
+      {
+        "_key": "ea8d3ea4dc8b",
+        "_type": "image",
+        "alt": "Soothe™ Gobos gallery image 1",
+        "asset": {
+          "_ref": "image-dfdcb24c68f98d42e402dd7bbaeb05c70f6a5433-3024x4032-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "5840ab5a16df",
+        "_type": "image",
+        "alt": "Soothe™ Gobos gallery image 2",
+        "asset": {
+          "_ref": "image-21ab65461f9f659a25c8910dce4000381ecef0ad-3024x4032-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "d308d41a9385",
+        "_type": "image",
+        "alt": "Soothe™ Gobos gallery image 3",
+        "asset": {
+          "_ref": "image-67cb2a54e9e467ab7ab2ec0787b123b2ce41cc7e-3024x4032-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "1f0374981776",
+        "_type": "image",
+        "alt": "Soothe™ Gobos gallery image 4",
+        "asset": {
+          "_ref": "image-f8970a27c3a4340cdf28d44b96beed76a0d7565a-1024x1536-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "8aac81e8e0db",
+        "_type": "image",
+        "alt": "Soothe™ Gobos gallery image 5",
+        "asset": {
+          "_ref": "image-ab5b0e0f446f3fb8f6c88903f736da9f2c96c98c-1024x1536-png",
+          "_type": "reference"
+        }
+      }
+    ],
+    "leadTime": "Made to order. Typical production is 3-4 weeks after size, depth, finish, stand configuration, and quantity are confirmed.",
+    "mainImage": {
+      "_type": "image",
+      "alt": "Soothe™ Gobos product image",
+      "asset": {
+        "_ref": "image-f55790f73a45a26ba3fdb0c49bee15cada8fafca-1122x1402-png",
+        "_type": "reference"
+      }
+    },
+    "minQuantity": 1,
+    "price": 340,
+    "productLine": "gobo",
+    "shortDescription": "A movable, freestanding acoustic panel for shaping room tone, reducing reflections, and improving separation without permanent wall or ceiling mounting.",
+    "slug": {
+      "_type": "slug",
+      "current": "soothe-gobos"
+    },
+    "specifications": [
+      {
+        "_key": "configuration-0",
+        "_type": "specification",
+        "label": "Configuration",
+        "value": "Custom freestanding acoustic panel with floor support"
+      },
+      {
+        "_key": "size-1",
+        "_type": "specification",
+        "label": "Size",
+        "value": "Custom to application"
+      },
+      {
+        "_key": "thickness-2",
+        "_type": "specification",
+        "label": "Thickness",
+        "value": "Custom to acoustic and portability requirements"
+      },
+      {
+        "_key": "primary-use-3",
+        "_type": "specification",
+        "label": "Primary Use",
+        "value": "Vocals, drums, amplifiers, temporary reflection control, windows and doors"
+      },
+      {
+        "_key": "acoustic-function-4",
+        "_type": "specification",
+        "label": "Acoustic Function",
+        "value": "Reduces reflections, reverberation, and microphone bleed"
+      },
+      {
+        "_key": "important-5",
+        "_type": "specification",
+        "label": "Important",
+        "value": "Acoustic treatment; not a replacement for construction soundproofing"
+      }
+    ],
+    "title": "Soothe™ Gobos"
+  },
+  {
+    "_createdAt": "2026-05-30T13:29:17Z",
+    "_id": "shopItem.bass-trap-150mm",
+    "_rev": "ozCyOlBi58GE7eckjfklLp",
+    "_system": {
+      "base": {
+        "id": "shopItem.bass-trap-150mm",
+        "rev": "jIwg3X3cZFUaTrI3KJ3ACD"
+      }
+    },
+    "_type": "shopItem",
+    "_updatedAt": "2026-06-30T11:11:53Z",
+    "acousticalSpecs": {
+      "_type": "object",
+      "rows": [
+        {
+          "_key": "studio-150-mm-0",
+          "_type": "acousticalSpecRow",
+          "hz1000": "1.00",
+          "hz125": "0.42",
+          "hz2000": "1.02",
+          "hz250": "0.79",
+          "hz4000": "1.00",
+          "hz500": "0.92",
+          "nrc": "Indicative",
+          "thickness": "Studio 150 mm"
+        },
+        {
+          "_key": "maxx-300-mm-1",
+          "_type": "acousticalSpecRow",
+          "hz1000": "1.04",
+          "hz125": "0.72",
+          "hz2000": "1.02",
+          "hz250": "1.03",
+          "hz4000": "1.00",
+          "hz500": "1.05",
+          "nrc": "Indicative",
+          "thickness": "Maxx 300 mm"
+        }
+      ],
+      "subtitle": "Comparable construction reference only - not a Just Acoustics laboratory test",
+      "title": "Indicative Reference Performance"
+    },
+    "category": "standard-panels",
+    "colourOptions": [
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv6r",
+        "available": true,
+        "hex": "#ede8dc",
+        "id": "ivory",
+        "name": "Ivory",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv7d",
+        "available": true,
+        "hex": "#9c9a92",
+        "id": "warm-grey",
+        "name": "Warm Grey",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv8P",
+        "available": true,
+        "hex": "#242424",
+        "id": "charcoal",
+        "name": "Charcoal",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv9B",
+        "available": true,
+        "hex": "#2e4a3d",
+        "id": "forest",
+        "name": "Forest",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv9x",
+        "available": true,
+        "hex": "#a75d45",
+        "id": "terracotta",
+        "name": "Terracotta",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4ivAj",
+        "available": true,
+        "hex": "#25384f",
+        "id": "navy",
+        "name": "Navy",
+        "priceAdjustment": 0
+      }
+    ],
+    "configuratorEnabled": true,
+    "defaultQuantity": 1,
+    "defaultSizeId": "1200x600",
+    "defaultThicknessId": "150mm",
+    "gallery": [
+      {
+        "_key": "c77167eb963d",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 1",
+        "asset": {
+          "_ref": "image-b8a8e0ebf10db56ccc384dfafd204ecd74d6b103-1536x2048-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "3ed6ea07ca1f",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 2",
+        "asset": {
+          "_ref": "image-f20a688144f8b824d58b407d1afc1c30596b9ea2-1536x2048-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "999d2db8cad7",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 3",
+        "asset": {
+          "_ref": "image-9abb4c4f60ae8c39da38a6d577ebda658141c105-3024x4032-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "b4988c159b86",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 4",
+        "asset": {
+          "_ref": "image-6ccaac4f192482b5a32c185c55c1f24ed2a9a337-1448x1086-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "a0432265a748",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 5",
+        "asset": {
+          "_ref": "image-db710c67c036fb52843c54b5c8a0825358bb8f74-1122x1402-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "6efc98ed61e3",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 6",
+        "asset": {
+          "_ref": "image-f8970a27c3a4340cdf28d44b96beed76a0d7565a-1024x1536-png",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "c165a6661327",
+        "_type": "image",
+        "alt": "Soothe™ Bass Traps gallery image 7",
+        "asset": {
+          "_ref": "image-ab5b0e0f446f3fb8f6c88903f736da9f2c96c98c-1024x1536-png",
+          "_type": "reference"
+        }
+      }
+    ],
+    "installationOptions": [
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv5J",
+        "available": true,
+        "description": "Panels are supplied for your own installation.",
+        "id": "self-install",
+        "label": "Self-install",
+        "price": 0,
+        "priceType": "none"
+      },
+      {
+        "_key": "PqAgSgFWPa4GzheZz4iv65",
+        "available": true,
+        "description": "Just Acoustics installs the panels. Final access requirements are reviewed before payment.",
+        "id": "professional-install",
+        "label": "Professional installation",
+        "price": 45,
+        "priceType": "perUnit"
+      }
+    ],
+    "leadTime": "Made to order. Typical production is 3-4 weeks after size, finish, placement, and installation requirements are confirmed.",
+    "mainImage": {
+      "_type": "image",
+      "alt": "Soothe™ Bass Traps product image",
+      "asset": {
+        "_ref": "image-97b33ea0aae3b240f8eb2b60b19249a9fe648e24-1122x1402-png",
+        "_type": "reference"
+      }
+    },
+    "minQuantity": 1,
+    "price": 240,
+    "productLine": "bass-trap",
+    "shortDescription": "Deep porous bass treatment designed to reduce low-frequency buildup, modal ringing, and long decay times in studios and critical listening rooms.",
+    "sizeOptions": [
+      {
+        "_key": "1200x600-0",
+        "_type": "sizeOption",
+        "available": true,
+        "description": "120 x 60 cm",
+        "heightMm": 600,
+        "id": "1200x600",
+        "label": "Standard",
+        "priceAdjustment": 0,
+        "widthMm": 1200
+      }
+    ],
+    "sku": "JA-BASS-150",
+    "slug": {
+      "_type": "slug",
+      "current": "soothe-tm-bass-trap-panel"
+    },
+    "specifications": [
+      {
+        "_key": "standard-size-0",
+        "_type": "specification",
+        "label": "Standard Size",
+        "value": "120 x 60 cm"
+      },
+      {
+        "_key": "thickness-1",
+        "_type": "specification",
+        "label": "Thickness",
+        "value": "15 cm Studio / 30 cm Maxx"
+      },
+      {
+        "_key": "core-material-2",
+        "_type": "specification",
+        "label": "Core Material",
+        "value": "Rockwool acoustic absorption core"
+      },
+      {
+        "_key": "studio-construction-3",
+        "_type": "specification",
+        "label": "Studio Construction",
+        "value": "Two rockwool layers"
+      },
+      {
+        "_key": "maxx-construction-4",
+        "_type": "specification",
+        "label": "Maxx Construction",
+        "value": "Four rockwool layers with built-in air gap"
+      },
+      {
+        "_key": "primary-use-5",
+        "_type": "specification",
+        "label": "Primary Use",
+        "value": "Low-frequency control below 200 Hz, modal decay, corners and critical studio positions"
+      },
+      {
+        "_key": "finish-6",
+        "_type": "specification",
+        "label": "Finish",
+        "value": "Acoustically transparent fabric"
+      }
+    ],
+    "thicknessOptions": [
+      {
+        "_key": "150mm-0",
+        "_type": "thicknessOption",
+        "available": true,
+        "description": "15 cm depth",
+        "id": "150mm",
+        "label": "Soothe™ Studio Bass Trap",
+        "millimeters": 150,
+        "nrc": "Two-layer rockwool build for practical upper-bass control",
+        "priceAdjustment": 0
+      },
+      {
+        "_key": "300mm-1",
+        "_type": "thicknessOption",
+        "available": true,
+        "description": "30 cm depth · Quote required",
+        "id": "300mm",
+        "label": "Soothe™ Maxx Bass Trap",
+        "millimeters": 300,
+        "nrc": "Four-layer rockwool build with an internal air gap for deeper low-frequency control"
+      }
+    ],
+    "title": "Soothe™ Bass Traps"
+  }
+]

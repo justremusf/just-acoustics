@@ -48,3 +48,6 @@ TODO.md
 /just-acoustics-media-library/
 /outputs/
 /tmp/
+.env*
+
+/.next-orders-build/

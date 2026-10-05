@@ -61,12 +61,7 @@ const profiles: Record<ShopProductLine, ProductProfile> = {
       {
         icon: "flame",
         title: "High safety rating",
-        copy: "Fire safe, formaldehyde safe, and emissions safe.",
-      },
-      {
-        icon: "palette",
-        title: "30+ colours",
-        copy: "Texture-backed swatches make it easier to choose a finish.",
+        copy: "Fire safe and formaldehyde safe.",
       },
       {
         icon: "ruler",

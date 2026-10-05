@@ -651,7 +651,6 @@ export function ProductInfoFaqSection({ item }: { item: ShopItem }) {
     <FAQ
       items={items}
       title="Product Info"
-      subtitle="Common questions before selecting size, placement, and installation."
       flush
     />
   );

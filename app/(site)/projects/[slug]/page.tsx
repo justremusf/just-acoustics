@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getProjectBySlug, getAllProjectSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { canonicalPath, SITE_URL } from '@/lib/seo'
+import { pageMetadata, serializeJsonLd, canonicalPath, SITE_URL } from '@/lib/seo'
 import type { Project } from '@/lib/types'
 
 export const revalidate = 60
@@ -20,14 +20,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project: Project | null = await getProjectBySlug(slug).catch(() => null)
   if (!project) return {}
   const fallbackDescription = `${project.title}${project.location ? ` in ${project.location}` : ''} — acoustic panel installation and echo control project by Just Acoustics, Singapore.`
-  return {
-    title: project.title,
+  return pageMetadata({
+    title: `${project.title} — Acoustic Treatment Project`,
     description: project.description || fallbackDescription,
-    alternates: { canonical: canonicalPath(`/projects/${slug}`) },
-    openGraph: project.mainImage
-      ? { images: [{ url: urlFor(project.mainImage).width(1200).height(630).url() }] }
-      : undefined,
-  }
+    path: `/projects/${slug}`,
+    image: project.mainImage ? urlFor(project.mainImage).width(1200).height(630).url() : undefined,
+  })
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -47,7 +45,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
     <div className="page-wrap page-stack">
       <Link href="/projects" className="page-link">← All Projects</Link>
 

@@ -10,7 +10,6 @@ import {
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ChevronDown,
@@ -25,19 +24,27 @@ import CartOptionDetails from "@/components/cart/CartOptionDetails";
 import { useCart, type CartItem } from "@/components/cart/CartContext";
 import CheckoutHelp from "@/components/checkout/CheckoutHelp";
 import CheckoutSteps from "@/components/checkout/CheckoutSteps";
+import InstallationEnquiry from "@/components/cart/InstallationEnquiry";
+import { trackEvent } from "@/components/analytics/trackEvent";
 import {
   CONTACT_PHONE_DISPLAY,
-  LAST_ORDER_STORAGE_KEY,
   formatPayable,
   lineTotal,
   validateCheckoutFields,
   type CheckoutFieldErrors,
   type CheckoutFields,
-  type PlacedOrder,
 } from "@/lib/checkout";
-import { JUST_ACOUSTICS_WHATSAPP_URL } from "@/lib/paymentCopy";
+import {
+  DELIVERY_DISCLOSURE,
+  DELIVERY_FEE,
+  JUST_ACOUSTICS_WHATSAPP_URL,
+  ORDER_FOLLOW_UP,
+} from "@/lib/paymentCopy";
 
-const DRAFT_STORAGE_KEY = "just-acoustics-checkout-draft";
+// Shared with the order status page, which clears these once payment is confirmed.
+export const DRAFT_STORAGE_KEY = "just-acoustics-checkout-draft";
+export const REQUEST_STORAGE_KEY = "just-acoustics-checkout-request";
+export const ORDER_CART_STORAGE_KEY = "ja-order-cart";
 const SUBMIT_TIMEOUT_MS = 20000;
 
 const emptyFields: CheckoutFields = {
@@ -89,6 +96,22 @@ function readDraft(): CheckoutFields {
   } catch {
     return emptyFields;
   }
+}
+
+type CheckoutRequest = { snapshot: string; id: string };
+
+function readRequest(): CheckoutRequest | null {
+  try {
+    const parsed = JSON.parse(window.sessionStorage.getItem(REQUEST_STORAGE_KEY) || "null");
+    return typeof parsed?.snapshot === "string" && typeof parsed?.id === "string" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Delivery is charged once the address and six-digit postal code look valid. */
+function isAddressReady(fields: CheckoutFields) {
+  return fields.addressLine1.trim().length >= 5 && /^\d{6}$/.test(fields.postalCode.trim());
 }
 
 function QuantityControl({ item }: { item: CartItem }) {
@@ -182,21 +205,33 @@ function OrderLines({ editable }: { editable: boolean }) {
   );
 }
 
-function SummaryTotal() {
+function SummaryTotal({ addressReady }: { addressReady: boolean }) {
   const { subtotal } = useCart();
+  const total = subtotal + (addressReady ? DELIVERY_FEE : 0);
   return (
     <div className="border-t border-black/8 pt-4">
-      <div className="flex items-baseline justify-between gap-4">
+      <dl className="m-0 grid grid-cols-[1fr_auto] gap-y-2 text-sm text-[var(--color-gray-100)]">
+        <dt>Products</dt>
+        <dd className="m-0 text-right">{formatPayable(subtotal)}</dd>
+        <dt>Islandwide delivery</dt>
+        <dd className="m-0 text-right" aria-live="polite">
+          {addressReady ? formatPayable(DELIVERY_FEE) : `${formatPayable(DELIVERY_FEE)} after address`}
+        </dd>
+      </dl>
+      <div className="mt-3 flex items-baseline justify-between gap-4">
         <span className="text-sm font-semibold text-[var(--color-dark-100)]">
-          Total to pay
+          {addressReady ? "Total to pay" : "Product subtotal"}
         </span>
-        <span className="text-2xl font-semibold text-[var(--color-dark-100)]">
-          {formatPayable(subtotal)}
+        <span className="text-2xl font-semibold text-[var(--color-dark-100)]" aria-live="polite">
+          {formatPayable(total)}
         </span>
       </div>
       <p className="m-0 mt-2 text-xs leading-5 text-[var(--color-gray-100)]">
         Made to order: standard lead time is 4 to 6 weeks. We confirm
         delivery or installation timing after payment.
+      </p>
+      <p className="m-0 mt-1 text-xs leading-5 text-[var(--color-gray-100)]">
+        Supply and delivery. Installation is arranged separately.
       </p>
     </div>
   );
@@ -211,8 +246,7 @@ function PageShell({ children }: { children: ReactNode }) {
 }
 
 export default function CheckoutClient() {
-  const router = useRouter();
-  const { items, itemCount, subtotal, hydrated, clearCart } = useCart();
+  const { items, itemCount, subtotal, hydrated } = useCart();
   const [fields, setFields] = useState<CheckoutFields>(emptyFields);
   const [errors, setErrors] = useState<CheckoutFieldErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -220,12 +254,23 @@ export default function CheckoutClient() {
   const [placed, setPlaced] = useState(false);
   const submittingRef = useRef(false);
   const draftLoaded = useRef(false);
+  const request = useRef<CheckoutRequest | null>(null);
+  const tracked = useRef(false);
+  const addressReady = isAddressReady(fields);
+  const total = subtotal + (addressReady ? DELIVERY_FEE : 0);
 
   // Restore an unsent draft (e.g. after a refresh or a failed submit).
   useEffect(() => {
     setFields(readDraft());
+    request.current = readRequest();
     draftLoaded.current = true;
   }, []);
+
+  useEffect(() => {
+    if (!hydrated || !items.length || tracked.current) return;
+    tracked.current = true;
+    trackEvent("begin_checkout", { value: subtotal, currency: "SGD" });
+  }, [hydrated, items.length, subtotal]);
 
   useEffect(() => {
     if (!draftLoaded.current) return;
@@ -253,6 +298,9 @@ export default function CheckoutClient() {
     if (submittingRef.current || items.length === 0) return;
 
     const nextErrors = validateCheckoutFields(fields);
+    if (!nextErrors.addressLine1 && fields.addressLine1.trim().length < 5) {
+      nextErrors.addressLine1 = "Please enter the full delivery address.";
+    }
     setErrors(nextErrors);
     const firstInvalid = FIELDS.find((field) => nextErrors[field.name]);
     if (firstInvalid) {
@@ -268,60 +316,63 @@ export default function CheckoutClient() {
     const timeout = window.setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
 
     try {
-      const response = await fetch("/api/cart-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: controller.signal,
-        body: JSON.stringify({
-          items: items.map((item) => ({
-            id: item.id,
-            slug: item.slug,
-            title: item.title,
-            quantity: item.quantity,
-            unitPrice: item.unitPrice,
-            options: item.options.map(({ label, value }) => ({ label, value })),
-          })),
-          subtotal,
-          customer: fields,
-        }),
-      });
-      const body = await response.json().catch(() => null);
-
-      if (!response.ok || !body?.paymentReference) {
+      if (items.some((item) => !item.selection)) {
         setSubmitError(
-          body?.error ||
-            "We couldn't place your order just now. Please try again in a moment.",
+          "This cart was created before our checkout update. Please remove the products and add them again.",
         );
         return;
       }
 
-      const order: PlacedOrder = {
-        reference: body.paymentReference,
-        amount: Number(body.payment?.amount ?? subtotal),
-        currency: "SGD",
-        placedAt: new Date().toISOString(),
-        email: fields.email.trim(),
-        customerEmailSent: Boolean(body.customerEmailSent),
-        teamNotified: Boolean(body.teamNotified),
+      // Prices are recalculated on the server from the product catalogue.
+      const payload = {
+        customer: fields,
         items: items.map((item) => ({
-          id: item.id,
-          title: item.title,
+          slug: item.slug,
           quantity: item.quantity,
-          lineTotal: lineTotal(item.unitPrice, item.quantity),
-          options: item.options.map(({ label, value }) => ({ label, value })),
+          unitPrice: item.unitPrice,
+          selection: { ...item.selection!, quantity: item.quantity },
         })),
       };
+      // A stable request id makes retries return the same saved order.
+      const snapshot = JSON.stringify(payload);
+      if (request.current?.snapshot !== snapshot) {
+        request.current = { snapshot, id: crypto.randomUUID() };
+      }
+      try {
+        window.sessionStorage.setItem(REQUEST_STORAGE_KEY, JSON.stringify(request.current));
+      } catch {
+        // Idempotency still holds for retries within this page view.
+      }
+
+      const response = await fetch("/api/cart-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({ ...payload, requestId: request.current.id }),
+      });
+      const body = await response.json().catch(() => null);
+
+      if (!response.ok || !body?.orderUrl || !body?.paymentReference) {
+        setSubmitError(
+          body?.error ||
+            "We couldn't save your order just now. Please try again in a moment. Do not pay until your order is saved.",
+        );
+        return;
+      }
 
       try {
-        window.localStorage.setItem(LAST_ORDER_STORAGE_KEY, JSON.stringify(order));
-        window.sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+        // The cart is cleared on the order page once payment is confirmed,
+        // provided it hasn't changed since this order was placed.
+        window.sessionStorage.setItem(
+          ORDER_CART_STORAGE_KEY,
+          JSON.stringify({ reference: body.paymentReference, snapshot: JSON.stringify(items) }),
+        );
       } catch {
-        // The PayNow page also accepts the reference in the URL.
+        // Clearing the cart after payment is a convenience only.
       }
 
       setPlaced(true);
-      router.push(`/checkout/paynow?ref=${encodeURIComponent(order.reference)}`);
-      clearCart();
+      window.location.assign(body.orderUrl);
     } catch (error) {
       setSubmitError(
         error instanceof DOMException && error.name === "AbortError"
@@ -345,7 +396,7 @@ export default function CheckoutClient() {
               aria-hidden="true"
             />
             <h1 className="page-title" style={{ marginTop: 20, fontSize: "clamp(28px, 4vw, 40px)" }}>
-              Order received
+              Order saved
             </h1>
             <p className="page-subtitle" style={{ margin: "12px auto 0" }} role="status">
               Opening your PayNow details…
@@ -409,6 +460,9 @@ export default function CheckoutClient() {
             Tell us where to deliver. On the next step you&apos;ll get the
             PayNow QR, the exact amount and your order reference.
           </p>
+          <p className="m-0 mt-2 text-sm leading-6 text-[var(--color-gray-100)]">
+            {DELIVERY_DISCLOSURE}
+          </p>
         </div>
       </div>
 
@@ -425,12 +479,12 @@ export default function CheckoutClient() {
               />
             </span>
             <span className="shrink-0 text-lg font-semibold text-[var(--color-dark-100)]">
-              {formatPayable(subtotal)}
+              {formatPayable(total)}
             </span>
           </summary>
           <div className="grid gap-4 border-t border-black/8 px-4 py-4">
             <OrderLines editable />
-            <SummaryTotal />
+            <SummaryTotal addressReady={addressReady} />
           </div>
         </details>
 
@@ -556,17 +610,23 @@ export default function CheckoutClient() {
                 <>
                   <LockKeyhole className="h-5 w-5" aria-hidden="true" />
                   Continue to PayNow
-                  <span className="hidden sm:inline">· {formatPayable(subtotal)}</span>
+                  <span className="hidden sm:inline">· {formatPayable(total)}</span>
                 </>
               )}
             </button>
             <p className="m-0 text-center text-sm leading-6 text-[var(--color-gray-100)]">
-              Nothing is charged automatically. You&apos;ll pay by PayNow from
-              your own banking app on the next step.
+              Nothing is charged automatically. Your order is saved first, then
+              you&apos;ll pay by PayNow from your own banking app on the next step.
+            </p>
+            <p className="m-0 text-center text-sm leading-6 text-[var(--color-gray-100)]">
+              {ORDER_FOLLOW_UP}
             </p>
           </div>
 
           <CheckoutHelp compact />
+          <div className="lg:hidden">
+            <InstallationEnquiry />
+          </div>
         </form>
 
         {/* Desktop: sticky summary beside the form */}
@@ -582,8 +642,9 @@ export default function CheckoutClient() {
             <OrderLines editable />
           </div>
           <div className="mt-4">
-            <SummaryTotal />
+            <SummaryTotal addressReady={addressReady} />
           </div>
+          <InstallationEnquiry />
         </aside>
       </div>
     </PageShell>

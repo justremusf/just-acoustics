@@ -6,7 +6,9 @@ import Link from "next/link";
 import { HelpCircle, X } from "lucide-react";
 import { useCart, type CartItemOption } from "@/components/cart/CartContext";
 import type { ShopItem } from "@/lib/types";
-import { getProductProfile } from "@/lib/shopProductProfiles";
+import { getProductProfile, resolveProductLine } from "@/lib/shopProductProfiles";
+import { trackEvent } from "@/components/analytics/trackEvent";
+import { DELIVERY_DISCLOSURE, ORDER_LEAD_TIME } from "@/lib/paymentCopy";
 import {
   calculateShopPrice,
   formatSgd,
@@ -284,12 +286,19 @@ export function ProductConfigurator({
     value: ShopQuoteSelection[K],
   ) => {
     setSelection((current) => ({ ...current, [key]: value }));
+    trackEvent("product_option_selected", {
+      product_slug: configurableItem.slug.current,
+      option: key,
+      option_value: String(value),
+    });
   };
 
   useEffect(() => {
     if (!isColourOpen) return;
 
     const onPointerDown = (event: MouseEvent) => {
+      // The Soothe collection is inline; collapsing on mousedown moves the clicked control.
+      if (isSoothe) return;
       if (
         colourPopoverRef.current &&
         !colourPopoverRef.current.contains(event.target as Node)
@@ -308,7 +317,15 @@ export function ProductConfigurator({
       document.removeEventListener("mousedown", onPointerDown);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [isColourOpen]);
+  }, [isColourOpen, isSoothe]);
+
+  useEffect(() => {
+    trackEvent("product_view", {
+      product_slug: configurableItem.slug.current,
+      product_name: configurableItem.title,
+      product_line: resolveProductLine(configurableItem),
+    });
+  }, [configurableItem]);
 
   const handleAddToCart = () => {
     const quantity = normaliseQuantity(configurableItem, selection.quantity);
@@ -330,10 +347,9 @@ export function ProductConfigurator({
       {
         label: isSoothe ? "Fabric" : "Colour",
         value: profile.artworkReview ? undefined : resolved.colourOption?.name,
-        swatchSrc: isSoothe
-          ? undefined
-          : getColourSwatchSrc(resolved.colourOption, 64, 64) || undefined,
+        swatchSrc: getColourSwatchSrc(resolved.colourOption, 64, 64) || undefined,
         hex: resolved.colourOption?.hex,
+        swatchRegion: resolved.colourOption?.swatchRegion,
       },
     ].filter((option) => Boolean(option.value));
 
@@ -344,8 +360,16 @@ export function ProductConfigurator({
         getSizePreviewSrc(configurableItem, selection, 640, 640) ||
         getImageSrc(configurableItem.mainImage, 640, 640),
       unitPrice,
+      selection: { ...selection, installationId: "self-install", packageId: undefined },
       quantity,
       options,
+    });
+    trackEvent("add_to_cart", {
+      product_slug: configurableItem.slug.current,
+      product_name: configurableItem.title,
+      quantity,
+      value: price.total,
+      currency: "SGD",
     });
   };
 
@@ -452,7 +476,7 @@ export function ProductConfigurator({
               <>
                 <div
                   ref={swatchRowRef}
-                  className="product-swatch-grid mt-3 flex flex-nowrap gap-1 sm:hidden"
+                  className="product-swatch-grid mt-3 flex flex-wrap gap-2 sm:hidden"
                 >
                   {mobileVisibleColours.map((option) => (
                     <ProductColourSwatchButton
@@ -639,8 +663,8 @@ export function ProductConfigurator({
           )}
 
         <div className={`${optionSectionClass()} grid gap-4`}>
-          <div className="product-action-row grid grid-cols-[132px_minmax(0,1fr)] items-center gap-3">
-            <div className="inline-flex h-14 overflow-hidden rounded-full border border-black/8 bg-white/86">
+          <div className="product-action-row grid min-w-0 grid-cols-[132px_minmax(0,1fr)] items-center gap-3">
+            <div className="product-quantity-control inline-flex h-[52px] w-[132px] justify-self-start overflow-hidden rounded-full border border-black/8 bg-white/86">
               <button
                 type="button"
                 onClick={() =>
@@ -649,12 +673,12 @@ export function ProductConfigurator({
                     normaliseQuantity(configurableItem, selection.quantity - 1),
                   )
                 }
-                className="inline-flex h-full w-11 items-center justify-center text-2xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
+                className="inline-flex h-full flex-1 items-center justify-center text-xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
                 aria-label="Decrease quantity"
               >
                 -
               </button>
-              <div className="flex h-full w-11 items-center justify-center border-x border-black/8 text-base font-semibold text-[var(--color-dark-100)]">
+              <div className="flex h-full flex-1 items-center justify-center border-x border-black/8 text-sm font-semibold text-[var(--color-dark-100)]">
                 {selection.quantity}
               </div>
               <button
@@ -665,7 +689,7 @@ export function ProductConfigurator({
                     normaliseQuantity(configurableItem, selection.quantity + 1),
                   )
                 }
-                className="inline-flex h-full w-11 items-center justify-center text-2xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
+                className="inline-flex h-full flex-1 items-center justify-center text-xl text-[var(--color-dark-100)] transition-colors hover:bg-black/5"
                 aria-label="Increase quantity"
               >
                 +
@@ -690,6 +714,7 @@ export function ProductConfigurator({
             )}
           </div>
 
+          <p className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">{DELIVERY_DISCLOSURE}<br />{ORDER_LEAD_TIME}</p>
           <Link
             href="/contact"
             className="grid grid-cols-[42px_minmax(0,1fr)] items-center gap-4 rounded-[18px] bg-[rgba(19,126,137,0.12)] px-4 py-4 text-[#137e89] no-underline transition-colors hover:bg-[rgba(19,126,137,0.16)]"

@@ -1,0 +1,56 @@
+[
+  {
+    "source": "/shop/standard-flexi-acoustic-panel",
+    "status": 308,
+    "location": "/shop/flexi-acoustic-panels",
+    "pass": true
+  },
+  {
+    "source": "/shop/custom-print-acoustic-panel",
+    "status": 308,
+    "location": "/shop/flexi-custom-print-panels",
+    "pass": true
+  },
+  {
+    "source": "/shop/acoustic-ceiling-panels",
+    "status": 308,
+    "location": "/shop/flexi-acoustic-panels",
+    "pass": true
+  },
+  {
+    "source": "/products/acoustic-ceiling-panels",
+    "status": 308,
+    "location": "/shop/flexi-acoustic-panels",
+    "pass": true
+  },
+  {
+    "source": "/products/acoustic-wall-panels",
+    "status": 308,
+    "location": "/shop/flexi-acoustic-panels",
+    "pass": true
+  },
+  {
+    "source": "/products/custom-print-acoustic-panels",
+    "status": 308,
+    "location": "/shop/flexi-custom-print-panels",
+    "pass": true
+  },
+  {
+    "source": "/services/churches-event-spaces",
+    "status": 308,
+    "location": "/spaces/churches",
+    "pass": true
+  },
+  {
+    "source": "/services/offices-meeting-rooms",
+    "status": 308,
+    "location": "/spaces/offices",
+    "pass": true
+  },
+  {
+    "source": "/services/restaurants-cafes-bars",
+    "status": 308,
+    "location": "/spaces/restaurants",
+    "pass": true
+  }
+]

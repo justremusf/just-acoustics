@@ -323,16 +323,24 @@ export default function HeaderClient({
   }
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame: number | null = null
+    const updateScroll = () => {
+      frame = null
       const scrollY = window.scrollY
       setScrolled(scrollY > 20)
       setMobileHeaderProgress(Math.min(Math.max(scrollY / 96, 0), 1))
-      if (window.scrollY > 24) closeDesktopMenuImmediate()
+      if (scrollY > 24) closeDesktopMenuImmediate()
+    }
+    const onScroll = () => {
+      if (frame === null) frame = window.requestAnimationFrame(updateScroll)
     }
 
-    onScroll()
+    updateScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame !== null) window.cancelAnimationFrame(frame)
+    }
   // closeDesktopMenuImmediate only uses stable state setters and refs.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

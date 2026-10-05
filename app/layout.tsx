@@ -1,13 +1,15 @@
 import type { Metadata, Viewport } from 'next'
 import { Suspense } from 'react'
-import { Instrument_Sans, Manrope, League_Spartan } from 'next/font/google'
+import { Instrument_Sans, Manrope } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
+import ClarityAnalytics from '@/components/analytics/ClarityAnalytics'
 import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
+import FirstPartyInsights from '@/components/analytics/FirstPartyInsights'
 import HapticProvider from '@/components/providers/HapticProvider'
-import { SITE_LOGO_URL, SITE_PREVIEW_IMAGE, SITE_URL } from '@/lib/seo'
+import { serializeJsonLd, SITE_LOGO_URL, SITE_PREVIEW_IMAGE, SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -22,12 +24,6 @@ const manrope = Manrope({
   display: 'swap',
 })
 
-const leagueSpartan = League_Spartan({
-  subsets: ['latin'],
-  variable: '--font-spartan',
-  weight: ['800'],
-  display: 'swap',
-})
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -90,18 +86,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const gaId = process.env.NEXT_PUBLIC_GA_ID
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID
+  const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID
   const hasTracking = Boolean(gaId || googleAdsId || metaPixelId)
   const gtagId = gaId || googleAdsId
 
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${instrumentSans.variable} ${manrope.variable} ${leagueSpartan.variable}`}
+      className={`${instrumentSans.variable} ${manrope.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://cdn.sanity.io" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body suppressHydrationWarning className="bg-white">
         <HapticProvider>
@@ -159,38 +156,65 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={null}>
             <AttributionProvider />
           </Suspense>
+          <ClarityAnalytics projectId={clarityProjectId} />
+          <Suspense fallback={null}>
+            <FirstPartyInsights />
+          </Suspense>
           <CookieConsentBanner />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
+              __html: serializeJsonLd({
                 '@context': 'https://schema.org',
-                '@type': ['Organization', 'LocalBusiness'],
-                name: 'Just Acoustics',
-                url: SITE_URL,
-                logo: SITE_LOGO_URL,
-                description:
-                  'Acoustic panel supply and installation for offices, restaurants, churches, studios, and more in Singapore.',
-                telephone: '+65 8930 1905',
-                email: 'info@justacoustics.co',
-                priceRange: '$$',
-                address: {
-                  '@type': 'PostalAddress',
-                  addressCountry: 'SG',
-                  addressRegion: 'Singapore',
-                  addressLocality: 'Singapore',
-                },
-                areaServed: { '@type': 'Country', name: 'Singapore' },
-                contactPoint: {
-                  '@type': 'ContactPoint',
-                  contactType: 'customer service',
-                  telephone: '+65 8930 1905',
-                  email: 'info@justacoustics.co',
-                  availableLanguage: 'English',
-                },
-                sameAs: [
-                  'https://www.instagram.com/justacoustics',
-                  'https://www.facebook.com/justacoustics',
+                '@graph': [
+                  {
+                    '@type': ['Organization', 'LocalBusiness'],
+                    '@id': `${SITE_URL}/#organization`,
+                    name: 'Just Acoustics',
+                    url: SITE_URL,
+                    logo: SITE_LOGO_URL,
+                    image: `${SITE_URL}${SITE_PREVIEW_IMAGE}`,
+                    foundingDate: '2022',
+                    description:
+                      'Singapore acoustic treatment specialist supplying and installing acoustic panels for offices, restaurants, churches, schools, studios, gyms, cinemas, and homes.',
+                    telephone: '+65 8930 1905',
+                    email: 'info@justacoustics.co',
+                    priceRange: '$$',
+                    address: {
+                      '@type': 'PostalAddress',
+                      addressCountry: 'SG',
+                      addressRegion: 'Singapore',
+                      addressLocality: 'Singapore',
+                    },
+                    areaServed: { '@type': 'Country', name: 'Singapore' },
+                    knowsAbout: [
+                      'Acoustic treatment',
+                      'Acoustic panels',
+                      'Echo reduction',
+                      'Speech clarity',
+                      'Room acoustics',
+                    ],
+                    contactPoint: {
+                      '@type': 'ContactPoint',
+                      contactType: 'customer service',
+                      telephone: '+65 8930 1905',
+                      email: 'info@justacoustics.co',
+                      availableLanguage: 'English',
+                    },
+                    sameAs: [
+                      'https://www.instagram.com/just.acoustics/',
+                      'https://www.facebook.com/profile.php?id=61550947084275',
+                      'https://www.youtube.com/@JustAcoustics',
+                    ],
+                  },
+                  {
+                    '@type': 'WebSite',
+                    '@id': `${SITE_URL}/#website`,
+                    url: SITE_URL,
+                    name: 'Just Acoustics',
+                    inLanguage: 'en-SG',
+                    publisher: { '@id': `${SITE_URL}/#organization` },
+                  },
                 ],
               }),
             }}

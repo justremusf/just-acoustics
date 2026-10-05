@@ -21,13 +21,6 @@ export function ProductBeforeAfterSection() {
       category: "Restaurant",
       note: "Comfortable dining",
     },
-    {
-      videoId: "Y9b0NNTRnFw",
-      thumbnail: "/assets/webflow/69687c96d1feff52c5d91be4_3.avif",
-      label: "Function Room",
-      category: "Church",
-      note: "Comfortable event space",
-    },
   ];
 
   return (

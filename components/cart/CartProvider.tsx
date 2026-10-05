@@ -19,6 +19,7 @@ import {
   type CartItemInput,
   type CartItemOption,
 } from "@/components/cart/CartContext";
+import InstallationEnquiry from "./InstallationEnquiry";
 import CartOptionDetails from "@/components/cart/CartOptionDetails";
 
 const CART_STORAGE_KEY = "just-acoustics-cart";
@@ -64,6 +65,7 @@ function parseStoredItems(value: string | null): CartItem[] {
         )
           return null;
         return {
+          selection: candidate.selection as CartItem["selection"],
           id: candidate.id,
           slug: candidate.slug,
           title: candidate.title,
@@ -89,6 +91,7 @@ function parseStoredItems(value: string | null): CartItem[] {
                     typeof option.swatchSrc === "string"
                       ? option.swatchSrc
                       : undefined,
+                  swatchRegion: option.swatchRegion,
                   hex: typeof option.hex === "string" ? option.hex : undefined,
                 }))
             : [],
@@ -260,9 +263,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
             {
               ...input,
               quantity,
-              // Keep full precision: rounding here made line totals drift
-              // (e.g. a $1,000 bundle of 3 became 3 x $333 = $999).
-              unitPrice: Math.max(0, input.unitPrice),
+              // Whole cents: the orders API reprices on the server and compares cents.
+              unitPrice: Math.max(0, Math.round(input.unitPrice * 100) / 100),
               imageSrc: input.imageSrc || null,
               id,
               addedAt: new Date().toISOString(),
@@ -475,8 +477,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
             <div className="border-t border-black/8 bg-white/66 px-5 py-5 sm:px-7">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <p className="m-0 max-w-[220px] text-sm leading-6 text-[var(--color-gray-100)]">
-                    Add delivery details next, then pay by PayNow.
+                  <p className="m-0 max-w-[240px] text-sm leading-6 text-[var(--color-gray-100)]">
+                    Add delivery details next, then pay by PayNow. S$50 flat-rate islandwide delivery is added after your address.
                   </p>
                 </div>
                 <div className="text-right">
@@ -496,6 +498,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 <LockKeyhole className="h-5 w-5" />
                 Check out
               </Link>
+              <InstallationEnquiry />
             </div>
           )}
         </aside>

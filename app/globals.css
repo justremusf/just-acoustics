@@ -718,7 +718,6 @@ body[data-gallery-expanded="true"] header {
   }
 
   .product-swatch-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 10px;
   }
 
@@ -735,8 +734,12 @@ body[data-gallery-expanded="true"] header {
   }
 
   .product-action-row {
-    grid-template-columns: 118px minmax(0, 1fr);
-    gap: 8px;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .product-quantity-control {
+    width: 76px;
   }
 
   .product-accordion-list {

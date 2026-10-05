@@ -158,6 +158,7 @@ export default function ArticleDetail({ article, nav }: { article: ArticleView; 
                 <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
                     href="/contact"
+                    data-insight-cta="blog_consultation"
                     className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[var(--color-dark-100)] px-7 text-sm font-semibold text-white no-underline transition-colors hover:bg-black"
                   >
                     Get free advice <ArrowRight size={16} aria-hidden="true" />
