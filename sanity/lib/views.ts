@@ -120,6 +120,7 @@ export function toArticleView(post: Post): ArticleView {
     excerpt: post.excerpt,
     image: toViewImage(post.mainImage, post.title, 2400),
     body: resolveBody(body, post.title),
+    author: post.author?.name ? { name: post.author.name, role: post.author.role, bio: post.author.bio } : null,
     faqs: (post.faqs ?? []).filter((f) => f?.question && f?.answer).map((f) => ({ q: f.question, a: f.answer })),
   }
 }

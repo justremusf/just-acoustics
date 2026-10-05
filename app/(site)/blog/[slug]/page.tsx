@@ -50,6 +50,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const article = toArticleView(post)
   const listed = (Array.isArray(allPosts) ? allPosts : []).filter((p) => p?.slug?.current).map(toExplorerPost)
   const nav = buildArticleNav(listed, slug, post.category)
+  const author = post.author?.name ? post.author : null
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -61,7 +62,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     articleSection: article.topicLabel,
     inLanguage: 'en-SG',
     timeRequired: `PT${article.readingTime}M`,
-    author: { '@id': `${SITE_URL}/#organization` },
+    author: author
+      ? { '@type': 'Person', name: author.name, ...(author.role && { jobTitle: author.role }) }
+      : { '@id': `${SITE_URL}/#organization` },
     publisher: { '@id': `${SITE_URL}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalPath(`/blog/${slug}`) },
     isPartOf: { '@id': `${SITE_URL}/#website` },

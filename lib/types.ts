@@ -103,6 +103,14 @@ export interface Post {
   seo?: { metaTitle?: string; metaDescription?: string }
   faqs?: FaqItem[]
   imagePrompts?: ImagePrompt[]
+  author?: PostAuthor
+}
+
+export interface PostAuthor {
+  name?: string
+  role?: string
+  bio?: string
+  image?: SanityImage
 }
 
 export interface SpaceAudience {

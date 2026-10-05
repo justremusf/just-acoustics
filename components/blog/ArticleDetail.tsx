@@ -100,6 +100,15 @@ export default function ArticleDetail({ article, nav }: { article: ArticleView; 
             <h1 className="page-title max-w-[22ch]">{article.title}</h1>
             {article.excerpt && <p className="page-subtitle text-[17px]">{article.excerpt}</p>}
             <p className="m-0 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-[var(--color-gray-200)]">
+              {article.author ? (
+                <>
+                  <span className="font-semibold text-[var(--color-dark-100)]">
+                    By {article.author.name}
+                    {article.author.role ? `, ${article.author.role}` : ''}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                </>
+              ) : null}
               <span className="font-semibold text-[var(--color-dark-100)]">{article.typeLabel}</span>
               {article.date && (
                 <>
@@ -183,6 +192,16 @@ export default function ArticleDetail({ article, nav }: { article: ArticleView; 
               </aside>
             )}
           </div>
+        {article.author?.bio ? (
+            <aside className="glass-card flex flex-col gap-2 p-6 md:p-7" aria-label="About the author">
+              <p className="page-kicker m-0 !text-[var(--color-brand-orange)]">About the author</p>
+              <p className="m-0 font-semibold text-[var(--color-dark-100)]">
+                {article.author.name}
+                {article.author.role ? `, ${article.author.role}` : ''}
+              </p>
+              <p className="m-0 text-[15px] text-[var(--color-gray-200)]">{article.author.bio}</p>
+            </aside>
+          ) : null}
         </article>
 
         {article.faqs.length > 0 && (

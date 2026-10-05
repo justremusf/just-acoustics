@@ -108,6 +108,7 @@ export interface ArticleView {
   /** Portable text with image blocks already resolved to `inlineImage` (src/alt/size). */
   body: PortableTextBlock[]
   faqs: { q: string; a: string }[]
+  author?: { name: string; role?: string; bio?: string } | null
 }
 
 export interface ArticleNavView {
