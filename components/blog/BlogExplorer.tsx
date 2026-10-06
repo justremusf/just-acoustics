@@ -115,14 +115,16 @@ function FeatureTile({ post, className = '' }: { post: ExplorerPost; className?:
     >
       <div className="relative w-full" style={{ aspectRatio: coverRatio(post.image) }}>
         <Cover post={post} priority sizes="(min-width: 1024px) 66vw, 100vw" />
-        <span className="absolute left-4 top-4 z-10 rounded-full bg-[var(--color-brand-orange)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-dark-100)]">
-          {post.pinned ? 'Featured' : 'Latest'}
-        </span>
       </div>
 
       <div className="flex w-full items-end gap-4 p-6 md:p-8">
         <div className="min-w-0 flex-1">
-          <p className="page-kicker mb-3 !text-[var(--color-brand-orange)]">{topicTitle(post.category)}</p>
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <span className="rounded-full bg-[var(--color-brand-orange)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-dark-100)]">
+              {post.pinned ? 'Featured' : 'Latest'}
+            </span>
+            <p className="page-kicker m-0 !text-[var(--color-brand-orange)]">{topicTitle(post.category)}</p>
+          </div>
           <h3
             className="m-0 text-[clamp(26px,3vw,40px)] font-medium leading-[1.05] tracking-[-1px] text-white"
             style={{ fontFamily: 'var(--font-heading)' }}
