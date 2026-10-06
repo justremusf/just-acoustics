@@ -3,6 +3,8 @@
 import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import SiteVideoPlayer from '@/components/ui/SiteVideoPlayer'
+import { SITE_VIDEOS } from '@/lib/videos'
 import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown } from 'lucide-react'
 import {
   type RoomType,
@@ -57,7 +59,7 @@ const CASE_STUDIES = [
         ],
       },
     ],
-    videoId: 'Y9b0NNTRnFw',
+    video: SITE_VIDEOS.functionRoom,
   },
   {
     id: 'lengkwang',
@@ -76,7 +78,7 @@ const CASE_STUDIES = [
         ],
       },
     ],
-    videoId: 'Y9b0NNTRnFw',
+    video: SITE_VIDEOS.functionRoom,
   },
   {
     id: 'grace',
@@ -95,7 +97,7 @@ const CASE_STUDIES = [
         ],
       },
     ],
-    videoId: 'Y9b0NNTRnFw',
+    video: SITE_VIDEOS.functionRoom,
   },
 ]
 
@@ -669,21 +671,15 @@ export default function ChurchLanderClient() {
               <p className="mt-4 text-sm leading-7 text-[var(--color-gray-100)]">{activeCase.description}</p>
             </div>
 
-            {/* Hear Results — YouTube embed */}
+            {/* Hear Results — before & after video */}
             <div className="glass-card overflow-hidden">
               <div className="relative" style={{ paddingBottom: '56.25%' }}>
-                {activeVideoId === activeCase.videoId ? (
-                  <iframe
-                    className="absolute inset-0 h-full w-full"
-                    src={`https://www.youtube.com/embed/${activeCase.videoId}?autoplay=1&rel=0&playsinline=1`}
-                    title={`${activeCase.fullName} — Before & After`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                {activeVideoId === activeCase.video.youtubeId ? (
+                  <SiteVideoPlayer video={activeCase.video} />
                 ) : (
                   <button
                     type="button"
-                    onClick={() => setActiveVideoId(activeCase.videoId)}
+                    onClick={() => setActiveVideoId(activeCase.video.youtubeId)}
                     className="group absolute inset-0 flex flex-col items-center justify-center bg-[var(--color-dark-100)] text-white"
                     aria-label="Play before & after audio"
                   >

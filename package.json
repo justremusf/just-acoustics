@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint app components hooks lib sanity",
     "check": "npm run lint && tsc --noEmit",
+    "videos": "bash scripts/fetch-site-videos.sh",
     "local": "bash scripts/local-dev.sh",
     "local:install": "bash scripts/install-localhost-launchagent.sh",
     "local:uninstall": "bash scripts/uninstall-localhost-launchagent.sh",

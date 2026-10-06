@@ -2,24 +2,26 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import SiteVideoPlayer from '@/components/ui/SiteVideoPlayer'
+import { SITE_VIDEOS } from '@/lib/videos'
 
 const videos = [
   {
-    videoId: '8DURhlYt3wQ',
+    video: SITE_VIDEOS.meetingRoom,
     thumbnail: '/assets/webflow/69687b1239333b922d70b26a_Title.avif',
     label: 'Meeting Room',
     category: 'Meeting Room',
     note: 'Clearer voices',
   },
   {
-    videoId: 'bm-q3dQWB6g',
+    video: SITE_VIDEOS.restaurant,
     thumbnail: '/assets/webflow/69687d6c4e41c7a3a58f9107_Title.avif',
     label: 'Noisy Restaurant',
     category: 'Restaurant',
     note: 'Comfortable dining',
   },
   {
-    videoId: 'Y9b0NNTRnFw',
+    video: SITE_VIDEOS.functionRoom,
     thumbnail: '/assets/webflow/69687c96d1feff52c5d91be4_3.avif',
     label: 'Function Room',
     category: 'Church',
@@ -53,14 +55,13 @@ export default function HearTheDifference() {
           {/* Single responsive grid — renders all videos once, collapses to 1 column on mobile showing only first video */}
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {videos.map((v, index) => {
-              const isActive = activeVideoId === v.videoId
+              const isActive = activeVideoId === v.video.youtubeId
               const isHiddenOnMobile = index > 0
-              const activeSrc = `https://www.youtube-nocookie.com/embed/${v.videoId}?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1`
 
               return (
                 <button
-                  key={v.videoId}
-                  onClick={() => setActiveVideoId(v.videoId)}
+                  key={v.video.youtubeId}
+                  onClick={() => setActiveVideoId(v.video.youtubeId)}
                   onMouseEnter={prewarmYouTube}
                   onTouchStart={prewarmYouTube}
                   className={[
@@ -84,13 +85,7 @@ export default function HearTheDifference() {
                       </>
                     ) : (
                       <div className="absolute inset-0 bg-black">
-                        <iframe
-                          className="absolute inset-0 h-full w-full"
-                          src={activeSrc}
-                          title={v.label}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
+                        <SiteVideoPlayer video={v.video} />
                       </div>
                     )}
 

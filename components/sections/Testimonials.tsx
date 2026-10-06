@@ -6,8 +6,11 @@ import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import { urlFor } from '@/sanity/lib/image'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import SiteVideoPlayer from '@/components/ui/SiteVideoPlayer'
+import { SITE_VIDEOS } from '@/lib/videos'
 
-const CASE_STUDY_VIDEO_ID = '-1WDATPou2Y'
+const CASE_STUDY_VIDEO = SITE_VIDEOS.yogaStudio
+const CASE_STUDY_VIDEO_ID = CASE_STUDY_VIDEO.youtubeId
 const CASE_STUDY_THUMBNAILS = [
   `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/hqdefault.jpg`,
   `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/maxresdefault.jpg`,
@@ -76,13 +79,7 @@ export default function Testimonials({ testimonials }: Props) {
             <div className="min-h-[220px] border-t border-black/6 lg:border-t-0 lg:border-l lg:border-black/6">
               <div className="relative h-full w-full overflow-hidden" style={{ paddingBottom: '56.25%' }}>
                 {isStoryVideoActive ? (
-                  <iframe
-                    className="absolute inset-0 h-full w-full"
-                    src={`https://www.youtube-nocookie.com/embed/${CASE_STUDY_VIDEO_ID}?autoplay=1&rel=0&playsinline=1`}
-                    title="Client Testimonial Video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  <SiteVideoPlayer video={CASE_STUDY_VIDEO} />
                 ) : (
                   <button
                     type="button"

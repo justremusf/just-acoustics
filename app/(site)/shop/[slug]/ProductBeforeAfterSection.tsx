@@ -3,19 +3,21 @@
 import { useState } from "react";
 import Image from "next/image";
 import { PRODUCT_PLAY_ICON } from "./productData";
+import SiteVideoPlayer from "@/components/ui/SiteVideoPlayer";
+import { SITE_VIDEOS } from "@/lib/videos";
 
 export function ProductBeforeAfterSection() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const videos = [
     {
-      videoId: "8DURhlYt3wQ",
+      video: SITE_VIDEOS.meetingRoom,
       thumbnail: "/assets/webflow/69687b1239333b922d70b26a_Title.avif",
       label: "Meeting Room",
       category: "Meeting Room",
       note: "Clearer voices",
     },
     {
-      videoId: "bm-q3dQWB6g",
+      video: SITE_VIDEOS.restaurant,
       thumbnail: "/assets/webflow/69687d6c4e41c7a3a58f9107_Title.avif",
       label: "Noisy Restaurant",
       category: "Restaurant",
@@ -37,26 +39,20 @@ export function ProductBeforeAfterSection() {
         </div>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {videos.map((video) => {
-            const isActive = activeVideoId === video.videoId;
+            const isActive = activeVideoId === video.video.youtubeId;
 
             return (
               <button
-                key={video.videoId}
+                key={video.video.youtubeId}
                 type="button"
-                onClick={() => setActiveVideoId(video.videoId)}
+                onClick={() => setActiveVideoId(video.video.youtubeId)}
                 className="group relative overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]"
                 aria-label={`Play ${video.label} result clip`}
               >
                 <div className="relative aspect-[4/5] min-h-[300px]">
                   {isActive ? (
                     <div className="absolute inset-0 bg-black">
-                      <iframe
-                        className="absolute inset-0 h-full w-full"
-                        src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&rel=0&playsinline=1`}
-                        title={video.label}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
+                      <SiteVideoPlayer video={video.video} />
                     </div>
                   ) : (
                     <>
