@@ -1,5 +1,6 @@
 // Static product data for the product detail page (performance series,
-// Standard Flexi options and colours, Soothe fabric collections).
+// gallery assets, visible colour/fabric ids). Server-only: client islands
+// receive what they need as props.
 import type { resolveProductLine } from "@/lib/shopProductProfiles";
 
 export const ACOUSTIC_FREQUENCIES = [
@@ -214,28 +215,19 @@ export const GOBO_REFERENCE_SERIES: PerformanceSeries[] = [
   },
 ];
 
-// Product options, Flexi colours and Soothe fabrics are shared with the orders API
+// Flexi colours and Soothe fabrics are shared with the orders API
 // (lib/orders/validation.ts) so browser and server pricing always agree.
-export {
-  STANDARD_FLEXI_SIZE_OPTIONS,
-  STANDARD_FLEXI_THICKNESS_OPTIONS,
-  STANDARD_FLEXI_INSTALLATION_OPTIONS,
-} from "@/lib/shopCatalogue";
 export {
   FLEXI_COLOUR_CHART_SRC as STANDARD_FLEXI_COLOUR_CHART_SRC,
   FLEXI_VISIBLE_COLOUR_IDS as STANDARD_FLEXI_VISIBLE_COLOUR_IDS,
-  STANDARD_FLEXI_COLOURS,
 } from "@/lib/flexiColours";
-export { SOOTHE_FABRIC_CHARTS, SOOTHE_FABRICS } from "@/lib/sootheFabrics";
+export { SOOTHE_FABRIC_CHARTS } from "@/lib/sootheFabrics";
 
 export const STANDARD_FLEXI_SIZE_IMAGE_SRC: Record<string, string> = {
   "600x600": "/assets/shop/standard-flexi/standard-flexi-600x600.webp",
   "1200x600": "/assets/shop/standard-flexi/standard-flexi-1200x600.webp",
   "1800x600": "/assets/shop/standard-flexi/standard-flexi-1800x600.webp",
 };
-
-export const PRODUCT_PLAY_ICON =
-  "/assets/webflow/6967a0f62bd9b7dce9e01040_Play%20icon.png";
 
 export const STANDARD_FLEXI_IN_USE_IMAGES = [
   "/assets/shop/standard-flexi/gallery/flexi-gallery-1.webp",
