@@ -8,7 +8,7 @@ import { urlFor } from "@/sanity/lib/image";
 import type { ShopItem } from "@/lib/types";
 import FAQ from "@/components/sections/FAQ";
 import type { FaqItem } from "@/components/sections/FAQ";
-import { canonicalPath } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 import { getShopPriceLabel } from "@/lib/shopDisplay";
 import ShopFilters from "@/components/sections/ShopFilters";
 import { ArrowRight } from "lucide-react";
@@ -41,13 +41,13 @@ export async function generateMetadata({
   searchParams: Promise<{ category?: string }>;
 }): Promise<Metadata> {
   const { category } = await searchParams;
-  return {
-    title: "Shop",
+  return pageMetadata({
+    title: "Buy Acoustic Panels Online Singapore",
     description:
-      "Shop acoustic panels and soundproofing products from Just Acoustics, Singapore.",
-    alternates: { canonical: canonicalPath("/shop") },
-    robots: category ? { index: false, follow: true } : undefined,
-  };
+      "Shop acoustic wall panels, ceiling panels, bass traps and accessories online from Just Acoustics, with optional installation across Singapore.",
+    path: "/shop",
+    noindex: Boolean(category),
+  });
 }
 
 const CATEGORY_LABELS: Record<string, string> = {

@@ -5,18 +5,18 @@ import { ArrowRight } from 'lucide-react'
 import { getAllSpaces } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Space } from '@/lib/types'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 import { sortBySpacePriority } from '@/lib/spaceOrder'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Spaces',
+export const metadata: Metadata = pageMetadata({
+  title: 'Acoustic Treatment by Space, Singapore',
   description:
-    'Explore acoustic treatment strategies for homes, studios, offices, churches, restaurants, education, and activity spaces in Singapore.',
-  alternates: { canonical: canonicalPath('/spaces') },
-}
+    'Acoustic treatment for homes, studios, offices, churches, restaurants, schools and activity spaces in Singapore, with real projects and typical prices.',
+  path: '/spaces',
+})
 
 export default async function SpacesPage() {
   const spaces: Space[] = sortBySpacePriority(await getAllSpaces().catch(() => []), (space: Space) => space.slug?.current)

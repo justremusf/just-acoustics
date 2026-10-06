@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import { FOOTER_SERVICE_LINKS } from '@/lib/serviceLinks'
 
 const navGroups = [
   {
@@ -17,6 +18,10 @@ const navGroups = [
       { label: 'Spaces', href: '/spaces' },
       { label: 'Acoustic Education', href: '/blog' },
     ],
+  },
+  {
+    title: 'Services',
+    links: FOOTER_SERVICE_LINKS,
   },
   {
     title: 'Company',
@@ -170,7 +175,7 @@ export default function Footer() {
 
             <div className="rounded-[30px] border border-black/6 bg-white/58 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.04),0_1px_0_rgba(255,255,255,0.82)_inset] sm:p-6 md:p-7">
               <div className="flex h-full flex-col gap-5">
-                <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-14">
+                <div className="grid gap-12 sm:grid-cols-2 lg:gap-14 xl:grid-cols-4 xl:gap-10">
                   {navGroups.map((group) => (
                     <div key={group.title}>
                       <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">

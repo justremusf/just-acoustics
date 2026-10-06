@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Privacy Policy',
   description: 'Privacy Policy for Just Acoustics — how we collect, use and protect your personal data.',
-  robots: { index: false },
-}
+  path: '/privacy-policy',
+  noindex: true,
+})
 
 export default function PrivacyPolicyPage() {
   return (

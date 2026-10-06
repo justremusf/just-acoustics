@@ -3,7 +3,7 @@ import { getAllPosts } from '@/sanity/lib/queries'
 import { toExplorerPost } from '@/sanity/lib/views'
 import type { Post } from '@/lib/types'
 import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 import BlogExplorer from '@/components/blog/BlogExplorer'
 import { CONTENT_TYPES } from '@/lib/blogContent'
 
@@ -16,13 +16,13 @@ interface BlogPageProps {
 export async function generateMetadata({ searchParams }: BlogPageProps): Promise<Metadata> {
   const { topic, type, search } = await searchParams
   const isFiltered = Boolean(topic || type || search)
-  return {
-    title: 'Acoustic Education',
+  return pageMetadata({
+    title: 'Acoustic Treatment Guides Singapore',
     description:
-      'Read acoustic treatment guides, buying advice, room-specific tips, comparisons, videos, and case studies from the Just Acoustics team.',
-    alternates: { canonical: canonicalPath('/blog') },
-    robots: isFiltered ? { index: false, follow: true } : undefined,
-  }
+      'Acoustic treatment guides, buying advice, room-specific tips, comparisons, videos and case studies from the Just Acoustics team in Singapore.',
+    path: '/blog',
+    noindex: isFiltered,
+  })
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {

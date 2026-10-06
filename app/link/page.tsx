@@ -1,11 +1,15 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Image from 'next/image'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Link in Bio',
   description: 'Acoustic panels, echo control, and sound treatment across Singapore.',
-}
+  path: '/link',
+  // Thin social link hub that duplicates the homepage; keep it out of search results.
+  noindex: true,
+})
 
 const links = [
   {
@@ -536,6 +540,7 @@ export default function LinkInBioPage() {
               src="/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp"
               alt="Acoustic panel installation by Just Acoustics Singapore"
               fill
+              sizes="(max-width: 520px) 100vw, 480px"
               style={{ objectFit: 'cover', objectPosition: 'center' }}
               priority
             />

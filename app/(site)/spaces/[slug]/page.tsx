@@ -7,11 +7,12 @@ import { getAllProjects, getAllSpaceSlugs, getSpaceBySlug } from '@/sanity/lib/q
 import { urlFor } from '@/sanity/lib/image'
 import type { Project, Space } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
-import { pageMetadata, serializeJsonLd, canonicalPath, SITE_URL, stripBrand } from '@/lib/seo'
+import { breadcrumbJsonLd as buildBreadcrumbJsonLd, fitTitle, pageMetadata, serializeJsonLd, serviceJsonLd as buildServiceJsonLd, stripBrand } from '@/lib/seo'
+import { serviceForSpace } from '@/lib/serviceLinks'
 import { formatSgd } from '@/lib/shopPricing'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 import PriceEstimator from '@/components/estimator/PriceEstimator'
-import { estimatorSpaceForPage } from '@/lib/priceGuide'
+import { estimatorSpaceForPage, findSpaceType } from '@/lib/priceGuide'
 
 export const revalidate = 60
 
@@ -26,10 +27,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!space) return {}
 
   return pageMetadata({
-    title: stripBrand(space.seo?.metaTitle) || `${space.title} Acoustic Treatment Singapore`,
+    title: fitTitle(
+      stripBrand(space.seo?.metaTitle),
+      `${space.title} Acoustic Treatment Singapore`,
+      `${space.title} Acoustics Singapore`,
+      `${space.title} Acoustics`,
+    ),
     description: space.seo?.metaDescription || space.shortDescription,
     path: `/spaces/${slug}`,
     image: space.mainImage ? urlFor(space.mainImage).width(1200).height(630).url() : undefined,
+    imageAlt: space.mainImage?.alt || space.title,
   })
 }
 
@@ -60,27 +67,22 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
     new Map(projectCandidates.map((project) => [project._id, project])).values()
   )
 
-  const serviceJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: `${space.title} acoustic treatment`,
-    description: space.shortDescription,
-    provider: { '@id': `${SITE_URL}/#organization` },
-    areaServed: { '@type': 'Country', name: 'Singapore' },
-    url: canonicalPath(`/spaces/${slug}`),
-  }
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Spaces', item: canonicalPath('/spaces') },
-      { '@type': 'ListItem', position: 3, name: space.title, item: canonicalPath(`/spaces/${slug}`) },
-    ],
-  }
-
   const estimatorSpace = estimatorSpaceForPage(slug)
+  const estimatorPrices = findSpaceType(estimatorSpace)?.prices
+  const servicePage = serviceForSpace(slug)
+
+  const serviceJsonLd = buildServiceJsonLd({
+    name: `${space.title} acoustic treatment in Singapore`,
+    description: space.shortDescription,
+    path: `/spaces/${slug}`,
+    serviceType: `${space.title} acoustic treatment`,
+    minPrice: estimatorPrices ? Math.min(...Object.values(estimatorPrices).map((entry) => entry.low)) : undefined,
+  })
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Spaces', path: '/spaces' },
+    { name: space.title, path: `/spaces/${slug}` },
+  ])
 
   const faqItems = (space.faqs || []).flatMap((item) =>
     item.question && item.answer ? [{ q: item.question, a: item.answer }] : []
@@ -213,6 +215,11 @@ export default async function SpacePage({ params }: { params: Promise<{ slug: st
               <p className="mb-0 mt-5 max-w-[48ch] text-[15px] leading-7 text-[var(--color-gray-100)]">
                 Pick your room size to see what similar projects typically cost in Singapore, including supply and installation.
               </p>
+              {servicePage ? (
+                <Link href={servicePage.href} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#171717] no-underline hover:text-[var(--color-brand-orange)]">
+                  {servicePage.label} <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : null}
             </div>
             <div className="min-w-0">
               <PriceEstimator defaultSpace={estimatorSpace} compact id="estimator" />

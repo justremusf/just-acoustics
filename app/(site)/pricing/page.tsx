@@ -11,15 +11,15 @@ import PageEngagementTracker from '@/components/analytics/PageEngagementTracker'
 import { getAllShopItems } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { ShopItem } from '@/lib/types'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 import { formatSgd } from '@/lib/shopPricing'
 
-export const metadata: Metadata = {
-  title: 'Pricing - Acoustic Treatment Costs in Singapore',
+export const metadata: Metadata = pageMetadata({
+  title: 'Acoustic Panel & Treatment Prices Singapore',
   description:
-    'Transparent acoustic treatment pricing ranges for offices, home studios, churches, schools, and restaurants in Singapore.',
-  alternates: { canonical: canonicalPath('/pricing') },
-}
+    'Typical installed prices for acoustic treatment in Singapore offices, home studios, churches, schools and restaurants, from about S$1,000 for smaller rooms.',
+  path: '/pricing',
+})
 
 const PRICING_RANGES: PricingRange[] = [
   {

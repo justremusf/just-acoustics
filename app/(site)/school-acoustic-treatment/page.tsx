@@ -2,15 +2,18 @@ import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
 import PriceEstimator from '@/components/estimator/PriceEstimator'
 import { getPaidSearchData } from '@/lib/paidSearchData'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata, serializeJsonLd, serviceJsonLd } from '@/lib/seo'
+import { minPriceForService, SPACE_LINKS_BY_SERVICE } from '@/lib/serviceLinks'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'School & Classroom Acoustic Treatment Singapore',
+const PAGE_PATH = '/school-acoustic-treatment'
+
+export const metadata: Metadata = pageMetadata({
+  title: 'School & Classroom Acoustics Singapore',
   description: 'Reduce classroom echo so students can hear the teacher clearly. Acoustic wall and ceiling treatment for Singapore schools and tuition centres.',
-  alternates: { canonical: canonicalPath('/school-acoustic-treatment') },
-}
+  path: PAGE_PATH,
+})
 
 const config: PaidSearchPageConfig = {
   eyebrow: 'Schools & Classrooms',
@@ -46,5 +49,21 @@ const config: PaidSearchPageConfig = {
 
 export default async function Page() {
   const data = await getPaidSearchData()
-  return <PaidSearchLandingPage config={config} {...data} estimator={<PriceEstimator defaultSpace="school" compact id="estimator" />} />
+  const jsonLd = serviceJsonLd({
+    name: 'School and classroom acoustic treatment in Singapore',
+    description: config.summary,
+    path: PAGE_PATH,
+    minPrice: minPriceForService('school'),
+  })
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+      <PaidSearchLandingPage
+        config={config}
+        {...data}
+        relatedLinks={SPACE_LINKS_BY_SERVICE.school}
+        estimator={<PriceEstimator defaultSpace="school" compact id="estimator" />}
+      />
+    </>
+  )
 }
