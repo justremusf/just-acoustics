@@ -5,6 +5,7 @@ import BrandScroller from '@/components/sections/BrandScroller'
 import ProductsGrid from '@/components/sections/ProductsGrid'
 import Spaces from '@/components/sections/Spaces'
 import HomePriceEstimate from '@/components/sections/HomePriceEstimate'
+import RecentProjects from '@/components/sections/RecentProjects'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
@@ -15,6 +16,7 @@ import {
   getAllShopItems,
   getAllSpaces,
   getFeaturedTestimonials,
+  getAllProjects,
 } from '@/sanity/lib/queries'
 import { pageMetadata } from '@/lib/seo'
 
@@ -32,11 +34,12 @@ export const metadata: Metadata = pageMetadata({
 })
 
 export default async function HomePage() {
-  const [settings, products, spaces, testimonials] = await Promise.all([
+  const [settings, products, spaces, testimonials, projects] = await Promise.all([
     getSiteSettings().catch(() => null),
     getAllShopItems().catch(() => []),
     getAllSpaces().catch(() => []),
     getFeaturedTestimonials().catch(() => []),
+    getAllProjects().catch(() => []),
   ])
 
   return (
@@ -51,6 +54,7 @@ export default async function HomePage() {
       </div>
       <div data-home-reveal><Spaces spaces={spaces} /></div>
       <div data-home-reveal><HomePriceEstimate /></div>
+      <div data-home-reveal><RecentProjects projects={projects} /></div>
       <div data-home-reveal>
         <LazyInteractiveVSL
           config={landingVslConfig}
