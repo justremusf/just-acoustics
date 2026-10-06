@@ -42,7 +42,12 @@ export default async function HomePage() {
     <>
       <ScrollToTopOnMount />
       <Hero />
-      <div data-home-reveal><BrandScroller logos={settings?.brandLogos} /></div>
+      <div data-home-reveal>
+        <div className="px-4 pt-6 md:pt-8">
+          <p className="page-kicker text-center">Trusted by teams across Singapore</p>
+        </div>
+        <BrandScroller logos={settings?.brandLogos} />
+      </div>
       <div data-home-reveal><Spaces spaces={spaces} /></div>
       <div data-home-reveal>
         <LazyInteractiveVSL
