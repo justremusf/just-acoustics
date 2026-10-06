@@ -28,7 +28,7 @@ Ad consent comes from `readAnalyticsConsent() === 'all'` (`lib/analyticsConsent.
 | `add_to_cart` | Add to cart | `product_slug`, `quantity`, `value`, `currency`, `items[]` (built automatically) | ✓ | – | `AddToCart` | ✓ | ✓ |
 | `cart_opened` | Cart drawer opened | `item_count` | ✓ | – | – | ✓ | ✓ |
 | `begin_checkout` | `/checkout` with a non-empty cart, once per visit | `value`, `currency`, `items[]` | ✓ | – | `InitiateCheckout` | ✓ | ✓ |
-| `purchase` | First time a saved order is shown at `/orders/<ref>`, once per reference per device. PayNow is confirmed later, offline. | `transaction_id`=order ref, `value`=total incl. delivery, `shipping`, `payment_status`, `items[]` | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_PURCHASE` | `Purchase` | ✓ | ✓ |
+| `purchase` | Only once the PayNow transfer is matched and the order page shows "paid" (`/orders/<ref>`), once per reference per device. Unpaid orders never count. | `transaction_id`=order ref, `value`=total incl. delivery, `shipping`, `items[]` | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_PURCHASE` | `Purchase` | ✓ | ✓ |
 | `vsl_space_type_selected` | Interactive video space picker | `space_type` | ✓ | – | custom | ✓ | ✓ |
 
 Page views: GA4 uses its own `config` hit, plus enhanced-measurement history events for client-side navigation. Meta gets `PageView` on load and on every route change (`FirstPartyInsights`). Vercel tracks routes automatically. First-party insights records `page_view`, `pricing_view`, `blog_view`, `landing_page_view`, `page_engaged`, `page_deep_read`, `page_cta_clicked` and `pricing_range_opened`; these go to insights only.
@@ -46,7 +46,7 @@ The message is built by `lib/whatsappContext.ts` (pure logic) and `hooks/useWhat
 - **Space:** `/spaces/<slug>`, the ad landers (`/office-acoustic-treatment` → office, `/restaurant-echo-reduction` → restaurant, `/school-acoustic-treatment` → school, `/acoustic-panels-singapore` → home, `/church-acoustics` → church) and estimator picks (weighted ×2). The current page wins; otherwise the most-viewed space, with ties going to the most recent.
 - **Estimate:** the last estimator result, e.g. "I saw the S$2,500–4,000 estimate for a medium room."
 - **Product:** the name, on that product's page only.
-- **Ref:** a short `Ref: JA-XXXXXX` (the visitor's `lead_ref`), so a chat can be matched to its ad click. No campaign, keyword or URL text is added.
+- **Lead source block:** underneath the message: `Lead ref`, `Source` (utm source/medium, or google / cpc from a gclid, meta / paid social from an fbclid, a referring site, or direct), then `Campaign`, `Ad`, `Keyword` and `Landing page` when known.
 
 The server HTML always has the generic text (or the lander's own text). The contextual message replaces it after mount. Installation-enquiry and order messages in the cart, checkout and order pages are left as they are.
 
@@ -71,4 +71,4 @@ The server HTML always has the generic text (or the lander's own text). The cont
 3. **GA4 → Admin → Events:** mark `generate_lead`, `whatsapp_click`, `phone_click` and `purchase` as **Key events** (optionally `email_click`). Check that Admin → Data streams → Enhanced measurement has "Page changes based on browser history events" on. Link GA4 to Google Ads (Admin → Product links).
 4. **Meta Events Manager:** confirm the pixel in `NEXT_PUBLIC_META_PIXEL_ID` receives `PageView`, `Lead`, `Contact`, `ViewContent`, `AddToCart`, `InitiateCheckout` and `Purchase`. Create custom conversions from `Lead` (form) and `Contact` (WhatsApp/phone) for ad optimisation. The custom events `price_estimate_view` and `calculator_used` are good audience seeds.
 5. **Tally → form → Hidden fields:** add `space`, `size`, `lead_ref`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `campaign_id`, `ad_group_id`, `ad_id`, `landing_page`, `referrer`, `consent_state`. The names must match exactly. The webhook (`app/api/tally-webhook`) forwards them to Make as `attribution.*`.
-6. **WhatsApp Business:** chats now end with `Ref: JA-XXXXXX` (previously a multi-line "Lead ref / Source / Campaign…" block). Look that ref up in GA4 (`lead_ref` param) or the Make sheet to see which ad the chat came from.
+6. **WhatsApp Business:** chats start with the contextual message and end with the usual "Lead ref / Source / Campaign / Keyword / Landing page" block.

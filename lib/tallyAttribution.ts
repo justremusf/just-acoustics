@@ -235,23 +235,51 @@ export function getLeadRef() {
   return getAttribution().lead_ref || ''
 }
 
-const REF_LINE = /\n*Ref: JA-[A-Z0-9]+\s*$/
+const LEAD_BLOCK = /\n*Lead ref: JA-[A-Z0-9]+[\s\S]*$/
+
+function hostOf(value?: string) {
+  if (!value) return ''
+  try {
+    return new URL(value).hostname.replace(/^www\./, '')
+  } catch {
+    return value
+  }
+}
+
+/** Where the visit came from, in plain words, even when the ad link had no UTM tags. */
+function describeSource(attribution: Attribution) {
+  if (attribution.utm_source) return [attribution.utm_source, attribution.utm_medium].filter(Boolean).join(' / ')
+  if (attribution.gclid || attribution.gbraid || attribution.wbraid) return 'google / cpc'
+  if (attribution.fbclid) return 'meta / paid social'
+  if (attribution.ttclid) return 'tiktok / paid social'
+  const referrer = hostOf(attribution.referrer)
+  if (referrer && !referrer.includes('justacoustics.co')) return `${referrer} / referral`
+  return 'direct'
+}
+
+/** The lead-source block the team reads in WhatsApp: ref, source, campaign, ad, keyword, landing page. */
+function leadSourceLines(attribution: Attribution) {
+  const lines = [`Lead ref: ${attribution.lead_ref || createLeadRef()}`, `Source: ${describeSource(attribution)}`]
+  if (attribution.utm_campaign) lines.push(`Campaign: ${attribution.utm_campaign}`)
+  else if (attribution.campaign_id) lines.push(`Campaign ID: ${attribution.campaign_id}`)
+  if (attribution.utm_content) lines.push(`Ad: ${attribution.utm_content}`)
+  if (attribution.utm_term) lines.push(`Keyword: ${attribution.utm_term}`)
+  if (attribution.landing_page) lines.push(`Landing page: ${attribution.landing_page}`)
+  return lines
+}
 
 /**
- * Keeps the link's own message (or a generic one) and adds only a short "Ref: JA-XXXXXX" line.
- * Campaign, keyword and landing-page details stay in analytics, never in the customer's message.
- * Idempotent: a link that already carries a ref is left alone.
+ * Keeps the link's own message (or a generic one) and adds the lead-source block underneath,
+ * so the team always sees where a WhatsApp lead came from. Idempotent: an existing block is replaced.
  */
 export function buildWhatsAppUrlWithAttribution(baseUrl: string) {
   const url = new URL(baseUrl)
-  const text = url.searchParams.get('text') || "Hi Just Acoustics, I'd like some advice on acoustic treatment."
-  if (REF_LINE.test(text)) return baseUrl
-  const ref = getLeadRef()
+  const own = (url.searchParams.get('text') || "Hi Just Acoustics, I'd like some advice on acoustic treatment.").replace(LEAD_BLOCK, '')
+  const text = isBrowser() ? `${own}\n\n${leadSourceLines(getAttribution()).join('\n')}` : own
   url.searchParams.delete('text')
   const rest = url.searchParams.toString()
   // encodeURIComponent (%20), not URLSearchParams ("+"), so every WhatsApp client shows spaces.
-  const encoded = encodeURIComponent(ref ? `${text}\n\nRef: ${ref}` : text)
-  return `${url.origin}${url.pathname}?${rest ? `${rest}&` : ''}text=${encoded}`
+  return `${url.origin}${url.pathname}?${rest ? `${rest}&` : ''}text=${encodeURIComponent(text)}`
 }
 
 export function buildTallyUrlWithAttribution(baseTallyUrl: string) {

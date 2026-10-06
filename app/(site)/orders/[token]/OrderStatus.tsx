@@ -18,10 +18,10 @@ export default function OrderStatus({token}:{token:string}) {
     return()=>{stopped=true;controller.abort();clearInterval(timer);};
   },[token]);
   useEffect(()=>{if(order?.status!=='paid')return;try{const saved=JSON.parse(sessionStorage.getItem('ja-order-cart')||'null');if(saved?.reference===token){if(saved.snapshot===JSON.stringify(items))clearCart();sessionStorage.removeItem('ja-order-cart');sessionStorage.removeItem('just-acoustics-checkout-draft');sessionStorage.removeItem('just-acoustics-checkout-request');}}catch{}},[order?.status,token,items,clearCart]);
-  // purchase: once per order reference on this device, the first time the saved order is shown
-  // (PayNow is confirmed later, offline). transaction_id lets GA4 / Google Ads drop any repeat.
-  useEffect(()=>{if(!order||purchaseTracked.has(order.reference))return;purchaseTracked.add(order.reference);const key=`ja_purchase_tracked_${order.reference}`;try{if(localStorage.getItem(key))return;localStorage.setItem(key,'1');}catch{}
-    trackEvent('purchase',{transaction_id:order.reference,value:order.total,currency:'SGD',shipping:order.delivery,payment_status:order.status,items:order.items.map(i=>({item_id:i.slug,item_name:i.title,price:i.unitCents/100,quantity:i.quantity}))},{dedupeId:order.reference});
+  // purchase: only once the bank transfer is matched (status 'paid'), so unpaid or fake orders never
+  // count as sales. Once per order reference on this device; transaction_id lets GA4 / Google Ads drop repeats.
+  useEffect(()=>{if(!order||order.status!=='paid'||purchaseTracked.has(order.reference))return;purchaseTracked.add(order.reference);const key=`ja_purchase_tracked_${order.reference}`;try{if(localStorage.getItem(key))return;localStorage.setItem(key,'1');}catch{}
+    trackEvent('purchase',{transaction_id:order.reference,value:order.total,currency:'SGD',shipping:order.delivery,items:order.items.map(i=>({item_id:i.slug,item_name:i.title,price:i.unitCents/100,quantity:i.quantity}))},{dedupeId:order.reference});
   },[order]);
   async function copy(value:string){try{await navigator.clipboard.writeText(value);setCopied(value);}catch{setCopied('Copy unavailable — select the text below.');}}
   const paid=order?.status==='paid';
