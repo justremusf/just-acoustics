@@ -499,7 +499,6 @@ export default function ChurchLanderClient() {
               className="mt-4 whitespace-pre-line text-[48px] font-medium leading-[0.95] tracking-[-0.045em] text-white sm:text-[68px] lg:text-[78px]"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
-              <span className="sr-only">Church acoustic treatment in Singapore: </span>
               {HERO_SLIDES[activeSlide].headline}
             </h1>
             <p className="mt-5 max-w-[560px] text-[16px] leading-7 text-white/82">
