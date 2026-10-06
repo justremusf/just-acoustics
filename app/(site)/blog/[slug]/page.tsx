@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug, getAllPostSlugs } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { toArticleView, toExplorerPost } from '@/sanity/lib/views'
-import { canonicalPath, serializeJsonLd, SITE_PREVIEW_IMAGE, SITE_URL, stripBrand } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd as buildBreadcrumbJsonLd, canonicalPath, ORGANIZATION_ID, pageMetadata, serializeJsonLd, SITE_PREVIEW_IMAGE, SITE_URL, stripBrand } from '@/lib/seo'
+import { serviceForArticle } from '@/lib/serviceLinks'
 import { buildArticleNav } from '@/lib/contentView'
 import type { Post } from '@/lib/types'
 import ArticleDetail from '@/components/blog/ArticleDetail'
@@ -20,23 +21,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post: Post | null = await getPostBySlug(slug).catch(() => null)
   if (!post) return {}
-  const title = stripBrand(post.seo?.metaTitle) || post.title
-  const description = post.seo?.metaDescription || post.excerpt
-  return {
-    title,
-    description,
-    alternates: { canonical: canonicalPath(`/blog/${slug}`) },
-    openGraph: {
-      type: 'article',
-      title,
-      description,
-      url: canonicalPath(`/blog/${slug}`),
-      ...(post.publishedAt && { publishedTime: post.publishedAt }),
-      siteName: 'Just Acoustics',
-      locale: 'en_SG',
-      images: [{ url: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : SITE_PREVIEW_IMAGE, width: 1200, height: 630 }],
+  return pageMetadata({
+    title: stripBrand(post.seo?.metaTitle) || post.title,
+    description: post.seo?.metaDescription || post.excerpt,
+    path: `/blog/${slug}`,
+    image: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined,
+    imageAlt: post.mainImage?.alt || post.title,
+    article: {
+      publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt,
+      authors: post.author?.name ? [post.author.name] : undefined,
     },
-  }
+  })
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -58,34 +54,32 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     headline: post.title,
     description: post.excerpt,
     ...(post.publishedAt && { datePublished: post.publishedAt }),
-    ...(post.mainImage && { image: urlFor(post.mainImage).width(1200).height(630).url() }),
+    ...((post._updatedAt || post.publishedAt) && { dateModified: post._updatedAt || post.publishedAt }),
+    image: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : absoluteUrl(SITE_PREVIEW_IMAGE),
     articleSection: article.topicLabel,
     inLanguage: 'en-SG',
     timeRequired: `PT${article.readingTime}M`,
     author: author
-      ? { '@type': 'Person', name: author.name, ...(author.role && { jobTitle: author.role }) }
-      : { '@id': `${SITE_URL}/#organization` },
-    publisher: { '@id': `${SITE_URL}/#organization` },
+      ? { '@type': 'Person', name: author.name, ...(author.role && { jobTitle: author.role }), worksFor: { '@id': ORGANIZATION_ID } }
+      : { '@id': ORGANIZATION_ID },
+    publisher: { '@id': ORGANIZATION_ID },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalPath(`/blog/${slug}`) },
     isPartOf: { '@id': `${SITE_URL}/#website` },
   }
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Resource Centre', item: canonicalPath('/blog') },
-      { '@type': 'ListItem', position: 3, name: post.title, item: canonicalPath(`/blog/${slug}`) },
-    ],
-  }
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Resource Centre', path: '/blog' },
+    { name: post.title, path: `/blog/${slug}` },
+  ])
+
+  const serviceLink = serviceForArticle(slug, post.category)
 
   return (
     <>
       <PageEngagementTracker pageType="blog" contentName={slug} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
-      <ArticleDetail article={article} nav={nav} />
+      <ArticleDetail article={article} nav={nav} serviceLink={serviceLink} />
     </>
   )
 }

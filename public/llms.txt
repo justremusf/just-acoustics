@@ -12,7 +12,7 @@
 - [Home](https://www.justacoustics.co): Overview of acoustic panel services, projects, and products.
 - [About](https://www.justacoustics.co/about): Company story, mission, and credentials.
 - [Contact](https://www.justacoustics.co/contact): Free consultation request form.
-- [Pricing](https://www.justacoustics.co/pricing): Pricing structure for commercial acoustic projects.
+- [Pricing](https://www.justacoustics.co/pricing): Typical installed price ranges by space type, plus an instant price estimator.
 
 ## Acoustic treatment by space
 - [All spaces](https://www.justacoustics.co/spaces): Overview of acoustic treatment for different room types.
@@ -24,6 +24,23 @@
 - [Music & Home Studios](https://www.justacoustics.co/spaces/studios): Acoustic treatment for recording, mixing, and listening spaces.
 - [Homes](https://www.justacoustics.co/spaces/homes): Echo reduction for living rooms, home offices, and residential spaces.
 
+## Services
+- [Acoustic panels in Singapore](https://www.justacoustics.co/acoustic-panels-singapore): Panel supply and installation for homes, home studios and home offices; what panels solve and how they differ from soundproofing.
+- [Office acoustic treatment](https://www.justacoustics.co/office-acoustic-treatment): Echo reduction for meeting rooms, call rooms and open offices.
+- [Restaurant echo reduction](https://www.justacoustics.co/restaurant-echo-reduction): Acoustic treatment for restaurants, cafés and bars, installed around service hours.
+- [School acoustic treatment](https://www.justacoustics.co/school-acoustic-treatment): Classroom, tuition centre and hall echo reduction.
+- [Church acoustics](https://www.justacoustics.co/church-acoustics): Speech clarity and reverberation control for churches, worship halls and event spaces.
+- [Acoustic panel calculator](https://www.justacoustics.co/acoustic-panel-calculator): Estimate how many acoustic panels a room needs and the installed price.
+
+## Typical installed prices (SGD, supply + installation)
+Room sizes: small under 15 m², medium 15–40 m², large 40–100 m², very large 100 m²+. Final price is confirmed after reviewing the room; very large rooms usually need a site visit.
+- Office / meeting room: small S$1,000–2,000; medium S$2,500–4,000; large S$4,000–8,000; very large from S$8,000.
+- Restaurant / café: small S$1,000–2,000; medium S$2,000–4,000; large S$4,000–6,000; very large from S$6,000.
+- School / classroom: small S$1,000–2,000; medium S$2,000–3,500; large S$3,500–6,500; very large from S$6,500.
+- Church / hall: small from S$1,500; medium from S$4,000; large from S$6,000; very large (main sanctuaries) from S$15,000, typically S$15,000–40,000+.
+- Home / living room: small S$1,000–1,800; medium S$1,500–3,000; large S$3,000–5,000; very large from S$5,000.
+- Home studio: small S$1,000–2,000; medium S$2,000–3,500; large from S$3,500; very large from S$6,000.
+
 ## Shop
 - [Shop home](https://www.justacoustics.co/shop): Browse acoustic panels and accessories online.
 - Categories: Package Deals, Standard Panels, Custom Panels, Ceiling Panels, Accessories.
@@ -32,12 +49,7 @@
 - [Project portfolio](https://www.justacoustics.co/projects): Completed installations across hospitality, worship, education, office, and lifestyle spaces in Singapore.
 
 ## Resources
-- [Acoustic panel calculator](https://www.justacoustics.co/acoustic-panel-calculator): Estimate how many acoustic panels a room needs and the installed price.
 - [Resource Center / Blog](https://www.justacoustics.co/blog): Acoustic education, buying guides, comparisons, videos, and case studies.
-- [Acoustic panels in Singapore](https://www.justacoustics.co/acoustic-panels-singapore): What acoustic panels solve, how they differ from soundproofing, and how to start a project.
-- [Office acoustic treatment](https://www.justacoustics.co/office-acoustic-treatment): Practical echo reduction for meeting rooms, call rooms, and workplaces.
-- [Restaurant echo reduction](https://www.justacoustics.co/restaurant-echo-reduction): Acoustic treatment planning for Singapore F&B spaces.
-- [Church acoustics](https://www.justacoustics.co/church-acoustics): Speech clarity and reverberation control for worship spaces.
 
 ## Key facts
 - Acoustic treatment improves sound quality inside a room by absorbing and managing reflections. It does not by itself stop sound travelling through walls, floors, doors, or windows.

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, ChevronDown, Clock, Search, X } from 'lucide-react'
 import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
-import { CONTENT_TYPES, type ExplorerPost } from '@/lib/blogContent'
+import { CONTENT_TYPES, coverRatio, type ExplorerPost } from '@/lib/blogContent'
 
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest' },
@@ -94,43 +94,44 @@ function Cover({ post, sizes, priority }: { post: ExplorerPost; sizes: string; p
         fill
         sizes={sizes}
         priority={priority}
-        style={{ objectPosition: post.image.position ?? 'center' }}
-        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+        className="object-contain"
       />
     )
   }
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,165,0,0.35),transparent_55%),linear-gradient(160deg,#151515,#2a2a2a)] transition-transform duration-700 group-hover:scale-[1.06]"
+      className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,165,0,0.35),transparent_55%),linear-gradient(160deg,#151515,#2a2a2a)]"
     />
   )
 }
 
-/** Full-bleed image tile with the title laid over it. Leads the feed with the newest post. */
+/** Large card that leads the feed: the whole cover image on top, the title on a dark panel below it. */
 function FeatureTile({ post, className = '' }: { post: ExplorerPost; className?: string }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className={`blog-rise group relative isolate flex overflow-hidden rounded-[28px] bg-[var(--color-dark-100)] no-underline shadow-[0_24px_60px_rgba(0,0,0,0.12)] transition-shadow duration-500 hover:shadow-[0_32px_80px_rgba(0,0,0,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-brand-orange)] ${className}`}
+      className={`blog-rise group relative isolate flex flex-col overflow-hidden rounded-[28px] bg-[var(--color-dark-100)] no-underline shadow-[0_24px_60px_rgba(0,0,0,0.12)] transition-shadow duration-500 hover:shadow-[0_32px_80px_rgba(0,0,0,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-brand-orange)] ${className}`}
     >
-      <Cover post={post} priority sizes="(min-width: 1024px) 66vw, 100vw" />
-      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/0 transition-opacity duration-500 group-hover:from-black/90" />
+      <div className="relative w-full" style={{ aspectRatio: coverRatio(post.image) }}>
+        <Cover post={post} priority sizes="(min-width: 1024px) 66vw, 100vw" />
+      </div>
 
-      <span className="absolute left-5 top-5 z-10 rounded-full bg-[var(--color-brand-orange)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-dark-100)]">
-        {post.pinned ? 'Featured' : 'Latest'}
-      </span>
-
-      <div className="relative z-10 mt-auto flex w-full items-end gap-4 p-6 md:p-8">
+      <div className="flex w-full items-end gap-4 p-6 md:p-8">
         <div className="min-w-0 flex-1">
-          <p className="page-kicker mb-3 !text-[var(--color-brand-orange)]">{topicTitle(post.category)}</p>
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <span className="rounded-full bg-[var(--color-brand-orange)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-dark-100)]">
+              {post.pinned ? 'Featured' : 'Latest'}
+            </span>
+            <p className="page-kicker m-0 !text-[var(--color-brand-orange)]">{topicTitle(post.category)}</p>
+          </div>
           <h3
-            className="m-0 text-[clamp(28px,3.4vw,48px)] font-medium leading-[1] tracking-[-1.2px] text-white"
+            className="m-0 text-[clamp(26px,3vw,40px)] font-medium leading-[1.05] tracking-[-1px] text-white"
             style={{ fontFamily: 'var(--font-heading)' }}
           >
             {post.title}
           </h3>
-          {post.excerpt && <p className="mb-0 mt-3 hidden max-w-[52ch] text-[15px] leading-6 text-white/80 md:line-clamp-2">{post.excerpt}</p>}
+          {post.excerpt && <p className="mb-0 mt-3 hidden max-w-[52ch] text-[15px] leading-6 text-white/75 md:line-clamp-2">{post.excerpt}</p>}
           <div className="mt-3">
             <ReadMeta post={post} light />
           </div>
@@ -154,7 +155,7 @@ function ArticleCard({ post, terms = [], index = 0, className = '' }: { post: Ex
       style={riseStyle(index)}
       className={`blog-rise group flex flex-col no-underline focus-visible:outline-none ${className}`}
     >
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-[var(--color-dark-100)] shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_26px_60px_rgba(0,0,0,0.16)] group-focus-visible:ring-4 group-focus-visible:ring-[var(--color-brand-orange)]">
+      <div style={{ aspectRatio: coverRatio(post.image) }} className="relative overflow-hidden rounded-[22px] bg-[var(--color-dark-100)] shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_26px_60px_rgba(0,0,0,0.16)] group-focus-visible:ring-4 group-focus-visible:ring-[var(--color-brand-orange)]">
         <Cover post={post} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 85vw" />
         <span
           aria-hidden="true"
@@ -464,7 +465,7 @@ export default function BlogExplorer({ posts, initialTopic = '', initialType = '
               <div key={resultsKey} className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                 {visiblePosts.map((post, index) =>
                   featureFirst && index === 0 ? (
-                    <FeatureTile key={post._id} post={post} className="min-h-[440px] sm:col-span-2" />
+                    <FeatureTile key={post._id} post={post} className="sm:col-span-2" />
                   ) : (
                     <ArticleCard key={post._id} post={post} terms={searchTerms} index={index} />
                   )

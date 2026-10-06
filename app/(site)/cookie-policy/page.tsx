@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 import CookieSettings from '@/components/analytics/CookieSettings'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Cookie Policy',
-  robots: { index: false },
-}
+  description: 'How Just Acoustics uses cookies and similar technologies on justacoustics.co, and how to change your cookie settings.',
+  path: '/cookie-policy',
+  noindex: true,
+})
 
 export default function CookiePolicyPage() {
   return (

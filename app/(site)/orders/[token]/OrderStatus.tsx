@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/components/cart/CartContext'
 import InstallationEnquiry from '@/components/cart/InstallationEnquiry'
+import { trackEvent } from '@/components/analytics/trackEvent'
 import { ORDER_FOLLOW_UP, ORDER_LEAD_TIME, PAYNOW_INSTRUCTIONS, PAYNOW_QR_URL, PAYNOW_VPA, JUST_ACOUSTICS_WHATSAPP_URL } from '@/lib/paymentCopy'
 import { formatSgd } from '@/lib/shopPricing'
 import type { publicOrder } from '@/lib/orders/store'
 type PublicOrder=ReturnType<typeof publicOrder>
+const purchaseTracked=new Set<string>()
 export default function OrderStatus({token}:{token:string}) {
   const [order,setOrder]=useState<PublicOrder|null>(null),[error,setError]=useState(''),[copied,setCopied]=useState('');
   const {items,clearCart}=useCart();
@@ -16,6 +18,11 @@ export default function OrderStatus({token}:{token:string}) {
     return()=>{stopped=true;controller.abort();clearInterval(timer);};
   },[token]);
   useEffect(()=>{if(order?.status!=='paid')return;try{const saved=JSON.parse(sessionStorage.getItem('ja-order-cart')||'null');if(saved?.reference===token){if(saved.snapshot===JSON.stringify(items))clearCart();sessionStorage.removeItem('ja-order-cart');sessionStorage.removeItem('just-acoustics-checkout-draft');sessionStorage.removeItem('just-acoustics-checkout-request');}}catch{}},[order?.status,token,items,clearCart]);
+  // purchase: only once the bank transfer is matched (status 'paid'), so unpaid or fake orders never
+  // count as sales. Once per order reference on this device; transaction_id lets GA4 / Google Ads drop repeats.
+  useEffect(()=>{if(!order||order.status!=='paid'||purchaseTracked.has(order.reference))return;purchaseTracked.add(order.reference);const key=`ja_purchase_tracked_${order.reference}`;try{if(localStorage.getItem(key))return;localStorage.setItem(key,'1');}catch{}
+    trackEvent('purchase',{transaction_id:order.reference,value:order.total,currency:'SGD',shipping:order.delivery,items:order.items.map(i=>({item_id:i.slug,item_name:i.title,price:i.unitCents/100,quantity:i.quantity}))},{dedupeId:order.reference});
+  },[order]);
   async function copy(value:string){try{await navigator.clipboard.writeText(value);setCopied(value);}catch{setCopied('Copy unavailable — select the text below.');}}
   const paid=order?.status==='paid';
   return <div className="page-wrap page-stack"><section style={{opacity:1,transform:"none"}} className="home-shell page-hero-shell max-w-3xl mx-auto">

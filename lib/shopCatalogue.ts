@@ -2,6 +2,7 @@ import { SOOTHE_FABRIC_CHARTS, SOOTHE_FABRICS } from "./sootheFabrics";
 import { STANDARD_FLEXI_COLOURS } from "./flexiColours";
 import type { ShopItem } from "./types";
 import { resolveProductLine } from "./shopProductProfiles";
+import { getSizeDimensionLabel, getSizeShapeLabel } from "./shopSizeLabels";
 function isFlexiProduct(item: ShopItem) {
   return resolveProductLine(item) === "flexi-panel";
 }
@@ -9,27 +10,6 @@ function isFlexiProduct(item: ShopItem) {
 function isSootheProduct(item: ShopItem) {
   const line = resolveProductLine(item);
   return line === "bass-trap" || line === "gobo";
-}
-
-
-function getSizeShapeLabel(option: { id?: string; label?: string }) {
-  const id = option.id || "";
-  if (id === "600x600") return "Square";
-  if (id === "1200x600") return "Standard";
-  if (id === "1800x600") return "Tall";
-  return option.label || "Panel";
-}
-
-function getSizeDimensionLabel(option: {
-  widthMm?: number;
-  heightMm?: number;
-  description?: string;
-  label?: string;
-}) {
-  if (option.widthMm && option.heightMm) {
-    return `${option.widthMm / 10} x ${option.heightMm / 10}cm`;
-  }
-  return option.description || option.label || "";
 }
 
 

@@ -15,16 +15,20 @@ import {
   getAllSpaces,
   getFeaturedTestimonials,
 } from '@/sanity/lib/queries'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 
 const HearTheDifference = dynamic(() => import('@/components/sections/HearTheDifference'))
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'))
 const FAQ = dynamic(() => import('@/components/sections/FAQ'))
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  alternates: { canonical: canonicalPath('/') },
-}
+export const metadata: Metadata = pageMetadata({
+  title: 'Just Acoustics | Acoustic Panels & Treatment Singapore',
+  description:
+    'Acoustic panels supplied and installed across Singapore for offices, restaurants, churches, schools, studios and homes. Free consultation, reply within 1 hour.',
+  path: '/',
+  absoluteTitle: true,
+})
 
 export default async function HomePage() {
   const [settings, products, spaces, testimonials] = await Promise.all([

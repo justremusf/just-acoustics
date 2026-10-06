@@ -7,7 +7,7 @@ import {
   getAllShopItems,
 } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
-import { pageMetadata, serializeJsonLd, canonicalPath, SITE_URL, stripBrand } from "@/lib/seo";
+import { fitTitle, ORGANIZATION_ID, pageMetadata, serializeJsonLd, canonicalPath, SITE_URL, stripBrand } from "@/lib/seo";
 import type { ShopItem } from "@/lib/types";
 import { getShopPriceLabel } from "@/lib/shopDisplay";
 import { getProductProfile } from "@/lib/shopProductProfiles";
@@ -38,10 +38,11 @@ export async function generateMetadata({
       ? STANDARD_FLEXI_DESCRIPTION
       : item.seo?.metaDescription || item.shortDescription || getProductProfile(item).shortDescription;
   return pageMetadata({
-    title: stripBrand(item.seo?.metaTitle) || item.title,
+    title: fitTitle(stripBrand(item.seo?.metaTitle), `${item.title} Singapore`, item.title),
     description,
     path: `/shop/${slug}`,
     image: item.mainImage ? urlFor(item.mainImage).width(1200).height(630).url() : undefined,
+    imageAlt: item.mainImage?.alt || item.title,
   });
 }
 
@@ -111,17 +112,23 @@ export default async function ShopItemPage({
       image: urlFor(item.mainImage).width(1200).height(900).url(),
     }),
     brand: { "@type": "Brand", name: "Just Acoustics" },
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "SGD",
-      ...(item.price && { price: item.price }),
-      availability:
-        item.inStock !== false
-          ? "https://schema.org/InStock"
-          : "https://schema.org/OutOfStock",
-      url: canonicalPath(`/shop/${slug}`),
-      seller: { "@type": "Organization", name: "Just Acoustics" },
-    },
+    url: canonicalPath(`/shop/${slug}`),
+    // Google only accepts an Offer with a price; quote-only items list no Offer.
+    ...(item.price != null &&
+      item.price > 0 && {
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "SGD",
+          price: item.price,
+          itemCondition: "https://schema.org/NewCondition",
+          availability:
+            item.inStock !== false
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+          url: canonicalPath(`/shop/${slug}`),
+          seller: { "@id": ORGANIZATION_ID },
+        },
+      }),
   };
 
   const breadcrumbJsonLd = {

@@ -1,20 +1,16 @@
 'use client'
 
-import { useRef } from 'react'
 import { trackEvent } from '@/components/analytics/trackEvent'
+import { contactEventForHref } from '@/components/analytics/contactLinks'
 import {
   buildUrlWithAttribution,
   buildWhatsAppUrlWithAttribution,
   getAttributionEventParams,
 } from '@/lib/tallyAttribution'
 
-type TrackedAnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
-
-function getEventName(href: string) {
-  if (href.includes('wa.me') || href.includes('api.whatsapp.com')) return 'whatsapp_click'
-  if (href.startsWith('tel:')) return 'phone_click'
-  if (href.startsWith('mailto:')) return 'email_click'
-  return null
+type TrackedAnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+  /** Where on the site this link sits, sent as the `source` event param (e.g. "floating_button"). */
+  trackingSource?: string
 }
 
 function getFinalHref(href: string) {
@@ -35,50 +31,32 @@ function getFinalHref(href: string) {
   return href
 }
 
-export default function TrackedAnchor({
-  href,
-  onClick,
-  target,
-  children,
-  ...props
-}: TrackedAnchorProps) {
-  const isPendingRef = useRef(false)
-
+/**
+ * Anchor that fires whatsapp_click / phone_click / email_click once and adds attribution to the
+ * destination. The browser's own navigation is never blocked or delayed (no popup-blocker issues):
+ * the href is updated in place before the default action runs.
+ */
+export default function TrackedAnchor({ href, onClick, trackingSource, children, ...props }: TrackedAnchorProps) {
   return (
     <a
       {...props}
       href={href}
-      target={target}
+      data-ja-tracked=""
       onClick={(event) => {
         onClick?.(event)
         if (event.defaultPrevented || !href) return
 
-        const eventName = getEventName(href)
         const finalHref = getFinalHref(href)
-        if (!eventName && finalHref === href) return
-        if (isPendingRef.current) {
-          event.preventDefault()
-          return
-        }
+        if (finalHref !== href) event.currentTarget.href = finalHref
 
-        isPendingRef.current = true
-        event.preventDefault()
-
+        const eventName = contactEventForHref(href)
         if (eventName) {
           trackEvent(eventName, {
-            link_url: finalHref,
+            source: trackingSource || 'inline_link',
+            link_url: finalHref.slice(0, 100),
             ...getAttributionEventParams(),
           })
         }
-
-        window.setTimeout(() => {
-          if (target === '_blank') {
-            window.open(finalHref, '_blank', 'noopener,noreferrer')
-          } else {
-            window.location.href = finalHref
-          }
-          isPendingRef.current = false
-        }, 150)
       }}
     >
       {children}

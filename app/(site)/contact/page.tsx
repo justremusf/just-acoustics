@@ -3,13 +3,14 @@ import Script from 'next/script'
 import { preconnect, preload } from 'react-dom'
 import { Mail, MessageCircle, Phone } from 'lucide-react'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
 import BrandScroller from '@/components/sections/BrandScroller'
 import FAQ, { type FaqItem } from '@/components/sections/FAQ'
 import { getFeaturedTestimonials, getSiteSettings } from '@/sanity/lib/queries'
 import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import type { Testimonial } from '@/lib/types'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 
 export const revalidate = 60
@@ -47,12 +48,12 @@ const OBJECTIONS: FaqItem[] = [
   },
 ]
 
-export const metadata: Metadata = {
-  title: 'Contact — Free Consultation',
+export const metadata: Metadata = pageMetadata({
+  title: 'Free Acoustic Consultation Singapore',
   description:
     'Book a free acoustic consultation in Singapore. Send your room details and the Just Acoustics team will reach out within 1 hour.',
-  alternates: { canonical: canonicalPath('/contact') },
-}
+  path: '/contact',
+})
 
 export default async function ContactPage() {
   // Start talking to Tally while the page is still loading, so the form appears sooner.
@@ -140,22 +141,30 @@ function DirectContact() {
     <div className="glass-card p-5">
       <p className="page-kicker">Prefer to talk?</p>
       <div className="mt-4 flex flex-col gap-3">
-        {DIRECT_CONTACT.map(({ icon: Icon, label, value, href, external }) => (
-          <TrackedAnchor
-            key={label}
-            href={href}
-            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className="flex items-center gap-3 rounded-[14px] border border-black/6 bg-white/70 px-3 py-2.5 no-underline transition-colors hover:border-black/15"
-          >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-orange)] text-[var(--color-dark-100)]">
-              <Icon size={16} aria-hidden="true" />
-            </span>
-            <span className="flex flex-col">
-              <span className="text-xs text-[var(--color-gray-200)]">{label}</span>
-              <span className="text-sm font-semibold text-[var(--color-dark-100)]">{value}</span>
-            </span>
-          </TrackedAnchor>
-        ))}
+        {DIRECT_CONTACT.map(({ icon: Icon, label, value, href, external }) => {
+          const className =
+            'flex items-center gap-3 rounded-[14px] border border-black/6 bg-white/70 px-3 py-2.5 no-underline transition-colors hover:border-black/15'
+          const content = (
+            <>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-orange)] text-[var(--color-dark-100)]">
+                <Icon size={16} aria-hidden="true" />
+              </span>
+              <span className="flex flex-col">
+                <span className="text-xs text-[var(--color-gray-200)]">{label}</span>
+                <span className="text-sm font-semibold text-[var(--color-dark-100)]">{value}</span>
+              </span>
+            </>
+          )
+          return external ? (
+            <WhatsAppLink key={label} source="contact_page" className={className}>
+              {content}
+            </WhatsAppLink>
+          ) : (
+            <TrackedAnchor key={label} href={href} trackingSource="contact_page" className={className}>
+              {content}
+            </TrackedAnchor>
+          )
+        })}
       </div>
     </div>
   )

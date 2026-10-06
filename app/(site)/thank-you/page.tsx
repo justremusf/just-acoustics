@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, Camera, Check, MessageCircle, Phone } from 'lucide-react'
 import LeadConversionTracker from '@/components/analytics/LeadConversionTracker'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import { getAllProjects } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'
@@ -19,9 +20,9 @@ export const metadata: Metadata = {
   },
 }
 
-const WHATSAPP_PHOTOS_URL = `https://wa.me/6589301905?text=${encodeURIComponent(
-  'Hi Just Acoustics, I just sent the consultation form on your website. Here are some photos of my room:'
-)}`
+// Prefixed on the client with what the visitor was looking at (e.g. "for an office").
+const WHATSAPP_PHOTOS_FOLLOW_UP =
+  'I just sent the consultation form on your website. Here are some photos of my room:'
 
 const PHOTO_TIPS = ['The whole room, taken from a corner', 'The ceiling', 'Rough room size, if you know it']
 
@@ -67,15 +68,14 @@ export default async function ThankYouPage() {
               </li>
             ))}
           </ul>
-          <TrackedAnchor
-            href={WHATSAPP_PHOTOS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            source="thank_you"
+            followUp={WHATSAPP_PHOTOS_FOLLOW_UP}
             className="inline-flex h-12 items-center justify-center gap-2 self-start rounded-full px-6 text-sm font-semibold text-white no-underline transition-transform hover:-translate-y-0.5"
             style={{ backgroundColor: '#25D366' }}
           >
             <MessageCircle size={17} aria-hidden="true" /> Send photos on WhatsApp
-          </TrackedAnchor>
+          </WhatsAppLink>
         </div>
 
         <div className="glass-card flex flex-col gap-4 p-6">
@@ -88,7 +88,7 @@ export default async function ThankYouPage() {
               </li>
             ))}
           </ol>
-          <TrackedAnchor href="tel:+6589301905" className="page-link mt-auto pt-2">
+          <TrackedAnchor href="tel:+6589301905" trackingSource="thank_you" className="page-link mt-auto pt-2">
             <Phone size={14} aria-hidden="true" /> Prefer to talk? +65 8930 1905
           </TrackedAnchor>
         </div>

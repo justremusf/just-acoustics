@@ -1,0 +1,1007 @@
+[
+  {
+    "slug": "acqua-e-farina",
+    "title": "Acqua E Farina",
+    "source": {
+      "sanity": {
+        "clientName": "Acqua E Farina",
+        "location": "Keong Saik Rd, Singapore",
+        "category": "restaurants",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "Acqua E Farina Keong Saik",
+          "stage": "Closed Won",
+          "created": "2024-09"
+        },
+        {
+          "dealName": "Top up panels",
+          "stage": "Closed Won",
+          "created": "2024-10",
+          "matchedBy": "same CRM account as Acqua E Farina"
+        },
+        {
+          "dealName": "Acqua E Farina Top Up Walls",
+          "stage": "Project Handoff (fulfilment)",
+          "created": "2026-08"
+        }
+      ]
+    },
+    "confidence": "medium",
+    "fields": {
+      "description": "Acoustic panels for Acqua E Farina at Keong Saik Road, Singapore. Diners hear each other without shouting, and the room keeps its buzz.",
+      "problem": "Like most cafes and restaurants, Acqua E Farina has hard floors, glass and bare walls. When the room filled up, sound bounced around, diners raised their voices and the noise kept climbing.",
+      "solution": "We supplied and installed acoustic panels on agreed wall areas, finished to match the decor. The panels are easy to keep clean, and we schedule installs outside service hours so trading is not disrupted.",
+      "result": "Diners talk across the table at a normal volume, even at full house. The room still feels lively, just without the din. Acqua E Farina came back to us for more panels after the first install.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "bhaskars-arts-academy",
+    "title": "Bhaskar's Arts Academy",
+    "source": {
+      "sanity": {
+        "clientName": "Bhaskar's Arts Academy",
+        "location": "Singapore",
+        "category": "schools",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Bhaskar's Arts Academy, an arts academy in Singapore. Teachers are heard without straining, and lessons are calmer.",
+      "problem": "The studios at Bhaskar's Arts Academy had hard floors and bare walls. Voices, music and lively students bounced around, so teachers had to raise their voices and lessons got tiring.",
+      "solution": "We supplied and installed durable acoustic panels mounted firmly on the walls, out of the way of everyday knocks. Installation was planned around the lesson timetable.",
+      "result": "The room is quieter and calmer. The teacher's voice carries without shouting, and students follow instructions more easily.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "capital-asia-investments",
+    "title": "Capital Asia Investments",
+    "source": {
+      "sanity": {
+        "clientName": "Capital Asia Investments",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "medium",
+      "deals": [
+        {
+          "dealName": "CAI Office with Bar",
+          "stage": "Closed Won",
+          "created": "2024-08"
+        },
+        {
+          "dealName": "CAI Phone Booth",
+          "stage": "Closed Won",
+          "created": "2024-09"
+        }
+      ],
+      "note": "'CAI' read as Capital Asia Investments; not confirmed by account name."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels across several spaces in Capital Asia Investments' office in Singapore. Echo fixed, calls clear, finish to suit the interior.",
+      "problem": "Capital Asia Investments (CAI) had echo in several spaces across their office. Hard surfaces made voices bounce, so calls sounded hollow and conversations carried.",
+      "solution": "We supplied and installed acoustic panels in several spaces around the CAI office, placed and coloured to sit with the existing interior. We worked around office hours to keep disruption low.",
+      "result": "The echo is fixed. Calls sound clear, and conversations stay in the room they belong to.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "concentricheal",
+    "title": "Concentricheal Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Concentricheal Sound Healing Studio",
+        "location": "Singapore",
+        "category": "schools",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Concentricheal, a sound healing studio in Singapore. Instruments sound clean and the room feels calm.",
+      "problem": "Sound healing depends on hearing every instrument cleanly. In a bare room with hard walls, the sound bounced around and sessions felt harsh instead of calm.",
+      "solution": "We supplied and installed acoustic panels on the walls to absorb reflected sound. The panels are finished to suit the studio's calm look.",
+      "result": "The instruments sound clean and natural, and the room feels quiet and settled during sessions.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "dough-cafe",
+    "title": "Dough Cafe",
+    "source": {
+      "sanity": {
+        "clientName": "Dough Cafe",
+        "location": "Chijmes, Singapore",
+        "category": "restaurants",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "Dough Cafe",
+          "stage": "Closed Won",
+          "created": "2024-03"
+        }
+      ]
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Dough Cafe at Chijmes, Singapore. Diners hear each other without shouting, and the room keeps its buzz.",
+      "problem": "Like most cafes and restaurants, Dough Cafe has hard floors, glass and bare walls. When the room filled up, sound bounced around, diners raised their voices and the noise kept climbing.",
+      "solution": "We supplied and installed acoustic panels on agreed wall areas, finished to match the decor. The panels are easy to keep clean, and we schedule installs outside service hours so trading is not disrupted.",
+      "result": "Diners talk across the table at a normal volume, even at full house. The room still feels lively, just without the din.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "drum-practice-room",
+    "title": "Drum Practice Room",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Yishun Drum Room",
+          "stage": "Closed Won",
+          "created": "2024-03"
+        },
+        {
+          "dealName": "Drum Living Room",
+          "stage": "Closed Won",
+          "created": "2024-03"
+        }
+      ],
+      "note": "Two possible matches; not confirmed. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a drum practice room in a Singapore home. Less harsh ring, a more controlled kit, and a room that still looks good.",
+      "problem": "Drums in a small room with hard walls are loud and harsh. Sound bounced straight back at the player, so the kit rang and long sessions were tiring.",
+      "solution": "We supplied and installed acoustic panels to absorb reflected sound inside the room. These panels treat the room's sound; they are not soundproofing for the neighbours.",
+      "result": "The kit sounds tighter and more controlled at the stool, and long practice sessions are easier on the ears.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "franklin-offshore",
+    "title": "Franklin Offshore",
+    "source": {
+      "sanity": {
+        "clientName": "Franklin Offshore",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Franklin Offshore's office in Singapore. Less echo, clearer calls and better meeting-room privacy, finished to suit the interior.",
+      "problem": "The office at Franklin Offshore had the usual Singapore office problem: glass, concrete and hard ceilings that make voices echo. Calls sounded hollow and conversations carried out of meeting rooms.",
+      "solution": "We supplied and installed acoustic panels on the walls, in colours and positions chosen to sit with the existing interior. We plan installs around working hours, so the team keeps working while we fit.",
+      "result": "The echo is gone. Calls sound clear at both ends, and conversations stay inside the meeting rooms.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "guitar-practice-studio",
+    "title": "Guitar Practice Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Guitar Corner",
+          "stage": "Closed Won",
+          "created": "2024-09"
+        }
+      ],
+      "note": "Not confirmed. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a guitar practice studio in a Singapore home. Clearer tone, no flutter echo, and a finish that suits the home.",
+      "problem": "A room at home with bare walls and hard floors makes a guitar and amp ring. Flutter echo between parallel walls blurred the tone.",
+      "solution": "We supplied and installed acoustic panels on the walls to break up reflections. The panels are finished to look at home in the space.",
+      "result": "The guitar and amp sound clear and true, and the flutter echo is gone.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "home-double-office",
+    "title": "Home Double Office",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "Home double office",
+          "stage": "Closed Won",
+          "created": "2024-12"
+        }
+      ],
+      "note": "Exact name match; deal has no product details."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a shared two-person home office in Singapore. Two people take calls in one room without echo.",
+      "problem": "Two people working and taking calls in one room with hard walls meant echo and cross-talk. Each call picked up the room and the other person.",
+      "solution": "We supplied and installed acoustic panels in the shared office to absorb reflected sound. The panels are finished to look at home in the space.",
+      "result": "Both people take calls at the same time without echo. The room is calmer and easier to focus in.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "home-office",
+    "title": "Home Office",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "medium",
+      "deals": [
+        {
+          "dealName": "Home office",
+          "stage": "Closed Won",
+          "created": "2024-12"
+        }
+      ],
+      "note": "Logged in the same batch as 'Home double office'; generic name, so not used in copy."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a home office in Singapore. No more echo on video calls, with a finish that suits the home.",
+      "problem": "A small home office with hard walls and little furniture made voices bounce. Video calls sounded echoey on both ends.",
+      "solution": "We supplied and installed acoustic panels on the walls to absorb the echo. The panels are finished to look at home in the space.",
+      "result": "Calls sound clear and close, with no room echo.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "home-office-studio",
+    "title": "Home Office & Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a home office and studio in Singapore. Clear calls, cleaner recordings and a room that still looks like home.",
+      "problem": "The room doubles as an office and a studio, so it has to work for both calls and recording. Bare walls made voices echo on both.",
+      "solution": "We supplied and installed acoustic panels on the walls to control echo for calls and recording. The panels are finished to look at home in the space.",
+      "result": "Calls and recordings sound clearer and closer, with less room sound to clean up.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "home-theatre",
+    "title": "Home Theatre",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Home Theatre",
+          "stage": "Closed Won",
+          "created": "2024-09"
+        },
+        {
+          "dealName": "Home Theatre Odd Shape",
+          "stage": "Closed Won",
+          "created": "2024-07"
+        }
+      ],
+      "note": "Several generic home theatre deals; cannot tell which. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a home theatre in Singapore. Clearer dialogue, tighter sound at the seats, and panels that look good at home.",
+      "problem": "Home theatres often sit in rooms with hard walls and tiled floors. Sound bounced around, dialogue got muddy and loud scenes felt harsh.",
+      "solution": "We supplied and installed acoustic panels to absorb reflections from the speakers. The panels are finished to look at home in the space.",
+      "result": "Dialogue is clear, effects are focused at the seats, and loud scenes no longer feel harsh.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "home-theatre-2",
+    "title": "Home Theatre 2",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Home Theatre",
+          "stage": "Closed Won",
+          "created": "2024-09"
+        }
+      ],
+      "note": "Several generic home theatre deals; cannot tell which. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a home theatre in Singapore. Clear dialogue, focused sound at the seats, and a finish that suits the home.",
+      "problem": "This home theatre had hard walls and floors that bounced sound around. Dialogue was muddy and the sound felt harsh at volume.",
+      "solution": "We supplied and installed acoustic panels to absorb reflections from the speakers. The panels are finished to look at home in the space.",
+      "result": "Dialogue is clear and the sound is focused at the seats, even at high volume.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "hoogwegt",
+    "title": "Hoogwegt",
+    "source": {
+      "sanity": {
+        "clientName": "Hoogwegt",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "medium",
+      "deals": [
+        {
+          "dealName": "Hoogwegt New office 2 Rooms",
+          "stage": "Closed Won; fulfilment Installation Complete",
+          "created": "2026-06",
+          "installComplete": "2026-07-23"
+        }
+      ],
+      "note": "The Hoogwegt CRM account dates from 2024, so the project on the site may be an earlier job than this 2026 new-office deal."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Hoogwegt's office in Singapore across two jobs and multiple rooms. Echo fixed, calls clear, interior intact.",
+      "problem": "Hoogwegt's office had echo. Hard walls, glass and ceilings bounced voices around, so calls sounded hollow and meetings were tiring.",
+      "solution": "We treated multiple rooms over two separate jobs, supplying and installing acoustic panels that suit the office interior. Installs were planned around working hours.",
+      "result": "The echo is fixed. Calls sound clear and meetings are easier on the ears. Hoogwegt brought us back for a second job.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "jam-studio",
+    "title": "Jam Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Jam Studio",
+          "stage": "Project Handoff (fulfilment)",
+          "created": "2026-09"
+        },
+        {
+          "dealName": "Peninsula Jamming Studio",
+          "stage": "Closed Won",
+          "created": "2024-12"
+        }
+      ],
+      "note": "Two possible matches; neither confirmed. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a jam studio in Singapore. A tighter room where every player hears themselves and each instrument.",
+      "problem": "A band in a small room gets loud and muddy fast. Sound bounced between the walls, and players struggled to hear themselves.",
+      "solution": "We supplied and installed acoustic panels around the room to absorb reflected sound. These treat the sound inside the room; they are not soundproofing.",
+      "result": "The room sounds tighter, each instrument is easy to pick out, and players hear themselves clearly.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "leng-kwang-baptist-church",
+    "title": "Leng Kwang Baptist Church",
+    "source": {
+      "sanity": {
+        "clientName": "Leng Kwang Baptist Church",
+        "location": "Singapore",
+        "category": "churches",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "medium",
+      "deals": [
+        {
+          "dealName": "Leng Kwang Church Youth Room 2",
+          "stage": "Closed Won; fulfilment Installation Complete",
+          "created": "2025-12",
+          "installComplete": "2025-12-02"
+        },
+        {
+          "dealName": "Han Kiat Church Basement",
+          "stage": "Closed Won",
+          "created": "2024-11",
+          "matchedBy": "same CRM account as Leng Kwang"
+        }
+      ],
+      "note": "Two jobs on the same account; unclear which one the site project shows."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Leng Kwang Baptist Church, Singapore: a loud youth room and a basement room, treated over two jobs. Clearer speech in both.",
+      "problem": "Leng Kwang Baptist Church had two problem rooms. The youth room was loud and echoey with noisy kids, and the basement room had the same hard-surface echo.",
+      "solution": "We treated both rooms over two separate jobs, supplying and installing durable acoustic panels suited to each room's use. Installs were scheduled around church activities.",
+      "result": "Both rooms are fixed. Leaders are heard clearly in the youth room, speech carries in the basement, and music still sounds full.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "mixing-recording-studio",
+    "title": "Mixing & Recording Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a mixing and recording studio in Singapore. Cleaner recordings and mixes that translate outside the room.",
+      "problem": "A room used for recording and mixing has two jobs. Reflections off bare walls got into the microphones and coloured what came out of the speakers.",
+      "solution": "We supplied and installed acoustic panels on the main reflecting walls, covering both the recording spot and the mix position. The panels are finished to look at home in the space.",
+      "result": "Recordings pick up far less room sound, and mixes translate to other speakers and headphones.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "mixing-studio",
+    "title": "Mixing Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Kelvin's Home Mixing Studio",
+          "stage": "Closed Won",
+          "created": "2024-08"
+        }
+      ],
+      "note": "Possible match only; the deal lists Soothe panels and bass traps, but nothing ties it to this project, so it is not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a home mixing studio in Singapore. Fewer reflections, an honest listening position and mixes that translate.",
+      "problem": "Bare walls and hard floors sent speaker sound bouncing back into the mix position. It was hard to judge what was really there, especially in the low end.",
+      "solution": "We supplied and installed acoustic panels to cut the early reflections around the listening position. The panels are finished to look at home in the space.",
+      "result": "The speakers give an honest picture of the mix, and mixes translate to other systems.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "mortgage-hub",
+    "title": "Mortgage Hub",
+    "source": {
+      "sanity": {
+        "clientName": "Mortgage Hub",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "Mortgage Hub Office",
+          "stage": "Closed Won",
+          "created": "2024-03"
+        }
+      ]
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Mortgage Hub's office in Singapore. Less echo, clearer calls and better meeting-room privacy, finished to suit the interior.",
+      "problem": "The office at Mortgage Hub had the usual Singapore office problem: glass, concrete and hard ceilings that make voices echo. Calls sounded hollow and conversations carried out of meeting rooms.",
+      "solution": "We supplied and installed acoustic panels on the walls, in colours and positions chosen to sit with the existing interior. We plan installs around working hours, so the team keeps working while we fit.",
+      "result": "The echo is gone. Calls sound clear at both ends, and conversations stay inside the meeting rooms.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "music-studio",
+    "title": "Music Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Music Studio",
+          "stage": "Closed Won",
+          "created": "2024-07"
+        }
+      ],
+      "note": "Generic deal name; not confirmed. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a music studio in Singapore. Less flutter echo, clearer playback and a room that still looks good.",
+      "problem": "Bare walls and hard floors made the room ring. Flutter echo and reflections muddied both live playing and playback.",
+      "solution": "We supplied and installed acoustic panels to reduce reflections in the room. The panels are finished to look at home in the space.",
+      "result": "Playing and listening back both sound clearer, and the flutter echo is gone.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "pasir-pajang-church-of-christ",
+    "title": "Pasir Pajang Church of Christ",
+    "displayTitle": "Pasir Panjang Church of Christ",
+    "source": {
+      "sanity": {
+        "clientName": "Pasir Pajang Church of Christ",
+        "location": "Pasir Pajang, Singapore",
+        "category": "churches",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "PP Church Room",
+          "stage": "Closed Won",
+          "created": "2024-10"
+        },
+        {
+          "dealName": "PPCOC 4 Rooms Extra",
+          "stage": "Closed Won; fulfilment Installation Complete",
+          "created": "2026-01",
+          "installComplete": "2026-02-02",
+          "matchedBy": "same CRM account"
+        }
+      ]
+    },
+    "confidence": "medium",
+    "fields": {
+      "description": "Acoustic panels for Pasir Panjang Church of Christ, Singapore: the hall, meeting rooms, teaching rooms and youth room. Clearer speech throughout.",
+      "problem": "Pasir Panjang Church of Christ had noisy rooms across the building. The hall echoed, and the meeting rooms, teaching rooms and youth room were loud and hard to talk in.",
+      "solution": "We worked with the church twice: once on the hall, and once on several meeting rooms, teaching rooms and the youth room. Panels were placed to suit each room and installed around church activities.",
+      "result": "The noise is fixed. Sermons and talks are clear in the hall, music still sounds full, and classes and meetings are easy to follow. The second job was completed in February 2026.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "pei-school-of-dance",
+    "title": "Pei School of Dance",
+    "source": {
+      "sanity": {
+        "clientName": "Pei School of Dance",
+        "location": "Singapore",
+        "category": "schools",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Dance Studio",
+          "stage": "Closed Won",
+          "created": "2024-11"
+        }
+      ],
+      "note": "Generic deal name; may or may not be Pei School of Dance. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Pei School of Dance, Singapore. Music is clear, the teacher is heard over it, and the studio is calmer.",
+      "problem": "Dance studios have hard floors, mirror walls and almost no furniture. Music and the teacher's voice bounced off every surface, so the room got loud and instructions were lost.",
+      "solution": "We supplied and installed durable acoustic panels on the walls clear of the mirrors and out of the way of dancers. Installation was planned around the class timetable.",
+      "result": "The music sounds clear instead of boomy, and students hear the teacher's counts without shouting. Classes are calmer for everyone.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "podcast-office",
+    "title": "Podcast Office",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a podcast and office room in Singapore. Voices sound close and clean on recordings and calls.",
+      "problem": "Microphones pick up the room as well as the voice. Bare walls made the podcast sound thin and distant, and calls sounded echoey.",
+      "solution": "We supplied and installed acoustic panels so the room works for recording and everyday calls. The panels are finished to look at home in the space.",
+      "result": "Recordings and calls pick up far less room echo, and voices sound close and natural.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "podcast-studio",
+    "title": "Podcast Studio",
+    "source": {
+      "sanity": {
+        "clientName": "Private Client",
+        "location": "Singapore",
+        "category": "studios-homes",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "JB Podcast Studio",
+          "stage": "unknown (not Closed Won)",
+          "created": "2024-11"
+        }
+      ],
+      "note": "Not confirmed. Not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a podcast studio in Singapore. Close, clean voices with less room echo to fix in editing.",
+      "problem": "Microphones pick up the room as well as the voice. Bare walls made voices sound thin and far away.",
+      "solution": "We supplied and installed acoustic panels around the recording area to absorb the reflections the microphones picked up. The panels are finished to look at home in the space.",
+      "result": "Voices sound close and clean, with far less echo to fix in editing.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "ppp-coffee-new-bahru",
+    "title": "PPP Coffee (New Bahru)",
+    "source": {
+      "sanity": {
+        "clientName": "PPP Coffee",
+        "location": "New Bahru, Singapore",
+        "category": "restaurants",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "PPP Coffee New Bahru",
+          "stage": "Closed Won",
+          "created": "2024-09"
+        }
+      ]
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for PPP Coffee at New Bahru, Singapore. Diners hear each other without shouting, and the room keeps its buzz.",
+      "problem": "Like most cafes and restaurants, PPP Coffee has hard floors, glass and bare walls. When the room filled up, sound bounced around, diners raised their voices and the noise kept climbing.",
+      "solution": "We supplied and installed acoustic panels on agreed wall areas, finished to match the decor. The panels are easy to keep clean, and we schedule installs outside service hours so trading is not disrupted.",
+      "result": "Diners talk across the table at a normal volume, even at full house. The room still feels lively, just without the din.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "proteus-design-tech",
+    "title": "Proteus Design/Tech",
+    "source": {
+      "sanity": {
+        "clientName": "Proteus Design/Tech",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "SG Proteus Office",
+          "stage": "Warm Leads",
+          "created": "2024-03"
+        }
+      ],
+      "note": "Only an open lead ('Entertainment room & Small office') and a KL meeting-room lead; no won deal, so nothing from CRM is used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Proteus Design/Tech's office in Singapore. Less echo, clearer calls and better meeting-room privacy, finished to suit the interior.",
+      "problem": "The office at Proteus Design/Tech had the usual Singapore office problem: glass, concrete and hard ceilings that make voices echo. Calls sounded hollow and conversations carried out of meeting rooms.",
+      "solution": "We supplied and installed acoustic panels on the walls, in colours and positions chosen to sit with the existing interior. We plan installs around working hours, so the team keeps working while we fit.",
+      "result": "The echo is gone. Calls sound clear at both ends, and conversations stay inside the meeting rooms.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "rubiks-material-lab",
+    "title": "Rubik's Material Lab",
+    "source": {
+      "sanity": {
+        "clientName": "Rubik's Material Lab",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Rubik's Material Lab in Singapore. Less echo and clearer speech, with a finish that suits the space.",
+      "problem": "The space at Rubik's Material Lab had hard surfaces that made voices echo. Conversations and calls sounded hollow.",
+      "solution": "We supplied and installed acoustic panels on the walls, placed and finished to sit with the existing interior. We worked around opening hours to keep disruption low.",
+      "result": "The echo is gone. Speech is clearer and the space is more comfortable to work and talk in.",
+      "metrics": []
+    },
+    "needsOwnerInput": [
+      "segment unclear: confirm what kind of space this is (office, showroom, lab) so the copy can answer that segment's questions"
+    ]
+  },
+  {
+    "slug": "shimano-singapore",
+    "title": "Shimano Singapore",
+    "source": {
+      "sanity": {
+        "clientName": "Shimano Singapore",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "high",
+      "deals": [
+        {
+          "dealName": "Shimano Office Room",
+          "stage": "Closed Won",
+          "created": "2024-11"
+        }
+      ]
+    },
+    "confidence": "medium",
+    "fields": {
+      "description": "Acoustic panels for Shimano Singapore's office in Singapore. Less echo, clearer calls and better meeting-room privacy, finished to suit the interior.",
+      "problem": "The office at Shimano Singapore had the usual Singapore office problem: glass, concrete and hard ceilings that make voices echo. Calls sounded hollow and conversations carried out of meeting rooms.",
+      "solution": "We supplied and installed acoustic panels on the walls, in colours and positions chosen to sit with the existing interior. We plan installs around working hours, so the team keeps working while we fit.",
+      "result": "The echo is gone. Calls sound clear at both ends, and conversations stay inside the meeting rooms.",
+      "metrics": [],
+      "spaceType": "Office room"
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "the-nuggets-academy",
+    "title": "The Nuggets Academy",
+    "source": {
+      "sanity": {
+        "clientName": "The Nuggets Academy",
+        "location": "Singapore",
+        "category": "schools",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for The Nuggets Academy, an education centre in Singapore. Teachers are heard without straining, and lessons are calmer.",
+      "problem": "The classrooms at The Nuggets Academy had hard floors and bare walls. Voices, music and lively students bounced around, so teachers had to raise their voices and lessons got tiring.",
+      "solution": "We supplied and installed durable acoustic panels mounted firmly on the walls, out of the way of everyday knocks. Installation was planned around the lesson timetable.",
+      "result": "The room is quieter and calmer. The teacher's voice carries without shouting, and students follow instructions more easily.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "vibratone-academy",
+    "title": "Vibratone Academy",
+    "source": {
+      "sanity": {
+        "clientName": "Vibratone Academy",
+        "location": "Singapore",
+        "category": "schools",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "none",
+      "deals": []
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Vibratone Academy, a music and arts academy in Singapore. Teachers are heard without straining, and lessons are calmer.",
+      "problem": "The teaching rooms at Vibratone Academy had hard floors and bare walls. Voices, music and lively students bounced around, so teachers had to raise their voices and lessons got tiring.",
+      "solution": "We supplied and installed durable acoustic panels mounted firmly on the walls, out of the way of everyday knocks. Installation was planned around the lesson timetable.",
+      "result": "The room is quieter and calmer. The teacher's voice carries without shouting, and students follow instructions more easily.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "workforce-singapore",
+    "title": "Workforce Singapore",
+    "source": {
+      "sanity": {
+        "clientName": "Workforce Singapore",
+        "location": "PLQ, Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "low",
+      "deals": [
+        {
+          "dealName": "Workforce Room 2: Full wall + Paint",
+          "stage": "Closed Lost",
+          "created": "2026-01"
+        }
+      ],
+      "note": "Only a lost follow-up deal; the original job is not in CRM. Nothing from CRM is used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for Workforce Singapore's office in Singapore. Less echo, clearer calls and better meeting-room privacy, finished to suit the interior.",
+      "problem": "The office at Workforce Singapore had the usual Singapore office problem: glass, concrete and hard ceilings that make voices echo. Calls sounded hollow and conversations carried out of meeting rooms.",
+      "solution": "We supplied and installed acoustic panels on the walls, in colours and positions chosen to sit with the existing interior. We plan installs around working hours, so the team keeps working while we fit.",
+      "result": "The echo is gone. Calls sound clear at both ends, and conversations stay inside the meeting rooms.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  },
+  {
+    "slug": "ymca-metropolitan",
+    "title": "YMCA Metropolitan",
+    "source": {
+      "sanity": {
+        "clientName": "YMCA Metropolitan",
+        "location": "Singapore",
+        "category": "office-spaces",
+        "existingCaseStudyFields": "none (description, problem, solution, result, metrics, testimonial all empty on live site, 2026-10-06)"
+      }
+    },
+    "crmMatch": {
+      "confidence": "medium",
+      "deals": [
+        {
+          "dealName": "YMCA Cedar Space",
+          "stage": "Closed Won",
+          "created": "2024-07"
+        }
+      ],
+      "note": "Only YMCA deal won; 'YMCA Auditorium' (2026) is On Hold and not used."
+    },
+    "confidence": "low",
+    "fields": {
+      "description": "Acoustic panels for a space at YMCA Metropolitan, Singapore. Less echo, clearer speech for meetings and talks, and a finish that suits the room.",
+      "problem": "The space at YMCA Metropolitan had hard walls and floors, so voices echoed. Meetings and talks were harder to follow and calls sounded hollow.",
+      "solution": "We supplied and installed acoustic panels on the walls, chosen to sit with the existing interior. The install was planned around the space's bookings.",
+      "result": "The echo is gone. Speech is clear across the room, and calls sound clean at both ends.",
+      "metrics": []
+    },
+    "needsOwnerInput": []
+  }
+]

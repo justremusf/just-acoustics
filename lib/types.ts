@@ -90,6 +90,7 @@ export interface ImagePrompt {
 
 export interface Post {
   _id: string
+  _updatedAt?: string
   title: string
   slug: { current: string }
   category?: string

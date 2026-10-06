@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useId, useState } from 'react'
 import { MessageCircle } from 'lucide-react'
 import { trackEvent } from '@/components/analytics/trackEvent'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
+import { recordEstimate } from '@/lib/whatsappContext'
 import {
   SIZE_BANDS,
   SPACE_TYPES,
@@ -12,8 +14,6 @@ import {
   formatPriceEntry,
   type SizeBandSlug,
 } from '@/lib/priceGuide'
-
-const WHATSAPP_BASE = 'https://wa.me/6589301905'
 
 export type PriceEstimatorProps = {
   /** Space slug from lib/priceGuide.ts (e.g. "office") to preselect. */
@@ -51,6 +51,8 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
     const b = findSizeBand(nextSize)
     if (!s || !b) return
     const e = s.prices[b.slug]
+    // Same figures the visitor sees: a range only when the card shows one.
+    recordEstimate({ space: s.slug, size: b.slug, low: e.low, high: e.display === 'range' ? e.high : null })
     trackEvent('price_estimate_view', {
       space: s.slug,
       size: b.slug,
@@ -64,18 +66,6 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
     space && size
       ? `/contact?${new URLSearchParams({ space: space.slug, size: size.slug }).toString()}`
       : '/contact'
-
-  const whatsappText =
-    space && size && priceText
-      ? [
-          'Hi Just Acoustics, I used the price estimator on your website.',
-          `Space: ${space.label}`,
-          `Size: ${size.label} (${size.area})`,
-          `Typical range shown: ${priceText}`,
-          'Could you give me an exact quote?',
-        ].join('\n')
-      : 'Hi Just Acoustics, I would like a quote for acoustic treatment.'
-  const whatsappHref = `${WHATSAPP_BASE}?${new URLSearchParams({ text: whatsappText }).toString()}`
 
   const pillClass = (active: boolean) =>
     `page-filter min-h-[44px] cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-orange)] ${active ? 'active' : ''}`
@@ -200,19 +190,16 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
           >
             Get my exact quote
           </Link>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Message comes from lib/whatsappContext, which already includes the estimate picked above. */}
+          <WhatsAppLink
+            source="price_estimator"
+            followUp={space && size ? 'Could you give me an exact quote?' : undefined}
             className="page-link min-h-[44px] justify-center sm:justify-start"
-            onClick={() => {
-              trackEvent('price_estimate_cta_click', { cta: 'whatsapp', ...(eventParams ?? {}) })
-              trackEvent('whatsapp_click', { link_url: whatsappHref, source: 'price_estimator', ...(eventParams ?? {}) })
-            }}
+            onClick={() => trackEvent('price_estimate_cta_click', { cta: 'whatsapp', ...(eventParams ?? {}) })}
           >
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
             Ask on WhatsApp
-          </a>
+          </WhatsAppLink>
         </div>
         <Link href="/shop" className="m-0 w-fit text-sm font-semibold text-[var(--color-gray-100)] underline-offset-2 hover:underline">
           Installing yourself? See panel prices →

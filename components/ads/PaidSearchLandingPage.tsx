@@ -4,15 +4,15 @@ import Link from 'next/link'
 import Script from 'next/script'
 import { ArrowRight, Check, MessageCircle, TriangleAlert } from 'lucide-react'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import FAQ, { type FaqItem } from '@/components/sections/FAQ'
 import BrandScroller from '@/components/sections/BrandScroller'
 import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 import type { LandingTestimonial } from '@/lib/paidSearchData'
+import type { ServiceLink } from '@/lib/serviceLinks'
 import type { Project, SanityImage } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
-
-const WHATSAPP_NUMBER = '6589301905'
 
 export type PaidSearchPageConfig = {
   eyebrow: string
@@ -24,7 +24,7 @@ export type PaidSearchPageConfig = {
   projectCategory: string
   /** Short plural label for the space type, used in headings, e.g. 'office'. */
   spaceLabel: string
-  /** Pre-filled WhatsApp message. */
+  /** WhatsApp message in the server HTML; after load the session-aware message from lib/whatsappContext replaces it. */
   whatsappText: string
   /** Real local photo used when Sanity has no project photo for this space type. */
   heroImage: string
@@ -46,10 +46,8 @@ type Props = {
   brandLogos?: SanityImage[]
   /** Optional price estimator, rendered just above the price guide card. */
   estimator?: ReactNode
-}
-
-function whatsappHref(text: string) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+  /** Matching /spaces pages, linked under the price guide. */
+  relatedLinks?: ServiceLink[]
 }
 
 function CtaButtons({ whatsappText, dark = false }: { whatsappText: string; dark?: boolean }) {
@@ -61,16 +59,16 @@ function CtaButtons({ whatsappText, dark = false }: { whatsappText: string; dark
       >
         Get a free consultation <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </a>
-      <a
-        href={whatsappHref(whatsappText)}
-        target="_blank"
-        rel="noopener noreferrer"
+      {/* The server HTML keeps the page's own message; the client swaps in the session-aware one. */}
+      <WhatsAppLink
+        source={dark ? 'lander_footer' : 'lander_hero'}
+        fallbackText={whatsappText}
         className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full border px-6 text-sm font-bold no-underline ${
           dark ? 'border-white/25 text-white' : 'border-black/15 text-black'
         }`}
       >
         <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp us
-      </a>
+      </WhatsAppLink>
     </div>
   )
 }
@@ -79,7 +77,7 @@ function TrustLine({ dark = false }: { dark?: boolean }) {
   return <p className={`m-0 text-sm ${dark ? 'text-white/60' : 'text-[var(--color-gray-100)]'}`}>Free consultation. We reply within 1 hour.</p>
 }
 
-export default function PaidSearchLandingPage({ config, projects = [], testimonials = [], brandLogos, estimator }: Props) {
+export default function PaidSearchLandingPage({ config, projects = [], testimonials = [], brandLogos, estimator, relatedLinks = [] }: Props) {
   const withImage = projects.filter((project) => project?.mainImage?.asset && project.slug?.current)
   const matching = withImage.filter((project) => project.category === config.projectCategory)
   const others = withImage.filter((project) => project.category !== config.projectCategory)
@@ -252,6 +250,19 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
                 ))}
               </ul>
               <p className="mt-6 mb-0 text-sm text-white/55">Your exact price comes after a free consultation. No obligation.</p>
+              {relatedLinks.length > 0 ? (
+                <p className="mt-3 mb-0 flex flex-wrap gap-x-4 gap-y-1 text-sm text-white/55">
+                  <span>More on:</span>
+                  {relatedLinks.map((link) => (
+                    <Link key={link.href} href={link.href} className="text-white/80 underline underline-offset-4 hover:text-white">
+                      {link.label}
+                    </Link>
+                  ))}
+                  <Link href="/pricing" className="text-white/80 underline underline-offset-4 hover:text-white">
+                    Pricing guide
+                  </Link>
+                </p>
+              ) : null}
             </section>
           </div>
         </div>

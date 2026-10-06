@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 
 // Pages that already put the form or payment front and centre.
 const HIDDEN_ON = ['/contact', '/checkout', '/thank-you', '/proposals']
 // Ad landing pages keep visitors on the page: jump to their own form instead of /contact.
-const LANDING_PAGES = ['/office-acoustic-treatment', '/restaurant-echo-reduction', '/acoustic-panels-singapore']
+const LANDING_PAGES = ['/office-acoustic-treatment', '/restaurant-echo-reduction', '/school-acoustic-treatment', '/acoustic-panels-singapore']
 
 /**
  * Phone-only bar pinned to the bottom of the screen once the visitor scrolls past the first screenful,
@@ -55,8 +55,8 @@ export default function MobileActionBar() {
         >
           Free consultation
         </Link>
-        <TrackedAnchor
-          href="https://wa.me/6589301905"
+        <WhatsAppLink
+          source="mobile_bar"
           target="_blank"
           rel="noopener noreferrer"
           tabIndex={shown ? 0 : -1}
@@ -64,7 +64,7 @@ export default function MobileActionBar() {
           style={{ backgroundColor: '#25D366' }}
         >
           WhatsApp
-        </TrackedAnchor>
+        </WhatsAppLink>
       </div>
     </div>
   )

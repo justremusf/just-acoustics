@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown } from 'lucide-react'
 import {
   type RoomType,
@@ -10,6 +11,7 @@ import {
   calculatePanels,
   generateWhatsAppUrl,
 } from '@/lib/panel-calculator'
+import { CHURCH_FAQS } from './churchFaqs'
 
 // ─── Asset helpers ───────────────────────────────────────────────────────────
 const pricingAsset = (name: string) => `/assets/pricing/${name}`
@@ -174,29 +176,8 @@ const REVIEWS = [
   },
 ]
 
-// ─── FAQs ─────────────────────────────────────────────────────────────────────
-const FAQS = [
-  {
-    q: 'How many panels does our sanctuary need?',
-    a: 'Coverage depends on the room volume, layout, and surface materials. On average, treating 20–30% of the wall and ceiling area resolves most speech intelligibility and flutter echo issues. We confirm the exact amount through our 3D simulation.',
-  },
-  {
-    q: 'Why is our church so echoey?',
-    a: 'Most sanctuaries have tall ceilings and hard surfaces like concrete, brick, tile, or glass. Sound waves bounce off these without being absorbed, creating a long reverberation time that causes words to overlap and sound muddy.',
-  },
-  {
-    q: 'Does installation require drilling?',
-    a: 'Yes, secure mechanical fastening is required for ceiling clouds and wall panels. Our team uses dustless drilling methods and discrete hardware so the process is clean, fast, and safe for your congregation.',
-  },
-  {
-    q: 'Can members still hear with the panels installed?',
-    a: 'Yes — acoustic panels absorb excess reflections while preserving natural room ambience. They do not over-dampen the space. The result is clarity, not silence.',
-  },
-  {
-    q: 'How much does church acoustic treatment cost?',
-    a: 'A basic wall panel package for small halls starts around SGD 1,500. Full design, simulation, and professional installation for large main sanctuaries typically ranges from SGD 15,000 to SGD 40,000+.',
-  },
-]
+// ─── FAQs (shared with the server page for FAQPage JSON-LD) ──────────────────
+const FAQS = CHURCH_FAQS
 
 // ─── Inline Calculator ────────────────────────────────────────────────────────
 
@@ -498,6 +479,7 @@ export default function ChurchLanderClient() {
             src={slide.image}
             alt={slide.headline.replace('\n', ' ')}
             fill
+            sizes="100vw"
             priority={i === 0}
             className={[
               'object-cover transition-opacity duration-1000',
@@ -691,6 +673,7 @@ export default function ChurchLanderClient() {
                       src={activeCase.images[activeRoomIdx].src}
                       alt=""
                       fill
+                      sizes="(max-width: 1024px) 100vw, 40vw"
                       className="object-cover opacity-40 transition-transform duration-700 group-hover:scale-[1.04]"
                     />
                     <div className="absolute inset-0 bg-black/40" />
@@ -726,7 +709,7 @@ export default function ChurchLanderClient() {
               className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(0,0,0,0.12),0_10px_28px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.78)_inset]"
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-b-none">
-                <Image src={prod.image} alt={prod.title} fill className="object-cover" />
+                <Image src={prod.image} alt={prod.title} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" />
                 <span className="absolute left-3 top-3 rounded-full bg-[var(--color-brand-orange)] px-3 py-1 text-[10px] font-black text-white">
                   {prod.badge}
                 </span>
@@ -813,6 +796,9 @@ export default function ChurchLanderClient() {
             <span className="soft-pill">FAQ</span>
             <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">Got questions? We have answers.</h2>
             <p className="home-copy mt-4 max-w-[36ch]">Common questions from church leaders about acoustic treatment.</p>
+            <Link href="/spaces/churches" className="home-link mt-4 inline-flex items-center gap-1">
+              More on churches and event spaces <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
           <div>
             {FAQS.map((faq, idx) => (
@@ -859,14 +845,12 @@ export default function ChurchLanderClient() {
           <Link href="/contact" className="page-cta">
             Book Free Assessment <ArrowRight className="ml-1 h-4 w-4" />
           </Link>
-          <a
-            href="https://wa.me/6589301905"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            source="church_lander"
             className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-7 text-sm font-bold text-[var(--color-dark-100)] transition-all hover:-translate-y-0.5 hover:border-black/20"
           >
             WhatsApp Us
-          </a>
+          </WhatsAppLink>
         </div>
       </section>
 

@@ -229,28 +229,57 @@ export function buildUrlWithAttribution(baseUrl: string) {
   return url.toString()
 }
 
-function getWhatsAppMessage(attribution: Attribution) {
-  const lines = [
-    'Hi Just Acoustics, I would like help with acoustic treatment.',
-    '',
-    `Lead ref: ${attribution.lead_ref || createLeadRef()}`,
-    `Source: ${attribution.utm_source || 'unknown'}`,
-  ]
+/** The visitor's short lead reference (e.g. "JA-4K2P9X"), so a WhatsApp chat can be matched to its ad click. */
+export function getLeadRef() {
+  if (!isBrowser()) return ''
+  return getAttribution().lead_ref || ''
+}
 
+const LEAD_BLOCK = /\n*Lead ref: JA-[A-Z0-9]+[\s\S]*$/
+
+function hostOf(value?: string) {
+  if (!value) return ''
+  try {
+    return new URL(value).hostname.replace(/^www\./, '')
+  } catch {
+    return value
+  }
+}
+
+/** Where the visit came from, in plain words, even when the ad link had no UTM tags. */
+function describeSource(attribution: Attribution) {
+  if (attribution.utm_source) return [attribution.utm_source, attribution.utm_medium].filter(Boolean).join(' / ')
+  if (attribution.gclid || attribution.gbraid || attribution.wbraid) return 'google / cpc'
+  if (attribution.fbclid) return 'meta / paid social'
+  if (attribution.ttclid) return 'tiktok / paid social'
+  const referrer = hostOf(attribution.referrer)
+  if (referrer && !referrer.includes('justacoustics.co')) return `${referrer} / referral`
+  return 'direct'
+}
+
+/** The lead-source block the team reads in WhatsApp: ref, source, campaign, ad, keyword, landing page. */
+function leadSourceLines(attribution: Attribution) {
+  const lines = [`Lead ref: ${attribution.lead_ref || createLeadRef()}`, `Source: ${describeSource(attribution)}`]
   if (attribution.utm_campaign) lines.push(`Campaign: ${attribution.utm_campaign}`)
+  else if (attribution.campaign_id) lines.push(`Campaign ID: ${attribution.campaign_id}`)
   if (attribution.utm_content) lines.push(`Ad: ${attribution.utm_content}`)
   if (attribution.utm_term) lines.push(`Keyword: ${attribution.utm_term}`)
   if (attribution.landing_page) lines.push(`Landing page: ${attribution.landing_page}`)
-
-  return lines.join('\n')
+  return lines
 }
 
+/**
+ * Keeps the link's own message (or a generic one) and adds the lead-source block underneath,
+ * so the team always sees where a WhatsApp lead came from. Idempotent: an existing block is replaced.
+ */
 export function buildWhatsAppUrlWithAttribution(baseUrl: string) {
-  const attribution = getAttribution()
   const url = new URL(baseUrl)
-  url.searchParams.set('text', getWhatsAppMessage(attribution))
-
-  return url.toString()
+  const own = (url.searchParams.get('text') || "Hi Just Acoustics, I'd like some advice on acoustic treatment.").replace(LEAD_BLOCK, '')
+  const text = isBrowser() ? `${own}\n\n${leadSourceLines(getAttribution()).join('\n')}` : own
+  url.searchParams.delete('text')
+  const rest = url.searchParams.toString()
+  // encodeURIComponent (%20), not URLSearchParams ("+"), so every WhatsApp client shows spaces.
+  return `${url.origin}${url.pathname}?${rest ? `${rest}&` : ''}text=${encodeURIComponent(text)}`
 }
 
 export function buildTallyUrlWithAttribution(baseTallyUrl: string) {
