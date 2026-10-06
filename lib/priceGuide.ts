@@ -213,3 +213,18 @@ export function findSpaceType(slug: string | null | undefined) {
 export function findSizeBand(slug: string | null | undefined) {
   return SIZE_BANDS.find((band) => band.slug === slug)
 }
+
+/**
+ * Typical installed range for an everyday room (small + medium bands, under 40 m²) across all
+ * space types: the lowest small-band price to the highest small/medium range top.
+ * Shown as the homepage hero price anchor.
+ */
+export function typicalRoomPriceRange() {
+  const low = Math.min(...SPACE_TYPES.map((space) => space.prices.small.low))
+  const high = Math.max(
+    ...SPACE_TYPES.flatMap((space) =>
+      (['small', 'medium'] as const).map((band) => space.prices[band].high ?? 0),
+    ),
+  )
+  return { low, high }
+}

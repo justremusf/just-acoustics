@@ -4,6 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image, { getImageProps } from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
+import { formatPriceSgd, typicalRoomPriceRange } from '@/lib/priceGuide'
+
+const TYPICAL_ROOM_PRICE = typicalRoomPriceRange()
+const HERO_TRUST_POINTS = ['Installed in 1–2 days', '1-year warranty', 'We reply within 1 hour'] as const
 
 const HERO_IMAGES = [
   {
@@ -152,14 +156,35 @@ export default function Hero() {
             <p className="mt-5 max-w-[58ch] text-[15px] leading-7 text-white/82 sm:text-[16px] sm:leading-7 md:text-[17px]">
               We supply and install acoustic panels for home studios, churches, offices, restaurants, and schools. Fixing sound quality &amp; speech clarity.
             </p>
+            <p className="mt-3 text-[14px] leading-6 text-white/70 sm:text-[15px]">
+              Most rooms{' '}
+              <span className="font-semibold text-white">
+                {formatPriceSgd(TYPICAL_ROOM_PRICE.low)}–{TYPICAL_ROOM_PRICE.high.toLocaleString('en-SG')}
+              </span>
+              , supplied and installed
+            </p>
 
-            <div className="mt-12 mb-4 flex flex-col gap-3 sm:mt-14 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-10 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center">
               <Link href="/contact" className="no-underline">
                 <ShimmerButton className="h-auto w-full px-7 py-4 text-[14px] font-semibold sm:min-w-[212px] sm:w-auto">
                   Free Acoustic Consultation
                 </ShimmerButton>
               </Link>
+              <Link
+                href="#estimate"
+                className="inline-flex min-h-[54px] items-center justify-center rounded-[100px] border border-white/22 bg-white/10 px-7 text-[14px] font-semibold text-white no-underline backdrop-blur-sm transition-colors duration-300 hover:border-white/40 hover:bg-white/16"
+              >
+                See what it costs
+              </Link>
             </div>
+            <p className="mt-5 mb-4 flex flex-wrap gap-x-2 gap-y-1 text-[12px] leading-5 text-white/66 sm:mb-8 sm:text-[13px]">
+              {HERO_TRUST_POINTS.map((point, i) => (
+                <span key={point} className="whitespace-nowrap">
+                  {i > 0 && <span aria-hidden="true" className="pr-2 text-white/36">·</span>}
+                  {point}
+                </span>
+              ))}
+            </p>
           </div>
         </div>
       </div>
