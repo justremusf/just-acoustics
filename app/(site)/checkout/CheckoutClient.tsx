@@ -26,6 +26,7 @@ import CheckoutHelp from "@/components/checkout/CheckoutHelp";
 import CheckoutSteps from "@/components/checkout/CheckoutSteps";
 import InstallationEnquiry from "@/components/cart/InstallationEnquiry";
 import { trackEvent } from "@/components/analytics/trackEvent";
+import { getAttributionEventParams } from "@/lib/tallyAttribution";
 import {
   CONTACT_PHONE_DISPLAY,
   formatPayable,
@@ -269,7 +270,18 @@ export default function CheckoutClient() {
   useEffect(() => {
     if (!hydrated || !items.length || tracked.current) return;
     tracked.current = true;
-    trackEvent("begin_checkout", { value: subtotal, currency: "SGD" });
+    trackEvent("begin_checkout", {
+      value: subtotal,
+      currency: "SGD",
+      items: items.map((item) => ({
+        item_id: item.slug,
+        item_name: item.title,
+        price: item.unitPrice,
+        quantity: item.quantity,
+      })),
+    });
+    // Fires once per checkout visit, with the cart as it was on arrival.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated, items.length, subtotal]);
 
   useEffect(() => {
@@ -348,7 +360,8 @@ export default function CheckoutClient() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify({ ...payload, requestId: request.current.id }),
+        // Attribution (utm_*, gclid, lead_ref…) rides alongside, outside the idempotency snapshot.
+        body: JSON.stringify({ ...payload, requestId: request.current.id, attribution: getAttributionEventParams() }),
       });
       const body = await response.json().catch(() => null);
 

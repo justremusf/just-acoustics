@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import { FOOTER_SERVICE_LINKS } from '@/lib/serviceLinks'
 
 const navGroups = [
@@ -70,6 +71,7 @@ const contactLinks = [
     label: 'WhatsApp / Hotline',
     value: '+65 8930 1905',
     href: 'https://wa.me/6589301905',
+    whatsapp: true,
   },
   {
     label: 'Email',
@@ -118,30 +120,37 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
-                  {contactLinks.map((item) => (
-                    <TrackedAnchor
-                      key={item.label}
-                      href={item.href}
-                      target={item.href.startsWith('http') ? '_blank' : undefined}
-                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="rounded-[16px] border border-white/24 bg-white/18 px-4 py-2.5 text-white no-underline shadow-[0_10px_24px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/24"
-                    >
-                      <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/72">
-                        {item.label}
-                      </p>
-                      <p
-                        className="mt-2 mb-0"
-                        style={{
-                          fontFamily: 'var(--font-heading)',
-                          fontSize: 'clamp(16px, 1.6vw, 20px)',
-                          lineHeight: '1.05',
-                          letterSpacing: '-0.6px',
-                        }}
-                      >
-                        {item.value}
-                      </p>
-                    </TrackedAnchor>
-                  ))}
+                  {contactLinks.map((item) => {
+                    const className =
+                      'rounded-[16px] border border-white/24 bg-white/18 px-4 py-2.5 text-white no-underline shadow-[0_10px_24px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/24'
+                    const content = (
+                      <>
+                        <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/72">
+                          {item.label}
+                        </p>
+                        <p
+                          className="mt-2 mb-0"
+                          style={{
+                            fontFamily: 'var(--font-heading)',
+                            fontSize: 'clamp(16px, 1.6vw, 20px)',
+                            lineHeight: '1.05',
+                            letterSpacing: '-0.6px',
+                          }}
+                        >
+                          {item.value}
+                        </p>
+                      </>
+                    )
+                    return item.whatsapp ? (
+                      <WhatsAppLink key={item.label} source="footer" className={className}>
+                        {content}
+                      </WhatsAppLink>
+                    ) : (
+                      <TrackedAnchor key={item.label} href={item.href} trackingSource="footer" className={className}>
+                        {content}
+                      </TrackedAnchor>
+                    )
+                  })}
                 </div>
 
                 <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">

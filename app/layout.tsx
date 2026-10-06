@@ -5,6 +5,8 @@ import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
 import AttributionProvider from '@/components/analytics/AttributionProvider'
+import BrowsingContextTracker from '@/components/analytics/BrowsingContextTracker'
+import ContactClickTracker from '@/components/analytics/ContactClickTracker'
 import ClarityAnalytics from '@/components/analytics/ClarityAnalytics'
 import CookieConsentBanner from '@/components/analytics/CookieConsentBanner'
 import FirstPartyInsights from '@/components/analytics/FirstPartyInsights'
@@ -133,22 +135,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               )}
               {metaPixelId && (
                 <>
-                  <Script id="meta-pixel-base" strategy="lazyOnload">
+                  {/* The fbq queue exists from the first paint, so events fired before the pixel
+                      library loads (e.g. a Lead on /thank-you) are queued instead of dropped. Only
+                      the library download itself waits for idle time. */}
+                  <Script id="meta-pixel-queue" strategy="beforeInteractive">
                     {`
-                      !function(f,b,e,v,n,t,s)
-                      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                      !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
                       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
                       if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                      n.queue=[];t=b.createElement(e);t.async=!0;
-                      t.src=v;s=b.getElementsByTagName(e)[0];
-                      s.parentNode.insertBefore(t,s)}(window, document,'script',
-                      'https://connect.facebook.net/en_US/fbevents.js');
+                      n.queue=[];}(window);
                       ${CONSENT_SNIPPET}
                       if (!window.__jaAdsAllowed) fbq('consent', 'revoke');
                       fbq('init', '${metaPixelId}');
                       fbq('track', 'PageView');
                     `}
                   </Script>
+                  <Script id="meta-pixel-lib" src="https://connect.facebook.net/en_US/fbevents.js" strategy="lazyOnload" />
                 </>
               )}
             </>
@@ -156,6 +158,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={null}>
             <AttributionProvider />
           </Suspense>
+          <BrowsingContextTracker />
+          <ContactClickTracker />
           <ClarityAnalytics projectId={clarityProjectId} />
           <Suspense fallback={null}>
             <FirstPartyInsights />
