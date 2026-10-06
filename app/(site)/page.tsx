@@ -4,6 +4,7 @@ import Hero from '@/components/sections/Hero'
 import BrandScroller from '@/components/sections/BrandScroller'
 import ProductsGrid from '@/components/sections/ProductsGrid'
 import Spaces from '@/components/sections/Spaces'
+import HomePriceEstimate from '@/components/sections/HomePriceEstimate'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
@@ -49,6 +50,7 @@ export default async function HomePage() {
         <BrandScroller logos={settings?.brandLogos} />
       </div>
       <div data-home-reveal><Spaces spaces={spaces} /></div>
+      <div data-home-reveal><HomePriceEstimate /></div>
       <div data-home-reveal>
         <LazyInteractiveVSL
           config={landingVslConfig}
