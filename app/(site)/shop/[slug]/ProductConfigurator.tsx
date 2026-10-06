@@ -6,7 +6,7 @@ import Link from "next/link";
 import { HelpCircle, X } from "lucide-react";
 import { useCart, type CartItemOption } from "@/components/cart/CartContext";
 import type { ShopItem } from "@/lib/types";
-import { getProductProfile, resolveProductLine } from "@/lib/shopProductProfiles";
+import type { ProductProfile, ShopProductLine } from "@/lib/shopProductProfiles";
 import { trackEvent } from "@/components/analytics/trackEvent";
 import { DELIVERY_DISCLOSURE, ORDER_LEAD_TIME } from "@/lib/paymentCopy";
 import {
@@ -16,30 +16,36 @@ import {
   resolveShopSelection,
   type ShopQuoteSelection,
 } from "@/lib/shopPricing";
-import {
-  SOOTHE_VISIBLE_FABRIC_IDS,
-  STANDARD_FLEXI_VISIBLE_COLOUR_IDS,
-} from "./productData";
-import {
-  getColourSwatchSrc,
-  getImageSrc,
-  getSizeDimensionLabel,
-  getSizePreviewSrc,
-  getSizeShapeLabel,
-  getSootheFabricSwatchStyle,
-  isFlexiProduct,
-  isSootheProduct,
-  optionButtonClass,
-  optionSectionClass,
-} from "./productHelpers";
+import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
+import { getSizeDimensionLabel, getSizeShapeLabel } from "@/lib/shopSizeLabels";
+import type { ProductMedia } from "./productHelpers";
+
+/** The parts of the product profile the configurator needs (resolved on the server). */
+export type ConfiguratorProfile = Pick<
+  ProductProfile,
+  "line" | "quoteOnly" | "artworkReview" | "customSizes" | "shortDescription"
+>;
+
+function optionButtonClass(active: boolean) {
+  return [
+    "rounded-[16px] border px-4 py-3 text-left text-sm transition-all duration-200",
+    active
+      ? "border-[var(--color-brand-orange)] bg-[rgba(255,165,0,0.12)] text-[var(--color-dark-100)] shadow-[0_12px_28px_rgba(255,165,0,0.08)]"
+      : "border-black/8 bg-white/74 text-[var(--color-gray-100)] hover:border-black/18 hover:text-[var(--color-dark-100)]",
+  ].join(" ");
+}
+
+const OPTION_SECTION_CLASS = "border-t border-black/8 pt-5";
 
 function ProductColourSwatch({
   option,
+  swatchSrc,
 }: {
   option: ReturnType<typeof resolveShopSelection>["colourOption"];
+  swatchSrc: string | null;
 }) {
-  const sootheStyle = getSootheFabricSwatchStyle(option);
-  const swatchSrc = getColourSwatchSrc(option, 120, 120);
+  // Soothe fabrics crop the original chart photo to the fabric cell; no recolouring.
+  const sootheStyle = colourSwatchStyle(option?.swatchSrc, option?.swatchRegion);
 
   if (sootheStyle)
     return (
@@ -65,11 +71,13 @@ function ProductColourSwatch({
 
 function ProductColourSwatchButton({
   option,
+  swatchSrc,
   selected,
   onSelect,
   showTooltip = false,
 }: {
   option: NonNullable<ReturnType<typeof resolveShopSelection>["colourOption"]>;
+  swatchSrc: string | null;
   selected: boolean;
   onSelect: () => void;
   showTooltip?: boolean;
@@ -88,7 +96,7 @@ function ProductColourSwatchButton({
       ].join(" ")}
     >
       <span className="block h-full w-full overflow-hidden rounded-full">
-        <ProductColourSwatch option={option} />
+        <ProductColourSwatch option={option} swatchSrc={swatchSrc} />
       </span>
       {showTooltip && (
         <span className="pointer-events-none absolute left-1/2 top-full z-[90] mt-2 w-max max-w-[180px] -translate-x-1/2 rounded-full border border-black/8 bg-white px-3 py-1.5 text-[11px] font-semibold leading-tight text-[var(--color-dark-100)] opacity-0 shadow-[0_12px_28px_rgba(15,23,42,0.14)] transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
@@ -191,6 +199,11 @@ function CustomSizeDialog({
 
 export function ProductConfigurator({
   item: configurableItem,
+  profile,
+  productLine,
+  isSoothe,
+  visibleColourIds,
+  media,
   selection,
   setSelection,
   price,
@@ -198,6 +211,12 @@ export function ProductConfigurator({
   onImageModeChange,
 }: {
   item: ShopItem;
+  profile: ConfiguratorProfile;
+  productLine: ShopProductLine;
+  isSoothe: boolean;
+  /** Curated swatch order for Flexi/Soothe; null shows the first nine colours. */
+  visibleColourIds: string[] | null;
+  media: ProductMedia;
   selection: ShopQuoteSelection;
   setSelection: (
     value:
@@ -209,9 +228,6 @@ export function ProductConfigurator({
   onImageModeChange: (mode: "size" | "colour") => void;
 }) {
   const { addItem } = useCart();
-  const isStandardFlexi = isFlexiProduct(configurableItem);
-  const isSoothe = isSootheProduct(configurableItem);
-  const profile = getProductProfile(configurableItem);
   const [isColourOpen, setIsColourOpen] = useState(false);
   const [isCustomSizeOpen, setIsCustomSizeOpen] = useState(false);
   // Stable reference so CustomSizeDialog's focus/scroll-lock effect only runs
@@ -238,17 +254,13 @@ export function ProductConfigurator({
   const colours = (configurableItem.colourOptions || []).filter(
     (option) => option.available !== false,
   );
-  const visibleColours = isStandardFlexi
-    ? STANDARD_FLEXI_VISIBLE_COLOUR_IDS.map((id) =>
-        colours.find((option) => option.id === id),
-      ).filter((option): option is (typeof colours)[number] => Boolean(option))
-    : isSoothe
-      ? SOOTHE_VISIBLE_FABRIC_IDS.map((id) =>
-          colours.find((option) => option.id === id),
-        ).filter((option): option is (typeof colours)[number] =>
-          Boolean(option),
-        )
-      : colours.slice(0, 9);
+  const visibleColours = visibleColourIds
+    ? visibleColourIds
+        .map((id) => colours.find((option) => option.id === id))
+        .filter((option): option is (typeof colours)[number] => Boolean(option))
+    : colours.slice(0, 9);
+  const swatchSrcFor = (option: { id?: string }) =>
+    (option.id && media.colourSwatches[option.id]?.button) || null;
   const hiddenColourCount = Math.max(0, colours.length - visibleColours.length);
 
   // Swatch = 36px (h-9), gap = 4px (gap-1). Always reserve 1 slot for the
@@ -323,9 +335,9 @@ export function ProductConfigurator({
     trackEvent("product_view", {
       product_slug: configurableItem.slug.current,
       product_name: configurableItem.title,
-      product_line: resolveProductLine(configurableItem),
+      product_line: productLine,
     });
-  }, [configurableItem]);
+  }, [configurableItem, productLine]);
 
   const handleAddToCart = () => {
     const quantity = normaliseQuantity(configurableItem, selection.quantity);
@@ -347,7 +359,10 @@ export function ProductConfigurator({
       {
         label: isSoothe ? "Fabric" : "Colour",
         value: profile.artworkReview ? undefined : resolved.colourOption?.name,
-        swatchSrc: getColourSwatchSrc(resolved.colourOption, 64, 64) || undefined,
+        swatchSrc:
+          (resolved.colourOption?.id &&
+            media.colourSwatches[resolved.colourOption.id]?.cart) ||
+          undefined,
         hex: resolved.colourOption?.hex,
         swatchRegion: resolved.colourOption?.swatchRegion,
       },
@@ -357,8 +372,9 @@ export function ProductConfigurator({
       slug: configurableItem.slug.current,
       title: configurableItem.title,
       imageSrc:
-        getSizePreviewSrc(configurableItem, selection, 640, 640) ||
-        getImageSrc(configurableItem.mainImage, 640, 640),
+        (resolved.sizeOption?.id &&
+          media.sizePreviews[resolved.sizeOption.id]?.cart) ||
+        media.cartImageSrc,
       unitPrice,
       selection: { ...selection, installationId: "self-install", packageId: undefined },
       quantity,
@@ -439,6 +455,7 @@ export function ProductConfigurator({
                           <ProductColourSwatchButton
                             key={option.id}
                             option={option}
+                            swatchSrc={swatchSrcFor(option)}
                             selected={selection.colourId === option.id}
                             onSelect={() => {
                               setSelectionValue("colourId", option.id);
@@ -482,6 +499,7 @@ export function ProductConfigurator({
                     <ProductColourSwatchButton
                       key={option.id}
                       option={option}
+                      swatchSrc={swatchSrcFor(option)}
                       selected={selection.colourId === option.id}
                       onSelect={() => {
                         setSelectionValue("colourId", option.id);
@@ -506,6 +524,7 @@ export function ProductConfigurator({
                     <ProductColourSwatchButton
                       key={option.id}
                       option={option}
+                      swatchSrc={swatchSrcFor(option)}
                       selected={selection.colourId === option.id}
                       onSelect={() => {
                         setSelectionValue("colourId", option.id);
@@ -567,6 +586,7 @@ export function ProductConfigurator({
                                 <ProductColourSwatchButton
                                   key={option.id}
                                   option={option}
+                                  swatchSrc={swatchSrcFor(option)}
                                   selected={selection.colourId === option.id}
                                   showTooltip
                                   onSelect={() => {
@@ -587,7 +607,7 @@ export function ProductConfigurator({
 
         {configurableItem.sizeOptions &&
           configurableItem.sizeOptions.length > 0 && (
-            <div className={optionSectionClass()}>
+            <div className={OPTION_SECTION_CLASS}>
               <p className="m-0 flex items-baseline gap-3 text-sm font-semibold text-[var(--color-dark-100)]">
                 <span className="page-kicker m-0">Shape</span>
                 <span>
@@ -637,7 +657,7 @@ export function ProductConfigurator({
 
         {configurableItem.thicknessOptions &&
           configurableItem.thicknessOptions.length > 0 && (
-            <div className={optionSectionClass()}>
+            <div className={OPTION_SECTION_CLASS}>
               <p className="page-kicker">Thickness</p>
               <div className="mt-3 grid grid-cols-2 gap-3">
                 {configurableItem.thicknessOptions
@@ -662,7 +682,7 @@ export function ProductConfigurator({
             </div>
           )}
 
-        <div className={`${optionSectionClass()} grid gap-4`}>
+        <div className={`${OPTION_SECTION_CLASS} grid gap-4`}>
           <div className="product-action-row grid min-w-0 grid-cols-[132px_minmax(0,1fr)] items-center gap-3">
             <div className="product-quantity-control inline-flex h-[52px] w-[132px] justify-self-start overflow-hidden rounded-full border border-black/8 bg-white/86">
               <button

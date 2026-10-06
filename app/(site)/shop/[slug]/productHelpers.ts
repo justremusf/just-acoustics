@@ -1,10 +1,12 @@
+// Server-side helpers for the product page. Client islands receive the
+// results as props (see getProductMedia) so Sanity URL building and the
+// product catalogue/profile data stay out of the browser bundle.
 import { urlFor } from "@/sanity/lib/image";
 import type { ShopItem } from "@/lib/types";
 import {
   resolveShopSelection,
   type ShopQuoteSelection,
 } from "@/lib/shopPricing";
-import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
 import { resolveProductLine } from "@/lib/shopProductProfiles";
 import { isFlexiProduct } from "@/lib/shopCatalogue";
 import { STANDARD_FLEXI_SIZE_IMAGE_SRC } from "./productData";
@@ -13,8 +15,6 @@ import { STANDARD_FLEXI_SIZE_IMAGE_SRC } from "./productData";
 // getConfigurableItem offers supply only: installation is a separate enquiry.
 export {
   getConfigurableItem,
-  getSizeDimensionLabel,
-  getSizeShapeLabel,
   isFlexiProduct,
   isSootheProduct,
 } from "@/lib/shopCatalogue";
@@ -31,19 +31,6 @@ export function getImageSrc(
   return image && "asset" in image && image.asset._ref
     ? urlFor(image).width(width).height(height).url()
     : null;
-}
-
-export function optionButtonClass(active: boolean) {
-  return [
-    "rounded-[16px] border px-4 py-3 text-left text-sm transition-all duration-200",
-    active
-      ? "border-[var(--color-brand-orange)] bg-[rgba(255,165,0,0.12)] text-[var(--color-dark-100)] shadow-[0_12px_28px_rgba(255,165,0,0.08)]"
-      : "border-black/8 bg-white/74 text-[var(--color-gray-100)] hover:border-black/18 hover:text-[var(--color-dark-100)]",
-  ].join(" ");
-}
-
-export function optionSectionClass() {
-  return "border-t border-black/8 pt-5";
 }
 
 export function getSpecValue(item: ShopItem, label: string) {
@@ -91,9 +78,40 @@ export function getColourSwatchSrc(
   );
 }
 
-export function getSootheFabricSwatchStyle(
-  option: ReturnType<typeof resolveShopSelection>["colourOption"] | undefined,
-) {
-  // Crops the original chart photo to the fabric cell; no recolouring.
-  return colourSwatchStyle(option?.swatchSrc, option?.swatchRegion);
+/** Image URLs the client islands need, resolved once on the server. */
+export type ProductMedia = {
+  /** Main image at gallery size (1200x1500). */
+  mainImageSrc: string | null;
+  /** Main image at cart size (640x640), the add-to-cart fallback. */
+  cartImageSrc: string | null;
+  /** Size preview per size option id: gallery (1200x1500) and cart (640x640). */
+  sizePreviews: Record<string, { gallery: string | null; cart: string | null }>;
+  /** Swatch per colour option id: button (120x120) and cart (64x64). */
+  colourSwatches: Record<string, { button: string | null; cart: string | null }>;
+};
+
+export function getProductMedia(configurableItem: ShopItem): ProductMedia {
+  const sizePreviews: ProductMedia["sizePreviews"] = {};
+  for (const option of configurableItem.sizeOptions || []) {
+    if (!option.id) continue;
+    const selection = { sizeId: option.id, quantity: 1 } as ShopQuoteSelection;
+    sizePreviews[option.id] = {
+      gallery: getSizePreviewSrc(configurableItem, selection) ?? null,
+      cart: getSizePreviewSrc(configurableItem, selection, 640, 640) ?? null,
+    };
+  }
+  const colourSwatches: ProductMedia["colourSwatches"] = {};
+  for (const option of configurableItem.colourOptions || []) {
+    if (!option.id) continue;
+    colourSwatches[option.id] = {
+      button: getColourSwatchSrc(option, 120, 120),
+      cart: getColourSwatchSrc(option, 64, 64),
+    };
+  }
+  return {
+    mainImageSrc: getImageSrc(configurableItem.mainImage, 1200, 1500),
+    cartImageSrc: getImageSrc(configurableItem.mainImage, 640, 640),
+    sizePreviews,
+    colourSwatches,
+  };
 }
