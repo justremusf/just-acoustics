@@ -355,11 +355,8 @@ export function useInteractiveVSL(config: InteractiveVSLConfig, pageLocation: st
         timestamp: new Date().toISOString(),
       }
 
+      // trackEvent also sends the Meta custom event (when ad consent allows), so no direct fbq call here.
       trackEvent('vsl_space_type_selected', eventParams)
-
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('trackCustom', 'vsl_space_type_selected', eventParams)
-      }
 
       setIsSwitching(true)
       window.setTimeout(() => {

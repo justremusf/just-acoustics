@@ -8,6 +8,8 @@ const ID = /^[a-zA-Z0-9-]{8,100}$/
 const ALLOWED_EVENTS = new Set([
   'page_view', 'product_view', 'product_option_selected', 'add_to_cart', 'begin_checkout', 'generate_lead', 'whatsapp_click', 'phone_click', 'email_click', 'cart_opened',
   'blog_view', 'pricing_view', 'landing_page_view', 'page_engaged', 'page_deep_read', 'page_cta_clicked', 'pricing_range_opened',
+  // Keep in step with docs/TRACKING.md: events not listed here are rejected with 400.
+  'price_estimate_view', 'price_estimate_cta_click', 'calculator_used', 'purchase', 'vsl_space_type_selected',
 ])
 
 function readString(value: unknown, length: number) {

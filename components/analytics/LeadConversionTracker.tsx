@@ -1,79 +1,55 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import {
-  canQueueLead,
   getLeadTrackingRecord,
   markLeadQueued,
   markLeadSent,
 } from '@/components/analytics/leadTrackingState'
 import { trackEvent } from '@/components/analytics/trackEvent'
 
-const GTAG_WAIT_MS = 10 * 1000
-const GTAG_POLL_MS = 100
-
+/**
+ * Fires generate_lead exactly once per Tally submission, on /thank-you?submitted=tally&submission_id=…
+ *
+ * TallyAttributionIframe only records the submission (leadTrackingState) and redirects; this is the
+ * single place the lead is sent, so the Tally message and the thank-you load can never both count it.
+ * A reload, back-navigation or a direct visit without a pending record sends nothing. If GA4 never
+ * confirmed delivery, a later visit re-sends to Google only (GA4 + Ads, which dedupes on
+ * transaction_id); Meta, Vercel and first-party insights only ever get the first send.
+ */
 export default function LeadConversionTracker() {
-  const hasTracked = useRef(false)
-
   useEffect(() => {
-    if (hasTracked.current) return
-
     const searchParams = new URLSearchParams(window.location.search)
     const submissionId = searchParams.get('submission_id') || ''
     if (searchParams.get('submitted') !== 'tally' || !submissionId) return
 
-    const initialRecord = getLeadTrackingRecord(submissionId)
-    if (!initialRecord || initialRecord.status === 'sent') return
+    const record = getLeadTrackingRecord(submissionId)
+    if (!record || record.status === 'sent') return
 
-    let pollTimer: number | undefined
-    let cancelled = false
-    const waitDeadline = Date.now() + GTAG_WAIT_MS
+    const firstSend = record.status === 'pending'
+    const queued = markLeadQueued(submissionId)
+    if (!queued) return
 
-    const tryQueueLead = () => {
-      if (cancelled || hasTracked.current) return
-
-      const record = getLeadTrackingRecord(submissionId)
-      if (!record || record.status === 'sent') return
-
-      if (typeof window.gtag === 'function' && canQueueLead(record)) {
-        const gaAccepted = trackEvent(
-          'generate_lead',
-          {
-            value: 1,
-            currency: 'SGD',
-            form_name: 'free_acoustic_consultation',
-            page_path: '/thank-you',
-            source_page: record.sourcePage,
-            tally_form_id: record.formId || '',
-            tally_form_name: record.formName || '',
-            tracking_source: record.source,
-            ...record.attribution,
-          },
-          {
-            eventCallback: () => {
-              window.setTimeout(() => markLeadSent(submissionId), 0)
-            },
-            eventTimeoutMs: 2000,
-          }
-        )
-
-        if (gaAccepted && markLeadQueued(submissionId)) {
-          hasTracked.current = true
-          return
-        }
+    trackEvent(
+      'generate_lead',
+      {
+        form_name: 'free_acoustic_consultation',
+        source: 'tally_form',
+        source_page: record.sourcePage,
+        tally_form_id: record.formId || '',
+        tally_form_name: record.formName || '',
+        tracking_source: record.source,
+        ...record.attribution,
+      },
+      {
+        dedupeId: submissionId,
+        googleOnly: !firstSend,
+        eventCallback: () => {
+          window.setTimeout(() => markLeadSent(submissionId), 0)
+        },
+        eventTimeoutMs: 2000,
       }
-
-      if (Date.now() < waitDeadline) {
-        pollTimer = window.setTimeout(tryQueueLead, GTAG_POLL_MS)
-      }
-    }
-
-    tryQueueLead()
-
-    return () => {
-      cancelled = true
-      if (pollTimer) window.clearTimeout(pollTimer)
-    }
+    )
   }, [])
 
   return null

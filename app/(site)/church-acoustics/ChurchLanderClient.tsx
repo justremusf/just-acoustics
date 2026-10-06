@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown } from 'lucide-react'
 import {
   type RoomType,
@@ -859,14 +860,12 @@ export default function ChurchLanderClient() {
           <Link href="/contact" className="page-cta">
             Book Free Assessment <ArrowRight className="ml-1 h-4 w-4" />
           </Link>
-          <a
-            href="https://wa.me/6589301905"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            source="church_lander"
             className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-7 text-sm font-bold text-[var(--color-dark-100)] transition-all hover:-translate-y-0.5 hover:border-black/20"
           >
             WhatsApp Us
-          </a>
+          </WhatsAppLink>
         </div>
       </section>
 

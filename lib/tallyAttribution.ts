@@ -229,28 +229,29 @@ export function buildUrlWithAttribution(baseUrl: string) {
   return url.toString()
 }
 
-function getWhatsAppMessage(attribution: Attribution) {
-  const lines = [
-    'Hi Just Acoustics, I would like help with acoustic treatment.',
-    '',
-    `Lead ref: ${attribution.lead_ref || createLeadRef()}`,
-    `Source: ${attribution.utm_source || 'unknown'}`,
-  ]
-
-  if (attribution.utm_campaign) lines.push(`Campaign: ${attribution.utm_campaign}`)
-  if (attribution.utm_content) lines.push(`Ad: ${attribution.utm_content}`)
-  if (attribution.utm_term) lines.push(`Keyword: ${attribution.utm_term}`)
-  if (attribution.landing_page) lines.push(`Landing page: ${attribution.landing_page}`)
-
-  return lines.join('\n')
+/** The visitor's short lead reference (e.g. "JA-4K2P9X"), so a WhatsApp chat can be matched to its ad click. */
+export function getLeadRef() {
+  if (!isBrowser()) return ''
+  return getAttribution().lead_ref || ''
 }
 
-export function buildWhatsAppUrlWithAttribution(baseUrl: string) {
-  const attribution = getAttribution()
-  const url = new URL(baseUrl)
-  url.searchParams.set('text', getWhatsAppMessage(attribution))
+const REF_LINE = /\n*Ref: JA-[A-Z0-9]+\s*$/
 
-  return url.toString()
+/**
+ * Keeps the link's own message (or a generic one) and adds only a short "Ref: JA-XXXXXX" line.
+ * Campaign, keyword and landing-page details stay in analytics, never in the customer's message.
+ * Idempotent: a link that already carries a ref is left alone.
+ */
+export function buildWhatsAppUrlWithAttribution(baseUrl: string) {
+  const url = new URL(baseUrl)
+  const text = url.searchParams.get('text') || "Hi Just Acoustics, I'd like some advice on acoustic treatment."
+  if (REF_LINE.test(text)) return baseUrl
+  const ref = getLeadRef()
+  url.searchParams.delete('text')
+  const rest = url.searchParams.toString()
+  // encodeURIComponent (%20), not URLSearchParams ("+"), so every WhatsApp client shows spaces.
+  const encoded = encodeURIComponent(ref ? `${text}\n\nRef: ${ref}` : text)
+  return `${url.origin}${url.pathname}?${rest ? `${rest}&` : ''}text=${encoded}`
 }
 
 export function buildTallyUrlWithAttribution(baseTallyUrl: string) {

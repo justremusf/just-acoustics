@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { trackEvent } from "@/components/analytics/trackEvent";
 import {
   calculatePanels,
   generateWhatsAppUrl,
@@ -149,6 +150,13 @@ export default function ProductPanelCalculator({
     }
     setError("");
     setStep(4);
+    trackEvent("calculator_used", {
+      calculator: "product_calculator",
+      room_type: roomType,
+      product_name: productTitle,
+      panels_low: results.recommendedMin,
+      panels_high: results.recommendedMax,
+    });
   };
 
   const installed = results ? installedPriceForCalculatorRoom(roomType, results.floorArea) : null;
@@ -372,6 +380,7 @@ export default function ProductPanelCalculator({
                     href={whatsappHref}
                     target="_blank"
                     rel="noreferrer"
+                    data-track-source="product_calculator"
                     className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#137e89]/25 bg-[#137e89]/9 px-4 text-center text-sm font-semibold text-[#137e89] no-underline transition-colors hover:bg-[#137e89]/14"
                   >
                     Get personalised advice

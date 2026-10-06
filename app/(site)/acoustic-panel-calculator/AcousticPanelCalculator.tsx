@@ -1,7 +1,8 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
+import { trackEvent } from '@/components/analytics/trackEvent'
 
 type RoomPreset = { factor: number; tips: string[] }
 
@@ -97,6 +98,25 @@ Panel size: ${sizeLabel}
 Estimate: ${low}-${high} panels
 I can send 2-3 photos of the room. Could you confirm the count, layout and price?`
   const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+
+  // calculator_used: once per visit to the page, after the visitor has changed an input and paused.
+  const inputsKey = [roomType, echo, length, width, height, panelSize].join('|')
+  const initialInputs = useRef(inputsKey)
+  const usedTracked = useRef(false)
+  useEffect(() => {
+    if (usedTracked.current || inputsKey === initialInputs.current) return
+    const timer = window.setTimeout(() => {
+      usedTracked.current = true
+      trackEvent('calculator_used', {
+        calculator: 'panel_calculator',
+        room_type: roomType,
+        echo_level: echo,
+        panels_low: low,
+        panels_high: high,
+      })
+    }, 1500)
+    return () => window.clearTimeout(timer)
+  }, [inputsKey, roomType, echo, low, high])
 
   const dims = [
     { id: 'calc-length', label: 'Length', value: length, set: setLength, min: 1, max: 60 },
@@ -232,7 +252,7 @@ I can send 2-3 photos of the room. Could you confirm the count, layout and price
           <p className="m-0 text-sm leading-6 text-[var(--color-gray-100)]">
             Send 2–3 photos of the room on WhatsApp and we&apos;ll reply with the count, layout and price.
           </p>
-          <TrackedAnchor href={whatsappHref} target="_blank" rel="noopener noreferrer" className="page-cta w-fit">
+          <TrackedAnchor href={whatsappHref} trackingSource="panel_calculator" target="_blank" rel="noopener noreferrer" className="page-cta w-fit">
             WhatsApp +65 8930 1905
           </TrackedAnchor>
         </div>
