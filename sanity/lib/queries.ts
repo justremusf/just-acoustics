@@ -1,5 +1,7 @@
 import { client } from './client'
 import { serverClient } from './serverClient'
+import { withCaseStudy } from '@/lib/caseStudyFallback'
+import type { Project } from '@/lib/types'
 
 // ─── Blog Posts ───────────────────────────────────────────────────────────────
 
@@ -112,11 +114,12 @@ export async function getAllSpaceSlugs() {
 
 export async function getAllProjects() {
   try {
-    return await client.fetch(`
+    const projects: Project[] = await client.fetch(`
       *[_type == "project" && !(_id in path("drafts.**"))] | order(completionDate desc) {
         _id, title, slug, mainImage, category, location, clientName
       }
     `)
+    return (projects ?? []).map(withCaseStudy)
   } catch (error) {
     console.error('Error fetching all projects:', error)
     return []
@@ -134,7 +137,7 @@ export async function getProjectBySlug(slug: string) {
         testimonial, completionDate
       }`,
       { slug }
-    )
+    ).then((project: Project | null) => withCaseStudy(project))
   } catch (error) {
     console.error(`Error fetching project by slug ${slug}:`, error)
     return null
