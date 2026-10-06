@@ -3,6 +3,13 @@ import Image from 'next/image'
 import type { Space } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
+import { estimatorSpaceForPage, findSpaceType, formatPriceSgd } from '@/lib/priceGuide'
+
+/** Smallest-band starting price for a /spaces/[slug] card, or null if the price guide has no entry. */
+function startingPriceForSpaceHref(href: string) {
+  const space = findSpaceType(estimatorSpaceForPage(href.replace(/^\/spaces\//, '')))
+  return space ? formatPriceSgd(space.prices.small.low) : null
+}
 
 // Highest-value spaces first (see lib/spaceOrder.ts).
 const HOME_APPLICATION_ORDER = [
@@ -108,7 +115,7 @@ export default function Spaces({ spaces }: Props) {
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((app) => (
+          {items.map((item) => ({ ...item, fromPrice: startingPriceForSpaceHref(item.href) })).map((app) => (
             <Link
               key={app.href}
               href={app.href}
@@ -129,9 +136,16 @@ export default function Spaces({ spaces }: Props) {
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,1,1,0.02),rgba(1,1,1,0.34)_55%,rgba(1,1,1,0.52))]" />
               <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3.5 md:p-5">
                 <div className="flex min-h-[58px] items-center justify-between gap-2 rounded-[14px] border border-white/12 bg-[rgba(20,18,16,0.28)] p-3 backdrop-blur-sm transition-transform duration-300 group-hover:-translate-y-1 sm:min-h-[76px] sm:gap-4 sm:rounded-[20px] sm:p-4 md:p-5">
-                  <h3 className="m-0 text-[20px] leading-[1.04] font-medium tracking-[-0.4px] text-white sm:text-[26px] sm:tracking-[-0.8px]" style={{ fontFamily: 'var(--font-heading)' }}>
-                    {app.title}
-                  </h3>
+                  <div className="min-w-0">
+                    <h3 className="m-0 text-[20px] leading-[1.04] font-medium tracking-[-0.4px] text-white sm:text-[26px] sm:tracking-[-0.8px]" style={{ fontFamily: 'var(--font-heading)' }}>
+                      {app.title}
+                    </h3>
+                    {app.fromPrice && (
+                      <p className="m-0 mt-1.5 text-[12px] leading-4 text-white/72 sm:text-[13px]">
+                        From {app.fromPrice}
+                      </p>
+                    )}
+                  </div>
                   <span className="shrink-0 text-base text-white transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--color-brand-orange)] sm:text-xl" aria-hidden="true">→</span>
                 </div>
               </div>
