@@ -43,8 +43,8 @@ function bodyComponents(headingIds: Map<string, string>): PortableTextComponents
               className="h-auto w-full rounded-[20px]"
             />
           ) : (
-            <span className="relative block aspect-[16/10] overflow-hidden rounded-[20px]">
-              <Image src={value.src} alt={value.alt} fill sizes="(min-width: 800px) 720px, 100vw" className="object-cover" />
+            <span className="relative block aspect-[16/10] overflow-hidden rounded-[20px] bg-[var(--color-white-200)]">
+              <Image src={value.src} alt={value.alt} fill sizes="(min-width: 800px) 720px, 100vw" className="object-contain" />
             </span>
           )}
         </figure>
@@ -125,15 +125,17 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
           </header>
 
           {article.image && (
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[var(--color-white-200)] sm:aspect-[16/9]">
+            <div
+              className="relative overflow-hidden rounded-[24px] bg-[var(--color-white-200)]"
+              style={{ aspectRatio: article.image.width && article.image.height ? article.image.width / article.image.height : 1200 / 630 }}
+            >
               <Image
                 src={article.image.src}
                 alt={article.image.alt}
                 fill
                 priority
                 sizes={showToc ? '(min-width: 1180px) 1120px, 100vw' : '(min-width: 800px) 760px, 100vw'}
-                style={{ objectPosition: article.image.position ?? 'center' }}
-                className="object-cover"
+                className="object-contain"
               />
             </div>
           )}

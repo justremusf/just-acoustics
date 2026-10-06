@@ -42,7 +42,7 @@ export function toExplorerPost(post: Post): ExplorerPost {
     publishedAt: post.publishedAt,
     readingTime: post.readingTime,
     pinned: post.pinned,
-    image: image && { src: image.src, alt: image.alt, position: image.position },
+    image: image && { src: image.src, alt: image.alt, position: image.position, width: image.width, height: image.height },
   }
 }
 

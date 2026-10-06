@@ -11,7 +11,7 @@ export interface ExplorerPost {
   publishedAt?: string
   readingTime?: number
   pinned?: boolean
-  image?: { src: string; alt: string; position?: string }
+  image?: { src: string; alt: string; position?: string; width?: number; height?: number }
 }
 
 export const CONTENT_TYPES = [
@@ -21,3 +21,10 @@ export const CONTENT_TYPES = [
   { value: 'video', label: 'Videos', singular: 'Video' },
   { value: 'case-study', label: 'Case Studies', singular: 'Case Study' },
 ] as const
+
+/** Blog covers carry their own titles and graphics, so cards always show the whole image at its own shape. */
+export const DEFAULT_COVER_RATIO = 1200 / 630
+
+export function coverRatio(image?: { width?: number; height?: number }) {
+  return image?.width && image?.height ? image.width / image.height : DEFAULT_COVER_RATIO
+}

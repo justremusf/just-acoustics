@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import type { ExplorerPost } from '@/lib/blogContent'
-import { CONTENT_TYPES } from '@/lib/blogContent'
+import { CONTENT_TYPES, coverRatio } from '@/lib/blogContent'
 import { RESOURCE_TOPICS } from '@/lib/resourceTopics'
 
 /** Same visual language as the /blog feed cards, without the client-side search features. */
@@ -12,15 +12,14 @@ export default function RelatedPostCard({ post }: { post: ExplorerPost }) {
 
   return (
     <Link href={`/blog/${post.slug}`} className="group flex flex-col no-underline focus-visible:outline-none">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-[var(--color-dark-100)] shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300 group-hover:shadow-[0_26px_60px_rgba(0,0,0,0.16)] group-focus-visible:ring-4 group-focus-visible:ring-[var(--color-brand-orange)]">
+      <div style={{ aspectRatio: coverRatio(post.image) }} className="relative overflow-hidden rounded-[22px] bg-[var(--color-dark-100)] shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300 group-hover:shadow-[0_26px_60px_rgba(0,0,0,0.16)] group-focus-visible:ring-4 group-focus-visible:ring-[var(--color-brand-orange)]">
         {post.image ? (
           <Image
             src={post.image.src}
             alt={post.image.alt}
             fill
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-            style={{ objectPosition: post.image.position ?? 'center' }}
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+            className="object-contain"
           />
         ) : (
           <div aria-hidden="true" className="absolute inset-0 flex items-end bg-[linear-gradient(160deg,#2a2a2a,#151515)] p-5">
