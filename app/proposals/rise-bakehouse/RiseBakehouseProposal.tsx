@@ -5,6 +5,11 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const proposal = '/proposals/rise-bakehouse/'
+
+// iOS ignores `autoPlay` on a video mounted after a tap; an explicit play() is honoured.
+const startPlayback = (video: HTMLVideoElement | null) => {
+  void video?.play().catch(() => {})
+}
 const whatsapp = 'https://wa.me/6589301905?text=Hi%20Just%20Acoustics%2C%20I%20would%20like%20to%20proceed%20with%20the%20Rise%20Bakehouse%20acoustic%20proposal%20(QT-000329).'
 
 export default function RiseBakehouseProposal() {
@@ -123,7 +128,7 @@ export default function RiseBakehouseProposal() {
 
       <div className="rb-sticky"><a className="rb-text-link" href="#quote">S$6,185</a><a className="rb-cta" href={whatsapp} target="_blank">Accept on WhatsApp →</a></div>
 
-      {videoOpen && <div className="rb-modal" role="dialog" aria-modal="true" aria-label="Rise Bakehouse walkthrough"><div className="rb-modal-inner"><button className="rb-close" onClick={() => setVideoOpen(false)} aria-label="Close video">×</button><video controls autoPlay playsInline poster={`${proposal}model-perspective.jpg`}><source src={`${proposal}site-walkthrough.mp4`} type="video/mp4" /></video></div></div>}
+      {videoOpen && <div className="rb-modal" role="dialog" aria-modal="true" aria-label="Rise Bakehouse walkthrough"><div className="rb-modal-inner"><button className="rb-close" onClick={() => setVideoOpen(false)} aria-label="Close video">×</button><video ref={startPlayback} controls autoPlay playsInline poster={`${proposal}model-perspective.jpg`}><source src={`${proposal}site-walkthrough.mp4`} type="video/mp4" /></video></div></div>}
     </main>
   )
 }

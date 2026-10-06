@@ -58,17 +58,21 @@ export default function HearTheDifference() {
               const isActive = activeVideoId === v.video.youtubeId
               const isHiddenOnMobile = index > 0
 
+              // Once playing, the card stops being a button so taps reach the video controls.
+              const Card = isActive ? 'div' : 'button'
+
               return (
-                <button
+                <Card
                   key={v.video.youtubeId}
-                  onClick={() => setActiveVideoId(v.video.youtubeId)}
-                  onMouseEnter={prewarmYouTube}
-                  onTouchStart={prewarmYouTube}
+                  {...(isActive
+                    ? {}
+                    : { type: 'button' as const, onClick: () => setActiveVideoId(v.video.youtubeId), 'aria-label': `Play: ${v.label}` })}
+                  onMouseEnter={v.video.src ? undefined : prewarmYouTube}
+                  onTouchStart={v.video.src ? undefined : prewarmYouTube}
                   className={[
                     'group relative w-full overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]',
                     isHiddenOnMobile ? 'hidden md:block' : '',
                   ].join(' ')}
-                  aria-label={`Play: ${v.label}`}
                 >
                   <div className="relative aspect-[9/16] md:h-[410px] md:aspect-auto lg:h-[430px] xl:h-auto xl:aspect-[5/6]">
                     {!isActive ? (
@@ -126,7 +130,7 @@ export default function HearTheDifference() {
                       </>
                     )}
                   </div>
-                </button>
+                </Card>
               )
             })}
           </div>

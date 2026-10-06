@@ -11,7 +11,9 @@ export type SiteVideo = {
   poster?: string
 }
 
-export const SITE_VIDEOS = {
+export type SiteVideoKey = 'meetingRoom' | 'restaurant' | 'functionRoom' | 'yogaStudio'
+
+export const SITE_VIDEOS: Record<SiteVideoKey, SiteVideo> = {
   meetingRoom: {
     youtubeId: '8DURhlYt3wQ',
     title: 'Meeting Room — before & after',
@@ -28,6 +30,4 @@ export const SITE_VIDEOS = {
     youtubeId: '-1WDATPou2Y',
     title: 'Case Study: Noisy Yoga Studio',
   },
-} satisfies Record<string, SiteVideo>
-
-export type SiteVideoKey = keyof typeof SITE_VIDEOS
+}

@@ -41,13 +41,20 @@ export function ProductBeforeAfterSection() {
           {videos.map((video) => {
             const isActive = activeVideoId === video.video.youtubeId;
 
+            // Once playing, the card stops being a button so taps reach the video controls.
+            const Card = isActive ? "div" : "button";
+
             return (
-              <button
+              <Card
                 key={video.video.youtubeId}
-                type="button"
-                onClick={() => setActiveVideoId(video.video.youtubeId)}
+                {...(isActive
+                  ? {}
+                  : {
+                      type: "button" as const,
+                      onClick: () => setActiveVideoId(video.video.youtubeId),
+                      "aria-label": `Play ${video.label} result clip`,
+                    })}
                 className="group relative overflow-hidden rounded-[24px] border border-white/55 bg-white/35 p-0 text-left shadow-[0_18px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_64px_rgba(0,0,0,0.12)]"
-                aria-label={`Play ${video.label} result clip`}
               >
                 <div className="relative aspect-[4/5] min-h-[300px]">
                   {isActive ? (
@@ -98,7 +105,7 @@ export function ProductBeforeAfterSection() {
                     </div>
                   )}
                 </div>
-              </button>
+              </Card>
             );
           })}
         </div>

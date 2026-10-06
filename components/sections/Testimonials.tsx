@@ -12,8 +12,8 @@ import { SITE_VIDEOS } from '@/lib/videos'
 const CASE_STUDY_VIDEO = SITE_VIDEOS.yogaStudio
 const CASE_STUDY_VIDEO_ID = CASE_STUDY_VIDEO.youtubeId
 const CASE_STUDY_THUMBNAILS = [
+  ...(CASE_STUDY_VIDEO.poster ? [CASE_STUDY_VIDEO.poster] : []),
   `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/hqdefault.jpg`,
-  `https://i.ytimg.com/vi/${CASE_STUDY_VIDEO_ID}/maxresdefault.jpg`,
 ]
 
 

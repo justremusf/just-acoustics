@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import type { SiteVideo } from '@/lib/videos'
 
 type Props = {
@@ -8,20 +7,19 @@ type Props = {
   className?: string
 }
 
+// Runs during the commit triggered by the play tap, so iOS still treats play()
+// as user-initiated and allows sound. `autoPlay` alone is ignored there.
+const startPlayback = (video: HTMLVideoElement | null) => {
+  void video?.play().catch(() => {})
+}
+
 // Plays a site video once the visitor has tapped play. Self-hosted MP4 when the
 // file exists (instant start, no YouTube chrome), YouTube embed otherwise.
 export default function SiteVideoPlayer({ video, className = 'absolute inset-0 h-full w-full' }: Props) {
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-
-  useEffect(() => {
-    // The tap that mounted this player counts as the user gesture, so sound is allowed.
-    videoRef.current?.play().catch(() => {})
-  }, [])
-
   if (video.src) {
     return (
       <video
-        ref={videoRef}
+        ref={startPlayback}
         className={`${className} bg-black object-contain`}
         src={video.src}
         poster={video.poster}
