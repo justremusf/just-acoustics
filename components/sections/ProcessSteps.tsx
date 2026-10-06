@@ -2,10 +2,28 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ShimmerButton from '@/components/ui/shimmer-button'
 
-const steps = [
+type Step = {
+  title: string
+  description: string
+  image: string
+  /** Short, factual timing shown as a chip. Only set where the site already states it. */
+  timing?: string
+}
+
+function TimingChip({ timing }: { timing?: string }) {
+  if (!timing) return null
+  return (
+    <span className="mt-3 inline-flex rounded-full border border-white/18 bg-white/10 px-2.5 py-1 text-[11px] leading-none font-semibold text-white/86">
+      {timing}
+    </span>
+  )
+}
+
+const steps: Step[] = [
   {
     title: 'Contact Us',
     description: 'Send us details of your space to get started',
+    timing: 'Within 1 hour',
     image: '/assets/webflow/69687b1239333b922d70b26a_Title.avif',
   },
   {
@@ -21,6 +39,7 @@ const steps = [
   {
     title: 'Installation',
     description: 'Our licensed team works around your schedule',
+    timing: '1–2 days',
     image: '/assets/process/installation.webp',
   },
 ]
@@ -58,6 +77,7 @@ export default function ProcessSteps() {
                           <p className="mt-3 text-[14px] leading-6 text-white/78">
                             {step.description}
                           </p>
+                          <TimingChip timing={step.timing} />
                         </div>
                         <span className="shrink-0 pt-1 text-[14px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
                           0{i + 1}
@@ -95,6 +115,7 @@ export default function ProcessSteps() {
                         <p className="mt-3 text-[14px] leading-6 text-white/78">
                           {step.description}
                         </p>
+                        <TimingChip timing={step.timing} />
                       </div>
                       <span className="shrink-0 pt-1 text-[14px] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
                         0{i + 1}
