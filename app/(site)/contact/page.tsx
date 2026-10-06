@@ -9,7 +9,7 @@ import FAQ, { type FaqItem } from '@/components/sections/FAQ'
 import { getFeaturedTestimonials, getSiteSettings } from '@/sanity/lib/queries'
 import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import type { Testimonial } from '@/lib/types'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 
 export const revalidate = 60
@@ -47,12 +47,12 @@ const OBJECTIONS: FaqItem[] = [
   },
 ]
 
-export const metadata: Metadata = {
-  title: 'Contact — Free Consultation',
+export const metadata: Metadata = pageMetadata({
+  title: 'Free Acoustic Consultation Singapore',
   description:
     'Book a free acoustic consultation in Singapore. Send your room details and the Just Acoustics team will reach out within 1 hour.',
-  alternates: { canonical: canonicalPath('/contact') },
-}
+  path: '/contact',
+})
 
 export default async function ContactPage() {
   // Start talking to Tally while the page is still loading, so the form appears sooner.

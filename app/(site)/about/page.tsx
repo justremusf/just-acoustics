@@ -3,14 +3,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import ContactCTA from '@/components/sections/ContactCTA'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'About Just Acoustics | Acoustic Treatment Singapore',
+export const metadata: Metadata = pageMetadata({
+  title: 'About Our Acoustic Team in Singapore',
   description:
-    'Our story: a Singapore team with roots in music, renovation and carpentry, making acoustic treatment clearer, simpler and more affordable for offices, worship spaces, restaurants, schools, studios and homes.',
-  alternates: { canonical: canonicalPath('/about') },
-}
+    'A Singapore team with roots in music, renovation and carpentry, making acoustic treatment simpler and more affordable for offices, churches, cafés and homes.',
+  path: '/about',
+})
 
 // Real photos from our own jobs only. No renders or stock.
 const PHOTOS = {

@@ -59,6 +59,11 @@ const nextConfig: NextConfig = {
       { source: '/services/churches-event-spaces', destination: '/spaces/churches', permanent: true },
       { source: '/services/offices-meeting-rooms', destination: '/spaces/offices', permanent: true },
       { source: '/services/restaurants-cafes-bars', destination: '/spaces/restaurants', permanent: true },
+      // Retired slugs reached through the legacy /products/:slug route (avoid a two-hop chain).
+      { source: '/products/standard-flexi-acoustic-panel', destination: '/shop/flexi-acoustic-panels', permanent: true },
+      { source: '/products/custom-print-acoustic-panel', destination: '/shop/flexi-custom-print-panels', permanent: true },
+      // Removed internal test page.
+      { source: '/shop/test-product', destination: '/shop', permanent: true },
     ]
   },
   async headers() {

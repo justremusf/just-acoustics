@@ -2,15 +2,18 @@ import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
 import PriceEstimator from '@/components/estimator/PriceEstimator'
 import { getPaidSearchData } from '@/lib/paidSearchData'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata, serializeJsonLd, serviceJsonLd } from '@/lib/seo'
+import { minPriceForService, SPACE_LINKS_BY_SERVICE } from '@/lib/serviceLinks'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Acoustic Panels Singapore — Supply & Installation',
-  description: 'Acoustic wall and ceiling panels for echo control in Singapore. Get product, layout and installation guidance for your room.',
-  alternates: { canonical: canonicalPath('/acoustic-panels-singapore') },
-}
+const PAGE_PATH = '/acoustic-panels-singapore'
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Acoustic Panels Singapore: Supply & Install',
+  description: 'Acoustic wall and ceiling panels supplied and installed in Singapore, from S$120 per panel. Get product, layout and installation advice for your room.',
+  path: PAGE_PATH,
+})
 
 const config: PaidSearchPageConfig = {
   eyebrow: 'Homes & Home Studios',
@@ -46,5 +49,21 @@ const config: PaidSearchPageConfig = {
 
 export default async function Page() {
   const data = await getPaidSearchData()
-  return <PaidSearchLandingPage config={config} {...data} estimator={<PriceEstimator defaultSpace="home" compact id="estimator" />} />
+  const jsonLd = serviceJsonLd({
+    name: 'Acoustic panel supply and installation in Singapore',
+    description: config.summary,
+    path: PAGE_PATH,
+    minPrice: minPriceForService('panels'),
+  })
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+      <PaidSearchLandingPage
+        config={config}
+        {...data}
+        relatedLinks={SPACE_LINKS_BY_SERVICE.panels}
+        estimator={<PriceEstimator defaultSpace="home" compact id="estimator" />}
+      />
+    </>
+  )
 }

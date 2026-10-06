@@ -9,6 +9,7 @@ import BrandScroller from '@/components/sections/BrandScroller'
 import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 import type { LandingTestimonial } from '@/lib/paidSearchData'
+import type { ServiceLink } from '@/lib/serviceLinks'
 import type { Project, SanityImage } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 
@@ -46,6 +47,8 @@ type Props = {
   brandLogos?: SanityImage[]
   /** Optional price estimator, rendered just above the price guide card. */
   estimator?: ReactNode
+  /** Matching /spaces pages, linked under the price guide. */
+  relatedLinks?: ServiceLink[]
 }
 
 function whatsappHref(text: string) {
@@ -79,7 +82,7 @@ function TrustLine({ dark = false }: { dark?: boolean }) {
   return <p className={`m-0 text-sm ${dark ? 'text-white/60' : 'text-[var(--color-gray-100)]'}`}>Free consultation. We reply within 1 hour.</p>
 }
 
-export default function PaidSearchLandingPage({ config, projects = [], testimonials = [], brandLogos, estimator }: Props) {
+export default function PaidSearchLandingPage({ config, projects = [], testimonials = [], brandLogos, estimator, relatedLinks = [] }: Props) {
   const withImage = projects.filter((project) => project?.mainImage?.asset && project.slug?.current)
   const matching = withImage.filter((project) => project.category === config.projectCategory)
   const others = withImage.filter((project) => project.category !== config.projectCategory)
@@ -252,6 +255,19 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
                 ))}
               </ul>
               <p className="mt-6 mb-0 text-sm text-white/55">Your exact price comes after a free consultation. No obligation.</p>
+              {relatedLinks.length > 0 ? (
+                <p className="mt-3 mb-0 flex flex-wrap gap-x-4 gap-y-1 text-sm text-white/55">
+                  <span>More on:</span>
+                  {relatedLinks.map((link) => (
+                    <Link key={link.href} href={link.href} className="text-white/80 underline underline-offset-4 hover:text-white">
+                      {link.label}
+                    </Link>
+                  ))}
+                  <Link href="/pricing" className="text-white/80 underline underline-offset-4 hover:text-white">
+                    Pricing guide
+                  </Link>
+                </p>
+              ) : null}
             </section>
           </div>
         </div>

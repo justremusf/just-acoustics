@@ -7,6 +7,7 @@ import ArticleToc from '@/components/blog/ArticleToc'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import RelatedPostCard from '@/components/blog/RelatedPostCard'
 import { blockText, extractHeadings, slugify, whatsappLink, type ArticleNavView, type ArticleView, type ViewImage } from '@/lib/contentView'
+import type { ServiceLink } from '@/lib/serviceLinks'
 
 const BODY_ID = 'article-body'
 const headingFont = { fontFamily: 'var(--font-heading)' }
@@ -75,7 +76,7 @@ function MidCta() {
   )
 }
 
-export default function ArticleDetail({ article, nav }: { article: ArticleView; nav: ArticleNavView }) {
+export default function ArticleDetail({ article, nav, serviceLink }: { article: ArticleView; nav: ArticleNavView; serviceLink?: ServiceLink }) {
   const { headings, byBlock } = extractHeadings(article.body)
   const showToc = headings.length >= 3
   const components = bodyComponents(byBlock)
@@ -181,6 +182,14 @@ export default function ArticleDetail({ article, nav }: { article: ArticleView; 
                     <MessageCircle size={16} aria-hidden="true" /> WhatsApp us
                   </a>
                 </div>
+                {serviceLink ? (
+                  <p className="m-0 text-[14px] text-[var(--color-gray-200)]">
+                    Related service:{' '}
+                    <Link href={serviceLink.href} className="font-semibold text-[var(--color-dark-100)] underline underline-offset-4 hover:text-[var(--color-brand-orange)]">
+                      {serviceLink.label}
+                    </Link>
+                  </p>
+                ) : null}
               </aside>
             </div>
 

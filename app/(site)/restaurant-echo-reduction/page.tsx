@@ -2,15 +2,18 @@ import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
 import PriceEstimator from '@/components/estimator/PriceEstimator'
 import { getPaidSearchData } from '@/lib/paidSearchData'
-import { canonicalPath } from '@/lib/seo'
+import { pageMetadata, serializeJsonLd, serviceJsonLd } from '@/lib/seo'
+import { minPriceForService, SPACE_LINKS_BY_SERVICE } from '@/lib/serviceLinks'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+const PAGE_PATH = '/restaurant-echo-reduction'
+
+export const metadata: Metadata = pageMetadata({
   title: 'Restaurant Echo Reduction Singapore',
   description: 'Reduce harsh restaurant and venue echo with discreet acoustic wall and ceiling treatment in Singapore.',
-  alternates: { canonical: canonicalPath('/restaurant-echo-reduction') },
-}
+  path: PAGE_PATH,
+})
 
 const config: PaidSearchPageConfig = {
   eyebrow: 'Restaurants, Cafés & Bars',
@@ -46,5 +49,21 @@ const config: PaidSearchPageConfig = {
 
 export default async function Page() {
   const data = await getPaidSearchData()
-  return <PaidSearchLandingPage config={config} {...data} estimator={<PriceEstimator defaultSpace="restaurant" compact id="estimator" />} />
+  const jsonLd = serviceJsonLd({
+    name: 'Restaurant echo reduction in Singapore',
+    description: config.summary,
+    path: PAGE_PATH,
+    minPrice: minPriceForService('restaurant'),
+  })
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+      <PaidSearchLandingPage
+        config={config}
+        {...data}
+        relatedLinks={SPACE_LINKS_BY_SERVICE.restaurant}
+        estimator={<PriceEstimator defaultSpace="restaurant" compact id="estimator" />}
+      />
+    </>
+  )
 }

@@ -2,17 +2,17 @@ import type { Metadata } from 'next'
 import FAQ, { type FaqItem } from '@/components/sections/FAQ'
 import ContactCTA from '@/components/sections/ContactCTA'
 import FadeUp from '@/components/ui/FadeUp'
-import { canonicalPath } from '@/lib/seo'
+import { canonicalPath, ORGANIZATION_ID, pageMetadata, serializeJsonLd } from '@/lib/seo'
 import AcousticPanelCalculator from './AcousticPanelCalculator'
 
 const PAGE_PATH = '/acoustic-panel-calculator'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Acoustic Panel Calculator Singapore',
   description:
     'How many acoustic panels do you need? Enter your room size and type for a panel range, S$165 installed pricing and where to put panels first.',
-  alternates: { canonical: canonicalPath(PAGE_PATH) },
-}
+  path: PAGE_PATH,
+})
 
 const CALCULATOR_FAQS: FaqItem[] = [
   {
@@ -52,13 +52,13 @@ const webApplicationJsonLd = {
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'SGD' },
-  provider: { '@type': 'Organization', name: 'Just Acoustics', url: canonicalPath('/') },
+  provider: { '@id': ORGANIZATION_ID },
 }
 
 export default function AcousticPanelCalculatorPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(webApplicationJsonLd) }} />
       <div className="page-wrap page-stack gap-10 md:gap-14">
         <section className="home-shell page-hero-shell flex flex-col gap-7 p-[clamp(30px,4.6vw,52px)]">
           <span className="soft-pill">Acoustic Panel Calculator</span>

@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Terms of Service',
-  robots: { index: false },
-}
+  description: 'Terms of service for using the Just Acoustics website and buying acoustic panels and installation services from Just Acoustics.',
+  path: '/terms-of-service',
+  noindex: true,
+})
 
 export default function TermsPage() {
   return (
