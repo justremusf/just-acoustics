@@ -1,5 +1,5 @@
 /**
- * Rewrite every blog post FAQ answer as a plain, one-line answer clients can absorb at a glance.
+ * Rewrite every blog post and service (space) page FAQ answer as a plain, one-line answer clients can absorb at a glance.
  * Fixes answers that are too blunt ("Yes.") or too long.
  *
  * Usage:
@@ -85,7 +85,7 @@ async function rewrite(post: Post, feedback = ''): Promise<string[]> {
     messages: [
       {
         role: 'user',
-        content: `Article: ${post.title}\n${post.excerpt ? `Summary: ${post.excerpt}\n` : ''}\nRewrite these ${post.faqs.length} answers:\n${questions}${feedback}`,
+        content: `Page: ${post.title}\n${post.excerpt ? `Summary: ${post.excerpt}\n` : ''}\nRewrite these ${post.faqs.length} answers:\n${questions}${feedback}`,
       },
     ],
   })
@@ -99,12 +99,12 @@ async function rewrite(post: Post, feedback = ''): Promise<string[]> {
 
 async function main() {
   const posts = await sanity.fetch<Post[]>(
-    `*[_type == "post" && count(faqs) > 0 ${SLUG ? '&& slug.current == $slug' : ''}] | order(publishedAt desc) {
-      _id, title, "slug": slug.current, excerpt, faqs
+    `*[_type in ["post", "space"] && count(faqs) > 0 ${SLUG ? '&& slug.current == $slug' : ''}] | order(_type asc, publishedAt desc) {
+      _id, title, "slug": slug.current, "excerpt": coalesce(excerpt, shortDescription), faqs
     }`,
     SLUG ? { slug: SLUG } : {}
   )
-  console.log(`\n${APPLY ? 'Rewriting' : 'Previewing'} FAQs on ${posts.length} posts (incl. drafts)…\n`)
+  console.log(`\n${APPLY ? 'Rewriting' : 'Previewing'} FAQs on ${posts.length} blog and service pages (incl. drafts)…\n`)
 
   const preview: string[] = ['# Blog FAQ rewrite preview', '']
   let changed = 0

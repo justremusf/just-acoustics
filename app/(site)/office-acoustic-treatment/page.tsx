@@ -40,10 +40,10 @@ const config: PaidSearchPageConfig = {
   pricing: 'Regular offices, meeting rooms and call rooms commonly fall around S$1,000–S$3,000. Multi-room or high-ceiling projects are quoted by scope.',
   proof: ['Meeting-room and video-call focus', 'Colour and finish options', 'Wall and ceiling treatment', 'Site assessment when required'],
   faq: [
-    { q: 'Will panels improve meeting-room privacy?', a: 'They reduce echo, which makes speech clearer and the room more comfortable. Keeping conversations confidential may also need sealing, partitions or sound masking.' },
-    { q: 'Can work happen after office hours?', a: 'Yes. Access timing and installation constraints are included when we scope the project.' },
-    { q: 'Can you treat several rooms?', a: 'Yes. We can prioritise rooms and phase a multi-room rollout around budget and day-to-day operations.' },
-    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
+    { q: 'Will panels improve meeting-room privacy?', a: 'Partly, panels cut echo so speech is clearer, but true privacy also needs sealed doors, solid partitions or sound masking.' },
+    { q: 'Can work happen after office hours?', a: 'Yes, we plan installation around your office hours so work carries on without disruption.' },
+    { q: 'Can you treat several rooms?', a: 'Yes, we can do the worst rooms first and roll out the rest in phases to suit your budget.' },
+    { q: 'How long does installation take?', a: 'Most installs take one to two days, after a 4 to 6 week lead time to make your panels.' },
   ],
 }
 

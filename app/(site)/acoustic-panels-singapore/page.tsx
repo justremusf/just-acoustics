@@ -40,10 +40,10 @@ const config: PaidSearchPageConfig = {
   pricing: 'Home studios and rooms in HDB flats and condos commonly fall around S$1,000–S$3,000. Larger spaces and ceiling installations are scoped separately.',
   proof: ['Acoustic panels and bass traps', 'Self-install option when useful', 'Room-specific coverage guidance', 'Professional Singapore installation'],
   faq: [
-    { q: 'How many acoustic panels do I need?', a: 'It depends on room size, hard surfaces and how the room is used. Photos and dimensions are enough for a first coverage recommendation.' },
-    { q: 'Do acoustic panels soundproof a room?', a: 'No. They reduce echo inside the room. Soundproofing needs changes to walls, doors, windows or ceilings.' },
-    { q: 'Can the panels match my interior?', a: 'Yes. Fabric colours, sizes, print finishes and ceiling formats can be chosen to suit the interior.' },
-    { q: 'How long does it take?', a: 'Panels are made to order, with a standard lead time of 4 to 6 weeks. Most installs are completed in one to two days.' },
+    { q: 'How many acoustic panels do I need?', a: 'It depends on room size and hard surfaces, and photos with dimensions are enough for a first estimate.' },
+    { q: 'Do acoustic panels soundproof a room?', a: 'No, panels cut echo inside the room, while soundproofing needs changes to walls, doors, windows or ceilings.' },
+    { q: 'Can the panels match my interior?', a: 'Yes, you can pick fabric colours, sizes, printed finishes and ceiling formats to suit your interior.' },
+    { q: 'How long does it take?', a: 'Panels take 4 to 6 weeks to make, and most installs are done in one to two days.' },
   ],
 }
 
