@@ -230,7 +230,7 @@ const PUBLISH_ARTICLE_TOOL = {
           required: ['question', 'answer'],
           properties: {
             question: { type: 'string' },
-            answer: { type: 'string' },
+            answer: { type: 'string', description: 'One plain sentence, 6–25 words. Direct answer first, then the one reason or next step.' },
           },
         },
       },
@@ -300,6 +300,7 @@ Your single job: given a target keyword, produce a complete, ranking-ready artic
 - Never confuse acoustic treatment with soundproofing
 - No fake stats, no generic SEO filler, no hype
 - FAQs (5–7) must be SPECIFIC to the keyword, not generic — answer real searcher sub-questions
+- Each FAQ answer is ONE plain sentence (6–25 words) a 10-year-old could follow: lead with the direct answer (Yes / No / Usually...), then the one reason or next step. Never a bare "Yes." or "No."
 
 # Image prompts — diagrams, not photos
 Images exist so visual learners can scroll the article and still grasp the value. Every image is a **diagram, infographic, or concept illustration** — NEVER a photo of a treated space.
