@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/Image";
 import Link from "next/link";
 import type { ShopItem } from "@/lib/types";
 import type { ShopProductLine } from "@/lib/shopProductProfiles";

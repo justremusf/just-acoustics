@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { FileText, MessageSquare, Ruler, Wrench, Search, MapPin, LayoutDashboard, Box, Package, Hammer } from 'lucide-react'
 import FAQ from '@/components/sections/FAQ'

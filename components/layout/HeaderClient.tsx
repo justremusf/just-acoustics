@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { sortBySpacePriority } from '@/lib/spaceOrder'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {

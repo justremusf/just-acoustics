@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import { ArrowRight } from 'lucide-react'
 import ContactCTA from '@/components/sections/ContactCTA'
 import { pageMetadata } from '@/lib/seo'

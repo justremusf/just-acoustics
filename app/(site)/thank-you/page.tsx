@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { ArrowRight, Camera, Check, MessageCircle, Phone } from 'lucide-react'
 import LeadConversionTracker from '@/components/analytics/LeadConversionTracker'

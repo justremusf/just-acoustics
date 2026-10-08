@@ -1,7 +1,7 @@
 "use client";
 
 import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
-import Image from "next/image";
+import Image from "@/components/ui/Image";
 import type { CartItemOption } from "@/components/cart/CartContext";
 
 const CART_COLOUR_FALLBACKS: Record<string, string> = {

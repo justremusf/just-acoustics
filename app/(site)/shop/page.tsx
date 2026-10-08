@@ -2,7 +2,7 @@ import { SOOTHE_FABRICS } from "@/lib/sootheFabrics";
 import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/Image";
 import { getAllShopItems, getSiteSettings } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import type { ShopItem } from "@/lib/types";

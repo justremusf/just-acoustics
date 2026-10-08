@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import TrackedAnchor from '@/components/analytics/TrackedAnchor'
 
 export const metadata: Metadata = pageMetadata({

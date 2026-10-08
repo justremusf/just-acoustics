@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { PortableText, type PortableTextBlock, type PortableTextComponents } from '@portabletext/react'
 import { ArrowLeft, ArrowRight, Clock, MessageCircle } from 'lucide-react'

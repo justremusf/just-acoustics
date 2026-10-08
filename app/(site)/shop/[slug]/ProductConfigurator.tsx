@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/Image";
 import Link from "next/link";
 import { HelpCircle, X } from "lucide-react";
 import { useCart, type CartItemOption } from "@/components/cart/CartContext";
