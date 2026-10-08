@@ -12,23 +12,23 @@ import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 const PROJECTS_FAQS: FaqItem[] = [
   {
     q: 'What kind of results can I expect?',
-    a: 'Most projects achieve a noticeable reduction in echo and reverberation within the first session. Specific outcomes depend on room size, surface types, and treatment coverage.',
+    a: 'Most rooms sound noticeably less echoey straight after install, though results depend on room size and coverage.',
   },
   {
     q: 'How long does installation take?',
-    a: 'Most installs are completed in one to two days. Larger spaces or complex layouts may require additional sessions.',
+    a: 'Most installs take one to two days, with larger or complex spaces needing an extra visit.',
   },
   {
     q: 'Does the installation include all the work?',
-    a: 'Yes. We supply and install everything. You do not need to source panels or coordinate separate contractors.',
+    a: 'Yes, we supply and install everything, so you never need to find panels or other contractors.',
   },
   {
     q: 'Can my project be featured in the portfolio?',
-    a: 'We always ask permission before publishing. If you are happy to be featured, we will photograph the result and add it here.',
+    a: 'Only with your permission, and if you agree we will photograph the finished room for our portfolio.',
   },
   {
     q: 'Can the panels match the existing interior design?',
-    a: 'Yes. We offer custom colours, fabric finishes, and printed panels so treatment integrates with the space rather than looking like an afterthought.',
+    a: 'Yes, custom colours, fabrics and printed panels let the treatment blend in instead of looking tacked on.',
   },
 ]
 

@@ -17,19 +17,19 @@ import { IMAGE_BLUR_DATA_URL } from "@/lib/imagePlaceholder";
 const SHOP_FAQS: FaqItem[] = [
   {
     q: "What is the typical lead time for panels?",
-    a: "Our panels are made to order. Standard lead time is 4 to 6 weeks from order confirmation, and we will confirm your exact timeline before production.",
+    a: "Panels are made to order and usually take 4 to 6 weeks, confirmed before production starts.",
   },
   {
     q: "Do you deliver and install, or is this self-install?",
-    a: "Both options are available. You can purchase panels for self-installation, or we can quote delivery and professional installation as a service.",
+    a: "Both, you can buy panels to install yourself or have us deliver and install them for you.",
   },
   {
     q: "How many panels do I need for my room?",
-    a: "As a guide, treating 20–30% of wall surface area gives a noticeable improvement. We are happy to help you calculate coverage for your specific room.",
+    a: "Covering about 20–30% of your wall area makes a noticeable difference, and we are happy to help you work it out.",
   },
   {
     q: "Do you work on commercial projects?",
-    a: "Yes. Our shop panels are used in offices, restaurants, churches, and studios. For larger commercial projects, reach out for a project consultation.",
+    a: "Yes, our panels are used in offices, restaurants, churches and studios, and larger projects get a full consultation.",
   },
 ];
 

@@ -28,23 +28,23 @@ const DIRECT_CONTACT = [
 const OBJECTIONS: FaqItem[] = [
   {
     q: 'Is the consultation really free?',
-    a: 'Yes. We look at the problem you are trying to solve, how the room is used and the likely treatment options, so you have a clear next step before you commit to anything.',
+    a: 'Yes, we look at your room and problem for free, so you know the next step before spending anything.',
   },
   {
     q: "I don't know what I need yet.",
-    a: 'That is normal, and it is what the consultation is for. Tell us what bothers you about the room, whether it is echo, noise or people struggling to hear, and we will work out the rest.',
+    a: 'That is normal, just tell us what bothers you about the room and we will work out the rest.',
   },
   {
     q: 'How much will it cost?',
-    a: 'It depends on the room and how much treatment it needs. Smaller spaces usually start from around $1,000, and office and home-studio projects commonly range from $1,000 to $3,000. We confirm the final quote after reviewing your space.',
+    a: 'Smaller spaces usually start from around $1,000, with most offices and home studios between $1,000 and $3,000.',
   },
   {
     q: 'Will installation disrupt us?',
-    a: 'Most projects are installed within one to two days. We plan the install to keep disruption low and the site clean, and many jobs can be scheduled around business hours.',
+    a: 'Barely, most installs take one to two days and can often be scheduled around your business hours.',
   },
   {
     q: 'Is this the same as soundproofing?',
-    a: 'Not quite. Acoustic treatment makes a room sound clearer and calmer by controlling echo inside it. Soundproofing stops sound travelling between rooms. Not sure which you need? Ask us, that is what we are here for.',
+    a: 'Not quite, treatment calms echo inside a room, while soundproofing stops sound travelling between rooms.',
   },
 ]
 
