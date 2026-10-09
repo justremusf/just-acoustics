@@ -34,7 +34,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .gstack/
-.claude/
+.claude/*
+# Shared Claude guard rails (everything else in .claude stays local)
+!.claude/settings.json
+!.claude/hooks/
+!.claude/skills/
 .local-config/
 .seo-cache/
 generated/*.log
@@ -51,3 +55,4 @@ TODO.md
 .env*
 
 /.next-orders-build/
+__pycache__/

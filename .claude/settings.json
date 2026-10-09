@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "ask": [
+      "mcp__Zoho_Suite_MCP__Bigin_addRecords",
+      "mcp__Zoho_Suite_MCP__Bigin_updateSpecificRecord",
+      "mcp__Zoho_Suite_MCP__Bigin_upsertRecords",
+      "mcp__Zoho_Suite_MCP__Bigin_sendEmails",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_create_contact",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_create_estimate",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_create_invoice",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_create_item",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_email_invoice",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_email_invoices",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_mark_estimate_accepted",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_mark_estimate_declined",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_mark_invoice_sent",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_mark_invoice_void",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_update_contact",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_update_estimate",
+      "mcp__Zoho_Suite_MCP__ZohoBooks_update_invoice",
+      "mcp__Zoho_Suite_MCP__ZohoMail_sendEmail",
+      "mcp__Zoho_Suite_MCP__ZohoMail_sendReplyEmail",
+      "mcp__Gmail__send_message",
+      "mcp__Gmail__reply",
+      "mcp__Gmail__forward"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__.*",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent_guard.py\"" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__.*",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent_guard.py\"" }
+        ]
+      }
+    ]
+  }
+}
