@@ -154,6 +154,10 @@ const ESTIMATOR_SPACE_BY_PAGE_SLUG: Record<string, string> = {
   churches: 'church',
   homes: 'home',
   studios: 'home-studio',
+  'clinics-and-healthcare': 'office',
+  'retail-and-showrooms': 'office',
+  'hotels-and-hospitality': 'restaurant',
+  'event-venues': 'church',
 }
 
 export function estimatorSpaceForPage(pageSlug: string) {
