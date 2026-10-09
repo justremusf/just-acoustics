@@ -43,6 +43,10 @@ const SERVICE_BY_SPACE_SLUG: Record<string, ServiceKey> = {
   churches: 'church',
   homes: 'panels',
   studios: 'panels',
+  'clinics-and-healthcare': 'panels',
+  'retail-and-showrooms': 'panels',
+  'hotels-and-hospitality': 'restaurant',
+  'event-venues': 'panels',
 }
 
 export function serviceForSpace(spaceSlug: string): ServicePage | null {
