@@ -534,110 +534,110 @@ export function ProductInfoFaqSection({ item }: { item: ShopItem }) {
   const shared = [
     {
       q: "Can this soundproof my room?",
-      a: "No. Acoustic treatment improves sound inside a room. Soundproofing requires construction changes that reduce sound transfer through walls, ceilings, doors, windows, and gaps.",
+      a: "No, panels improve sound inside a room, while soundproofing needs building work on walls, doors and windows.",
     },
     {
       q: "Can you make a custom size?",
-      a: "Yes. Send room dimensions, photos, and the intended placement so we can confirm a practical custom shape, size, finish, and mounting method.",
+      a: "Yes, send your dimensions, photos and where it is going, and we will confirm a size and fit that works.",
     },
     {
       q: "Can Just Acoustics install it?",
-      a: "Yes. Delivery and installation can be reviewed together with access, surface, height, and mounting requirements.",
+      a: "Yes, we can deliver and install it once we have checked access, wall type and mounting height.",
     },
   ];
   const specific: Record<string, FaqItem[]> = {
     "flexi-panel": [
       {
         q: "Can Flexi panels soundproof my room?",
-        a: "No. Flexi panels improve sound inside a room by absorbing reflections and reducing echo. Soundproofing requires construction changes that reduce sound transfer through walls, ceilings, doors, windows, and gaps.",
+        a: "No, Flexi panels cut echo inside a room, while soundproofing needs building work on walls, doors and windows.",
       },
       {
         q: "What do Flexi acoustic panels improve?",
-        a: "They reduce reverberation and harsh reflections so speech, calls, music, and everyday activity sound clearer and less tiring.",
+        a: "They cut echo and harsh reflections, so speech, calls and music sound clearer and less tiring.",
       },
       {
         q: "How many panels do I need?",
-        a: "The right quantity depends on room size, surface finishes, ceiling height, and how the space is used. Send us dimensions and photos and we can recommend a practical starting coverage.",
+        a: "It depends on room size and finishes, so send dimensions and photos and we will suggest a starting amount.",
       },
       {
         q: "Should I choose 25 mm or 50 mm panels?",
-        a: "The 25 mm panel is a slim broadband option for speech and general room control. Choose 50 mm when you want stronger absorption through more of the low-mid range or have a more demanding room.",
+        a: "Pick 25 mm for speech and everyday rooms, or 50 mm for stronger absorption in louder, more demanding rooms.",
       },
       {
         q: "Where should acoustic panels be installed?",
-        a: "Common priorities include first-reflection points, walls facing speakers, hard parallel surfaces, and areas close to talkers or listeners. The best arrangement depends on the room layout.",
+        a: "Start with walls facing speakers, hard parallel walls and spots near where people talk, then adjust for your layout.",
       },
       {
         q: "Can you make a custom size or shape?",
-        a: "Yes. Most practical shapes and sizes can be produced. Send the dimensions, intended placement, and photos so we can confirm the finish and mounting method.",
+        a: "Yes, most practical shapes and sizes are possible, so send dimensions and photos and we will confirm the details.",
       },
       {
         q: "Can Flexi panels be installed on a ceiling?",
-        a: "Yes. They can be ceiling mounted when the correct mounting system and substrate are confirmed. We can review access, ceiling type, and installation height with you.",
+        a: "Yes, they can go on ceilings once we have checked the ceiling type, access and mounting system.",
       },
       {
         q: "Can Just Acoustics install the panels?",
-        a: "Yes. We provide supply-only or delivery and installation, subject to site access, surface condition, mounting requirements, and working height.",
+        a: "Yes, choose supply-only or full delivery and installation, depending on site access and wall condition.",
       },
       {
         q: "How long is the lead time?",
-        a: "Flexi panels are made to order. Standard lead time is 4 to 6 weeks, with final timing confirmed when the colour, size, quantity, and installation scope are approved.",
+        a: "Panels are made to order and usually take 4 to 6 weeks, confirmed once your order is approved.",
       },
       {
         q: "Can I see fabric colours before ordering?",
-        a: "Yes. Contact us to review the available fabric collection or request help choosing a finish that suits the room.",
+        a: "Yes, contact us to see the fabric collection or get help picking a finish for your room.",
       },
       {
         q: "How should I clean the panels?",
-        a: "Remove surface dust gently with a soft brush or low-suction vacuum. Avoid soaking the fabric or using harsh cleaners.",
+        a: "Dust gently with a soft brush or low-suction vacuum, and never soak them or use harsh cleaners.",
       },
       {
         q: "Which spaces are Flexi panels suitable for?",
-        a: "They are used in offices, meeting rooms, studios, restaurants, homes, schools, churches, and other interiors where clearer sound and a clean finish are important.",
+        a: "They suit offices, studios, restaurants, homes, schools and churches, or anywhere you want clearer sound and a clean finish.",
       },
     ],
     "bass-trap": [
       {
         q: "Should I choose Studio or Maxx?",
-        a: "Studio is a practical 15 cm starting point for upper-bass control. Choose the 30 cm Maxx when deeper low-frequency control is the priority and room space allows it.",
+        a: "Start with the 15 cm Studio for upper bass, or the 30 cm Maxx for deeper bass if you have the space.",
       },
       {
         q: "Where should bass traps go?",
-        a: "Corners are normally the first priority, followed by front and back walls or other pressure-heavy positions identified from room dimensions and measurements.",
+        a: "Corners first, then the front and back walls where bass builds up the most.",
       },
       {
         q: "Will bass traps remove every null?",
-        a: "No treatment removes every room mode. Bass traps reduce the severity and decay of modal problems, while speaker and listener placement remain important.",
+        a: "No, bass traps tame boomy and dead bass spots, but speaker and seating position still matter.",
       },
     ],
     gobo: [
       {
         q: "What is a Gobo used for?",
-        a: "A Gobo is a movable acoustic panel used around microphones, drums, amplifiers, performers, windows, doors, or temporary reflection points.",
+        a: "It is a movable panel that cuts reflections around mics, drums, amps or performers wherever you need it.",
       },
       {
         q: "Does a Gobo block sound completely?",
-        a: "No. It can reduce reflections and microphone bleed, but it does not replace a fully constructed sound-isolated wall or booth.",
+        a: "No, it cuts reflections and mic bleed but will not replace a properly built soundproof wall or booth.",
       },
     ],
     "custom-print-panels": [
       {
         q: "Which artwork files work best?",
-        a: "High-resolution PDF and vector artwork are preferred. We review resolution, crop, bleed, and panel layout before production.",
+        a: "High-resolution PDF or vector files work best, and we check the layout before printing.",
       },
       {
         q: "Is the printed surface waterproof?",
-        a: "No. The synthetic finish is wipeable and more moisture-resistant than fabric, but it is not sold as a waterproof exterior surface.",
+        a: "No, the printed finish wipes clean and handles moisture better than fabric, but it is not waterproof.",
       },
     ],
     "pet-panel": [
       {
         q: "What is the difference between 9 mm and 12 mm?",
-        a: "The 9 mm panel is slimmer and works well for decorative direct-fix applications. The 12 mm panel provides stronger absorption and a more substantial visual profile.",
+        a: "9 mm is slimmer for decorative wall fixing, while 12 mm absorbs more sound and looks more solid.",
       },
       {
         q: "Can PET panels be custom cut?",
-        a: "Yes. Forma panels can be cut into practical shapes, grooves, patterns, and sizes after the layout and material use are reviewed.",
+        a: "Yes, Forma panels can be cut into shapes, grooves and patterns once we have reviewed your layout.",
       },
     ],
   };

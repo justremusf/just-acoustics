@@ -40,10 +40,10 @@ const config: PaidSearchPageConfig = {
   pricing: 'Classrooms, tuition rooms and learning spaces start from about S$1,000. Larger rooms or multi-room rollouts are quoted based on room count and treatment scope.',
   proof: ['Classroom and hall treatment', 'Wall and ceiling options', 'Colour and finish options', 'Multi-room rollouts phased by priority'],
   faq: [
-    { q: 'Will panels stop noise from the next classroom?', a: 'No. Panels reduce echo inside the room, which makes speech clearer. Blocking sound between rooms needs changes to walls, doors or ceilings.' },
-    { q: 'Can you work during school holidays or after lessons?', a: 'Yes. Access timing and installation constraints are agreed when we scope the project.' },
-    { q: 'Can you treat several classrooms?', a: 'Yes. We can prioritise rooms and phase the rollout around budget and the school calendar.' },
-    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
+    { q: 'Will panels stop noise from the next classroom?', a: 'No, panels make speech clearer inside the classroom, but stopping noise between rooms needs wall, door or ceiling work.' },
+    { q: 'Can you work during school holidays or after lessons?', a: 'Yes, we schedule installation around lessons or school holidays so teaching is never disrupted.' },
+    { q: 'Can you treat several classrooms?', a: 'Yes, we can treat the worst classrooms first and phase the rest around budget and the school calendar.' },
+    { q: 'How long does installation take?', a: 'Most installs take one to two days, after a 4 to 6 week lead time to make your panels.' },
   ],
 }
 

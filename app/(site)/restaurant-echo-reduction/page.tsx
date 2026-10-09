@@ -40,10 +40,10 @@ const config: PaidSearchPageConfig = {
   pricing: 'Restaurant and hospitality projects commonly range from S$2,000–S$6,000. Larger venues, custom finishes and difficult access are quoted separately.',
   proof: ['Discreet ceiling and wall options', 'Custom colours and prints', 'After-hours installation planning', 'Coverage designed around occupancy'],
   faq: [
-    { q: 'Will acoustic panels make the restaurant silent?', a: 'No. The aim is to cut excessive echo while keeping the room lively and comfortable.' },
-    { q: 'Can the treatment be hidden?', a: 'Often. Ceiling clouds, colour-matched panels and custom prints can blend into the interior.' },
-    { q: 'Can you install outside operating hours?', a: 'Yes. Installation timing and access requirements are agreed during quoting.' },
-    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
+    { q: 'Will acoustic panels make the restaurant silent?', a: 'No, panels cut the harsh echo but keep the buzz, so guests can talk without shouting.' },
+    { q: 'Can the treatment be hidden?', a: 'Often, ceiling clouds, colour-matched fabric or printed artwork can blend panels right into your interior.' },
+    { q: 'Can you install outside operating hours?', a: 'Yes, we install before opening or after closing so service is never interrupted.' },
+    { q: 'How long does installation take?', a: 'Most installs take one to two days, after a 4 to 6 week lead time to make your panels.' },
   ],
 }
 

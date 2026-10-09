@@ -17,27 +17,27 @@ export const metadata: Metadata = pageMetadata({
 const CALCULATOR_FAQS: FaqItem[] = [
   {
     q: 'How many acoustic panels do I need for my room?',
-    a: 'A good starting point is to cover about 20–30% of the usable wall area, then adjust for how busy and hard the room is. A 6 m × 4 m meeting room with a 2.8 m ceiling usually needs around 9–14 standard 1200 × 600 mm panels.',
+    a: 'Start by covering about 20–30% of your wall area, which is around 9–14 panels for a 6 × 4 m meeting room.',
   },
   {
     q: 'How does the calculator work out the panel count?',
-    a: 'It takes the total wall area, 2 × (length + width) × ceiling height, and counts 75% of it as usable after doors and windows. It then covers 20–30% of that area, multiplies by a factor for the room type and echo level, and divides by the area of one panel.',
+    a: 'It takes your usable wall area, covers 20–30% of it, adjusts for room type and echo, then divides by panel size.',
   },
   {
     q: 'How much do acoustic panels cost in Singapore?',
-    a: 'Our panels are from S$120 per panel plus S$45 installation per panel, so S$165 per panel installed. Accessories are quoted separately.',
+    a: 'Panels are S$120 each plus S$45 to install, so S$165 per panel installed, with accessories quoted separately.',
   },
   {
     q: 'Do I need ceiling panels as well as wall panels?',
-    a: 'Busy, hard rooms such as restaurants, cafés, classrooms and halls usually need ceiling panels too, because the ceiling is often the largest bare surface. Small bedrooms and offices can often be treated on the walls alone.',
+    a: 'Busy, hard rooms like restaurants and classrooms usually need ceiling panels too, while small offices and bedrooms often do not.',
   },
   {
     q: 'Will acoustic panels stop noise from my neighbours?',
-    a: 'No. Panels cut echo and reverberation inside the room. Blocking sound between rooms or from neighbours is soundproofing, which needs mass and airtight construction rather than absorption.',
+    a: 'No, panels cut echo inside your room, while blocking neighbour noise needs heavy, airtight construction work.',
   },
   {
     q: 'How accurate is this estimate?',
-    a: 'It is a ballpark. Glass walls, high ceilings, furniture and how the room is used all change the final count. Send 2–3 photos on WhatsApp and we will confirm the exact count, layout and price for free.',
+    a: 'It is a ballpark, so send 2–3 photos on WhatsApp and we will confirm the exact count and price for free.',
   },
 ]
 

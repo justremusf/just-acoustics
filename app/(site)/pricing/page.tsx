@@ -101,27 +101,27 @@ const INCLUDED = [
 const PRICING_FAQS = [
   {
     q: 'Can you give me a price before a site visit?',
-    a: 'Yes. Send photos, videos, dimensions, and the type of space you have. We can usually give an indicative range first, then confirm the final quote after checking the details.',
+    a: 'Yes, send photos, dimensions and your space type and we will give a price range before any site visit.',
   },
   {
     q: 'Why are the ranges not fixed packages?',
-    a: 'Acoustic treatment depends on room size, ceiling height, reflective surfaces, treatment type, and installation access. A fixed package can be useful for small rooms, but most spaces need a quote matched to the room.',
+    a: 'Every room differs in size, ceiling height and hard surfaces, so most need a quote matched to the room.',
   },
   {
     q: 'Do custom colours or printed panels cost more?',
-    a: 'Usually, yes. Standard fabric finishes are the most cost-effective. Colour matching, custom printed panels, non-standard sizes, and specialised ceiling treatments add production cost.',
+    a: 'Usually yes, standard fabrics are cheapest, while colour matching, printing and custom sizes add production cost.',
   },
   {
     q: 'What if my space is not an office, studio, church, school, or restaurant?',
-    a: 'That is fine. Other spaces are quoted as custom projects. Smaller spaces usually start from around $1,000+, with larger or more complex spaces priced after review.',
+    a: 'That is fine, we quote other spaces as custom projects, with smaller rooms usually starting from around $1,000.',
   },
   {
     q: 'Is this soundproofing?',
-    a: 'No. We specialise in acoustic treatment, which improves how a room sounds inside by reducing echo and reflections. Soundproofing is about blocking sound between spaces.',
+    a: 'No, we reduce echo inside the room, while soundproofing blocks sound travelling between spaces.',
   },
   {
     q: 'How do I get a more accurate quote?',
-    a: 'Send us the room dimensions, a few photos or videos, the space type, and what feels wrong with the sound. We will recommend the next step and give you a clearer range.',
+    a: 'Send room dimensions, a few photos and what sounds wrong, and we will give you a tighter price range.',
   },
 ]
 

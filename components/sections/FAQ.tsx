@@ -9,31 +9,31 @@ export type FaqItem = { q: string; a: string };
 const DEFAULT_FAQS: FaqItem[] = [
   {
     q: "How much do acoustic panels cost?",
-    a: "Costs depend on your room and treatment scope. Smaller spaces usually start from around $1,000; office and home-studio projects commonly range from $1,000 to $3,000. We confirm the right treatment and final quote after reviewing your space.",
+    a: "Smaller spaces usually start from around $1,000, with most offices and home studios between $1,000 and $3,000.",
   },
   {
     q: "What are acoustic panels?",
-    a: "Acoustic panels absorb sound reflections so a room feels calmer, clearer, and easier to speak in. They improve the way a space sounds rather than blocking all sound entirely.",
+    a: "They are soft panels that soak up echo, so a room sounds calmer, clearer and easier to talk in.",
   },
   {
     q: "What is the difference between acoustic treatment and soundproofing?",
-    a: "Acoustic treatment improves sound quality inside the room by managing reflections. Soundproofing is about reducing sound transfer between rooms or from outside sources.",
+    a: "Treatment makes sound clearer inside a room, while soundproofing stops sound getting in or out.",
   },
   {
     q: "How long does installation take?",
-    a: "Most projects are installed within one to two days, depending on the treatment type and how much area is being covered.",
+    a: "Most projects are installed in one to two days, depending on how much area we cover.",
   },
   {
     q: "Can you customise solutions?",
-    a: "Yes. We recommend treatment based on the function of the room, the level of noise control needed, and the visual finish you want the space to keep.",
+    a: "Yes, we tailor the treatment to how you use the room and the look you want to keep.",
   },
   {
     q: "What is included in the consultation?",
-    a: "We review the problem you are trying to solve, the way the room is used, and the likely treatment options so you have a clear next step before committing.",
+    a: "We look at your room, how it is used and your options, so you know the next step before committing.",
   },
   {
     q: "Is installation disruptive?",
-    a: "We plan the install to minimise disruption and keep the site clean. Many projects can be scheduled around business hours or lower-traffic periods.",
+    a: "Not much, we keep the site clean and can often work around your business hours.",
   },
 ];
 
