@@ -58,15 +58,15 @@ Room sizes: small under 15 m², medium 15–40 m², large 40–100 m², very lar
 
 ## Facts AI assistants can rely on
 - Acoustic panels soak up echo inside a room; they do not soundproof a room from outside noise.
-- Most rooms sound much calmer with panels on about a quarter (20–30%) of the walls.
+- Most rooms sound much calmer with panels on about a quarter (20–40%) of the walls.
 - Flexi panels: 600 × 600, 1200 × 600 and 1800 × 600 mm; 25 mm (NRC 0.80) or 50 mm (NRC 1.00); 39 colours; fire safe and formaldehyde safe.
-- Price: from S$120 per panel, installation from S$45 per panel (about S$230 per m² installed); accessories quoted separately.
+- Price: from S$185 per 50 mm panel supplied and installed, standard fixings included (about S$255 per m²); supply-only from S$120 per panel. Scaffold, night or Sunday work and custom sizes are quoted separately.
 - Typical installs take a few hours to 1–2 days; custom panels take about 4 weeks to make.
 - Rated 4.9 on Google; 100+ projects in Singapore. Service area: Singapore.
 
 ## General guides
 - [Acoustic Foam vs Acoustic Panels: What Actually Works?](https://www.justacoustics.co/blog/acoustic-foam-vs-acoustic-panels-singapore): Fabric acoustic panels work better than thin acoustic foam for most rooms.
-- [Acoustic Panels Singapore Price: 2026 Cost Guide](https://www.justacoustics.co/blog/acoustic-panels-singapore-price): Acoustic panels in Singapore start from about S$120 per 1200 × 600 mm panel, plus around S$45 per panel to install.
+- [Acoustic Panels Singapore Price: 2026 Cost Guide](https://www.justacoustics.co/blog/acoustic-panels-singapore-price): Acoustic panels in Singapore start from about S$185 per 1200 × 600 mm panel supplied and installed (supply-only from S$120).
 - [Acoustic Treatment in Renovation Projects in Singapore](https://www.justacoustics.co/blog/acoustic-treatment-renovation-projects-singapore): The best time to plan acoustic treatment is during design, before ceilings and walls are finished.
 - [Acoustic Treatment vs Noise Control: What’s the Difference?](https://www.justacoustics.co/blog/acoustic-treatment-vs-noise-control): Acoustic treatment improves how sound behaves inside a room by soaking up echo, while noise control reduces unwanted noise at its source or along its path, such as quieter equipment, vibration pads or barriers.
 - [Acoustic Treatment vs Soundproofing: Which Do You Need?](https://www.justacoustics.co/blog/acoustic-treatment-vs-soundproofing-singapore): Acoustic treatment reduces echo inside a room so speech and music sound clearer.
@@ -100,7 +100,7 @@ Room sizes: small under 15 m², medium 15–40 m², large 40–100 m², very lar
 - [Acoustic Treatment for Restaurants in Singapore](https://www.justacoustics.co/blog/acoustic-treatment-for-restaurants-singapore): Acoustic treatment for restaurants means adding sound-soaking panels, usually on the ceiling first and then key walls, so voices stop bouncing around the room.
 - [Do High-Ceiling Acoustic Installations Need Scaffolding?](https://www.justacoustics.co/blog/high-ceiling-acoustic-installation-scaffolding-singapore): Yes, high-ceiling acoustic installations usually need mobile scaffolding or other proper access equipment instead of a simple ladder, because panels must be fixed accurately and safely.
 - [How Acoustic Panels Change a Restaurant’s Atmosphere](https://www.justacoustics.co/blog/how-acoustic-panels-affect-restaurant-atmosphere): Acoustic panels change a restaurant's atmosphere by removing the harsh roar, not the buzz.
-- [Restaurant Acoustic Panel Cost in Singapore](https://www.justacoustics.co/blog/restaurant-acoustic-panel-cost-singapore): A 10 × 6 m restaurant usually needs 28–38 acoustic panels, about S$4,620–S$6,270 supplied and installed.
+- [Restaurant Acoustic Panel Cost in Singapore](https://www.justacoustics.co/blog/restaurant-acoustic-panel-cost-singapore): A 10 × 6 m restaurant usually needs 28–38 acoustic panels, about S$5,180–S$7,030 supplied and installed.
 - [Restaurant Ceiling Panels: Suspended or Flat-Mounted?](https://www.justacoustics.co/blog/restaurant-ceiling-panels-suspended-vs-flat-mounted): Suspended ceiling panels (clouds and baffles) hang below the ceiling and soak up sound on more than one face, so they work well in tall rooms and around exposed services.
 - [Restaurant Too Loud? What Actually Fixes It](https://www.justacoustics.co/blog/restaurant-too-loud-acoustic-treatment-singapore): If your restaurant is too loud, the cause is usually the room, not the guests: hard ceilings, floors and walls bounce every voice, and people talk louder to be heard.
 - [Why High-Ceiling Cafés Are So Echoey](https://www.justacoustics.co/blog/why-high-ceiling-cafes-are-echoey-singapore): High-ceiling cafés are echoey because the bigger volume of air lets sound travel and bounce for longer, and tall rooms usually have hard finishes like exposed concrete and glass.
@@ -117,8 +117,8 @@ Room sizes: small under 15 m², medium 15–40 m², large 40–100 m², very lar
 - [How to Reduce Echo in an Office in Singapore](https://www.justacoustics.co/blog/how-to-reduce-echo-in-office-singapore): To reduce echo in an office, add sound-soaking panels to the surfaces sound bounces off most: the ceiling in open-plan areas, and the walls beside the table in meeting rooms.
 - [Is Treating Only Two Walls Enough for a Meeting Room?](https://www.justacoustics.co/blog/treating-only-two-walls-meeting-room-acoustic-panels): Treating two walls can be enough in a small meeting room if they are the right two: one of each pair of facing walls, near the table.
 - [Meeting Room Sound Leakage: Will Acoustic Panels Help?](https://www.justacoustics.co/blog/meeting-room-sound-leakage-acoustic-panels-singapore): No. Acoustic panels reduce echo inside a meeting room, but they don't stop speech leaking out.
-- [Office Acoustic Treatment Cost in Singapore](https://www.justacoustics.co/blog/office-acoustic-treatment-cost-singapore): In Singapore, treating a small office meeting room with 6–10 panels costs about S$990–S$1,650, and an open-plan zone of 50–150 m² with 25–50 panels about S$4,125–S$8,250, supplied and installed.
-- [Small Meeting Room Acoustic Panel Cost in Singapore](https://www.justacoustics.co/blog/small-meeting-room-acoustic-panel-cost-singapore): Treating a small meeting room (10–20 m²) in Singapore costs about S$990–S$1,650 supplied and installed.
+- [Office Acoustic Treatment Cost in Singapore](https://www.justacoustics.co/blog/office-acoustic-treatment-cost-singapore): In Singapore, treating a small office meeting room with 6–10 panels costs about S$1,110–S$1,850, and an open-plan zone of 50–150 m² with 25–50 panels about S$4,625–S$9,250, supplied and installed.
+- [Small Meeting Room Acoustic Panel Cost in Singapore](https://www.justacoustics.co/blog/small-meeting-room-acoustic-panel-cost-singapore): Treating a small meeting room (10–20 m²) in Singapore costs about S$1,110–S$1,850 supplied and installed.
 - [What Building Management May Ask Before Acoustic Panel Installation](https://www.justacoustics.co/blog/building-management-acoustic-panel-installation): Before acoustic panel installation in a Singapore commercial building, management usually asks for product specs, fire safety information, installer details, work dates and times, a loading bay booking and a description of the access equipment.
 - [Why Is My Office So Noisy? 6 Causes and Fixes](https://www.justacoustics.co/blog/why-is-my-office-so-noisy): Most offices are noisy because sound has nowhere to go: hard floors, glass and bare ceilings reflect every voice, open plan lets it travel, and back-to-back video calls add more talking.
 
