@@ -1,7 +1,7 @@
 'use client'
 
 import { useDeferredValue, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, ChevronDown, Clock, Search, X } from 'lucide-react'
 import { RESOURCE_TOPICS } from '@/lib/resourceTopics'

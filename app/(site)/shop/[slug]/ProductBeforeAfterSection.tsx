@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/Image";
 
 const PRODUCT_PLAY_ICON =
   "/assets/webflow/6967a0f62bd9b7dce9e01040_Play%20icon.png";

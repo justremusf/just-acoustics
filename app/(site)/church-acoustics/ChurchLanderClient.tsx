@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown } from 'lucide-react'

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import { getAllProjects } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'

@@ -1,7 +1,7 @@
 import { SOOTHE_FABRICS } from "@/lib/sootheFabrics";
 import { colourSwatchStyle } from "@/lib/colourSwatchStyle";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/Image";
 import type { ShopItem } from "@/lib/types";
 import { urlFor } from "@/sanity/lib/image";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/imagePlaceholder";

@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import type { Testimonial } from '@/lib/types'
 import { FALLBACK_TESTIMONIALS } from '@/lib/testimonials'
 import { urlFor } from '@/sanity/lib/image'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 const CASE_STUDY_VIDEO_ID = '-1WDATPou2Y'
