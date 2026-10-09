@@ -4,6 +4,9 @@ import { SITE_URL } from '@/lib/seo'
 
 const BASE_URL = SITE_URL
 
+// Articles and space pages are published from Sanity without a code deploy, so rebuild the sitemap hourly.
+export const revalidate = 3600
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [postSlugs, productSlugs, spaceSlugs, projectSlugs] = await Promise.all([
     getAllPostSlugs().catch(() => []),
