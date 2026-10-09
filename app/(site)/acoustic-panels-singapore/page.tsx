@@ -11,7 +11,7 @@ const PAGE_PATH = '/acoustic-panels-singapore'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Acoustic Panels Singapore: Supply & Install',
-  description: 'Acoustic wall and ceiling panels supplied and installed in Singapore, from S$120 per panel. Get product, layout and installation advice for your room.',
+  description: 'Acoustic wall and ceiling panels supplied and installed in Singapore, from S$185 per panel installed. Get product, layout and installation advice for your room.',
   path: PAGE_PATH,
 })
 

@@ -30,7 +30,7 @@ const PANEL_SIZES = [
   { value: '0.36', label: '600 × 600 mm (squares)' },
 ]
 
-const INSTALLED_PRICE_PER_PANEL = 165
+const INSTALLED_PRICE_PER_PANEL = 185
 const WHATSAPP_NUMBER = '6589301905'
 
 const money = (n: number) => `S$${Math.round(n).toLocaleString('en-SG')}`
@@ -208,7 +208,7 @@ I can send 2-3 photos of the room. Could you confirm the count, layout and price
         </div>
 
         <p className="m-0 text-xs leading-5 text-[var(--color-gray-200)]">
-          Method: about a quarter of the usable wall area (20–30%), adjusted for how busy and hard the room is. Busy rooms
+          Method: roughly 20–30% of the usable wall area, rising towards 40% (walls and ceiling) for loud, hard rooms, following common industry guidance. Busy rooms
           like restaurants and halls usually also need ceiling panels.
         </p>
       </form>
@@ -258,7 +258,7 @@ I can send 2-3 photos of the room. Could you confirm the count, layout and price
         </div>
 
         <p className="m-0 text-xs leading-5 text-[var(--color-gray-200)]">
-          Prices: from S$120 per panel plus S$45 installation per panel (S$165 installed); accessories quoted separately.
+          Prices: from S$185 per 50 mm panel supplied and installed, standard fixings included (supply-only from S$120). Scaffold for high ceilings, night or Sunday work and custom sizes are quoted separately.
           Panels cut echo inside the room; they do not block noise from neighbours.
         </p>
       </section>

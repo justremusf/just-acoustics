@@ -10,14 +10,14 @@ const PAGE_PATH = '/acoustic-panel-calculator'
 export const metadata: Metadata = pageMetadata({
   title: 'Acoustic Panel Calculator Singapore',
   description:
-    'How many acoustic panels do you need? Enter your room size and type for a panel range, S$165 installed pricing and where to put panels first.',
+    'How many acoustic panels do you need? Enter your room size and type for a panel range, S$185 installed pricing and where to put panels first.',
   path: PAGE_PATH,
 })
 
 const CALCULATOR_FAQS: FaqItem[] = [
   {
     q: 'How many acoustic panels do I need for my room?',
-    a: 'A good starting point is to cover about 20–30% of the usable wall area, then adjust for how busy and hard the room is. A 6 m × 4 m meeting room with a 2.8 m ceiling usually needs around 9–14 standard 1200 × 600 mm panels.',
+    a: 'Most rooms need panels on roughly 20–30% of the wall area, and loud spaces such as restaurants, gyms and halls up to about 40% (walls and ceiling). The right amount depends on the echo time you are aiming for. A 6 m × 4 m meeting room with a 2.8 m ceiling usually needs around 9–14 standard 1200 × 600 mm panels.',
   },
   {
     q: 'How does the calculator work out the panel count?',
@@ -25,7 +25,7 @@ const CALCULATOR_FAQS: FaqItem[] = [
   },
   {
     q: 'How much do acoustic panels cost in Singapore?',
-    a: 'Our panels are from S$120 per panel plus S$45 installation per panel, so S$165 per panel installed. Accessories are quoted separately.',
+    a: 'Our 50 mm panels are from S$185 per panel supplied and installed, with standard fixings included. Supply-only starts from S$120 per panel. Scaffold for high ceilings, night or Sunday work and custom sizes are quoted separately.',
   },
   {
     q: 'Do I need ceiling panels as well as wall panels?',
