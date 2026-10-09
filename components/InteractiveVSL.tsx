@@ -200,7 +200,21 @@ export default function InteractiveVSL({
                     }}
                     onLoadedMetadata={handleLoadedMetadata}
                     onWaiting={() => state.setIsLoading(true)}
-                    onCanPlay={() => state.setIsLoading(false)}
+                    onCanPlay={(event) => {
+                      state.setIsLoading(false)
+                      // The hook's first play() fires before the sources are attached
+                      // (they wait for the section to scroll into view), and iOS Safari
+                      // doesn't reliably retry via the autoplay attribute. Start the
+                      // silent intro once the video can actually play.
+                      const video = event.currentTarget
+                      if (selectedCategory || hasStartedWithAudio || !video.paused || video.currentTime > 0) return
+                      video.defaultMuted = true
+                      video.muted = true
+                      void video.play().then(
+                        () => state.setAutoplayBlocked(false),
+                        () => state.setAutoplayBlocked(true),
+                      )
+                    }}
                     onClick={handleVideoSurfaceClick}
                     onPause={() => {
                       state.setIsPlaying(false)
