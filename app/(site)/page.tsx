@@ -44,9 +44,9 @@ export default async function HomePage() {
       <ScrollToTopOnMount />
       <Hero />
       <div data-home-reveal><BrandScroller logos={settings?.brandLogos} /></div>
-      {/* Installed prices come before the shop so the page reads as a service first. */}
-      <HomeEstimator />
       <div data-home-reveal><Spaces spaces={spaces} /></div>
+      {/* After visitors see we handle their kind of space: what it costs. Before the shop, so the page reads as a service first. */}
+      <HomeEstimator />
       <div data-home-reveal>
         <LazyInteractiveVSL
           config={landingVslConfig}
