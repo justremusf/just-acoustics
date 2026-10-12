@@ -6,6 +6,7 @@ import ProductsGrid from '@/components/sections/ProductsGrid'
 import Spaces from '@/components/sections/Spaces'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import ContactCTA from '@/components/sections/ContactCTA'
+import HomeEstimator from '@/components/sections/HomeEstimator'
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount'
 import LazyInteractiveVSL from '@/components/LazyInteractiveVSL'
 import { landingVslConfig } from '@/data/vslConfig'
@@ -43,6 +44,8 @@ export default async function HomePage() {
       <ScrollToTopOnMount />
       <Hero />
       <div data-home-reveal><BrandScroller logos={settings?.brandLogos} /></div>
+      {/* Installed prices come before the shop so the page reads as a service first. */}
+      <HomeEstimator />
       <div data-home-reveal><Spaces spaces={spaces} /></div>
       <div data-home-reveal>
         <LazyInteractiveVSL
@@ -50,10 +53,10 @@ export default async function HomePage() {
           pageLocation="/"
         />
       </div>
-      <div data-home-reveal><ProductsGrid products={products} /></div>
       <div data-home-reveal><HearTheDifference /></div>
       <div data-home-reveal><ProcessSteps /></div>
       <div data-home-reveal><Testimonials testimonials={testimonials} /></div>
+      <div data-home-reveal><ProductsGrid products={products} /></div>
       <div data-home-reveal><FAQ showLabel={false} /></div>
       <div data-home-reveal><ContactCTA showBadge={false} /></div>
     </>

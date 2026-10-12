@@ -3,7 +3,12 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image, { getImageProps } from 'next/image'
+import { MessageCircle } from 'lucide-react'
 import ShimmerButton from '@/components/ui/shimmer-button'
+import WhatsAppLink from '@/components/analytics/WhatsAppLink'
+
+// Price anchor and reassurance shown under the hero copy. Prices match lib/priceGuide and the panel calculator.
+const HERO_POINTS = ['From S$185 per panel, installed', 'Free site survey', 'Reply within 1 hour'] as const
 
 const HERO_IMAGES = [
   {
@@ -102,7 +107,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative mx-auto mt-0 w-[calc(100%-2rem)] max-w-[1580px] overflow-hidden rounded-[24px] px-0 pt-[188px] pb-12 sm:mt-0 sm:pt-[198px] md:mt-[-82px] md:pt-[246px] md:pb-20"
+      className="relative mx-auto mt-0 w-[calc(100%-2rem)] max-w-[1580px] overflow-hidden rounded-[24px] px-0 pt-[92px] pb-10 sm:mt-0 sm:pb-12 sm:pt-[198px] md:mt-[-82px] md:pt-[246px] md:pb-20"
       style={{ fontSize: 16, lineHeight: '1.5em' }}
     >
       <div className="absolute inset-0 z-0 rounded-[24px] overflow-hidden">
@@ -150,15 +155,41 @@ export default function Hero() {
               Acoustic Panel Specialists for Echo Reduction
             </h1>
             <p className="mt-5 max-w-[58ch] text-[15px] leading-7 text-white/82 sm:text-[16px] sm:leading-7 md:text-[17px]">
-              We supply and install acoustic panels for home studios, churches, offices, restaurants, and schools. Fixing sound quality &amp; speech clarity.
+              We design, supply and install acoustic panels for offices, restaurants, churches, schools and homes across Singapore. Clearer speech, less echo.
             </p>
 
-            <div className="mt-12 mb-4 flex flex-col gap-3 sm:mt-14 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-center">
-              <Link href="/contact" className="no-underline">
+            <ul className="m-0 mt-5 flex list-none flex-wrap gap-2 p-0">
+              {HERO_POINTS.map((point) => (
+                <li
+                  key={point}
+                  className="rounded-full border border-white/18 bg-white/10 px-3 py-1.5 text-[12px] font-medium text-white/90 backdrop-blur-sm sm:text-[13px]"
+                >
+                  {point}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 mb-2 flex flex-col gap-3 sm:mt-12 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-center">
+              <Link href="/contact" className="no-underline" data-insight-cta="home_hero_quote">
                 <ShimmerButton className="h-auto w-full px-7 py-4 text-[14px] font-semibold sm:min-w-[212px] sm:w-auto">
-                  Free Acoustic Consultation
+                  Get a Free Quote
                 </ShimmerButton>
               </Link>
+              <div className="grid grid-cols-2 gap-3 sm:flex">
+                <Link
+                  href="#estimator"
+                  data-insight-cta="home_hero_prices"
+                  className="inline-flex h-[52px] items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 text-[14px] font-semibold text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/20"
+                >
+                  See prices
+                </Link>
+                <WhatsAppLink
+                  source="home_hero"
+                  className="inline-flex h-[52px] items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 text-[14px] font-semibold text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/20"
+                >
+                  <MessageCircle size={16} aria-hidden="true" /> WhatsApp
+                </WhatsAppLink>
+              </div>
             </div>
           </div>
         </div>
