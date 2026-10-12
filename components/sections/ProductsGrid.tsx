@@ -54,22 +54,36 @@ export default function ProductsGrid({ products }: Props) {
       <div className="home-shell section-shell-pad mx-auto max-w-[1580px]">
         <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[870px]">
+            <p className="page-kicker text-[var(--color-brand-orange)]">
+              Prefer to install it yourself?
+            </p>
             <h2
-              className="home-heading mt-5 text-[var(--color-dark-100)]"
+              className="home-heading mt-3 text-[var(--color-dark-100)]"
               style={{ width: "min(100%, 870px)" }}
             >
-              Products for sound clarity
+              Buy the same panels online
             </h2>
-            <p className="home-copy mt-5 max-w-[54ch]">
-              Trusted by the pros to solve all of your acoustic issues.
+            <p className="home-copy mt-5 max-w-[56ch]">
+              The panels we install, sold with published prices and delivered
+              across Singapore. Not sure which to pick? Tell us about the room
+              and we&rsquo;ll recommend one, free.
             </p>
           </div>
-          <Link
-            href="/shop"
-            className="home-link inline-flex items-center gap-2 self-start md:self-auto"
-          >
-            Shop all products <span aria-hidden="true">→</span>
-          </Link>
+          <div className="flex flex-col items-start gap-3 md:items-end">
+            <Link
+              href="/shop"
+              className="home-link inline-flex items-center gap-2"
+            >
+              Shop all products <span aria-hidden="true">→</span>
+            </Link>
+            <Link
+              href="/contact"
+              data-insight-cta="home_shop_advice"
+              className="home-link inline-flex items-center gap-2"
+            >
+              Or get it installed <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-5 xl:grid-cols-4">

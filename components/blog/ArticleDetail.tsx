@@ -6,8 +6,9 @@ import FAQ from '@/components/sections/FAQ'
 import ArticleToc from '@/components/blog/ArticleToc'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import RelatedPostCard from '@/components/blog/RelatedPostCard'
+import PriceEstimator from '@/components/estimator/PriceEstimator'
 import { blockText, extractHeadings, slugify, whatsappLink, type ArticleNavView, type ArticleView, type ViewImage } from '@/lib/contentView'
-import type { ServiceLink } from '@/lib/serviceLinks'
+import type { ServicePage } from '@/lib/serviceLinks'
 
 const BODY_ID = 'article-body'
 const headingFont = { fontFamily: 'var(--font-heading)' }
@@ -53,34 +54,46 @@ function bodyComponents(headingIds: Map<string, string>): PortableTextComponents
   }
 }
 
-/** Long reads get a quiet nudge halfway through: split the body just before the middle h2. */
-function splitForMidCta(body: PortableTextBlock[], headingCount: number, readingTime: number) {
-  if (headingCount < 4 || readingTime < 5) return [body]
+/** Articles with sections get the price estimator halfway through: split the body just before the middle h2. */
+function splitForMidCta(body: PortableTextBlock[], headingCount: number) {
+  if (headingCount < 2) return [body]
   const target = Math.floor(headingCount / 2)
   let seen = -1
   const index = body.findIndex((block) => block._type === 'block' && block.style === 'h2' && blockText(block).trim() && ++seen === target)
   return index > 0 ? [body.slice(0, index), body.slice(index)] : [body]
 }
 
-function MidCta() {
+/** Short strip under the article header that points readers at the estimator further down. */
+function PriceTeaser() {
   return (
-    <aside className="my-10 flex flex-col gap-3 rounded-[20px] border border-black/8 bg-[var(--color-white-200)] p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-      <p className="m-0 text-[15px] leading-snug text-[var(--color-dark-100)]">
-        <strong>Not sure what your room needs?</strong>{' '}
-        <span className="text-[var(--color-gray-100)]">Send us a photo and we&rsquo;ll tell you.</span>
-      </p>
-      <Link href="/contact" className="page-link shrink-0">
-        Get free advice <ArrowRight size={15} aria-hidden="true" />
-      </Link>
+    <a
+      href="#estimator"
+      data-insight-cta="blog_price_teaser"
+      className="flex items-center justify-between gap-4 rounded-[20px] border border-black/8 bg-[var(--color-white-200)] px-5 py-4 text-[15px] leading-snug text-[var(--color-dark-100)] no-underline transition-colors hover:border-[var(--color-brand-orange)]"
+    >
+      <span>
+        <strong>What would this cost for your room?</strong>{' '}
+        <span className="text-[var(--color-gray-100)]">See a typical installed price in two taps.</span>
+      </span>
+      <ArrowRight size={18} aria-hidden="true" className="shrink-0 rotate-90" />
+    </a>
+  )
+}
+
+/** In-article price estimator, preset to the space the article is about. */
+function ArticleEstimator({ defaultSpace }: { defaultSpace?: string }) {
+  return (
+    <aside className="not-prose my-10 rounded-[24px] border border-black/8 bg-[var(--color-white-200)] p-5 sm:p-7">
+      <PriceEstimator defaultSpace={defaultSpace} compact id="estimator" />
     </aside>
   )
 }
 
-export default function ArticleDetail({ article, nav, serviceLink }: { article: ArticleView; nav: ArticleNavView; serviceLink?: ServiceLink }) {
+export default function ArticleDetail({ article, nav, serviceLink }: { article: ArticleView; nav: ArticleNavView; serviceLink?: ServicePage }) {
   const { headings, byBlock } = extractHeadings(article.body)
   const showToc = headings.length >= 3
   const components = bodyComponents(byBlock)
-  const parts = splitForMidCta(article.body, headings.length, article.readingTime)
+  const parts = splitForMidCta(article.body, headings.length)
   const width = showToc ? 'max-w-[1120px]' : 'max-w-[760px]'
 
   return (
@@ -124,6 +137,8 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
             </p>
           </header>
 
+          <PriceTeaser />
+
           {article.image && (
             <div
               className="relative overflow-hidden rounded-[24px] bg-[var(--color-white-200)]"
@@ -152,12 +167,15 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
                 <div id={BODY_ID} className="rich-content article-body">
                   {parts.map((part, i) => (
                     <div key={i}>
-                      {i > 0 && <MidCta />}
+                      {i > 0 && <ArticleEstimator defaultSpace={serviceLink?.priceSpace} />}
                       <PortableText value={part} components={components} />
                     </div>
                   ))}
                 </div>
               )}
+
+              {/* No mid-article split (or no body): show the estimator after the article instead. */}
+              {parts.length < 2 && <ArticleEstimator defaultSpace={serviceLink?.priceSpace} />}
 
               <aside className="glass-card mt-12 flex flex-col gap-4 p-[clamp(20px,3vw,32px)]">
                 <p className="page-kicker !text-[var(--color-brand-orange)]">Free advice</p>
