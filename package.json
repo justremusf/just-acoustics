@@ -17,7 +17,8 @@
     "seed-standard-flexi-assets": "node scripts/seed-standard-flexi-assets.mjs",
     "migrate-products-to-shop-items": "node scripts/migrate-products-to-shop-items.mjs",
     "migrate-product-pages": "node scripts/migrate-product-pages.mjs",
-    "migrate-services-to-spaces": "node scripts/migrate-services-to-spaces.mjs"
+    "migrate-services-to-spaces": "node scripts/migrate-services-to-spaces.mjs",
+    "images": "node scripts/image-variants.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
