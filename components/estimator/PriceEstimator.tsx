@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useId, useRef, useState } from 'react'
-import Image from 'next/image'
+import Image, { getImageProps } from 'next/image'
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,7 +15,6 @@ import {
   Headphones,
   House,
   Landmark,
-  MessageCircle,
   Mic,
   Music,
   BookOpen,
@@ -31,6 +30,8 @@ import {
 } from 'lucide-react'
 import { trackEvent } from '@/components/analytics/trackEvent'
 import WhatsAppLink from '@/components/analytics/WhatsAppLink'
+import { SHIMMER_BUTTON_CLASS } from '@/components/ui/shimmer-button'
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon'
 import { recordEstimate } from '@/lib/whatsappContext'
 import { QUIZ_SPACES, findQuizSpace, type QuizIcon } from '@/lib/estimatorQuiz'
 import {
@@ -65,6 +66,24 @@ const ICONS: Record<QuizIcon, LucideIcon> = {
   utensils: UtensilsCrossed,
   coffee: Coffee,
   store: Store,
+}
+
+const RESULT_IMAGE_SIZES = '(min-width: 640px) 480px, 92vw'
+const RESULT_IMAGE_QUALITY = 70
+
+/**
+ * Start downloading a result photo the moment an answer is pressed, so it is usually ready by the
+ * time the result renders. Uses the same srcset/sizes as the <Image> below, so the browser picks
+ * the same file and nothing is fetched twice.
+ */
+function preloadResultImage(src: string) {
+  if (typeof window === 'undefined') return
+  const { props } = getImageProps({ src, alt: '', fill: true, sizes: RESULT_IMAGE_SIZES, quality: RESULT_IMAGE_QUALITY })
+  const img = new window.Image()
+  img.decoding = 'async'
+  img.sizes = props.sizes ?? ''
+  img.srcset = props.srcSet ?? ''
+  img.src = props.src
 }
 
 function OptionIcon({ icon }: { icon: QuizIcon }) {
@@ -215,7 +234,9 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
                 type="button"
                 aria-pressed={option.band === sizeSlug}
                 className={optionClass}
+                onPointerDown={() => preloadResultImage(option.example.image)}
                 onClick={() => {
+                  preloadResultImage(option.example.image)
                   select(quizSpace.slug, option.band)
                   goTo('result')
                 }}
@@ -241,26 +262,27 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
           <div className="glass-card flex flex-col overflow-hidden !p-0">
             <Link
               href={`/projects/${quizSize.example.slug}`}
-              className="group relative block aspect-[16/10] w-full overflow-hidden bg-[var(--color-white-200)]"
+              className="group relative block aspect-[16/10] w-full overflow-hidden bg-[var(--color-white-200)] no-underline"
               data-insight-cta="estimator_case_study"
             >
               <Image
                 src={quizSize.example.image}
                 alt={`${quizSize.example.title}: acoustic panels installed by Just Acoustics`}
                 fill
-                sizes="(min-width: 1024px) 560px, 100vw"
+                sizes={RESULT_IMAGE_SIZES}
+                quality={RESULT_IMAGE_QUALITY}
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
               />
-              <span className="absolute bottom-3 left-3 rounded-full bg-black/65 px-3 py-1.5 text-[12px] font-semibold text-white backdrop-blur-sm">
-                Our project: {quizSize.example.title} →
+              <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[12px] font-semibold text-white">
+                {quizSize.example.title}
+              </span>
+              <span className="absolute bottom-3 right-3 inline-flex min-h-10 items-center rounded-full bg-white px-4 text-sm font-bold text-[var(--color-dark-100)] shadow-[0_6px_18px_rgba(0,0,0,0.2)] transition-transform group-hover:-translate-y-0.5">
+                View case study →
               </span>
             </Link>
             <div className={`flex flex-col gap-3 ${compact ? 'p-5' : 'p-[clamp(20px,3vw,28px)]'}`}>
               <h3 ref={questionRef} tabIndex={-1} className="page-kicker !m-0 flex flex-wrap items-center gap-2 outline-none">
-                {quizSpace.resultNoun} typically cost
-                <span className="rounded-full border border-black/10 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-[var(--color-gray-100)]">
-                  Supply + installation
-                </span>
+                ≈ Estimated price range
               </h3>
               <p
                 className="!m-0 text-[clamp(30px,4vw,42px)] font-medium leading-[1.05] tracking-[-0.8px] text-[var(--color-dark-100)]"
@@ -277,21 +299,21 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={quoteHref}
-              className="page-cta w-full sm:w-fit"
+              className={`${SHIMMER_BUTTON_CLASS} w-full text-[15px] no-underline sm:w-fit`}
               onClick={() =>
                 trackEvent('price_estimate_cta_click', { cta: 'exact_quote', link_url: quoteHref, ...(eventParams ?? {}) })
               }
             >
-              Get my exact quote
+              Get my free quote
             </Link>
             {/* Message comes from lib/whatsappContext, which already includes the estimate picked above. */}
             <WhatsAppLink
               source="price_estimator"
               followUp="Could you give me an exact quote?"
-              className="page-link min-h-[44px] justify-center sm:justify-start"
+              className="inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 text-[15px] font-semibold text-white no-underline transition-transform hover:-translate-y-0.5 sm:w-fit"
               onClick={() => trackEvent('price_estimate_cta_click', { cta: 'whatsapp', ...(eventParams ?? {}) })}
             >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              <WhatsAppIcon size={20} />
               Ask on WhatsApp
             </WhatsAppLink>
           </div>

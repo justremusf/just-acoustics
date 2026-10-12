@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import PaidSearchLandingPage, { type PaidSearchPageConfig } from '@/components/ads/PaidSearchLandingPage'
-import PriceEstimator from '@/components/estimator/PriceEstimator'
+import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import { getPaidSearchData } from '@/lib/paidSearchData'
 import { pageMetadata, serializeJsonLd, serviceJsonLd } from '@/lib/seo'
 import { minPriceForService, SPACE_LINKS_BY_SERVICE } from '@/lib/serviceLinks'

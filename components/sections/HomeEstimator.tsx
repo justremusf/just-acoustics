@@ -1,4 +1,4 @@
-import PriceEstimator from '@/components/estimator/PriceEstimator'
+import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 
 /**
  * Homepage pricing section, placed after Spaces: once visitors see we handle their kind of space,

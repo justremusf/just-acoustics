@@ -42,8 +42,6 @@ export type QuizSpace = {
   hint: string
   icon: QuizIcon
   sizeQuestion: string
-  /** Noun for the result line, e.g. "Spaces like this typically cost…" → "Studios like this…" */
-  resultNoun: string
   sizes: QuizSizeOption[]
 }
 
@@ -80,7 +78,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
     hint: 'Music, podcast, recording or practice room',
     icon: 'mic',
     sizeQuestion: 'What kind of studio is it?',
-    resultNoun: 'Studios',
     sizes: [
       { band: 'small', label: 'Vocal booth or podcast corner', detail: 'One person, small room', icon: 'mic', example: CASES.podcast },
       { band: 'medium', label: 'Bedroom studio or music room', detail: 'HDB or condo bedroom', icon: 'headphones', example: CASES.guitar },
@@ -94,7 +91,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
     hint: 'Meeting rooms, boardrooms, open offices',
     icon: 'briefcase',
     sizeQuestion: 'Which room needs fixing?',
-    resultNoun: 'Rooms like this',
     sizes: [
       { band: 'small', label: 'Phone booth or 1–2 person room', detail: 'Calls, focus room, small office', icon: 'phone', example: CASES.hoogwegt },
       { band: 'medium', label: 'Meeting room, 4–8 seats', detail: 'Video calls, team meetings', icon: 'users', example: CASES.wsg },
@@ -108,7 +104,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
     hint: 'Sanctuaries, halls, youth and fellowship rooms',
     icon: 'church',
     sizeQuestion: 'How many people does it seat?',
-    resultNoun: 'Spaces like this',
     sizes: [
       { band: 'small', label: 'Up to 50 people', detail: 'Youth room, chapel, fellowship room', icon: 'users', example: CASES.ppcoc },
       { band: 'medium', label: '50–150 people', detail: 'Multi-purpose or worship hall', icon: 'church', example: CASES.lengKwang },
@@ -122,7 +117,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
     hint: 'Classrooms, music, dance and enrichment centres',
     icon: 'graduation',
     sizeQuestion: 'What kind of room is it?',
-    resultNoun: 'Rooms like this',
     sizes: [
       { band: 'small', label: 'Music or tuition room, 1–6 students', detail: 'Lessons, practice, small groups', icon: 'music', example: CASES.vibratone },
       { band: 'medium', label: 'Classroom, 20–30 students', detail: 'Standard classroom', icon: 'book', example: CASES.nuggets },
@@ -136,7 +130,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
     hint: 'Living rooms, home offices, home theatres',
     icon: 'sofa',
     sizeQuestion: 'Which part of your home?',
-    resultNoun: 'Rooms like this',
     sizes: [
       { band: 'small', label: 'Bedroom or study', detail: 'Home office, WFH calls', icon: 'briefcase', example: CASES.homeOffice },
       { band: 'medium', label: 'Living room', detail: 'HDB or condo living area', icon: 'sofa', example: CASES.livingRoom },
@@ -150,7 +143,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
     hint: 'Cafés, restaurants, bars, F&B',
     icon: 'utensils',
     sizeQuestion: 'How many diners does it seat?',
-    resultNoun: 'Venues like this',
     sizes: [
       { band: 'small', label: 'Up to 20 seats', detail: 'Café, kiosk, small eatery', icon: 'coffee', example: CASES.acqua },
       { band: 'medium', label: '20–50 seats', detail: 'Neighbourhood restaurant or café', icon: 'utensils', example: CASES.dough },
