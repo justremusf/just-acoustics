@@ -62,7 +62,7 @@ export default async function Page() {
         config={config}
         {...data}
         relatedLinks={SPACE_LINKS_BY_SERVICE.panels}
-        estimator={<PriceEstimator defaultSpace="home" compact id="estimator" />}
+        estimator={<PriceEstimator compact id="estimator" />}
       />
     </>
   )

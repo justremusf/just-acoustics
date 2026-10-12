@@ -33,11 +33,12 @@ export default function MobileActionBar() {
 
   // Let the floating WhatsApp button and cookie pill step aside while the bar is up.
   useEffect(() => {
-    document.body.dataset.mobileBar = shown ? 'on' : 'off'
+    // On the homepage the hero has its own WhatsApp button, so the floating one waits until the bar takes over.
+    document.body.dataset.mobileBar = shown ? 'on' : pathname === '/' ? 'hero' : 'off'
     return () => {
       delete document.body.dataset.mobileBar
     }
-  }, [shown])
+  }, [shown, pathname])
 
   if (hidden) return null
 

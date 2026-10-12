@@ -8,7 +8,7 @@ import ReadingProgress from '@/components/blog/ReadingProgress'
 import RelatedPostCard from '@/components/blog/RelatedPostCard'
 import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import { blockText, extractHeadings, slugify, whatsappLink, type ArticleNavView, type ArticleView, type ViewImage } from '@/lib/contentView'
-import type { ServicePage } from '@/lib/serviceLinks'
+import { SERVICE_PAGES, type ServicePage } from '@/lib/serviceLinks'
 
 const BODY_ID = 'article-body'
 const headingFont = { fontFamily: 'var(--font-heading)' }
@@ -94,6 +94,8 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
   const showToc = headings.length >= 3
   const components = bodyComponents(byBlock)
   const parts = splitForMidCta(article.body, headings.length)
+  // General articles fall back to the panels service page; only a specific service presets the quiz.
+  const estimatorSpace = serviceLink && serviceLink.href !== SERVICE_PAGES.panels.href ? serviceLink.priceSpace : undefined
   const width = showToc ? 'max-w-[1120px]' : 'max-w-[760px]'
 
   return (
@@ -167,7 +169,7 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
                 <div id={BODY_ID} className="rich-content article-body">
                   {parts.map((part, i) => (
                     <div key={i}>
-                      {i > 0 && <ArticleEstimator defaultSpace={serviceLink?.priceSpace} />}
+                      {i > 0 && <ArticleEstimator defaultSpace={estimatorSpace} />}
                       <PortableText value={part} components={components} />
                     </div>
                   ))}
@@ -175,7 +177,7 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
               )}
 
               {/* No mid-article split (or no body): show the estimator after the article instead. */}
-              {parts.length < 2 && <ArticleEstimator defaultSpace={serviceLink?.priceSpace} />}
+              {parts.length < 2 && <ArticleEstimator defaultSpace={estimatorSpace} />}
 
               <aside className="glass-card mt-12 flex flex-col gap-4 p-[clamp(20px,3vw,32px)]">
                 <p className="page-kicker !text-[var(--color-brand-orange)]">Free advice</p>
