@@ -20,7 +20,7 @@ const SPACES: Record<SpaceKey, { phrase: string; noun: string }> = {
   school: { phrase: 'a school', noun: 'classroom' },
   church: { phrase: 'a church', noun: 'church' },
   home: { phrase: 'my home', noun: 'home' },
-  'home-studio': { phrase: 'a home studio', noun: 'home studio' },
+  'home-studio': { phrase: 'a studio', noun: 'studio' },
   gym: { phrase: 'a gym', noun: 'gym' },
 }
 
@@ -42,7 +42,8 @@ const PAGE_SPACES: Record<string, SpaceKey> = {
 
 export type BrowsingContext = {
   spaces: Partial<Record<SpaceKey, { count: number; last: number }>>
-  estimate?: { space: SpaceKey; size: string; low: number; high?: number | null; at: number }
+  /** `answer` is the quiz option picked, in the visitor's words ("Boardroom, 10–20 seats"). */
+  estimate?: { space: SpaceKey; size: string; answer?: string; low: number; high?: number | null; at: number }
   product?: { name: string; path: string; at: number }
   /** Last path counted, so a re-render or a query-string change is not a second view. */
   lastPath?: string
@@ -97,12 +98,16 @@ export function withPageView(context: BrowsingContext, pathname: string, now = D
 /** An estimator pick is an explicit statement about the room, so it weighs more than a page view. */
 export function withEstimate(
   context: BrowsingContext,
-  estimate: { space: string; size: string; low: number; high?: number | null },
+  estimate: { space: string; size: string; answer?: string; low: number; high?: number | null },
   now = Date.now(),
 ): BrowsingContext {
   const space = spaceFromSlug(estimate.space)
   if (!space) return context
-  return { ...bump(context, space, 2, now), estimate: { space, size: estimate.size, low: estimate.low, high: estimate.high ?? null, at: now } }
+  const answer = estimate.answer?.replace(/\s+/g, ' ').trim().slice(0, 80) || undefined
+  return {
+    ...bump(context, space, 2, now),
+    estimate: { space, size: estimate.size, ...(answer ? { answer } : {}), low: estimate.low, high: estimate.high ?? null, at: now },
+  }
 }
 
 export function withProduct(context: BrowsingContext, name: string, path: string, now = Date.now()): BrowsingContext {
@@ -127,6 +132,15 @@ function formatAmount(amount: number) {
 }
 
 function estimateSentence(estimate: NonNullable<BrowsingContext['estimate']>, space: SpaceKey | null) {
+  // Quiz answers are specific ("Meeting room, 4–8 seats"), so quote them as picked.
+  if (estimate.answer) {
+    const price =
+      estimate.high != null
+        ? `S$${formatAmount(estimate.low)}–${formatAmount(estimate.high)}`
+        : `from S$${formatAmount(estimate.low)}`
+    const also = !space || estimate.space === space ? '' : ` for ${SPACES[estimate.space].phrase}`
+    return `In your price estimate I picked "${estimate.answer}"${also} and saw ${price}.`
+  }
   const size = SIZE_LABELS[estimate.size] ?? estimate.size.replace(/-/g, ' ')
   const same = !space || estimate.space === space
   const room = same ? 'room' : SPACES[estimate.space].noun
@@ -201,7 +215,7 @@ export function recordPageView(pathname: string) {
   update((context) => withPageView(context, pathname))
 }
 
-export function recordEstimate(estimate: { space: string; size: string; low: number; high?: number | null }) {
+export function recordEstimate(estimate: { space: string; size: string; answer?: string; low: number; high?: number | null }) {
   update((context) => withEstimate(context, estimate))
 }
 

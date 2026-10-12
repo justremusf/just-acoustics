@@ -149,7 +149,8 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
     if (!s || !b) return
     const e = s.prices[b.slug]
     // Same figures the visitor sees: a range only when the card shows one.
-    recordEstimate({ space: s.slug, size: b.slug, low: e.low, high: e.display === 'range' ? e.high : null })
+    const answer = findQuizSpace(s.slug)?.sizes.find((option) => option.band === b.slug)?.label
+    recordEstimate({ space: s.slug, size: b.slug, answer, low: e.low, high: e.display === 'range' ? e.high : null })
     trackEvent('price_estimate_view', {
       space: s.slug,
       size: b.slug,
