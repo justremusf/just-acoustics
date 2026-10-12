@@ -208,10 +208,7 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
                 }}
               >
                 <OptionIcon icon={option.icon} />
-                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="text-[15px] font-semibold leading-snug">{option.label}</span>
-                  <span className="text-[13px] leading-snug text-[var(--color-gray-100)]">{option.hint}</span>
-                </span>
+                <span className="min-w-0 flex-1 text-[15px] font-semibold leading-snug">{option.label}</span>
                 <ArrowRight className="h-4 w-4 shrink-0 opacity-40" aria-hidden="true" />
               </button>
             ))}

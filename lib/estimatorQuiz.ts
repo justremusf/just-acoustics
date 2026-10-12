@@ -39,7 +39,6 @@ export type QuizSpace = {
   /** Space slug in lib/priceGuide.ts */
   slug: string
   label: string
-  hint: string
   icon: QuizIcon
   sizeQuestion: string
   sizes: QuizSizeOption[]
@@ -75,7 +74,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
   {
     slug: 'home-studio',
     label: 'Studio',
-    hint: 'Music, podcast, recording or practice room',
     icon: 'mic',
     sizeQuestion: 'What kind of studio is it?',
     sizes: [
@@ -88,7 +86,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
   {
     slug: 'office',
     label: 'Office',
-    hint: 'Meeting rooms, boardrooms, open offices',
     icon: 'briefcase',
     sizeQuestion: 'Which room needs fixing?',
     sizes: [
@@ -101,7 +98,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
   {
     slug: 'church',
     label: 'Church or hall',
-    hint: 'Sanctuaries, halls, youth and fellowship rooms',
     icon: 'church',
     sizeQuestion: 'How many people does it seat?',
     sizes: [
@@ -114,7 +110,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
   {
     slug: 'school',
     label: 'School or academy',
-    hint: 'Classrooms, music, dance and enrichment centres',
     icon: 'graduation',
     sizeQuestion: 'What kind of room is it?',
     sizes: [
@@ -127,7 +122,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
   {
     slug: 'home',
     label: 'Home',
-    hint: 'Living rooms, home offices, home theatres',
     icon: 'sofa',
     sizeQuestion: 'Which part of your home?',
     sizes: [
@@ -140,7 +134,6 @@ export const QUIZ_SPACES: QuizSpace[] = [
   {
     slug: 'restaurant',
     label: 'Restaurant or café',
-    hint: 'Cafés, restaurants, bars, F&B',
     icon: 'utensils',
     sizeQuestion: 'How many diners does it seat?',
     sizes: [

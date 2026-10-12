@@ -878,8 +878,7 @@ body[data-gallery-expanded="true"] header {
 
 /* Mobile action bar: the floating WhatsApp button hides and the cookie pill moves up while the bar shows. */
 @media (max-width: 1023px) {
-  body[data-mobile-bar='on'] .wa-float,
-  body[data-mobile-bar='hero'] .wa-float {
+  body[data-mobile-bar='on'] .wa-float {
     opacity: 0;
     pointer-events: none;
   }
