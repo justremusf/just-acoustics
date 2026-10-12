@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from '@/components/ui/Image'
 
 const videos = [
@@ -31,10 +31,34 @@ const PLAY_ICON = '/assets/webflow/6967a0f62bd9b7dce9e01040_Play%20icon.png'
 
 export default function HearTheDifference() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
+  // The clips start playing (muted, looping) once the section scrolls into view. Browsers only allow
+  // autoplay without sound; YouTube's own speaker control unmutes.
+  const [inView, setInView] = useState(false)
+  // Phones show only the first clip, so only it autoplays; the hidden ones would still download.
+  const [wide, setWide] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el || inView) return
+    if (!('IntersectionObserver' in window)) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setWide(window.matchMedia('(min-width: 768px)').matches)
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [inView])
 
   return (
     <>
-      <section className="px-4 py-12 md:px-5 md:py-14">
+      <section ref={sectionRef} className="px-4 py-12 md:px-5 md:py-14">
         <div
           className="section-shell-pad mx-auto max-w-[1580px] overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,243,236,0.96))] shadow-[0_26px_80px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.82)_inset]"
           style={{ borderRadius: 'var(--section-radius)', border: '1px solid var(--section-border)' }}
@@ -45,7 +69,7 @@ export default function HearTheDifference() {
                 Listen to the results yourself
               </h2>
               <p className="mt-5 max-w-[52ch] text-[15px] leading-7 text-[var(--color-gray-100)] sm:text-base">
-                The before &amp; after difference.
+                The before &amp; after difference. Turn the sound on to hear it.
               </p>
             </div>
           </div>
@@ -53,9 +77,13 @@ export default function HearTheDifference() {
           {/* Single responsive grid — renders all videos once, collapses to 1 column on mobile showing only first video */}
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {videos.map((v, index) => {
-              const isActive = activeVideoId === v.videoId
+              const isActive = activeVideoId === v.videoId || (inView && (index === 0 || wide))
               const isHiddenOnMobile = index > 0
-              const activeSrc = `https://www.youtube-nocookie.com/embed/${v.videoId}?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1`
+              // Clicked: play with sound. Otherwise autoplay muted on a loop (loop needs playlist=<id>).
+              const activeSrc =
+                activeVideoId === v.videoId
+                  ? `https://www.youtube-nocookie.com/embed/${v.videoId}?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1`
+                  : `https://www.youtube-nocookie.com/embed/${v.videoId}?autoplay=1&mute=1&loop=1&playlist=${v.videoId}&controls=1&rel=0&playsinline=1&modestbranding=1`
 
               return (
                 <button
@@ -94,14 +122,17 @@ export default function HearTheDifference() {
                       </div>
                     )}
 
+                    {/* Hidden while playing so it doesn't cover YouTube's mute and caption buttons. */}
+                    {!isActive && (
                     <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
-                      <span className="inline-flex rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <span className="inline-flex rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/62 backdrop-blur-md">
-                        {isActive ? 'Playing' : 'Video'}
-                      </span>
-                    </div>
+                        <span className="inline-flex rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <span className="inline-flex rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/62 backdrop-blur-md">
+                          Video
+                        </span>
+                      </div>
+                    )}
 
                     {!isActive && (
                       <>
