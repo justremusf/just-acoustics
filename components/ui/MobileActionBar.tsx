@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import WhatsAppLink from '@/components/analytics/WhatsAppLink'
+import ShimmerButton from '@/components/ui/shimmer-button'
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon'
 
 // Pages that already put the form or payment front and centre.
 const HIDDEN_ON = ['/contact', '/checkout', '/thank-you', '/proposals']
@@ -47,23 +49,24 @@ export default function MobileActionBar() {
       className={`fixed inset-x-0 bottom-0 z-[90] border-t border-black/8 bg-white/95 px-3 pt-2.5 shadow-[0_-10px_30px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-300 lg:hidden ${shown ? 'translate-y-0' : 'pointer-events-none translate-y-full'}`}
       style={{ paddingBottom: 'calc(10px + env(safe-area-inset-bottom))' }}
     >
-      <div className="mx-auto flex max-w-md gap-2">
-        <Link
-          href={consultationHref}
-          tabIndex={shown ? 0 : -1}
-          className="flex h-12 flex-1 items-center justify-center rounded-full bg-[var(--color-brand-orange)] text-[15px] font-semibold text-[var(--color-dark-100)] no-underline"
-        >
-          Free consultation
+      <div className="mx-auto flex max-w-md items-center gap-3">
+        {/* Same shimmer button as the hero and contact sections. */}
+        <Link href={consultationHref} tabIndex={shown ? 0 : -1} className="flex-1 no-underline">
+          <ShimmerButton tabIndex={-1} className="h-[52px] min-h-0 w-full px-6 text-[15px]">
+            Free Consultation
+          </ShimmerButton>
         </Link>
+        {/* Matches the floating WhatsApp button, which steps aside while this bar is up. */}
         <WhatsAppLink
           source="mobile_bar"
           target="_blank"
           rel="noopener noreferrer"
           tabIndex={shown ? 0 : -1}
-          className="flex h-12 items-center justify-center gap-2 rounded-full px-5 text-[15px] font-semibold text-white no-underline"
+          aria-label="Chat with us on WhatsApp"
+          className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full text-white no-underline shadow-xl transition-transform hover:scale-105"
           style={{ backgroundColor: '#25D366' }}
         >
-          WhatsApp
+          <WhatsAppIcon size={28} />
         </WhatsAppLink>
       </div>
     </div>

@@ -2,13 +2,38 @@
 
 import Link from 'next/link'
 import { useEffect, useId, useRef, useState } from 'react'
-import { ArrowLeft, ArrowRight, MessageCircle } from 'lucide-react'
+import Image from 'next/image'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Briefcase,
+  Building2,
+  Church,
+  Coffee,
+  Drum,
+  GraduationCap,
+  Headphones,
+  House,
+  Landmark,
+  MessageCircle,
+  Mic,
+  Music,
+  BookOpen,
+  Phone,
+  Presentation,
+  School,
+  Sofa,
+  Store,
+  Theater,
+  Users,
+  UtensilsCrossed,
+  type LucideIcon,
+} from 'lucide-react'
 import { trackEvent } from '@/components/analytics/trackEvent'
 import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import { recordEstimate } from '@/lib/whatsappContext'
+import { QUIZ_SPACES, findQuizSpace, type QuizIcon } from '@/lib/estimatorQuiz'
 import {
-  SIZE_BANDS,
-  SPACE_TYPES,
   findSizeBand,
   findSpaceType,
   formatPriceEntry,
@@ -18,6 +43,38 @@ import {
 type Step = 'space' | 'size' | 'result'
 
 const headingFont = { fontFamily: 'var(--font-heading)' }
+
+const ICONS: Record<QuizIcon, LucideIcon> = {
+  mic: Mic,
+  headphones: Headphones,
+  music: Music,
+  drum: Drum,
+  briefcase: Briefcase,
+  phone: Phone,
+  users: Users,
+  presentation: Presentation,
+  building: Building2,
+  church: Church,
+  landmark: Landmark,
+  graduation: GraduationCap,
+  book: BookOpen,
+  school: School,
+  sofa: Sofa,
+  house: House,
+  theater: Theater,
+  utensils: UtensilsCrossed,
+  coffee: Coffee,
+  store: Store,
+}
+
+function OptionIcon({ icon }: { icon: QuizIcon }) {
+  const Icon = ICONS[icon]
+  return (
+    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-[var(--color-brand-orange)]/12 text-[#b86a00]">
+      <Icon className="h-5 w-5" aria-hidden="true" />
+    </span>
+  )
+}
 
 export type PriceEstimatorProps = {
   /** Space slug from lib/priceGuide.ts (e.g. "office") to preselect. */
@@ -43,6 +100,8 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
   }, [step])
 
   const space = findSpaceType(spaceSlug)
+  const quizSpace = findQuizSpace(spaceSlug)
+  const quizSize = quizSpace?.sizes.find((option) => option.band === sizeSlug)
   const size = findSizeBand(sizeSlug)
   const entry = space && size ? space.prices[size.slug] : null
   const priceText = entry ? formatPriceEntry(entry) : null
@@ -88,7 +147,7 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
 
   const stepNumber = step === 'space' ? 1 : step === 'size' ? 2 : 3
   const optionClass =
-    'flex min-h-[56px] w-full cursor-pointer items-center justify-between gap-3 rounded-[16px] border border-black/10 bg-white px-5 py-3 text-left text-[15px] font-semibold text-[var(--color-dark-100)] transition-[border-color,transform,background-color] duration-200 hover:-translate-y-0.5 hover:border-[var(--color-brand-orange)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-orange)] aria-pressed:border-[var(--color-dark-100)] aria-pressed:bg-[var(--color-white-200)]'
+    'flex min-h-[64px] w-full cursor-pointer items-center gap-3.5 rounded-[16px] border border-black/10 bg-white p-3 pr-4 text-left text-[var(--color-dark-100)] transition-[border-color,transform,background-color] duration-200 hover:-translate-y-0.5 hover:border-[var(--color-brand-orange)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-orange)] aria-pressed:border-[var(--color-dark-100)] aria-pressed:bg-[var(--color-white-200)]'
   const questionClass = `!m-0 font-medium leading-[1.08] tracking-[-0.6px] text-[var(--color-dark-100)] outline-none ${compact ? 'text-[22px]' : 'text-[clamp(24px,3vw,34px)]'}`
   const backClass =
     'inline-flex w-fit cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-sm font-semibold text-[var(--color-gray-100)] hover:text-[var(--color-dark-100)]'
@@ -96,10 +155,10 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
   return (
     <div id={id} className={`flex scroll-mt-28 flex-col ${compact ? 'gap-4' : 'gap-6'}`} role="group" aria-labelledby={headingId}>
       <div className="flex items-center justify-between gap-4">
-        <p id={headingId} className="page-kicker m-0 text-[var(--color-brand-orange)]">
+        <p id={headingId} className="page-kicker !m-0 text-[var(--color-brand-orange)]">
           Instant price estimate
         </p>
-        <p className="m-0 text-xs font-semibold text-[var(--color-gray-200)]" aria-live="polite">
+        <p className="!m-0 text-xs font-semibold text-[var(--color-gray-200)]" aria-live="polite">
           {step === 'result' ? 'Your estimate' : `Question ${stepNumber} of 2`}
         </p>
       </div>
@@ -115,84 +174,105 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
           <h3 ref={questionRef} tabIndex={-1} className={questionClass} style={headingFont}>
             What kind of space is it?
           </h3>
-          {!compact && <p className="page-card-copy m-0">Two quick taps. No contact details needed.</p>}
           <div className="grid gap-2.5 sm:grid-cols-2">
-            {SPACE_TYPES.map((option) => (
+            {QUIZ_SPACES.map((option) => (
               <button
                 key={option.slug}
                 type="button"
                 aria-pressed={option.slug === spaceSlug}
                 className={optionClass}
                 onClick={() => {
-                  select(option.slug, sizeSlug)
-                  goTo(sizeSlug ? 'result' : 'size')
+                  // A new space means new size answers, so always ask the size question again.
+                  select(option.slug, null)
+                  goTo('size')
                 }}
               >
-                {option.label}
-                <ArrowRight className="h-4 w-4 shrink-0 opacity-50" aria-hidden="true" />
+                <OptionIcon icon={option.icon} />
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="text-[15px] font-semibold leading-snug">{option.label}</span>
+                  <span className="text-[13px] leading-snug text-[var(--color-gray-100)]">{option.hint}</span>
+                </span>
+                <ArrowRight className="h-4 w-4 shrink-0 opacity-40" aria-hidden="true" />
               </button>
             ))}
           </div>
         </div>
       )}
 
-      {step === 'size' && (
+      {step === 'size' && quizSpace && (
         <div key="size" className="flex flex-col gap-4 motion-safe:animate-[estimator-step_0.3s_ease-out]">
           <button type="button" className={backClass} onClick={() => goTo('space')}>
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            {space ? space.label : 'Back'}
+            {quizSpace.label}
           </button>
           <h3 ref={questionRef} tabIndex={-1} className={questionClass} style={headingFont}>
-            How big is the room?
+            {quizSpace.sizeQuestion}
           </h3>
           <div className="grid gap-2.5 sm:grid-cols-2">
-            {SIZE_BANDS.map((option) => (
+            {quizSpace.sizes.map((option) => (
               <button
-                key={option.slug}
+                key={option.band}
                 type="button"
-                aria-pressed={option.slug === sizeSlug}
+                aria-pressed={option.band === sizeSlug}
                 className={optionClass}
                 onClick={() => {
-                  select(spaceSlug, option.slug)
+                  select(quizSpace.slug, option.band)
                   goTo('result')
                 }}
               >
-                <span className="flex flex-col gap-0.5">
-                  <span>
-                    {option.label} <span className="font-normal text-[var(--color-gray-100)]">· {option.area}</span>
-                  </span>
-                  <span className="text-xs font-normal text-[var(--color-gray-200)]">e.g. {option.examples}</span>
+                <OptionIcon icon={option.icon} />
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="text-[15px] font-semibold leading-snug">{option.label}</span>
+                  <span className="text-[13px] leading-snug text-[var(--color-gray-100)]">{option.detail}</span>
                 </span>
-                <ArrowRight className="h-4 w-4 shrink-0 opacity-50" aria-hidden="true" />
+                <ArrowRight className="h-4 w-4 shrink-0 opacity-40" aria-hidden="true" />
               </button>
             ))}
           </div>
         </div>
       )}
 
-      {step === 'result' && space && size && entry && priceText && (
+      {step === 'result' && space && size && entry && priceText && quizSpace && quizSize && (
         <div key="result" className="flex flex-col gap-5 motion-safe:animate-[estimator-step_0.3s_ease-out]">
           <button type="button" className={backClass} onClick={() => goTo('size')}>
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            {space.label} · {size.label}
+            {quizSize.label}
           </button>
-          <div className={`glass-card flex flex-col gap-3 ${compact ? 'p-5' : 'p-[clamp(20px,3vw,32px)]'}`}>
-            <h3 ref={questionRef} tabIndex={-1} className="page-kicker !m-0 flex flex-wrap items-center gap-2 outline-none">
-              {entry.display === 'range' ? 'Typical range' : 'Typical price'}
-              <span className="rounded-full border border-black/10 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-[var(--color-gray-100)]">
-                Supply + installation
-              </span>
-            </h3>
-            <p
-              className="m-0 text-[clamp(30px,4vw,42px)] font-medium leading-[1.05] tracking-[-0.8px] text-[var(--color-dark-100)]"
-              style={headingFont}
+          <div className="glass-card flex flex-col overflow-hidden !p-0">
+            <Link
+              href={`/projects/${quizSize.example.slug}`}
+              className="group relative block aspect-[16/10] w-full overflow-hidden bg-[var(--color-white-200)]"
+              data-insight-cta="estimator_case_study"
             >
-              {priceText}
-            </p>
-            <p className="page-card-copy m-0">
-              For a {size.label.toLowerCase()} {space.label.toLowerCase()} ({size.area}), with panels designed for your room.
-              {entry.siteVisit ? ' Larger spaces like this are quoted after a site visit.' : ''} Final price confirmed after we see your space.
-            </p>
+              <Image
+                src={quizSize.example.image}
+                alt={`${quizSize.example.title}: acoustic panels installed by Just Acoustics`}
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+              <span className="absolute bottom-3 left-3 rounded-full bg-black/65 px-3 py-1.5 text-[12px] font-semibold text-white backdrop-blur-sm">
+                Our project: {quizSize.example.title} →
+              </span>
+            </Link>
+            <div className={`flex flex-col gap-3 ${compact ? 'p-5' : 'p-[clamp(20px,3vw,28px)]'}`}>
+              <h3 ref={questionRef} tabIndex={-1} className="page-kicker !m-0 flex flex-wrap items-center gap-2 outline-none">
+                {quizSpace.resultNoun} typically cost
+                <span className="rounded-full border border-black/10 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-[var(--color-gray-100)]">
+                  Supply + installation
+                </span>
+              </h3>
+              <p
+                className="!m-0 text-[clamp(30px,4vw,42px)] font-medium leading-[1.05] tracking-[-0.8px] text-[var(--color-dark-100)]"
+                style={headingFont}
+              >
+                {priceText}
+              </p>
+              <p className="page-card-copy !m-0">
+                Panels designed and installed to fix the echo in a space like yours.
+                {entry.siteVisit ? ' Bigger spaces like this are quoted after a free site visit.' : ''} We confirm the exact price after seeing your space.
+              </p>
+            </div>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
@@ -215,9 +295,6 @@ export function PriceEstimator({ defaultSpace, compact = false, id }: PriceEstim
               Ask on WhatsApp
             </WhatsAppLink>
           </div>
-          <Link href="/shop" className="m-0 w-fit text-sm font-semibold text-[var(--color-gray-100)] underline-offset-2 hover:underline">
-            Installing yourself? See panel prices →
-          </Link>
         </div>
       )}
     </div>

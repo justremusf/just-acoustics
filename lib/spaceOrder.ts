@@ -1,6 +1,19 @@
-// Order spaces by commercial value: higher-ticket, high-close-rate spaces first
-// (CRM: schools ~S$6.1k, offices ~S$4.5k, restaurants ~S$2.8k vs homes ~S$1.6k average job).
-export const SPACE_PRIORITY = ['offices', 'education', 'restaurants', 'churches', 'gym-and-activity-spaces', 'studios', 'homes'] as const
+// Order spaces by won revenue (Bigin, 102 Closed Won deals, checked 12 Oct 2026): studios S$44.7k,
+// offices S$42.0k, churches S$38.7k, schools/academies S$33.5k, homes S$30.3k, restaurants S$23.3k.
+// The price estimator (lib/estimatorQuiz.ts) uses the same order. Smaller verticals follow.
+export const SPACE_PRIORITY = [
+  'studios',
+  'offices',
+  'churches',
+  'education',
+  'homes',
+  'restaurants',
+  'gym-and-activity-spaces',
+  'event-venues',
+  'hotels-and-hospitality',
+  'clinics-and-healthcare',
+  'retail-and-showrooms',
+] as const
 
 export function spaceRank(slug: string) {
   const index = (SPACE_PRIORITY as readonly string[]).indexOf(slug)

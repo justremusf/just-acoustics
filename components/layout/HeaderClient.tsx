@@ -88,8 +88,9 @@ interface HeaderClientProps {
 
 // Static nav config is now in data/navigationConfig.ts
 
-const FEATURED_SPACE_SLUGS = ['studios', 'offices', 'churches', 'restaurants']
-const SECONDARY_SPACE_SLUGS = ['education']
+// Same order as lib/spaceOrder.ts (by won revenue).
+const FEATURED_SPACE_SLUGS = ['studios', 'offices', 'churches', 'education']
+const SECONDARY_SPACE_SLUGS = ['homes', 'restaurants']
 const ACOUSTIC_PANEL_PRODUCT_LINES = new Set([
   'flexi-panel',
   'custom-print-panels',
@@ -129,8 +130,8 @@ function buildSpaceSections(spaces: SpaceMenuItem[]) {
       {
         title: 'Popular Spaces',
         links: [
+          { label: 'Studios', href: '/spaces/studios' },
           { label: 'Offices', href: '/spaces/offices' },
-          { label: 'Restaurants', href: '/spaces/restaurants' },
           { label: 'Churches', href: '/spaces/churches' },
           { label: 'Education', href: '/spaces/education' },
         ],
