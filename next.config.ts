@@ -107,6 +107,9 @@ const nextConfig: NextConfig = {
     ]
   },
   images: {
+    // Keeps images off Vercel's capped optimiser; see lib/imageLoader.ts.
+    loader: 'custom',
+    loaderFile: './lib/imageLoader.ts',
     formats: ['image/avif', 'image/webp'],
     qualities: [62, 70, 72, 75],
     minimumCacheTTL: 60 * 60 * 24 * 30,
