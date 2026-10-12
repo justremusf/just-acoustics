@@ -11,7 +11,7 @@ import { breadcrumbJsonLd as buildBreadcrumbJsonLd, fitTitle, pageMetadata, seri
 import { serviceForSpace } from '@/lib/serviceLinks'
 import { formatSgd } from '@/lib/shopPricing'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
-import PriceEstimator from '@/components/estimator/PriceEstimator'
+import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import { estimatorSpaceForPage, findSpaceType } from '@/lib/priceGuide'
 
 export const revalidate = 3600

@@ -6,7 +6,7 @@ import FAQ from '@/components/sections/FAQ'
 import ArticleToc from '@/components/blog/ArticleToc'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import RelatedPostCard from '@/components/blog/RelatedPostCard'
-import PriceEstimator from '@/components/estimator/PriceEstimator'
+import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import { blockText, extractHeadings, slugify, whatsappLink, type ArticleNavView, type ArticleView, type ViewImage } from '@/lib/contentView'
 import type { ServicePage } from '@/lib/serviceLinks'
 

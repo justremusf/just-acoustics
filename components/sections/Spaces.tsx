@@ -3,16 +3,10 @@ import Image from '@/components/ui/Image'
 import type { Space } from '@/lib/types'
 import { urlFor } from '@/sanity/lib/image'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
+import { SPACE_PRIORITY } from '@/lib/spaceOrder'
 
-// Highest-value spaces first (see lib/spaceOrder.ts).
-const HOME_APPLICATION_ORDER = [
-  'offices',
-  'education',
-  'restaurants',
-  'churches',
-  'studios',
-  'homes',
-] as const
+// Highest-revenue spaces first: the top six of lib/spaceOrder.ts.
+const HOME_APPLICATION_ORDER = SPACE_PRIORITY.slice(0, 6)
 
 type SpaceCard = {
   title: string

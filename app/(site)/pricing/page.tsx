@@ -5,7 +5,7 @@ import { FileText, MessageSquare, Ruler, Wrench, Search, MapPin, LayoutDashboard
 import FAQ from '@/components/sections/FAQ'
 import ContactCTA from '@/components/sections/ContactCTA'
 import FadeUp from '@/components/ui/FadeUp'
-import PriceEstimator from '@/components/estimator/PriceEstimator'
+import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import PricingRangeAccordion, { type PricingRange } from './PricingRangeAccordion'
 import PageEngagementTracker from '@/components/analytics/PageEngagementTracker'
 import { getAllShopItems } from '@/sanity/lib/queries'

@@ -26,8 +26,8 @@
  * Table (low – high, or "from"):
  *   Office / meeting room  small   1,000–2,000   [OFFICE]/[PRICE] low; high split
  *                          medium  2,500–4,000   [VSL] "meeting rooms from 2,500"; high
- *                          large   4,000–8,000   extrapolated
- *                          v.large from 8,000    extrapolated, site visit
+ *                          large   4,000–6,000   owner set 12 Oct 2026 (boardroom)
+ *                          v.large from 6,000    owner set 12 Oct 2026 (open office), site visit
  *   Restaurant / café      small   1,000–2,000   [FAQ] "smaller spaces from ~1,000"
  *                          medium  2,000–4,000   [REST]/[PRICE] low 2,000; high split
  *                          large   4,000–6,000   [REST]/[PRICE] high 6,000
@@ -83,35 +83,26 @@ export const SIZE_BANDS: SizeBand[] = [
   { slug: 'very-large', label: 'Very large', area: '100 m²+', examples: 'restaurant floor, church, auditorium' },
 ]
 
+// Ordered by won revenue (see lib/estimatorQuiz.ts).
 export const SPACE_TYPES: SpaceType[] = [
+  {
+    slug: 'home-studio',
+    label: 'Home studio',
+    prices: {
+      small: { low: 1000, high: 2000, display: 'range' },
+      medium: { low: 2000, high: 3500, display: 'range' },
+      large: { low: 3500, display: 'from' },
+      'very-large': { low: 6000, display: 'from', siteVisit: true },
+    },
+  },
   {
     slug: 'office',
     label: 'Office / meeting room',
     prices: {
       small: { low: 1000, high: 2000, display: 'range' },
       medium: { low: 2500, high: 4000, display: 'range' },
-      large: { low: 4000, high: 8000, display: 'range' },
-      'very-large': { low: 8000, display: 'from', siteVisit: true },
-    },
-  },
-  {
-    slug: 'restaurant',
-    label: 'Restaurant / café',
-    prices: {
-      small: { low: 1000, high: 2000, display: 'range' },
-      medium: { low: 2000, high: 4000, display: 'range' },
       large: { low: 4000, high: 6000, display: 'range' },
       'very-large': { low: 6000, display: 'from', siteVisit: true },
-    },
-  },
-  {
-    slug: 'school',
-    label: 'School / classroom',
-    prices: {
-      small: { low: 1000, high: 2000, display: 'range' },
-      medium: { low: 2000, high: 3500, display: 'range' },
-      large: { low: 3500, high: 6500, display: 'range' },
-      'very-large': { low: 6500, display: 'from', siteVisit: true },
     },
   },
   {
@@ -125,6 +116,16 @@ export const SPACE_TYPES: SpaceType[] = [
     },
   },
   {
+    slug: 'school',
+    label: 'School / classroom',
+    prices: {
+      small: { low: 1000, high: 2000, display: 'range' },
+      medium: { low: 2000, high: 3500, display: 'range' },
+      large: { low: 3500, high: 6500, display: 'range' },
+      'very-large': { low: 6500, display: 'from', siteVisit: true },
+    },
+  },
+  {
     slug: 'home',
     label: 'Home / living room',
     prices: {
@@ -135,12 +136,12 @@ export const SPACE_TYPES: SpaceType[] = [
     },
   },
   {
-    slug: 'home-studio',
-    label: 'Home studio',
+    slug: 'restaurant',
+    label: 'Restaurant / café',
     prices: {
       small: { low: 1000, high: 2000, display: 'range' },
-      medium: { low: 2000, high: 3500, display: 'range' },
-      large: { low: 3500, display: 'from' },
+      medium: { low: 2000, high: 4000, display: 'range' },
+      large: { low: 4000, high: 6000, display: 'range' },
       'very-large': { low: 6000, display: 'from', siteVisit: true },
     },
   },

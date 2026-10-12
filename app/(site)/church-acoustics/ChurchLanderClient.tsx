@@ -1,16 +1,11 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import WhatsAppLink from '@/components/analytics/WhatsAppLink'
-import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play, ChevronDown } from 'lucide-react'
-import {
-  type RoomType,
-  type MainProblem,
-  calculatePanels,
-  generateWhatsAppUrl,
-} from '@/lib/panel-calculator'
+import { ArrowRight, MapPin, MessageSquare, Volume2, Sparkles, ShieldCheck, Play } from 'lucide-react'
 import { CHURCH_FAQS } from './churchFaqs'
 
 // ─── Asset helpers ───────────────────────────────────────────────────────────
@@ -179,281 +174,6 @@ const REVIEWS = [
 // ─── FAQs (shared with the server page for FAQPage JSON-LD) ──────────────────
 const FAQS = CHURCH_FAQS
 
-// ─── Inline Calculator ────────────────────────────────────────────────────────
-
-type CalcStep = 1 | 2 | 3 | 4
-
-const ROOM_OPTIONS: { id: RoomType; label: string }[] = [
-  { id: 'church', label: 'Church / Worship Hall' },
-  { id: 'office', label: 'Office / Meeting' },
-  { id: 'restaurant', label: 'Restaurant / Café' },
-  { id: 'tuition', label: 'Tuition / Classroom' },
-  { id: 'gym', label: 'Gym / Fitness Studio' },
-  { id: 'residential', label: 'Residential Space' },
-  { id: 'studio', label: 'Home Studio / Music' },
-  { id: 'other', label: 'Other Space' },
-]
-
-const PROBLEM_OPTIONS: { id: MainProblem; label: string }[] = [
-  { id: 'echo', label: 'Echo & reverberation' },
-  { id: 'speech', label: 'Speech is unclear' },
-  { id: 'loud', label: 'Room gets too loud when busy' },
-  { id: 'video', label: 'Video calls sound boxy / echoey' },
-  { id: 'music', label: 'Music sounds harsh / muddy' },
-  { id: 'noise', label: 'Noise leaking to another room' },
-  { id: 'unsure', label: 'Not sure / multiple issues' },
-]
-
-function PanelCalculator() {
-  const [step, setStep] = useState<CalcStep>(1)
-  const [roomType, setRoomType] = useState<RoomType>('church')
-  const [problem, setProblem] = useState<MainProblem>('echo')
-  const [length, setLength] = useState('')
-  const [width, setWidth] = useState('')
-  const [height, setHeight] = useState('')
-  const [errors, setErrors] = useState<Record<string, string>>({})
-
-  const progressPct = step === 4 ? 100 : ((step - 1) / 3) * 100
-
-  const results = useMemo(() => {
-    if (!length || !width || !height) return null
-    return calculatePanels({
-      roomType,
-      mainProblem: problem,
-      length: Number(length),
-      width: Number(width),
-      height: Number(height),
-      treatmentArea: 'unsure',
-      severity: 'noticeable',
-    })
-  }, [roomType, problem, length, width, height])
-
-  const validate = () => {
-    const e: Record<string, string> = {}
-    const l = Number(length), w = Number(width), h = Number(height)
-    if (!length || isNaN(l) || l < 1 || l > 80) e.length = 'Must be 1–80 m'
-    if (!width || isNaN(w) || w < 1 || w > 80) e.width = 'Must be 1–80 m'
-    if (!height || isNaN(h) || h < 2 || h > 12) e.height = 'Must be 2–12 m'
-    setErrors(e)
-    return Object.keys(e).length === 0
-  }
-
-  const handleGenerate = () => {
-    if (validate()) setStep(4)
-  }
-
-  const handleWhatsApp = () => {
-    if (!results) return
-    const url = generateWhatsAppUrl(
-      { roomType, mainProblem: problem, length: Number(length), width: Number(width), height: Number(height), treatmentArea: 'unsure', severity: 'noticeable' },
-      results
-    )
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
-
-  const MAX_VIS = 24
-  const minVis = results ? Math.min(results.recommendedMin, MAX_VIS) : 0
-  const diffVis = results ? Math.max(0, Math.min(results.recommendedMax - results.recommendedMin, MAX_VIS - minVis)) : 0
-  const capped = results ? results.recommendedMax > MAX_VIS : false
-  const cappedN = results ? results.recommendedMax - (minVis + diffVis) : 0
-
-  return (
-    <div className="glass-card section-shell-pad">
-      {/* Progress */}
-      {step < 4 && (
-        <div className="mb-6">
-          <div className="mb-2 h-1.5 w-full overflow-hidden rounded-full bg-black/5">
-            <div
-              className="h-full rounded-full bg-[var(--color-brand-orange)] transition-all duration-500"
-              style={{ width: `${progressPct}%` }}
-            />
-          </div>
-          <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">
-            Step {step} of 3
-          </span>
-        </div>
-      )}
-
-      {/* Step 1 — Room Type */}
-      {step === 1 && (
-        <div>
-          <h3 className="home-heading text-[var(--color-dark-100)]" style={{ fontSize: 'clamp(22px, 3vw, 32px)' }}>
-            Select room type
-          </h3>
-          <p className="home-copy mt-3 mb-6">Choose the space where you want to control echo and noise.</p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {ROOM_OPTIONS.map((opt) => (
-              <button
-                key={opt.id}
-                type="button"
-                onClick={() => { setRoomType(opt.id); setTimeout(() => setStep(2), 180) }}
-                className={[
-                  'rounded-[16px] border px-3 py-4 text-center text-sm font-semibold transition-all duration-200',
-                  roomType === opt.id
-                    ? 'border-[var(--color-brand-orange)] bg-[rgba(255,165,0,0.06)] text-[var(--color-dark-100)] shadow-[0_4px_12px_rgba(255,165,0,0.12)]'
-                    : 'border-black/8 bg-white/70 text-[var(--color-gray-100)] hover:-translate-y-0.5 hover:border-[rgba(255,165,0,0.3)]',
-                ].join(' ')}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Step 2 — Main Problem */}
-      {step === 2 && (
-        <div>
-          <h3 className="home-heading text-[var(--color-dark-100)]" style={{ fontSize: 'clamp(22px, 3vw, 32px)' }}>
-            What's the main issue?
-          </h3>
-          <p className="home-copy mt-3 mb-5">Identify the acoustic problem you want to solve.</p>
-          <div className="relative mb-6">
-            <select
-              value={problem}
-              onChange={(e) => setProblem(e.target.value as MainProblem)}
-              className="w-full appearance-none rounded-[14px] border border-black/8 bg-white px-4 py-4 pr-10 text-sm font-semibold text-[var(--color-dark-100)] transition-all focus:border-[var(--color-brand-orange)] focus:outline-none focus:ring-2 focus:ring-[rgba(255,165,0,0.14)]"
-            >
-              {PROBLEM_OPTIONS.map((opt) => (
-                <option key={opt.id} value={opt.id}>{opt.label}</option>
-              ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-gray-200)]" />
-          </div>
-          {problem === 'noise' && (
-            <div className="mb-5 rounded-[14px] border border-[rgba(255,165,0,0.18)] bg-[rgba(255,165,0,0.05)] p-4 text-sm text-[var(--color-gray-100)]">
-              <strong className="text-[var(--color-dark-100)]">Note:</strong> Acoustic panels reduce internal echoes, not structural sound leakage through walls. You can still calculate panels to treat internal reflections.
-            </div>
-          )}
-          <div className="flex gap-3">
-            <button type="button" onClick={() => setStep(1)} className="inline-flex items-center justify-center rounded-full border border-black/8 bg-white px-5 py-3 text-sm font-bold text-[var(--color-gray-100)] transition-all hover:bg-black/[0.02]">Back</button>
-            <button type="button" onClick={() => setStep(3)} className="page-cta flex-1">Next Step</button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 3 — Dimensions */}
-      {step === 3 && (
-        <div>
-          <h3 className="home-heading text-[var(--color-dark-100)]" style={{ fontSize: 'clamp(22px, 3vw, 32px)' }}>
-            Enter room dimensions
-          </h3>
-          <p className="home-copy mt-3 mb-5">Enter length, width, and height in metres.</p>
-          <div className="mb-5 grid grid-cols-3 gap-3">
-            {[
-              { field: 'length' as const, label: 'Length', placeholder: '15', val: length, set: setLength },
-              { field: 'width' as const, label: 'Width', placeholder: '12', val: width, set: setWidth },
-              { field: 'height' as const, label: 'Height', placeholder: '6', val: height, set: setHeight },
-            ].map(({ field, label, placeholder, val, set }) => (
-              <div key={field}>
-                <label htmlFor={`calc-${field}`} className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">{label}</label>
-                <div className="relative">
-                  <input
-                    id={`calc-${field}`}
-                    type="number"
-                    inputMode="decimal"
-                    placeholder={placeholder}
-                    value={val}
-                    onChange={(e) => { set(e.target.value); setErrors(prev => ({ ...prev, [field]: '' })) }}
-                    className={[
-                      'w-full rounded-[14px] border bg-white py-3.5 pl-4 pr-8 text-sm font-semibold transition-all focus:outline-none focus:ring-2',
-                      errors[field]
-                        ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
-                        : 'border-black/8 focus:border-[var(--color-brand-orange)] focus:ring-[rgba(255,165,0,0.14)]',
-                    ].join(' ')}
-                  />
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase text-[var(--color-gray-200)]">m</span>
-                </div>
-                {errors[field] && <p className="mt-1 text-[11px] text-red-500">{errors[field]}</p>}
-              </div>
-            ))}
-          </div>
-          <div className="flex gap-3">
-            <button type="button" onClick={() => setStep(2)} className="inline-flex items-center justify-center rounded-full border border-black/8 bg-white px-5 py-3 text-sm font-bold text-[var(--color-gray-100)] transition-all hover:bg-black/[0.02]">Back</button>
-            <button type="button" onClick={handleGenerate} className="page-cta flex-1">Generate Estimate</button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 4 — Results */}
-      {step === 4 && results && (
-        <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
-          {/* Left */}
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-black/6 pb-4">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(255,165,0,0.2)] bg-[rgba(255,165,0,0.08)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
-                Result
-              </span>
-              <button type="button" onClick={() => { setStep(1); setLength(''); setWidth(''); setHeight(''); setErrors({}) }} className="text-[13px] font-bold text-[var(--color-gray-200)] transition-colors hover:text-[var(--color-brand-orange)]">
-                ← Recalculate
-              </button>
-            </div>
-
-            <div>
-              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--color-gray-200)]">Recommended Quantity</span>
-              <div className="mt-1 flex items-baseline gap-2">
-                <span className="text-[3.5rem] font-semibold leading-tight tracking-[-2px] text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
-                  {results.recommendedMin}–{results.recommendedMax}
-                </span>
-                <span className="text-lg font-semibold text-[var(--color-brand-orange)]">panels</span>
-              </div>
-              <p className="text-sm text-[var(--color-gray-100)]">
-                Standard <strong>1.2 m × 0.6 m</strong> panels (0.72 sqm each, 50 mm thick).
-              </p>
-            </div>
-
-            {/* Panel visualiser */}
-            <div className="rounded-[14px] border border-dashed border-black/8 bg-black/[0.015] p-4">
-              <div className="grid gap-1.5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(26px, 1fr))' }}>
-                {Array.from({ length: minVis }).map((_, i) => (
-                  <div key={`m${i}`} className="aspect-[1/2] rounded-sm bg-[var(--color-brand-orange)] shadow-[0_1px_3px_rgba(255,165,0,0.15)]" />
-                ))}
-                {Array.from({ length: diffVis }).map((_, i) => (
-                  <div key={`d${i}`} className="aspect-[1/2] rounded-sm border border-dashed border-[var(--color-brand-orange)] bg-[rgba(255,165,0,0.14)]" />
-                ))}
-                {capped && (
-                  <div className="col-span-2 flex items-center justify-center text-[11px] font-bold text-[var(--color-brand-orange)]">+{cappedN}</div>
-                )}
-              </div>
-              <div className="mt-3 flex flex-wrap gap-4 text-[12px] text-[var(--color-gray-200)]">
-                <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-2 rounded-sm bg-[var(--color-brand-orange)]" /> Baseline ({results.recommendedMin})</span>
-                <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-2 rounded-sm border border-dashed border-[var(--color-brand-orange)] bg-[rgba(255,165,0,0.14)]" /> Upper range (+{results.recommendedMax - results.recommendedMin})</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <button onClick={handleWhatsApp} type="button" className="page-cta w-full">
-                Get Free Personalised Plan
-              </button>
-              <Link href="/shop" className="flex min-h-[48px] items-center justify-center rounded-full border border-black/10 bg-white text-sm font-bold text-[var(--color-dark-100)] transition-all hover:border-black/20 hover:bg-black/[0.02]">
-                Browse Acoustic Products
-              </Link>
-            </div>
-          </div>
-
-          {/* Right — placement guidance */}
-          <div className="flex flex-col gap-4 border-t border-black/6 pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
-            <div>
-              <p className="page-kicker text-[var(--color-brand-orange)]">Placement Guidance</p>
-              <p className="mt-3 text-sm leading-7 text-[var(--color-gray-100)]">{results.placementGuidance}</p>
-            </div>
-            <div className="rounded-[16px] border border-black/6 bg-white p-4">
-              <p className="page-kicker mb-3">What panels do</p>
-              <ul className="space-y-2 text-sm text-[var(--color-gray-100)]">
-                <li className="flex gap-2"><span className="shrink-0 font-bold text-green-500">✓</span> Reduce internal echo and flutter noise</li>
-                <li className="flex gap-2"><span className="shrink-0 font-bold text-green-500">✓</span> Improve speech clarity throughout the space</li>
-                <li className="flex gap-2"><span className="shrink-0 font-bold text-red-400">✗</span> Stop noise leaking through walls</li>
-                <li className="flex gap-2"><span className="shrink-0 font-bold text-red-400">✗</span> Block outside traffic or street noise</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ─── Main Component ────────────────────────────────────────────────────────────
 export default function ChurchLanderClient() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [activeCaseId, setActiveCaseId] = useState('ppcoc')
@@ -730,16 +450,19 @@ export default function ChurchLanderClient() {
         </div>
       </section>
 
-      {/* ── Calculator ────────────────────────────────────────────────────── */}
+      {/* ── Price estimator ────────────────────────────────────────────────────── */}
       <section id="calculator" className="scroll-mt-28 home-shell section-shell-pad">
-        <div className="mb-8 max-w-[620px]">
-          <span className="soft-pill">Panel Calculator</span>
-          <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">How many panels does your space need?</h2>
-          <p className="home-copy mt-4">
-            Use our interactive estimator to get a ballpark panel count for your sanctuary. Takes under a minute.
-          </p>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-start lg:gap-16">
+          <div className="max-w-[620px]">
+            <span className="soft-pill">Price estimate</span>
+            <h2 className="home-heading mt-4 text-[var(--color-dark-100)]">What will your church cost?</h2>
+            <p className="home-copy mt-4">
+              Tell us how many people your space seats to see what similar churches typically cost, supplied and installed.
+            </p>
+          </div>
+          {/* Same estimator as the rest of the site, starting at the church question. */}
+          <PriceEstimator defaultSpace="church" id="estimator" />
         </div>
-        <PanelCalculator />
       </section>
 
       {/* ── Process ───────────────────────────────────────────────────────── */}
