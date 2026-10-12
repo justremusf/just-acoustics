@@ -10,40 +10,45 @@ export const revalidate = 3600
 const PAGE_PATH = '/acoustic-panels-singapore'
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Acoustic Panels Singapore: Supply & Install',
-  description: 'Acoustic wall and ceiling panels supplied and installed in Singapore, from S$185 per panel installed. Get product, layout and installation advice for your room.',
+  title: 'Acoustic Panels Singapore: Supplied & Installed in Homes',
+  description: 'Echoey HDB, condo or landed home? We supply and install acoustic wall and ceiling panels across Singapore, from S$185 per panel installed. Free quote.',
   path: PAGE_PATH,
 })
 
 const config: PaidSearchPageConfig = {
-  eyebrow: 'Homes & Home Studios',
-  title: 'Room sounds echoey? Get the right panels, placed properly.',
-  summary: 'Acoustic panels for HDB and condo rooms, home studios and home offices in Singapore. Supply only, or supply and install.',
+  eyebrow: 'Acoustic Panels for Homes',
+  title: 'Echoey room at home? We install panels that soak it up.',
+  summary: 'Acoustic panels for HDB flats, condos and landed homes in Singapore: living rooms, home offices and home theatres. We pick the panels, place them and install them for you.',
   projectCategory: 'studios-homes',
+  projectSlugs: ['home-theatre-2', 'home-office', 'home-theatre', 'home-double-office', 'home-office-studio'],
   spaceLabel: 'room',
-  whatsappText: 'Hi Just Acoustics, I would like a free consultation on acoustic panels for my home / home studio.',
+  whatsappText: 'Hi Just Acoustics, I would like a free quote for acoustic panels in my home.',
   heroImage: '/assets/process/installation.webp',
   heroAlt: 'Just Acoustics team installing fabric wall panels on site',
-  problemTitle: 'Panels only work when coverage and placement suit the room.',
+  soundproofing: {
+    fixes: 'echo inside your room, so voices, calls, TV and music sound clear instead of hollow.',
+    doesNot: 'noise from neighbours, the corridor or traffic getting in. That needs work on walls, doors or windows.',
+  },
+  problemTitle: 'Bare walls, tiles and big windows keep sound bouncing.',
   problems: [
-    'Your voice sounds hollow on calls, podcasts or recordings.',
-    'Mixes sound different in your room than everywhere else.',
-    'Bare walls, tiles and windows keep sound bouncing around.',
-    'A few panels bought online made little audible change.',
+    'Your voice sounds hollow on work calls.',
+    'The TV or music sounds harsh and you keep turning it up.',
+    'Talking in the living room echoes like an empty flat.',
+    'A few panels bought online made little difference.',
   ],
-  approachTitle: 'From room photos to a treatment layout.',
+  approachTitle: 'From room photos to panels on your wall.',
   approach: [
-    { title: 'Review the room', copy: 'We look at size, surfaces, how you use the room and the sound problem you notice.' },
-    { title: 'Select treatment', copy: 'We recommend wall panels, ceiling treatment or bass control in suitable sizes and finishes.' },
-    { title: 'Supply or install', copy: 'Install it yourself with our guidance, or let our team install it to a set layout.' },
+    { title: 'Send photos of the room', copy: 'Tell us how you use the room and what bothers you. Photos and rough sizes are enough to start.' },
+    { title: 'We plan the panels', copy: 'We choose the number, size, colour and spots for the panels so they soak up the most echo and suit your home.' },
+    { title: 'We install them', copy: 'Our team puts the panels up neatly and cleans up after.' },
   ],
-  pricing: 'Home studios and rooms in HDB flats and condos commonly fall around S$1,000–S$3,000. Larger spaces and ceiling installations are scoped separately.',
-  proof: ['Acoustic panels and bass traps', 'Self-install option when useful', 'Room-specific coverage guidance', 'Professional Singapore installation'],
+  pricing: 'Panels are from S$185 each, supplied and installed. Most rooms in HDB flats and condos fall around S$1,000–S$3,000. Larger spaces and ceiling panels are quoted after we see the room.',
+  proof: ['Panels sized and placed for your room', 'Many colours, sizes and prints', 'Wall and ceiling panels', 'Installed across Singapore'],
   faq: [
-    { q: 'How many acoustic panels do I need?', a: 'It depends on room size, hard surfaces and how the room is used. Photos and dimensions are enough for a first coverage recommendation.' },
-    { q: 'Do acoustic panels soundproof a room?', a: 'No. They reduce echo inside the room. Soundproofing needs changes to walls, doors, windows or ceilings.' },
-    { q: 'Can the panels match my interior?', a: 'Yes. Fabric colours, sizes, print finishes and ceiling formats can be chosen to suit the interior.' },
-    { q: 'How long does it take?', a: 'Panels are made to order, with a standard lead time of 4 to 6 weeks. Most installs are completed in one to two days.' },
+    { q: 'How many acoustic panels do I need?', a: 'It depends on the room size, the hard surfaces and how you use it. Photos and rough sizes are enough for us to give you a first answer.' },
+    { q: 'Do acoustic panels soundproof a room?', a: 'No. They soak up echo inside the room. Stopping noise from neighbours needs work on walls, doors or windows.' },
+    { q: 'Can the panels match my interior?', a: 'Yes. You can choose fabric colours, sizes and printed designs to suit your home.' },
+    { q: 'How long does it take?', a: 'Panels are made to order, usually 4 to 6 weeks. Most installs take one to two days.' },
   ],
 }
 
@@ -62,7 +67,7 @@ export default async function Page() {
         config={config}
         {...data}
         relatedLinks={SPACE_LINKS_BY_SERVICE.panels}
-        estimator={<PriceEstimator compact id="estimator" />}
+        estimator={<PriceEstimator defaultSpace="home" compact id="estimator" />}
       />
     </>
   )

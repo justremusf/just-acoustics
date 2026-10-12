@@ -15,7 +15,9 @@ export type ServicePage = ServiceLink & {
   priceSpace?: string
 }
 
+// Ordered by won revenue (lib/spaceOrder.ts): studios, offices, churches, schools, homes, restaurants.
 export const SERVICE_PAGES = {
+  studio: { href: '/studio-acoustic-treatment', label: 'Studio acoustic treatment in Singapore', priceSpace: 'home-studio' },
   office: { href: '/office-acoustic-treatment', label: 'Office acoustic treatment in Singapore', priceSpace: 'office' },
   restaurant: { href: '/restaurant-echo-reduction', label: 'Restaurant echo reduction in Singapore', priceSpace: 'restaurant' },
   school: { href: '/school-acoustic-treatment', label: 'School and classroom acoustics in Singapore', priceSpace: 'school' },
@@ -28,10 +30,11 @@ export type ServiceKey = keyof typeof SERVICE_PAGES
 /** Footer "Services" group. */
 export const FOOTER_SERVICE_LINKS: ServiceLink[] = [
   { href: SERVICE_PAGES.panels.href, label: 'Acoustic Panels Singapore' },
+  { href: SERVICE_PAGES.studio.href, label: 'Studio Acoustics' },
   { href: SERVICE_PAGES.office.href, label: 'Office Acoustics' },
-  { href: SERVICE_PAGES.restaurant.href, label: 'Restaurant Echo Reduction' },
-  { href: SERVICE_PAGES.school.href, label: 'School Acoustics' },
   { href: SERVICE_PAGES.church.href, label: 'Church Acoustics' },
+  { href: SERVICE_PAGES.school.href, label: 'School Acoustics' },
+  { href: SERVICE_PAGES.restaurant.href, label: 'Restaurant Echo Reduction' },
   { href: '/acoustic-panel-calculator', label: 'Panel Calculator' },
 ]
 
@@ -42,7 +45,7 @@ const SERVICE_BY_SPACE_SLUG: Record<string, ServiceKey> = {
   education: 'school',
   churches: 'church',
   homes: 'panels',
-  studios: 'panels',
+  studios: 'studio',
   'clinics-and-healthcare': 'panels',
   'retail-and-showrooms': 'panels',
   'hotels-and-hospitality': 'restaurant',
@@ -56,14 +59,12 @@ export function serviceForSpace(spaceSlug: string): ServicePage | null {
 
 /** Service landing page → matching /spaces pages. */
 export const SPACE_LINKS_BY_SERVICE: Record<ServiceKey, ServiceLink[]> = {
+  studio: [{ href: '/spaces/studios', label: 'Music and home studios' }],
   office: [{ href: '/spaces/offices', label: 'Offices and meeting rooms' }],
   restaurant: [{ href: '/spaces/restaurants', label: 'Restaurants, cafés and bars' }],
   school: [{ href: '/spaces/education', label: 'Education spaces' }],
   church: [{ href: '/spaces/churches', label: 'Churches and event spaces' }],
-  panels: [
-    { href: '/spaces/homes', label: 'Homes' },
-    { href: '/spaces/studios', label: 'Music and home studios' },
-  ],
+  panels: [{ href: '/spaces/homes', label: 'Homes' }],
 }
 
 /** Lowest typical installed price for a service page, from the owner-confirmed price guide. */
@@ -83,7 +84,8 @@ const SERVICE_BY_TOPIC: Record<string, ServiceKey> = {
 /** Slug keywords take precedence over the broad topic so e.g. a classroom guide links to schools. */
 const SERVICE_BY_SLUG_KEYWORD: Array<[RegExp, ServiceKey]> = [
   [/church|worship|sanctuar/, 'church'],
-  [/home-office|hdb|condo|home-studio|podcast|piano/, 'panels'],
+  [/home-studio|recording|podcast|piano|drum|music-studio|music-room/, 'studio'],
+  [/home-office|hdb|condo/, 'panels'],
   [/classroom|school|tuition|training-room/, 'school'],
   [/restaurant|cafe|f-and-b|bar-/, 'restaurant'],
   [/office|meeting-room|conference/, 'office'],

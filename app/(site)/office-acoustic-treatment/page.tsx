@@ -10,40 +10,45 @@ export const revalidate = 3600
 const PAGE_PATH = '/office-acoustic-treatment'
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Office Acoustic Treatment Singapore',
-  description: 'Reduce meeting-room and office echo with practical wall and ceiling acoustic treatment designed for Singapore workplaces.',
+  title: 'Office Acoustic Panels Singapore: Stop Meeting Room Echo',
+  description: 'Echoey meeting room or office? We install acoustic wall and ceiling panels across Singapore so calls and meetings sound clear. Free quote, reply within 1 hour.',
   path: PAGE_PATH,
 })
 
 const config: PaidSearchPageConfig = {
   eyebrow: 'Offices & Meeting Rooms',
-  title: 'Echoey meeting rooms? Get clear calls and conversations.',
-  summary: 'Wall and ceiling acoustic panels for Singapore offices, so speech is clear in the room and on video calls.',
+  title: 'Echoey meeting room? Make calls and meetings clear again.',
+  summary: 'We install acoustic panels on the walls and ceiling of Singapore offices. Voices stop bouncing around, so people hear each other in the room and on video calls.',
   projectCategory: 'office-spaces',
+  preferReviewsFrom: ['Mortgage Hub'],
   spaceLabel: 'office',
-  whatsappText: 'Hi Just Acoustics, I would like a free consultation for echo in our office / meeting room.',
+  whatsappText: 'Hi Just Acoustics, I would like a free quote to fix the echo in our office / meeting room.',
   heroImage: '/assets/process/installation.webp',
   heroAlt: 'Just Acoustics team installing fabric wall panels on site',
-  problemTitle: 'Glass, concrete and open layouts make speech hard to follow.',
+  soundproofing: {
+    fixes: 'echo inside the meeting room or office, so voices are clear and the room feels calmer.',
+    doesNot: 'people outside the room hearing your meeting. Keeping talk private needs sealed doors, walls or partitions.',
+  },
+  problemTitle: 'Glass, concrete and open ceilings make voices bounce.',
   problems: [
     'Voices overlap and blur in meeting rooms.',
-    'Video calls sound hollow or distant to people on the other end.',
-    'Open areas get tiring and noisy as more people come in.',
+    'People on video calls say you sound far away or hollow.',
+    'Open areas get loud and tiring as more people come in.',
     'People raise their voices just to be heard across the table.',
   ],
-  approachTitle: 'A treatment plan built around how your office works.',
+  approachTitle: 'How we fix your office, start to finish.',
   approach: [
-    { title: 'Identify priority rooms', copy: 'Start with the meeting rooms, call rooms and shared areas causing the most trouble.' },
-    { title: 'Design around the fit-out', copy: 'Place wall or ceiling panels where they make a real difference, without clashing with lights, aircon or sprinklers.' },
-    { title: 'Install around your schedule', copy: 'Plan access and install times so staff and meetings are disrupted as little as possible.' },
+    { title: 'Start with the worst rooms', copy: 'Send photos or a short video. We pick the meeting rooms, call rooms and shared areas that need it most.' },
+    { title: 'Plan around your fit-out', copy: 'We place wall or ceiling panels where they soak up the most echo, clear of lights, aircon and sprinklers.' },
+    { title: 'We install, you keep working', copy: 'Our team puts the panels up, after office hours if you need, so meetings are not disturbed.' },
   ],
   pricing: 'Regular offices, meeting rooms and call rooms commonly fall around S$1,000–S$3,000. Multi-room or high-ceiling projects are quoted by scope.',
-  proof: ['Meeting-room and video-call focus', 'Colour and finish options', 'Wall and ceiling treatment', 'Site assessment when required'],
+  proof: ['Made for meeting rooms and video calls', 'Many colours and finishes', 'Wall and ceiling panels', 'Site visit when needed'],
   faq: [
-    { q: 'Will panels improve meeting-room privacy?', a: 'They reduce echo, which makes speech clearer and the room more comfortable. Keeping conversations confidential may also need sealing, partitions or sound masking.' },
-    { q: 'Can work happen after office hours?', a: 'Yes. Access timing and installation constraints are included when we scope the project.' },
-    { q: 'Can you treat several rooms?', a: 'Yes. We can prioritise rooms and phase a multi-room rollout around budget and day-to-day operations.' },
-    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
+    { q: 'Will panels stop people outside hearing our meetings?', a: 'No. Panels soak up echo inside the room, so speech is clearer and the room is calmer. Keeping talk private needs sealed doors, walls or partitions.' },
+    { q: 'Can you install after office hours?', a: 'Yes. We agree the install time with you when we quote.' },
+    { q: 'Can you do several rooms?', a: 'Yes. We can start with the worst rooms and do the rest in stages to suit your budget.' },
+    { q: 'How long does it take?', a: 'Panels are made to order, usually 4 to 6 weeks. Most installs take one to two days.' },
   ],
 }
 
