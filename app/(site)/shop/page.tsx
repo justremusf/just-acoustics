@@ -33,7 +33,7 @@ const SHOP_FAQS: FaqItem[] = [
   },
 ];
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateMetadata({
   searchParams,

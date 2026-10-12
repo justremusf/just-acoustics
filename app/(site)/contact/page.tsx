@@ -13,7 +13,7 @@ import type { Testimonial } from '@/lib/types'
 import { pageMetadata } from '@/lib/seo'
 import { TALLY_CONSULTATION_FORM_URL } from '@/lib/tally'
 
-export const revalidate = 60
+export const revalidate = 3600
 
 
 const NEXT_STEPS = ['Send us the form. It takes about two minutes.', 'We reach out within 1 hour.', 'We give you a free consultation on your space.']
