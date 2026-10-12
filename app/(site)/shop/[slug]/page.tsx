@@ -14,7 +14,7 @@ import { getProductProfile } from "@/lib/shopProductProfiles";
 import ShopItemDetail from "./ShopItemDetail";
 import RelatedProductsCarousel from "@/components/shop/RelatedProductsCarousel";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 // Override for the flagship product's meta / JSON-LD description.
 const STANDARD_FLEXI_DESCRIPTION =

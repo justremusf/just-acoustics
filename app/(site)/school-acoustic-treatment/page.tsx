@@ -5,7 +5,7 @@ import { getPaidSearchData } from '@/lib/paidSearchData'
 import { pageMetadata, serializeJsonLd, serviceJsonLd } from '@/lib/seo'
 import { minPriceForService, SPACE_LINKS_BY_SERVICE } from '@/lib/serviceLinks'
 
-export const revalidate = 60
+export const revalidate = 3600
 
 const PAGE_PATH = '/school-acoustic-treatment'
 
