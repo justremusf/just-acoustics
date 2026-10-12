@@ -19,21 +19,21 @@ export type ServicePage = ServiceLink & {
 export const SERVICE_PAGES = {
   studio: { href: '/studio-acoustic-treatment', label: 'Studio acoustic treatment in Singapore', priceSpace: 'home-studio' },
   office: { href: '/office-acoustic-treatment', label: 'Office acoustic treatment in Singapore', priceSpace: 'office' },
-  restaurant: { href: '/restaurant-echo-reduction', label: 'Restaurant echo reduction in Singapore', priceSpace: 'restaurant' },
-  school: { href: '/school-acoustic-treatment', label: 'School and classroom acoustics in Singapore', priceSpace: 'school' },
   church: { href: '/church-acoustics', label: 'Church acoustic treatment in Singapore', priceSpace: 'church' },
+  school: { href: '/school-acoustic-treatment', label: 'School and classroom acoustics in Singapore', priceSpace: 'school' },
   panels: { href: '/acoustic-panels-singapore', label: 'Acoustic panels in Singapore', priceSpace: 'home' },
+  restaurant: { href: '/restaurant-echo-reduction', label: 'Restaurant echo reduction in Singapore', priceSpace: 'restaurant' },
 } satisfies Record<string, ServicePage>
 
 export type ServiceKey = keyof typeof SERVICE_PAGES
 
-/** Footer "Services" group. */
+/** Footer "Services" group, in won-revenue order (the panels page now targets homes). */
 export const FOOTER_SERVICE_LINKS: ServiceLink[] = [
-  { href: SERVICE_PAGES.panels.href, label: 'Acoustic Panels Singapore' },
   { href: SERVICE_PAGES.studio.href, label: 'Studio Acoustics' },
   { href: SERVICE_PAGES.office.href, label: 'Office Acoustics' },
   { href: SERVICE_PAGES.church.href, label: 'Church Acoustics' },
   { href: SERVICE_PAGES.school.href, label: 'School Acoustics' },
+  { href: SERVICE_PAGES.panels.href, label: 'Acoustic Panels Singapore' },
   { href: SERVICE_PAGES.restaurant.href, label: 'Restaurant Echo Reduction' },
   { href: '/acoustic-panel-calculator', label: 'Panel Calculator' },
 ]
