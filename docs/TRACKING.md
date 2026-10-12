@@ -9,6 +9,7 @@ Every custom event goes through `trackEvent()` in `components/analytics/trackEve
 | First-party insights (`/api/insights/events`) | Unless the visitor is in an opt-in region and hasn't chosen yet | Event names must be on `ALLOWED_EVENTS` in `app/api/insights/events/route.ts`. |
 | Google Ads conversion | Ad consent allowed **and** a label env var is set | `send_to: AW-…/<label>`, SGD value, `transaction_id` when there is one. |
 | Meta pixel | Ad consent allowed | Standard events where Meta has one, otherwise `trackCustom`. `eventID` is set for deduplication. |
+| Microsoft Clarity | Clarity has loaded (analytics consent) | `clarity('event', name)` for every event, plus session tags for `source, method, space, size, cta, calculator, product_slug`. Conversions (`generate_lead`, `whatsapp_click`, `phone_click`, `email_click`, `purchase`) also set the `conversion` tag and call `clarity('upgrade')` so the recording is kept. Filter recordings and heatmaps by *Custom events* or *Custom tags*. |
 
 Ad consent comes from `readAnalyticsConsent() === 'all'` (`lib/analyticsConsent.ts`). It is on by default in Singapore and other standard regions. In the EEA, UK and CH it stays off until the visitor taps OK (`middleware.ts` sets `ja_consent_region`).
 
