@@ -13,6 +13,7 @@ import { recordProductView } from '@/lib/whatsappContext'
  * - First-party insights          once the visitor is not in an undecided opt-in region
  * - Google Ads conversion         only when ad cookies are allowed and a label env var is set
  * - Meta pixel                    only when ad cookies are allowed
+ * - Microsoft Clarity             whenever Clarity has loaded (it only loads with analytics consent)
  */
 
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
@@ -27,6 +28,11 @@ const googleAdsLabels: Partial<Record<string, string | undefined>> = {
 }
 
 const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID
+// Conversions tag the Clarity session and ask Clarity to keep its recording, so lead sessions can be
+// filtered in recordings and heatmaps and are never dropped by sampling.
+const CLARITY_CONVERSIONS = new Set(['generate_lead', 'whatsapp_click', 'phone_click', 'email_click', 'purchase'])
+// Clarity tags are session-level strings; these are the ones worth filtering recordings by.
+const CLARITY_TAGS = ['source', 'method', 'space', 'size', 'cta', 'calculator', 'product_slug']
 const META_STANDARD_EVENTS: Partial<Record<string, string>> = {
   generate_lead: 'Lead',
   whatsapp_click: 'Contact',
@@ -113,6 +119,23 @@ export type TrackEventDeliveryOptions = {
   googleOnly?: boolean
 }
 
+function sendToClarity(eventName: string, eventParams: EventParams) {
+  const clarity = window.clarity
+  if (typeof clarity !== 'function') return
+  try {
+    clarity('event', eventName)
+    Object.entries(flatProps(eventParams, CLARITY_TAGS)).forEach(([key, value]) => {
+      if (value !== null && value !== '') clarity('set', key, String(value))
+    })
+    if (CLARITY_CONVERSIONS.has(eventName)) {
+      clarity('set', 'conversion', eventName)
+      clarity('upgrade', eventName)
+    }
+  } catch {
+    // Clarity must never break the page.
+  }
+}
+
 /** Returns true when the event was handed to gtag. */
 export function trackEvent(eventName: string, params: object = {}, deliveryOptions: TrackEventDeliveryOptions = {}) {
   if (typeof window === 'undefined') return false
@@ -151,6 +174,8 @@ export function trackEvent(eventName: string, params: object = {}, deliveryOptio
       })
     }
   }
+
+  if (!googleOnly) sendToClarity(eventName, eventParams)
 
   if (!googleOnly && metaPixelId && typeof window.fbq === 'function' && adsAllowed()) {
     const metaParams = flatProps(eventParams, ['source', 'method', 'space', 'size', 'value', 'currency', 'content_name', 'product_slug', 'product_name', 'price_low', 'price_high', 'cta', 'calculator'])
