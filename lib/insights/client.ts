@@ -24,6 +24,15 @@ function getStoredId(key: string, persistent: boolean) {
   return value
 }
 
+/** The anonymous first-party visitor id (also sent, hashed, to Meta CAPI as external_id). */
+export function getInsightsVisitorId() {
+  try {
+    return getStoredId(VISITOR_KEY, true)
+  } catch {
+    return null
+  }
+}
+
 function getSessionId() {
   const lastSeen = Number(window.sessionStorage.getItem(`${SESSION_KEY}_last_seen`) || 0)
   if (Date.now() - lastSeen > SESSION_TTL_MS) window.sessionStorage.removeItem(SESSION_KEY)

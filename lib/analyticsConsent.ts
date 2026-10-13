@@ -34,9 +34,17 @@ export function readConsentChoice(): AnalyticsConsent {
  * until the visitor opts out.
  */
 export function readAnalyticsConsent(): AnalyticsConsent {
-  const choice = readConsentChoice()
+  return resolveAnalyticsConsent(readCookie(ANALYTICS_CONSENT_COOKIE), isStrictConsentRegion())
+}
+
+/**
+ * The same rule without `document`, for server code (app/api/meta-capi reads the request cookies):
+ * an explicit choice wins; otherwise opt-in regions are 'unset' and everywhere else is 'all'.
+ */
+export function resolveAnalyticsConsent(storedChoice: string | undefined, strictRegion: boolean): AnalyticsConsent {
+  const choice = normaliseAnalyticsConsent(storedChoice)
   if (choice !== 'unset') return choice
-  return isStrictConsentRegion() ? 'unset' : 'all'
+  return strictRegion ? 'unset' : 'all'
 }
 
 export function saveAnalyticsConsent(consent: Exclude<AnalyticsConsent, 'unset'>) {
