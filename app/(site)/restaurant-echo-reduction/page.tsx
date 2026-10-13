@@ -10,40 +10,44 @@ export const revalidate = 3600
 const PAGE_PATH = '/restaurant-echo-reduction'
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Restaurant Echo Reduction Singapore',
-  description: 'Reduce harsh restaurant and venue echo with discreet acoustic wall and ceiling treatment in Singapore.',
+  title: 'Restaurant Echo Reduction Singapore: Acoustic Panels',
+  description: 'Restaurant or café too loud? We install acoustic ceiling and wall panels across Singapore to cut the echo and keep the buzz. Free quote, reply within 1 hour.',
   path: PAGE_PATH,
 })
 
 const config: PaidSearchPageConfig = {
   eyebrow: 'Restaurants, Cafés & Bars',
   title: 'Restaurant too loud? Bring the noise down, keep the buzz.',
-  summary: 'Discreet ceiling and wall acoustic treatment for Singapore restaurants, cafés and bars, installed around your service hours.',
+  summary: 'We install acoustic panels on the ceiling and walls of Singapore restaurants, cafés and bars, outside your opening hours. Guests can talk without shouting.',
   projectCategory: 'restaurants',
   spaceLabel: 'restaurant',
-  whatsappText: 'Hi Just Acoustics, I would like a free consultation for echo and noise in our restaurant / café.',
+  whatsappText: 'Hi Just Acoustics, I would like a free quote to bring down the echo and noise in our restaurant / café.',
   heroImage: '/assets/webflow/6963a1ddcb30aae76c452853_Image%20from%20TinyPNG.webp',
   heroAlt: 'Acoustic ceiling clouds installed by Just Acoustics in a Singapore café',
-  problemTitle: 'Noise builds when every conversation bounces around the room.',
+  soundproofing: {
+    fixes: 'the echo that makes a full room loud, so guests can talk across the table.',
+    doesNot: 'noise from the street or the shop next door getting in, or your music getting out. That needs building work.',
+  },
+  problemTitle: 'A full room gets loud when every voice bounces around.',
   problems: [
     'Guests talk louder and louder to be heard over each other.',
-    'Concrete, glass, tile and exposed ceilings reflect sound everywhere.',
-    'Music and chatter turn harsh instead of adding atmosphere.',
+    'Concrete, glass, tiles and open ceilings bounce sound everywhere.',
+    'Music and chatter turn harsh instead of lively.',
     'Guests leave early or do not come back because it is too loud.',
   ],
-  approachTitle: 'Cut the echo while keeping your interior design.',
+  approachTitle: 'Cut the echo, keep your interior design.',
   approach: [
-    { title: 'Review the venue', copy: 'Look at the layout, finishes, ceiling access and the times when noise is worst.' },
-    { title: 'Find discreet coverage', copy: 'Use ceiling clouds, wall panels or custom prints that absorb enough sound without dominating the space.' },
-    { title: 'Install outside service', copy: 'Coordinate access, protection and work timing around your opening hours.' },
+    { title: 'Look at your venue', copy: 'Send photos or a short video at a busy time. We look at the layout, the finishes and the ceiling.' },
+    { title: 'Panels that blend in', copy: 'Ceiling panels, wall panels or printed panels in your colours, so they soak up echo without spoiling the look.' },
+    { title: 'We install outside service', copy: 'Our team puts the panels up before or after opening hours, so you do not lose a service.' },
   ],
   pricing: 'Restaurant and hospitality projects commonly range from S$2,000–S$6,000. Larger venues, custom finishes and difficult access are quoted separately.',
-  proof: ['Discreet ceiling and wall options', 'Custom colours and prints', 'After-hours installation planning', 'Coverage designed around occupancy'],
+  proof: ['Ceiling and wall options that blend in', 'Custom colours and prints', 'Installed outside opening hours', 'Planned for a full room'],
   faq: [
-    { q: 'Will acoustic panels make the restaurant silent?', a: 'No. The aim is to cut excessive echo while keeping the room lively and comfortable.' },
-    { q: 'Can the treatment be hidden?', a: 'Often. Ceiling clouds, colour-matched panels and custom prints can blend into the interior.' },
-    { q: 'Can you install outside operating hours?', a: 'Yes. Installation timing and access requirements are agreed during quoting.' },
-    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
+    { q: 'Will panels make the restaurant silent?', a: 'No. They cut the harsh echo so the room stays lively but guests can hear each other.' },
+    { q: 'Can the panels be hidden?', a: 'Often. Ceiling panels, colour-matched panels and printed panels can blend into your interior.' },
+    { q: 'Can you install outside opening hours?', a: 'Yes. We agree the install time with you when we quote.' },
+    { q: 'How long does it take?', a: 'Panels are made to order, usually 4 to 6 weeks. Most installs take one to two days.' },
   ],
 }
 

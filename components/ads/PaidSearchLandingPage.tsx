@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import Script from 'next/script'
-import { ArrowRight, Check, MessageCircle, TriangleAlert } from 'lucide-react'
+import { ArrowRight, Check, MessageCircle, TriangleAlert, X } from 'lucide-react'
 import TallyAttributionIframe from '@/components/TallyAttributionIframe'
 import WhatsAppLink from '@/components/analytics/WhatsAppLink'
 import FAQ, { type FaqItem } from '@/components/sections/FAQ'
@@ -22,6 +22,18 @@ export type PaidSearchPageConfig = {
   summary: string
   /** Sanity project `category` used for the hero photo and the project strip, e.g. 'office-spaces'. */
   projectCategory: string
+  /**
+   * Optional: only these projects (Sanity slugs, in this order) count as this space's work. Use it
+   * when a category mixes space types, e.g. 'studios-homes' holds both studios and homes.
+   */
+  projectSlugs?: string[]
+  /** Optional: reviews from these companies are shown first (matched case-insensitively). */
+  preferReviewsFrom?: string[]
+  /**
+   * The "echo vs soundproofing" note for people who searched "soundproofing". `fixes` is what panels
+   * do here; `doesNot` is the noise they will not stop (neighbours, the next room…). Plain words.
+   */
+  soundproofing: { fixes: string; doesNot: string }
   /** Short plural label for the space type, used in headings, e.g. 'office'. */
   spaceLabel: string
   /** WhatsApp message in the server HTML; after load the session-aware message from lib/whatsappContext replaces it. */
@@ -51,36 +63,97 @@ type Props = {
 }
 
 function CtaButtons({ whatsappText, dark = false }: { whatsappText: string; dark?: boolean }) {
+  // WhatsApp is the first and main button: it is how most people get in touch. The form is the
+  // second choice for people who would rather type it out.
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
-      <a
-        href="#consultation"
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--color-brand-orange)] px-6 text-sm font-bold text-black no-underline"
-      >
-        Get a free consultation <ArrowRight className="h-4 w-4" aria-hidden="true" />
-      </a>
       {/* The server HTML keeps the page's own message; the client swaps in the session-aware one. */}
       <WhatsAppLink
         source={dark ? 'lander_footer' : 'lander_hero'}
         fallbackText={whatsappText}
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--color-brand-orange)] px-6 text-sm font-bold text-black no-underline"
+      >
+        <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp us for a free quote
+      </WhatsAppLink>
+      <a
+        href="#consultation"
         className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full border px-6 text-sm font-bold no-underline ${
           dark ? 'border-white/25 text-white' : 'border-black/15 text-black'
         }`}
       >
-        <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp us
-      </WhatsAppLink>
+        Or fill in a short form <ArrowRight className="h-4 w-4" aria-hidden="true" />
+      </a>
     </div>
   )
 }
 
-function TrustLine({ dark = false }: { dark?: boolean }) {
-  return <p className={`m-0 text-sm ${dark ? 'text-white/60' : 'text-[var(--color-gray-100)]'}`}>Free consultation. We reply within 1 hour.</p>
+function TrustLine({ dark = false, estimatorLink = false }: { dark?: boolean; estimatorLink?: boolean }) {
+  return (
+    <p className={`m-0 text-sm ${dark ? 'text-white/60' : 'text-[var(--color-gray-100)]'}`}>
+      Free consultation. We reply within 1 hour.
+      {estimatorLink ? (
+        <>
+          {' '}
+          <a href="#estimator" className="font-semibold text-[var(--color-dark-100)] underline underline-offset-4">
+            See typical prices
+          </a>
+        </>
+      ) : null}
+    </p>
+  )
+}
+
+/** For people who searched "soundproofing": what panels do, and what they don't, in plain words. */
+function SoundproofingNote({ fixes, doesNot }: PaidSearchPageConfig['soundproofing']) {
+  return (
+    <section className="home-shell rounded-[28px] p-5 sm:p-7" aria-labelledby="soundproofing-note">
+      <h2 id="soundproofing-note" className="m-0 text-[clamp(20px,2vw,24px)] font-medium leading-tight text-[var(--color-dark-100)]" style={{ fontFamily: 'var(--font-heading)' }}>
+        Searched for soundproofing? Most rooms need echo fixed.
+      </h2>
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <p className="m-0 flex items-start gap-3 rounded-[18px] border border-black/8 bg-white/70 p-4 text-sm leading-6 text-black/75">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700">
+            <Check className="h-4 w-4" aria-hidden="true" />
+          </span>
+          <span>
+            <strong className="text-[var(--color-dark-100)]">What our panels fix:</strong> {fixes}
+          </span>
+        </p>
+        <p className="m-0 flex items-start gap-3 rounded-[18px] border border-black/8 bg-white/70 p-4 text-sm leading-6 text-black/75">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-black/5 text-black/60">
+            <X className="h-4 w-4" aria-hidden="true" />
+          </span>
+          <span>
+            <strong className="text-[var(--color-dark-100)]">What they don&rsquo;t stop:</strong> {doesNot} Not sure which one you have? Send us a short video and we will tell you honestly.
+          </span>
+        </p>
+      </div>
+    </section>
+  )
+}
+
+function sortReviews<T extends { company?: string | null }>(items: T[], prefer: string[] = []) {
+  if (!prefer.length) return items
+  const wanted = prefer.map((name) => name.toLowerCase())
+  const rank = (item: T) => {
+    const index = wanted.indexOf((item.company ?? '').toLowerCase())
+    return index === -1 ? wanted.length : index
+  }
+  return items.map((item, index) => ({ item, index })).sort((a, b) => rank(a.item) - rank(b.item) || a.index - b.index).map(({ item }) => item)
 }
 
 export default function PaidSearchLandingPage({ config, projects = [], testimonials = [], brandLogos, estimator, relatedLinks = [] }: Props) {
   const withImage = projects.filter((project) => project?.mainImage?.asset && project.slug?.current)
-  const matching = withImage.filter((project) => project.category === config.projectCategory)
-  const others = withImage.filter((project) => project.category !== config.projectCategory)
+  const slugs = config.projectSlugs
+  const isMatch = (project: Project) =>
+    slugs ? slugs.includes(project.slug.current) : project.category === config.projectCategory
+  const matching = withImage
+    .filter(isMatch)
+    .sort((a, b) => (slugs ? slugs.indexOf(a.slug.current) - slugs.indexOf(b.slug.current) : 0))
+  // Topping up with other work: never another space type from the same mixed category (a home
+  // studio photo on the homes page would read as a mismatch).
+  const others = withImage.filter((project) => !isMatch(project) && project.category !== config.projectCategory)
+  const reviews = sortReviews(testimonials, config.preferReviewsFrom)
 
   // Hero: a real project photo of this space type, otherwise a real local photo.
   const heroProject = matching[0]
@@ -91,7 +164,7 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
 
   // Proof strip: this space type first, topped up with other recent work.
   const strip = [...matching, ...others].slice(0, 3)
-  const stripAllMatching = strip.length > 0 && strip.every((project) => project.category === config.projectCategory)
+  const stripAllMatching = strip.length > 0 && strip.every(isMatch)
 
   return (
     <>
@@ -104,7 +177,7 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
               <h1 className="page-title !text-[clamp(34px,4.6vw,60px)] max-w-[18ch]">{config.title}</h1>
               <p className="page-subtitle !text-[16px] sm:!text-[17px]">{config.summary}</p>
               <CtaButtons whatsappText={config.whatsappText} />
-              <TrustLine />
+              <TrustLine estimatorLink={Boolean(estimator)} />
             </div>
             <div className="relative h-[190px] sm:h-[320px] lg:h-auto lg:min-h-[520px]">
               <Image
@@ -119,15 +192,17 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
           </div>
         </section>
 
+        <SoundproofingNote {...config.soundproofing} />
+
         {/* Form first on mobile; sticky right column on desktop. */}
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-start">
           <aside
             id="consultation"
             className="home-shell scroll-mt-28 overflow-hidden rounded-[28px] p-4 sm:p-6 lg:sticky lg:top-24 lg:col-start-2 lg:row-start-1 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"
           >
-            <p className="page-kicker">Free consultation</p>
+            <p className="page-kicker">Free quote</p>
             <h2 className="page-card-title mt-2">Tell us about your {config.spaceLabel}</h2>
-            <p className="page-card-copy mt-2 !text-sm">Takes about two minutes. We reply within 1 hour.</p>
+            <p className="page-card-copy mt-2 !text-sm">Takes about two minutes. We reply within 1 hour. Rather chat? WhatsApp us using the button above.</p>
             <div className="mt-4">
               <TallyAttributionIframe
                 baseUrl={TALLY_CONSULTATION_FORM_URL}
@@ -152,9 +227,6 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
                   </li>
                 ))}
               </ul>
-              <p className="page-card-copy mt-5 !text-sm">
-                Acoustic panels reduce echo inside the room. They do not stop sound passing through walls, doors or ceilings.
-              </p>
             </section>
 
             {/* How we fix it */}
@@ -212,11 +284,11 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
             ) : null}
 
             {/* Proof: testimonials */}
-            {testimonials.length > 0 ? (
+            {reviews.length > 0 ? (
               <section className="flex flex-col gap-4">
                 <h2 className="page-card-title px-1">What clients say</h2>
                 <div className="grid gap-4 md:grid-cols-3">
-                  {testimonials.slice(0, 3).map((item) => (
+                  {reviews.slice(0, 3).map((item) => (
                     <figure key={`${item.authorName}-${item.company ?? ''}`} className="glass-card m-0 flex flex-col gap-3 p-5">
                       <span className="text-sm text-[var(--color-brand-orange)]" aria-label={`${item.rating ?? 5} out of 5 stars`}>
                         {'★'.repeat(Math.min(5, Math.max(1, item.rating ?? 5)))}
@@ -249,7 +321,7 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 mb-0 text-sm text-white/55">Your exact price comes after a free consultation. No obligation.</p>
+              <p className="mt-6 mb-0 text-sm text-white/55">Prices include supply and installation. Your exact price comes after a free consultation. No obligation.</p>
               {relatedLinks.length > 0 ? (
                 <p className="mt-3 mb-0 flex flex-wrap gap-x-4 gap-y-1 text-sm text-white/55">
                   <span>More on:</span>
@@ -281,7 +353,7 @@ export default function PaidSearchLandingPage({ config, projects = [], testimoni
                 Ready to fix the echo?
               </h2>
               <p className="m-0 max-w-[52ch] text-base leading-7 text-white/70">
-                Send us a few details or photos of your {config.spaceLabel}. We will recommend what it needs and what it will cost.
+                Send us a few photos or a short video of your {config.spaceLabel}. We will tell you what it needs, what it will cost, and we will install it for you.
               </p>
               <TrustLine dark />
             </div>

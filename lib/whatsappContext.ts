@@ -38,6 +38,7 @@ const PAGE_SPACES: Record<string, SpaceKey> = {
   '/school-acoustic-treatment': 'school',
   '/acoustic-panels-singapore': 'home',
   '/church-acoustics': 'church',
+  '/studio-acoustic-treatment': 'home-studio',
 }
 
 export type BrowsingContext = {
