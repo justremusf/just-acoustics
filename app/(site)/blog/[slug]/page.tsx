@@ -10,7 +10,7 @@ import type { Post } from '@/lib/types'
 import ArticleDetail from '@/components/blog/ArticleDetail'
 import PageEngagementTracker from '@/components/analytics/PageEngagementTracker'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export async function generateStaticParams() {
   const slugs: { slug: string }[] = await getAllPostSlugs().catch(() => [])

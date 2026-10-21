@@ -8,7 +8,7 @@ import { buildProjectNav } from '@/lib/contentView'
 import type { Project } from '@/lib/types'
 import ProjectDetail from '@/components/projects/ProjectDetail'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export async function generateStaticParams() {
   const slugs: { slug: string }[] = await getAllProjectSlugs().catch(() => [])

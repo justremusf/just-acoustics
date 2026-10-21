@@ -151,6 +151,13 @@ export default defineType({
       title: 'Completion Date',
       type: 'date',
     }),
+    defineField({
+      name: 'publishAt',
+      title: 'Release date',
+      type: 'datetime',
+      description:
+        'Leave this project as a draft and set a date: the site publishes it automatically at 10am Singapore time on or after that date. Clear it to hold the draft back.',
+    }),
   ],
   preview: {
     select: {
