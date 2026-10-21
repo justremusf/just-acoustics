@@ -32,7 +32,7 @@ const PROJECTS_FAQS: FaqItem[] = [
   },
 ]
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
   const { category } = await searchParams

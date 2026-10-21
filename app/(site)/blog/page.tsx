@@ -7,7 +7,7 @@ import { pageMetadata } from '@/lib/seo'
 import BlogExplorer from '@/components/blog/BlogExplorer'
 import { CONTENT_TYPES } from '@/lib/blogContent'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 interface BlogPageProps {
   searchParams: Promise<{ topic?: string; type?: string; search?: string }>

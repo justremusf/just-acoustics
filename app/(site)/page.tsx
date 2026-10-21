@@ -21,7 +21,7 @@ import { pageMetadata } from '@/lib/seo'
 const HearTheDifference = dynamic(() => import('@/components/sections/HearTheDifference'))
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'))
 const FAQ = dynamic(() => import('@/components/sections/FAQ'))
-export const revalidate = 3600
+export const revalidate = 86400
 
 export const metadata: Metadata = pageMetadata({
   title: 'Just Acoustics | Acoustic Panels & Treatment Singapore',

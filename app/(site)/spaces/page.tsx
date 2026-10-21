@@ -9,7 +9,7 @@ import { pageMetadata } from '@/lib/seo'
 import { sortBySpacePriority } from '@/lib/spaceOrder'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export const metadata: Metadata = pageMetadata({
   title: 'Acoustic Treatment by Space, Singapore',

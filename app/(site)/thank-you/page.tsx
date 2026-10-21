@@ -9,7 +9,7 @@ import { getAllProjects } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export const metadata: Metadata = {
   title: 'Thank You',

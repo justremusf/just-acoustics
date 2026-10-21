@@ -14,7 +14,7 @@ import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
 import PriceEstimator from '@/components/estimator/LazyPriceEstimator'
 import { estimatorSpaceForPage, findSpaceType } from '@/lib/priceGuide'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export async function generateStaticParams() {
   const slugs: { slug: string }[] = await getAllSpaceSlugs().catch(() => [])
