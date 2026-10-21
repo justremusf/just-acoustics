@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // High-intent evergreen landing pages are intentionally listed alongside
     // CMS routes so Google can discover their canonical URLs directly.
     { url: `${BASE_URL}/acoustic-panels-singapore`, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/studio-acoustic-treatment`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/office-acoustic-treatment`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/restaurant-echo-reduction`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/church-acoustics`, changeFrequency: 'monthly', priority: 0.9 },

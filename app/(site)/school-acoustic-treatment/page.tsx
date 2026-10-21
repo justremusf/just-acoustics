@@ -10,40 +10,46 @@ export const revalidate = 86400
 const PAGE_PATH = '/school-acoustic-treatment'
 
 export const metadata: Metadata = pageMetadata({
-  title: 'School & Classroom Acoustics Singapore',
-  description: 'Reduce classroom echo so students can hear the teacher clearly. Acoustic wall and ceiling treatment for Singapore schools and tuition centres.',
+  title: 'School, Classroom & Dance Studio Acoustics Singapore',
+  description: 'Echoey classroom, music school or dance studio? We install acoustic panels across Singapore so students hear clearly. Free quote, reply within 1 hour.',
   path: PAGE_PATH,
 })
 
 const config: PaidSearchPageConfig = {
-  eyebrow: 'Schools & Classrooms',
-  title: 'Noisy, echoey classrooms? Help every student hear the teacher.',
-  summary: 'Acoustic wall and ceiling treatment for Singapore classrooms, tuition rooms and multipurpose halls.',
+  eyebrow: 'Schools, Academies & Dance Studios',
+  title: 'Echoey classroom or studio? Help every student hear clearly.',
+  summary: 'We install acoustic panels in Singapore classrooms, tuition centres, music schools and dance studios, around your lesson times.',
   projectCategory: 'schools',
-  spaceLabel: 'classroom',
-  whatsappText: 'Hi Just Acoustics, I would like a free consultation for echo in our classroom / school.',
+  projectSlugs: ['the-nuggets-academy', 'pei-school-of-dance', 'vibratone-academy', 'bhaskars-arts-academy', 'concentricheal'],
+  preferReviewsFrom: ['Concentricheal'],
+  spaceLabel: 'classroom or studio',
+  whatsappText: 'Hi Just Acoustics, I would like a free quote to fix the echo in our classroom / studio.',
   heroImage: '/assets/process/installation.webp',
   heroAlt: 'Just Acoustics team installing fabric wall panels on site',
-  problemTitle: 'Hard surfaces turn every lesson into a noisy room.',
+  soundproofing: {
+    fixes: 'echo inside the classroom or studio, so the teacher is clear and music sounds clean.',
+    doesNot: 'sound from the next room or your neighbours. Blocking that needs changes to walls, doors or ceilings.',
+  },
+  problemTitle: 'Hard walls, mirrors and floors make every lesson loud.',
   problems: [
-    'Students at the back struggle to hear the teacher clearly.',
-    'Teachers raise their voices all day and end up tired.',
-    'Group work quickly gets loud and hard to manage.',
-    'Halls and multipurpose rooms echo during talks and events.',
+    'Students at the back struggle to hear the teacher.',
+    'Teachers raise their voices all day and go home tired.',
+    'Music in dance and music rooms sounds harsh and boomy.',
+    'Group work and halls get loud very quickly.',
   ],
-  approachTitle: 'A treatment plan that fits how the school runs.',
+  approachTitle: 'How we fix your rooms, start to finish.',
   approach: [
-    { title: 'Review the rooms', copy: 'Look at the classrooms, tuition rooms or halls with the worst echo, and how each one is used.' },
-    { title: 'Design durable coverage', copy: 'Place wall or ceiling panels where they cut echo the most, in finishes that suit a busy learning space.' },
-    { title: 'Install around lessons', copy: 'Schedule work around timetables and school holidays, and phase multi-room rollouts.' },
+    { title: 'Look at your rooms', copy: 'Send photos or a short video. We look at the rooms with the worst echo and how you use each one.' },
+    { title: 'Tough panels in the right spots', copy: 'Wall or ceiling panels placed where they soak up the most echo, in finishes that suit a busy space.' },
+    { title: 'We install around lessons', copy: 'Our team works around your timetable or the school holidays, room by room if needed.' },
   ],
-  pricing: 'Classrooms, tuition rooms and learning spaces start from about S$1,000. Larger rooms or multi-room rollouts are quoted based on room count and treatment scope.',
-  proof: ['Classroom and hall treatment', 'Wall and ceiling options', 'Colour and finish options', 'Multi-room rollouts phased by priority'],
+  pricing: 'Classrooms, tuition rooms and music rooms start from about S$1,000. Dance studios, halls and multi-room projects are quoted on the number of rooms and their size.',
+  proof: ['Classrooms, music rooms and dance studios', 'Wall and ceiling options', 'Many colours and finishes', 'Several rooms done in stages'],
   faq: [
-    { q: 'Will panels stop noise from the next classroom?', a: 'No. Panels reduce echo inside the room, which makes speech clearer. Blocking sound between rooms needs changes to walls, doors or ceilings.' },
-    { q: 'Can you work during school holidays or after lessons?', a: 'Yes. Access timing and installation constraints are agreed when we scope the project.' },
-    { q: 'Can you treat several classrooms?', a: 'Yes. We can prioritise rooms and phase the rollout around budget and the school calendar.' },
-    { q: 'How long does installation take?', a: 'Most installs are completed in one to two days. Panels are made to order, with a standard lead time of 4 to 6 weeks.' },
+    { q: 'Will panels stop noise from the next room?', a: 'No. Panels soak up echo inside the room, which makes speech and music clearer. Blocking sound between rooms needs changes to walls, doors or ceilings.' },
+    { q: 'Can you work in the school holidays or after lessons?', a: 'Yes. We agree the install time with you when we quote.' },
+    { q: 'Can you do several rooms?', a: 'Yes. We can start with the worst rooms and do the rest in stages to suit your budget.' },
+    { q: 'How long does it take?', a: 'Panels are made to order, usually 4 to 6 weeks. Most installs take one to two days.' },
   ],
 }
 

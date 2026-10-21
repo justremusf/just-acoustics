@@ -36,7 +36,7 @@ Page views: GA4 uses its own `config` hit, plus enhanced-measurement history eve
 
 ### `source` values (contact clicks)
 
-`floating_button`, `mobile_bar`, `footer`, `contact_page`, `thank_you`, `lander_hero`, `lander_footer`, `church_lander`, `price_estimator`, `panel_calculator`, `product_calculator`, `inline_link` (anything else: blog, project, checkout help, order page, `/link`).
+`floating_button`, `mobile_bar`, `footer`, `contact_page`, `thank_you`, `lander_hero`, `lander_footer` (every ad lander, church included since 13 Oct 2026), `church_lander` (old church page, before 13 Oct 2026), `price_estimator`, `panel_calculator`, `product_calculator`, `inline_link` (anything else: blog, project, checkout help, order page, `/link`).
 
 Links rendered with `TrackedAnchor` or `WhatsAppLink` track themselves (`data-ja-tracked`). `ContactClickTracker` catches every other `wa.me` / `tel:` / `mailto:` link on the site. If an ancestor has `data-track-source`, that sets `source`. Each click fires exactly once.
 
@@ -44,7 +44,7 @@ Links rendered with `TrackedAnchor` or `WhatsAppLink` track themselves (`data-ja
 
 The message is built by `lib/whatsappContext.ts` (pure logic) and `hooks/useWhatsAppHref.ts`, and rendered through `components/analytics/WhatsAppLink.tsx`. It uses only what this session already knows (sessionStorage `ja_browsing_context_v1`):
 
-- **Space:** `/spaces/<slug>`, the ad landers (`/office-acoustic-treatment` → office, `/restaurant-echo-reduction` → restaurant, `/school-acoustic-treatment` → school, `/acoustic-panels-singapore` → home, `/church-acoustics` → church) and estimator picks (weighted ×2). The current page wins; otherwise the most-viewed space, with ties going to the most recent.
+- **Space:** `/spaces/<slug>`, the ad landers (`/studio-acoustic-treatment` → studio, `/office-acoustic-treatment` → office, `/church-acoustics` → church, `/school-acoustic-treatment` → school, `/acoustic-panels-singapore` → home, `/restaurant-echo-reduction` → restaurant) and estimator picks (weighted ×2). The current page wins; otherwise the most-viewed space, with ties going to the most recent.
 - **Estimate:** the last estimator result, e.g. "I saw the S$2,500–4,000 estimate for a medium room."
 - **Product:** the name, on that product's page only.
 - **Lead source block:** underneath the message: `Lead ref`, `Source` (utm source/medium, or google / cpc from a gclid, meta / paid social from an fbclid, a referring site, or direct), then `Campaign`, `Ad`, `Keyword` and `Landing page` when known.
