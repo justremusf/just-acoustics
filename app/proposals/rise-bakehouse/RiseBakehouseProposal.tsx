@@ -3,6 +3,7 @@
 import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { mediaUrl } from '@/lib/media'
 
 const proposal = '/proposals/rise-bakehouse/'
 const whatsapp = 'https://wa.me/6589301905?text=Hi%20Just%20Acoustics%2C%20I%20would%20like%20to%20proceed%20with%20the%20Rise%20Bakehouse%20acoustic%20proposal%20(QT-000329).'
@@ -106,7 +107,7 @@ export default function RiseBakehouseProposal() {
               <button onClick={() => setDetailsOpen(!detailsOpen)} aria-expanded={detailsOpen}>What is included and how payment works <span>{detailsOpen ? '−' : '+'}</span></button>
               <p>Includes supply, installation, suspended wire ceiling kit and a S$550 high-ceiling surcharge for mobile scaffolding. Quote validity: 30 days. Payment terms: 50% deposit to confirm, 50% balance on completion. Standard lead time: approximately 4 weeks from deposit confirmation.</p>
             </div>
-            <div className="rb-docs"><a className="rb-doc" href={`${proposal}quote-qt-000329.pdf`} target="_blank">Download quote PDF</a><a className="rb-doc" href={`${proposal}rise-bakehouse-acoustic-proposal.pdf`} target="_blank">Open full proposal PDF</a><a className="rb-doc" href={`${proposal}flexi-catalogue.pdf`} target="_blank">Flexi panel catalogue</a></div>
+            <div className="rb-docs"><a className="rb-doc" href={mediaUrl(`${proposal}quote-qt-000329.pdf`)} target="_blank">Download quote PDF</a><a className="rb-doc" href={mediaUrl(`${proposal}rise-bakehouse-acoustic-proposal.pdf`)} target="_blank">Open full proposal PDF</a><a className="rb-doc" href={mediaUrl(`${proposal}flexi-catalogue.pdf`)} target="_blank">Flexi panel catalogue</a></div>
           </div>
         </div>
       </section>
@@ -123,7 +124,7 @@ export default function RiseBakehouseProposal() {
 
       <div className="rb-sticky"><a className="rb-text-link" href="#quote">S$6,185</a><a className="rb-cta" href={whatsapp} target="_blank">Accept on WhatsApp →</a></div>
 
-      {videoOpen && <div className="rb-modal" role="dialog" aria-modal="true" aria-label="Rise Bakehouse walkthrough"><div className="rb-modal-inner"><button className="rb-close" onClick={() => setVideoOpen(false)} aria-label="Close video">×</button><video controls autoPlay playsInline poster={`${proposal}model-perspective.jpg`}><source src={`${proposal}site-walkthrough.mp4`} type="video/mp4" /></video></div></div>}
+      {videoOpen && <div className="rb-modal" role="dialog" aria-modal="true" aria-label="Rise Bakehouse walkthrough"><div className="rb-modal-inner"><button className="rb-close" onClick={() => setVideoOpen(false)} aria-label="Close video">×</button><video controls autoPlay playsInline poster={`${proposal}model-perspective.jpg`}><source src={mediaUrl(`${proposal}site-walkthrough.mp4`)} type="video/mp4" /></video></div></div>}
     </main>
   )
 }

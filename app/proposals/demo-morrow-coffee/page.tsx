@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import ProposalFaq from "./ProposalFaq";
 import "./proposal.css";
+import { mediaDownloadUrl, mediaUrl } from "@/lib/media";
 
 export const metadata: Metadata = {
   title: "Demo Proposal - Morrow Coffee Roastery",
@@ -147,7 +148,7 @@ export default function MorrowCoffeeDemoProposal() {
             preload="metadata"
             poster={`${asset}3d-render.jpg`}
           >
-            <source src={`${asset}walkthrough.mp4`} type="video/mp4" />
+            <source src={mediaUrl(`${asset}walkthrough.mp4`)} type="video/mp4" />
           </video>
           <div className="mc-video-copy">
             <div>
@@ -159,7 +160,7 @@ export default function MorrowCoffeeDemoProposal() {
                 interpret a technical drawing alone.
               </p>
             </div>
-            <a className="mc-btn" href={`${asset}walkthrough.mp4`} download>
+            <a className="mc-btn" href={mediaDownloadUrl(`${asset}walkthrough.mp4`)}>
               <Download aria-hidden="true" />
               Download walkthrough video
             </a>
@@ -334,7 +335,7 @@ export default function MorrowCoffeeDemoProposal() {
               <strong>S$5,493.60</strong>
             </div>
             <div className="mc-downloads">
-              <a className="mc-btn" href={`${asset}mock-quote.pdf`} download>
+              <a className="mc-btn" href={mediaDownloadUrl(`${asset}mock-quote.pdf`)}>
                 <FileText aria-hidden="true" />
                 Download quote PDF
               </a>
@@ -344,8 +345,7 @@ export default function MorrowCoffeeDemoProposal() {
               </a>
               <a
                 className="mc-btn alt"
-                href={`${asset}walkthrough.mp4`}
-                download
+                href={mediaDownloadUrl(`${asset}walkthrough.mp4`)}
               >
                 <Download aria-hidden="true" />
                 Download video
@@ -355,7 +355,7 @@ export default function MorrowCoffeeDemoProposal() {
           <div className="mc-pdf">
             <iframe
               title="Mock acoustic treatment quote"
-              src={`${asset}mock-quote.pdf#toolbar=0&navpanes=0`}
+              src={`${mediaUrl(`${asset}mock-quote.pdf`)}#toolbar=0&navpanes=0`}
             />
           </div>
         </div>
