@@ -8,7 +8,7 @@ import ShimmerButton from '@/components/ui/shimmer-button'
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon'
 
 // Pages that already put the form or payment front and centre.
-const HIDDEN_ON = ['/contact', '/checkout', '/thank-you', '/proposals']
+const HIDDEN_ON = ['/contact', '/checkout', '/thank-you']
 // Ad landing pages keep visitors on the page: jump to their own form instead of /contact.
 const LANDING_PAGES = ['/office-acoustic-treatment', '/restaurant-echo-reduction', '/school-acoustic-treatment', '/acoustic-panels-singapore']
 

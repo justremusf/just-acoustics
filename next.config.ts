@@ -12,7 +12,7 @@ const securityHeaders = [
       "font-src 'self' data: https://fonts.gstatic.com",
       "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://va.vercel-scripts.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.google.com https://www.google.com.sg https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://www.facebook.com https://connect.facebook.net https://cdn.sanity.io https://*.api.sanity.io https://tally.so https://*.clarity.ms https://analytics.google.com https://ad.doubleclick.net",
       "media-src 'self' blob: https://cdn.sanity.io",
-      "frame-src 'self' https://cdn.sanity.io https://tally.so https://www.googletagmanager.com https://td.doubleclick.net https://www.youtube.com https://www.youtube-nocookie.com https://www.facebook.com",
+      "frame-src 'self' https://tally.so https://www.googletagmanager.com https://td.doubleclick.net https://www.youtube.com https://www.youtube-nocookie.com https://www.facebook.com",
       "frame-ancestors 'self'",
       "form-action 'self' https://tally.so https://www.facebook.com",
       "base-uri 'self'",
