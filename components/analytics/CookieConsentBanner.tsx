@@ -45,7 +45,7 @@ export default function CookieConsentBanner() {
     }
   }, [mode, pathname])
 
-  if (mode === 'hidden' || pathname.startsWith('/proposals/')) return null
+  if (mode === 'hidden') return null
 
   const choose = (consent: 'analytics_only' | 'all') => {
     saveAnalyticsConsent(consent)

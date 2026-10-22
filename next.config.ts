@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import mediaCdn from './lib/mediaCdn.json'
 
 const securityHeaders = [
   {
@@ -10,6 +11,7 @@ const securityHeaders = [
       "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://www.googletagmanager.com https://*.google-analytics.com https://www.google-analytics.com https://www.google.com https://www.google.com.sg https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://ad.doubleclick.net",
       "font-src 'self' data: https://fonts.gstatic.com",
       "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://va.vercel-scripts.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.google.com https://www.google.com.sg https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://www.facebook.com https://connect.facebook.net https://cdn.sanity.io https://*.api.sanity.io https://tally.so https://*.clarity.ms https://analytics.google.com https://ad.doubleclick.net",
+      "media-src 'self' blob: https://cdn.sanity.io",
       "frame-src 'self' https://tally.so https://www.googletagmanager.com https://td.doubleclick.net https://www.youtube.com https://www.youtube-nocookie.com https://www.facebook.com",
       "frame-ancestors 'self'",
       "form-action 'self' https://tally.so https://www.facebook.com",
@@ -46,6 +48,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Videos and PDFs moved to Sanity's CDN; keep links already sent to clients working.
+      ...Object.entries(mediaCdn).map(([source, destination]) => ({ source, destination, permanent: true })),
       // Retired test landing pages.
       { source: '/studio-lander', destination: '/spaces/studios', permanent: true },
       { source: '/studio-landing-page', destination: '/spaces/studios', permanent: true },
