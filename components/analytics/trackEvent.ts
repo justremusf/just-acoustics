@@ -43,7 +43,10 @@ const META_STANDARD_EVENTS: Partial<Record<string, string>> = {
   begin_checkout: 'InitiateCheckout',
   purchase: 'Purchase',
 }
-const META_CUSTOM_EVENTS = new Set(['price_estimate_view', 'price_estimate_cta_click', 'calculator_used', 'vsl_space_type_selected'])
+const META_CUSTOM_EVENTS = new Set([
+  'price_estimate_view', 'price_estimate_cta_click', 'calculator_used', 'vsl_space_type_selected',
+  'package_view', 'package_booking_request',
+])
 
 // Vercel custom events take flat primitive props, and only a handful of them are useful in its dashboard.
 const VERCEL_PROPS = ['source', 'method', 'space', 'size', 'cta', 'calculator', 'product_slug', 'value', 'currency', 'form_name', 'page_path']

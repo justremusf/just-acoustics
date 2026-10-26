@@ -10,6 +10,8 @@ const ALLOWED_EVENTS = new Set([
   'blog_view', 'pricing_view', 'landing_page_view', 'page_engaged', 'page_deep_read', 'page_cta_clicked', 'pricing_range_opened',
   // Keep in step with docs/TRACKING.md: events not listed here are rejected with 400.
   'price_estimate_view', 'price_estimate_cta_click', 'calculator_used', 'purchase', 'vsl_space_type_selected',
+  // Studio in a Box (draft, preview only until go-live)
+  'package_view', 'package_configure', 'package_option_selected', 'package_booking_request',
 ])
 
 function readString(value: unknown, length: number) {

@@ -31,12 +31,16 @@ Ad consent comes from `readAnalyticsConsent() === 'all'` (`lib/analyticsConsent.
 | `begin_checkout` | `/checkout` with a non-empty cart, once per visit | `value`, `currency`, `items[]` | ✓ | – | `InitiateCheckout` | ✓ | ✓ |
 | `purchase` | Only once the PayNow transfer is matched and the order page shows "paid" (`/orders/<ref>`), once per reference per device. Unpaid orders never count. | `transaction_id`=order ref, `value`=total incl. delivery, `shipping`, `items[]` | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_PURCHASE` | `Purchase` | ✓ | ✓ |
 | `vsl_space_type_selected` | Interactive video space picker | `space_type` | ✓ | – | custom | ✓ | ✓ |
+| `package_view` | Studio in a Box pack page load (`/studio-in-a-box/<pack>`) | `product_slug`=pack id, `product_name`, `value`=pack price, `currency` | ✓ | – | custom | ✓ | ✓ |
+| `package_configure` | Configurator step opened | `product_slug`, `step` (1–5), `step_name` | ✓ | – | – | ✓ | ✓ |
+| `package_option_selected` | Configurator choice (room type, size, colour, extras, property, install date/time) | `product_slug`, `option`, `option_value` | ✓ | – | – | ✓ | ✓ |
+| `package_booking_request` | "Request booking" accepted by `/api/studio-box/request` (no payment taken) | `product_slug`, `value`=total, `currency`, `transaction_id`=SIB reference, `property`, `install_date`, attribution | ✓ | – (not a conversion until Remus decides) | custom (eventID = reference) | ✓ | ✓ |
 
 Page views: GA4 uses its own `config` hit, plus enhanced-measurement history events for client-side navigation. Meta gets `PageView` on load and on every route change (`FirstPartyInsights`). Vercel tracks routes automatically. First-party insights records `page_view`, `pricing_view`, `blog_view`, `landing_page_view`, `page_engaged`, `page_deep_read`, `page_cta_clicked` and `pricing_range_opened`; these go to insights only.
 
 ### `source` values (contact clicks)
 
-`floating_button`, `mobile_bar`, `footer`, `contact_page`, `thank_you`, `lander_hero`, `lander_footer` (every ad lander, church included since 13 Oct 2026), `church_lander` (old church page, before 13 Oct 2026), `price_estimator`, `panel_calculator`, `product_calculator`, `inline_link` (anything else: blog, project, checkout help, order page, `/link`).
+`floating_button`, `mobile_bar`, `footer`, `contact_page`, `thank_you`, `lander_hero`, `lander_footer` (every ad lander, church included since 13 Oct 2026), `church_lander` (old church page, before 13 Oct 2026), `price_estimator`, `panel_calculator`, `product_calculator`, `studio_box` (the "Send room photos on WhatsApp" button after a Studio in a Box request), `inline_link` (anything else: blog, project, checkout help, order page, `/link`).
 
 Links rendered with `TrackedAnchor` or `WhatsAppLink` track themselves (`data-ja-tracked`). `ContactClickTracker` catches every other `wa.me` / `tel:` / `mailto:` link on the site. If an ancestor has `data-track-source`, that sets `source`. Each click fires exactly once.
 
@@ -73,3 +77,7 @@ The server HTML always has the generic text (or the lander's own text). The cont
 4. **Meta Events Manager:** confirm the pixel in `NEXT_PUBLIC_META_PIXEL_ID` receives `PageView`, `Lead`, `Contact`, `ViewContent`, `AddToCart`, `InitiateCheckout` and `Purchase`. Create custom conversions from `Lead` (form) and `Contact` (WhatsApp/phone) for ad optimisation. The custom events `price_estimate_view` and `calculator_used` are good audience seeds.
 5. **Tally → form → Hidden fields:** add `space`, `size`, `lead_ref`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `campaign_id`, `ad_group_id`, `ad_id`, `landing_page`, `referrer`, `consent_state`. The names must match exactly. The webhook (`app/api/tally-webhook`) forwards them to Make as `attribution.*`.
 6. **WhatsApp Business:** chats start with the contextual message and end with the usual "Lead ref / Source / Campaign / Keyword / Landing page" block.
+
+## Studio in a Box (draft, branch `studio-in-a-box`)
+
+The pack pages and configurator only render on preview/local builds unless `STUDIO_BOX_ENABLED=1`. The four `package_*` events are custom events only: no Google Ads label, no Meta standard event and no Clarity conversion tag, so production conversion counts are unchanged. If Remus wants booking requests to count as leads, map `package_booking_request` to a Google Ads label and Meta `Lead` in `trackEvent.ts` at go-live.
