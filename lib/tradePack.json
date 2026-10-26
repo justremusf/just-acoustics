@@ -1,0 +1,493 @@
+{
+ "CONTACT": {
+  "whatsapp": "+65 8930 1905",
+  "whatsapp_url": "https://wa.me/6589301905",
+  "email": "info@justacoustics.co",
+  "web": "justacoustics.co",
+  "trade_url": "https://justacoustics.co/trade"
+ },
+ "INTRO": {
+  "title": "Acoustic panels for interior designers and architects",
+  "lede": "Just Acoustics designs, supplies and installs fabric wrapped acoustic panels across Singapore. Send us a plan and we send back a spec sheet, a render and a trade quote, usually within the hour.",
+  "who": [
+   "We are a Singapore acoustic treatment company. We plan the layout, supply the panels and install them with our own team, so you deal with one party from drawing to handover.",
+   "Our work covers offices, restaurants and cafés, studios, schools, churches, clinics and homes. Most rooms are installed in a few hours to two days, and we can work after hours or on weekends around your site programme.",
+   "We do acoustic treatment: making a room sound clearer and calmer by controlling echo. We are not a soundproofing contractor, and we will tell you early if a brief really needs sound isolation instead."
+  ],
+  "for_designers": [
+   [
+    "A plan in, a spec out",
+    "Send a floor plan, elevation or a few photos. We return a panel layout, a render in your colours, a spec sheet and a trade quote."
+   ],
+   [
+    "Your brand on it",
+    "Proposals can carry your logo, with our name kept small, so you present one scheme to your client."
+   ],
+   [
+    "Real numbers",
+    "Every proposal states the room's estimated RT60 before and after treatment, so you can show the client what changes."
+   ],
+   [
+    "We install",
+    "Our crew installs and cleans up. You get one point of contact and photos at handover."
+   ]
+  ]
+ },
+ "PRODUCTS": [
+  {
+   "id": "flexi-wall",
+   "name": "Flexi™ acoustic wall panel",
+   "short": "Fabric wrapped panel, bevel edged or straight edged, for walls",
+   "image": "flexi-1200x600.jpg",
+   "sizes": [
+    "600 × 600 mm",
+    "1200 × 600 mm (standard)",
+    "1800 × 600 mm (tall)",
+    "Custom sizes on request"
+   ],
+   "thickness": "25 mm or 50 mm",
+   "acoustic": "NRC 1.00 at 50 mm, NRC 0.80 at 25 mm (supplier data, lab report [check]). Weighted αw 0.90 (EN ISO 354 / EN ISO 11654, core test, SGS report)",
+   "core": "High-density semi-rigid glass fibre, 96 kg/m³, resin-hardened edges, glass tissue micro-mesh backing",
+   "face": "Acoustically transparent polyester fabric, 39 standard colours; or paintable white glass fibre tissue face",
+   "edges": "Bevel edged (standard) or straight edged",
+   "weight": "About 4 kg for 1200 × 600 × 50 mm",
+   "fixing": "Impaling clips and adhesive (no drilling), or mechanical clips on board and masonry",
+   "use": "Meeting rooms, offices, restaurants, classrooms, studios, homes"
+  },
+  {
+   "id": "flexi-ceiling",
+   "name": "Flexi™ ceiling panel and cloud",
+   "short": "Fabric wrapped panel for ceilings, flush fixed or suspended as a cloud",
+   "image": "fix-cloud.jpg",
+   "sizes": [
+    "1200 × 600 mm (standard)",
+    "Custom sizes on request"
+   ],
+   "thickness": "50 mm",
+   "acoustic": "NRC 1.00 at 50 mm (supplier data, lab report [check]). Suspended clouds absorb on both faces",
+   "core": "As the wall panel: 96 kg/m³ glass fibre core, resin-hardened edges",
+   "face": "Acoustically transparent polyester fabric, 39 standard colours",
+   "edges": "Bevel edged (standard) or straight edged",
+   "weight": "About 4 kg per 1200 × 600 panel, about 10 N per fixing point on four points",
+   "fixing": "Suspended about 100 mm below the soffit on four spring and wire sets, or fixed flush with helical anchors; hook-on to sloped ceilings",
+   "use": "Open offices, restaurants, studios, pilates and dance studios, halls"
+  },
+  {
+   "id": "flexi-bass",
+   "name": "Flexi™ 100 mm bass panel",
+   "short": "Double-depth fabric wrapped panel for low-frequency control",
+   "image": "ref-studio.jpg",
+   "sizes": [
+    "1200 × 600 mm"
+   ],
+   "thickness": "100 mm",
+   "acoustic": "No published test data yet [check]. We count it as a 50 mm panel in RT60 estimates, so our figures are conservative",
+   "core": "Glass fibre core, 100 mm [check build-up with supplier]",
+   "face": "Acoustically transparent polyester fabric, 39 standard colours",
+   "edges": "Bevel edged or straight edged",
+   "weight": "About 8 kg [check]",
+   "fixing": "Wall, wall-to-ceiling corner, or flush to ceiling",
+   "use": "Home cinemas, music rooms, studios, living rooms with boomy bass"
+  },
+  {
+   "id": "fabric-system",
+   "name": "Flexi™ fabric wall and ceiling system",
+   "short": "Stretched fabric over an absorbent infill, wall to wall, on a perimeter track",
+   "image": "case-meeting.jpg",
+   "sizes": [
+    "Made to the wall or ceiling, priced per m²"
+   ],
+   "thickness": "25 mm",
+   "acoustic": "NRC 0.80 to 0.90 (supplier data [check]; some past quotes state 0.75)",
+   "core": "Absorbent infill behind a perimeter track [check infill spec]",
+   "face": "Acoustically transparent fabric from the system catalogue [check range]",
+   "edges": "Concealed track, no visible panel joints",
+   "weight": "[check]",
+   "fixing": "Track fixed to existing partition or concrete wall",
+   "use": "Full feature walls, boardrooms, meeting rooms, ceilings where a seamless look matters"
+  },
+  {
+   "id": "melamine-ceiling",
+   "name": "Melamine foam ceiling panel",
+   "short": "Lightweight white panel fixed flush to the ceiling",
+   "image": "fix-flush.jpg",
+   "sizes": [
+    "1200 × 600 mm"
+   ],
+   "thickness": "50 mm",
+   "acoustic": "No verified test data on file [check]. Counted conservatively in our RT60 estimates",
+   "core": "Melamine foam [check density and fire classification with supplier]",
+   "face": "White",
+   "edges": "[check]",
+   "weight": "Very light [check]",
+   "fixing": "Fixed flush to the ceiling",
+   "use": "Homes with white ceilings: living rooms, corridors, piano and music rooms"
+  },
+  {
+   "id": "custom-print",
+   "name": "Custom print acoustic panel",
+   "short": "Your artwork, logo or photo printed on an acoustic panel",
+   "image": "ref-feature.jpg",
+   "sizes": [
+    "600 × 600, 1200 × 600, 1800 × 600 mm",
+    "Custom sizes after artwork review"
+   ],
+   "thickness": "25 mm or 50 mm",
+   "acoustic": "Printed synthetic face over the Flexi core. Absorption of the printed face [check]",
+   "core": "High-density absorptive core, as Flexi",
+   "face": "Custom-printed synthetic face; wipeable, more moisture resistant than fabric, not waterproof",
+   "edges": "[check]",
+   "weight": "As Flexi of the same size",
+   "fixing": "As the Flexi wall panel",
+   "use": "Brand walls in offices, artwork walls in restaurants and hotels"
+  }
+ ],
+ "CERTS": [
+  [
+   "Reaction to fire (EN 13501-1:2007+A1:2009)",
+   "Class A1, membrane components",
+   "SGS report XMIN180901795CCM, 29 Oct 2018"
+  ],
+  [
+   "Formaldehyde (EN 717-1:2004)",
+   "Not detected",
+   "SGS report XMIN180901795CCM"
+  ],
+  [
+   "Asbestos (NIOSH 9002 / 9000)",
+   "Negative",
+   "SGS report XMIN180901795CCM"
+  ],
+  [
+   "SVHC screening",
+   "Pass",
+   "SGS report XMIN180901795CCM"
+  ],
+  [
+   "Sound absorption (EN ISO 354 / EN ISO 11654)",
+   "αw 0.90",
+   "SGS report XMIN180901795CCM (test by Tsinghua University building environment lab)"
+  ],
+  [
+   "Thermal conductivity (EN 12664)",
+   "0.033 W/(m·K)",
+   "SGS report XMIN180901795CCM"
+  ],
+  [
+   "Fabric: UK Furniture and Furnishings (Fire) (Safety) Regulations 1988, Sch. 4 Part I and Sch. 5 Part I",
+   "Pass",
+   "SGS report SDHL1803005038FB, 30 Mar 2018"
+  ],
+  [
+   "NRC 1.00 at 50 mm (ASTM C423)",
+   "Supplier data",
+   "[check] lab report not on file"
+  ],
+  [
+   "BS 476 Part 4 and ASTM E136 non-combustibility",
+   "Stated in supplier data",
+   "[check] report not on file"
+  ],
+  [
+   "Singapore Green Label or SGBC certification",
+   "None on file",
+   "[check]"
+  ]
+ ],
+ "CERT_NOTE": "Reports cover the Flexi™ core and fabric and are available on request. Fire-safety acceptance of an installation rests with the project's QP and the relevant authority.",
+ "COLOURS": {
+  "count": 39,
+  "names": [
+   "Beige White 01",
+   "Stone Grey 02",
+   "Sand 03",
+   "Ash 04",
+   "Pearl 05",
+   "Silver Mist 06",
+   "Frost 07",
+   "Dove Grey 08",
+   "Cement 09",
+   "Rust 10",
+   "Moss 11",
+   "Olive 12",
+   "Yellow 13",
+   "Amber 14",
+   "Walnut 15",
+   "Terracotta 16",
+   "Crimson 17",
+   "Magenta 18",
+   "Burgundy 19",
+   "Plum 20",
+   "Mint 21",
+   "Sky Blue 22",
+   "Aqua 23",
+   "Charcoal 24",
+   "Slate 25",
+   "Grey Linen 26",
+   "Powder Blue 27",
+   "Ocean Blue 28",
+   "Blue 29",
+   "Dark Blue 30",
+   "Navy 31",
+   "Light grey 32",
+   "Steel 33",
+   "Blue grey 34",
+   "Anchor Grey 35",
+   "Onyx 36",
+   "Navy Grey 37",
+   "Dark Grey 38",
+   "Pitch Black 39"
+  ],
+  "note": "Colours are dyed fabric, so screens and print will differ. Ask for the physical swatch card before you specify. A paintable white face is available when you need an exact paint match."
+ },
+ "EDGES": [
+  [
+   "Fabric wrapped panel, bevel edged",
+   "The standard Flexi™ edge. A small chamfer softens the panel outline and reads well in grids with even reveals."
+  ],
+  [
+   "Fabric wrapped panel, straight edged",
+   "A square, crisp edge for tight-butted runs and full-wall layouts."
+  ]
+ ],
+ "FIXING": [
+  [
+   "Wall, no drilling",
+   "Impaling clips and adhesive. Clean and quick on painted plaster and board.",
+   "fix-wall.jpg"
+  ],
+  [
+   "Wall, mechanical",
+   "Clips screwed to board or masonry where adhesive is not suitable.",
+   null
+  ],
+  [
+   "Ceiling, flush",
+   "Fixed tight to the soffit with helical anchors, four per panel.",
+   "fix-flush.jpg"
+  ],
+  [
+   "Ceiling, suspended cloud",
+   "Hung about 100 mm below the soffit on four spring and wire sets, one per corner.",
+   "fix-cloud.jpg"
+  ],
+  [
+   "Fabric system",
+   "Perimeter track on the wall or ceiling, fabric stretched over the infill.",
+   null
+  ]
+ ],
+ "FIXING_NOTES": [
+  "Panels go on solid walls and ceilings only. We do not fix to glass, windows or demountable partitions.",
+  "Ceilings above 3 m need mobile scaffolding. We plan this in the quote.",
+  "We keep clear of sprinklers, detectors, diffusers and lights, and model every fixture in the 3D layout first."
+ ],
+ "LEAD_TIMES": [
+  [
+   "Proposal",
+   "Spec sheet, render and trade quote within an hour of a usable plan in working hours."
+  ],
+  [
+   "Production",
+   "About 15 working days after the deposit. Nothing is cut before the deposit is received."
+  ],
+  [
+   "Shipping",
+   "Sea freight 14 to 18 days, or express air freight in a few days at extra cost."
+  ],
+  [
+   "Install",
+   "A few hours to two days on site, after hours or weekends if needed."
+  ],
+  [
+   "Typical total",
+   "About 4 to 6 weeks from deposit to installed. We confirm a date when you order."
+  ]
+ ],
+ "SPACES": [
+  {
+   "space": "Meeting rooms",
+   "target": "0.4 to 0.5 s",
+   "src": "ja"
+  },
+  {
+   "space": "Classrooms and training rooms",
+   "target": "0.4 to 0.6 s",
+   "src": "ja"
+  },
+  {
+   "space": "Restaurants and cafés",
+   "target": "0.5 to 0.7 s",
+   "src": "ja"
+  },
+  {
+   "space": "Churches and halls",
+   "target": "0.8 to 1.2 s",
+   "src": "ja"
+  },
+  {
+   "space": "Open offices",
+   "target": "0.5 to 0.7 s [check]",
+   "src": "guide"
+  },
+  {
+   "space": "Clinics and consult rooms",
+   "target": "0.4 to 0.6 s [check]",
+   "src": "guide"
+  },
+  {
+   "space": "Pilates, dance and fitness studios",
+   "target": "0.6 to 0.9 s [check]",
+   "src": "guide"
+  },
+  {
+   "space": "Living rooms and home cinemas",
+   "target": "0.3 to 0.5 s [check]",
+   "src": "guide"
+  },
+  {
+   "space": "Home and recording studios",
+   "target": "0.2 to 0.4 s [check]",
+   "src": "guide"
+  }
+ ],
+ "SPACE_TIPS": [
+  [
+   "Meeting rooms",
+   "Treat the two long walls at seated head height, staggered so panels do not face each other. Add a ceiling cloud over the table in rooms over 3 m high."
+  ],
+  [
+   "Restaurants and cafés",
+   "Most of the noise comes off hard ceilings. Suspended clouds over the dining area do the heavy lifting; wall panels above banquettes add warmth."
+  ],
+  [
+   "Offices",
+   "Ceiling clouds over desks first, then wall panels behind call areas and on glass-facing walls opposite."
+  ],
+  [
+   "Homes",
+   "Keep it calm: tall panels in a soft colour on one or two walls, and flush white ceiling panels where the ceiling is bare."
+  ],
+  [
+   "Studios",
+   "Treat first reflection points, the wall behind the listener and the corners. Use 100 mm panels for bass."
+  ]
+ ],
+ "RT60_EXAMPLES": [
+  [
+   "Small meeting room, 27 m³",
+   "12 wall panels",
+   1.18,
+   0.44
+  ],
+  [
+   "Piano teaching studio, 73 m³",
+   "28 panels",
+   1.1,
+   0.43
+  ],
+  [
+   "Clinic consult rooms, about 12 m³ each",
+   "6 panels per room",
+   0.68,
+   0.33
+  ],
+  [
+   "Home music room, 82 m³",
+   "15 panels incl. flush ceiling",
+   1.22,
+   0.71
+  ],
+  [
+   "Training room, 303 m³",
+   "41 panels",
+   2.07,
+   0.97
+  ],
+  [
+   "Church hall, 1,580 m³, phase 1",
+   "34 panels",
+   1.87,
+   1.46
+  ]
+ ],
+ "CASES": [
+  {
+   "title": "Restaurant dining room",
+   "client": "Acqua e Farina",
+   "image": "case-restaurant.jpg",
+   "brief": "A busy Italian dining room with a hard ceiling and long banquette walls. Conversations were getting lost by mid-service.",
+   "work": "9 fabric wrapped panels, bevel edged, 50 mm, made to fit above the banquettes: custom widths from 1,204 to 1,748 mm at 510 mm high. A top-up to an earlier ceiling treatment.",
+   "rt60": "[check] not modelled",
+   "src": "INV-000213"
+  },
+  {
+   "title": "Corporate meeting rooms",
+   "client": "Amazon Singapore office",
+   "image": "case-meeting.jpg",
+   "brief": "Video-call rooms with glass, hard walls and a lot of speech. Calls sounded hollow at both ends.",
+   "work": "30 m² of the Flexi™ fabric wall system, 25 mm, on a perimeter track, in fabric colour Champagne, wall to wall behind the screens.",
+   "rt60": "[check] not modelled",
+   "src": "INV-000227"
+  },
+  {
+   "title": "New office, two rooms",
+   "client": "Hoogwegt",
+   "image": "case-office.jpg",
+   "brief": "A fresh fit-out with bare white walls and a glass front. The meeting rooms rang.",
+   "work": "14 Flexi™ fabric wrapped panels, bevel edged, 1200 × 600 × 50 mm, in grey, mounted vertically on the solid walls.",
+   "rt60": "[check] not modelled",
+   "src": "INV-000206"
+  },
+  {
+   "title": "Reformer pilates studio",
+   "client": "Boutique pilates studio",
+   "image": "case-pilates.jpg",
+   "brief": "A high, hard ceiling over a full reformer floor. Instructors had to shout over the music.",
+   "work": "22 Flexi™ ceiling panels, 1200 × 600 × 50 mm, in a colour chosen by the client, set in a grid with the lighting, above 3 m.",
+   "rt60": "[check] not modelled",
+   "src": "INV-000212"
+  },
+  {
+   "title": "Grand piano living room",
+   "client": "Residential",
+   "image": "case-home.jpg",
+   "brief": "A grand piano in an open living and dining room. Notes rang on and the room felt harsh.",
+   "work": "6 white ceiling panels fixed flush (2 at 1000 × 1000, 4 at 1200 × 1000 × 50 mm) and 4 wall panels in Beige 01 (1 at 1600 × 1000, 3 at 1000 × 700 × 50 mm).",
+   "rt60": "[check] not modelled",
+   "src": "INV-000208"
+  }
+ ],
+ "TRADE_STEPS": [
+  [
+   "Send the plan",
+   "Upload a floor plan, RCP or elevation (PDF, DWG or a photo), with ceiling height, finishes and the client's brief. Photos of the site help."
+  ],
+  [
+   "Within the hour",
+   "We send back a panel layout, a render in your chosen colours, a one-page spec sheet and a trade quote with the RT60 before and after."
+  ],
+  [
+   "Present it your way",
+   "Choose our branding or yours. White-label proposals carry your logo, with Just Acoustics kept small."
+  ],
+  [
+   "We build it",
+   "On your go-ahead and the deposit we order, confirm the install date and install. You get photos at handover."
+  ]
+ ],
+ "DOWNLOADS": [
+  [
+   "Spec sheets",
+   "One page per product, PDF"
+  ],
+  [
+   "CAD blocks",
+   "Standard panel sizes as DXF and SVG, elevation and section, 1:1 in mm"
+  ],
+  [
+   "Colour chart",
+   "39 standard Flexi™ fabric colours"
+  ]
+ ]
+}
