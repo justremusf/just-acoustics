@@ -84,6 +84,13 @@ const nextConfig: NextConfig = {
       { source: '/blog/wall-panels-vs-ceiling-panels-studio-acoustic-treatment', destination: '/blog/ceiling-panels-vs-wall-panels-acoustic-treatment-singapore', permanent: true },
     ]
   },
+  async rewrites() {
+    return [
+      // Static tool pages in public/tools (Singapore sound index).
+      { source: '/tools/room-check', destination: '/tools/room-check/index.html' },
+      { source: '/tools/noise-index', destination: '/tools/noise-index/index.html' },
+    ]
+  },
   async headers() {
     return [
       {
@@ -107,6 +114,15 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*',
         headers: securityHeaders,
+      },
+      // Room check needs the microphone (and optional location). Later entries override the
+      // same header key above. Kept out of search until the owner decides to launch.
+      {
+        source: '/tools/:path*',
+        headers: [
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=(self), payment=()' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
       },
     ]
   },

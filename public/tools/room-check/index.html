@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Room Check | Just Acoustics</title>
+<meta name="description" content="Measure how loud and how echoey a room is with your phone: approximate dBA and reverberation time (RT60) from a hand clap.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tools/ja-tools.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="top">
+    <a href="/"><img src="/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg" alt="Just Acoustics"></a>
+    <a class="small" href="/tools/noise-index">Sound index</a>
+  </div>
+
+  <h1>How does this room sound?</h1>
+  <p class="lead">Use your phone to measure how loud a space is and how long sound hangs in the air. It takes about two minutes.</p>
+
+  <details class="glass" id="guide">
+    <summary>How to measure</summary>
+    <ol>
+      <li>Stand roughly in the middle of the room, away from walls. Hold the phone at chest height with the bottom microphone uncovered.</li>
+      <li>Fill in the venue details and pick how busy it is right now.</li>
+      <li>Noise level: keep still and quiet for 30 seconds while the phone listens. Do not talk near the phone.</li>
+      <li>Echo: tap Record, wait for "Clap now", then give one hard clap with cupped hands (or pop a balloon), about an arm's length from the phone. Stay silent until it finishes. Do this three times.</li>
+      <li>Echo readings work best when the room is fairly quiet, such as before opening or in a lull.</li>
+      <li>Save the result. Nothing is uploaded: it stays on this phone until you export or share it.</li>
+    </ol>
+    <p class="note">Phone microphones are not sound level meters. Levels are approximate (often within 5 dB, sometimes worse) unless you set a calibration offset against a real meter. Echo time (RT60) does not depend on calibration and is usually much more reliable.</p>
+  </details>
+
+  <!-- 1. Venue -->
+  <section class="glass">
+    <div class="step-head"><span class="step-no">1</span><h2>The space</h2></div>
+    <label class="f" for="venue">Venue or room name</label>
+    <input id="venue" type="text" placeholder="e.g. Level 2 dining room" autocomplete="off">
+    <label class="f" for="space">Type of space</label>
+    <select id="space"></select>
+    <label class="f">How busy is it right now?</label>
+    <div class="seg" id="occ" role="group" aria-label="Occupancy">
+      <button type="button" data-v="empty" aria-pressed="true">Empty</button>
+      <button type="button" data-v="half" aria-pressed="false">Half full</button>
+      <button type="button" data-v="busy" aria-pressed="false">Busy</button>
+    </div>
+    <label class="f">Location (optional)</label>
+    <div class="row">
+      <button type="button" class="btn quiet" id="locBtn">Add my location</button>
+    </div>
+    <p class="note" id="locNote">Only used to place the venue on the map. Skip it for homes.</p>
+    <label class="f" for="notes">Notes (optional)</label>
+    <textarea id="notes" placeholder="Ceiling height, music playing, hard floors..."></textarea>
+  </section>
+
+  <!-- 2. Level -->
+  <section class="glass">
+    <div class="step-head"><span class="step-no">2</span><h2>Noise level</h2></div>
+    <div class="big" id="lvl">--<small>dBA</small></div>
+    <p class="approx" id="lvlNote">approx. Tap start and keep quiet.</p>
+    <div class="bar"><i id="lvlBar"></i></div>
+    <div class="row">
+      <div class="seg" id="dur" role="group" aria-label="Duration" style="flex:0 0 150px">
+        <button type="button" data-v="30" aria-pressed="true">30 s</button>
+        <button type="button" data-v="60" aria-pressed="false">60 s</button>
+      </div>
+      <button type="button" class="btn" id="lvlBtn">Start</button>
+    </div>
+    <div class="stats hidden" id="lvlStats"></div>
+    <div id="lvlMsg"></div>
+  </section>
+
+  <!-- 3. Echo -->
+  <section class="glass">
+    <div class="step-head"><span class="step-no">3</span><h2>Echo (RT60)</h2></div>
+    <div class="big" id="rt">--<small>s</small></div>
+    <p class="approx" id="rtNote">Time for a clap to fade by 60 dB. Aim for three good claps.</p>
+    <button type="button" class="btn" id="clapBtn" style="margin-top:14px">Record a clap</button>
+    <div id="clapMsg"></div>
+    <ul class="claps" id="clapList"></ul>
+    <button type="button" class="link hidden" id="clapReset" style="margin-top:10px">Clear claps</button>
+  </section>
+
+  <!-- 4. Result -->
+  <section class="glass">
+    <div class="step-head"><span class="step-no">4</span><h2>Result</h2></div>
+    <div id="result"><p class="note">Measure the noise level and at least one clap to see how this space compares with a comfortable target.</p></div>
+    <label class="f" style="display:flex;gap:10px;align-items:flex-start;font-weight:500">
+      <input type="checkbox" id="consent" style="margin-top:5px">
+      <span>The venue is happy to be listed on the public Singapore sound index. Leave this unticked unless the venue owner or manager agreed.</span>
+    </label>
+    <div class="row" style="margin-top:16px">
+      <button type="button" class="btn" id="saveBtn" disabled>Save on this phone</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button type="button" class="btn quiet" id="shareBtn" disabled>Share or export</button>
+    </div>
+    <div id="saveMsg"></div>
+  </section>
+
+  <!-- Saved -->
+  <section class="glass">
+    <div class="step-head"><h2>Saved on this phone</h2></div>
+    <ul class="claps" id="savedList"></ul>
+    <div class="row" style="margin-top:12px"><button type="button" class="btn quiet" id="exportAll">Export all as a file</button></div>
+  </section>
+
+  <details class="glass">
+    <summary>Calibration</summary>
+    <p class="note">Levels are shown as the phone's digital level plus an offset. The default (+120 dB) is a typical value for phones with audio processing switched off; individual phones vary. If you have a sound level meter, run a 30 second measurement next to it and type its reading below.</p>
+    <label class="f" for="cal">Calibration offset (dB)</label>
+    <input id="cal" type="number" step="0.5" inputmode="decimal">
+    <label class="f" for="ref">Or: reference meter reading for the last measurement (dBA)</label>
+    <div class="row"><input id="ref" type="number" step="0.1" inputmode="decimal" placeholder="e.g. 58.4"><button type="button" class="btn quiet" id="refBtn" style="flex:0 0 120px">Set</button></div>
+    <p class="note" id="calNote"></p>
+  </details>
+
+  <p class="foot">Readings are estimates from a phone microphone for guidance, not a certified acoustic survey. <a href="/contact">Ask Just Acoustics</a> for a proper assessment.</p>
+</main>
+
+<script src="/tools/room-check/dsp.js"></script>
+<script>
+(function () {
+  'use strict'
+  const $ = (id) => document.getElementById(id)
+  const D = window.JADSP
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v) } catch (e) { return d } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true } catch (e) { return false } },
+  }
+  const DEFAULT_CAL = 120
+  const state = {
+    occupancy: 'empty', duration: 30, loc: null,
+    ambient: null, claps: [], cal: store.get('ja-rc-cal', DEFAULT_CAL), calibrated: store.get('ja-rc-calibrated', false),
+    lastDbfs: null, ctx: null, stream: null, node: null, sink: null, busy: false,
+  }
+
+  // ---------- form ----------
+  for (const [k, t] of Object.entries(D.TARGETS)) {
+    const o = document.createElement('option'); o.value = k; o.textContent = t.label; $('space').appendChild(o)
+  }
+  $('space').value = store.get('ja-rc-space', 'cafe')
+  $('space').addEventListener('change', () => { store.set('ja-rc-space', $('space').value); renderResult() })
+  function segment(id, key, cast) {
+    $(id).addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return
+      for (const x of $(id).querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))
+      state[key] = cast ? cast(b.dataset.v) : b.dataset.v
+    })
+  }
+  segment('occ', 'occupancy'); segment('dur', 'duration', Number)
+  $('cal').value = state.cal
+  $('cal').addEventListener('change', () => { const v = parseFloat($('cal').value); if (isFinite(v)) { setCal(v, true) } })
+  $('refBtn').addEventListener('click', () => {
+    const r = parseFloat($('ref').value)
+    if (!isFinite(r) || state.lastDbfs == null) { $('calNote').textContent = 'Run a noise measurement first, then enter the meter reading.'; return }
+    setCal(Math.round((r - state.lastDbfs) * 10) / 10, true)
+  })
+  function setCal(v, user) {
+    state.cal = v; state.calibrated = !!user
+    store.set('ja-rc-cal', v); store.set('ja-rc-calibrated', state.calibrated)
+    $('cal').value = v
+    $('calNote').textContent = state.calibrated ? 'Calibrated for this phone. Levels now use your offset.' : ''
+    if (state.ambient) { state.ambient = levelsWith(state.ambient.raw); showLevels() }
+    renderResult()
+  }
+  if (state.calibrated) $('calNote').textContent = 'Calibrated for this phone (offset ' + state.cal + ' dB).'
+
+  $('locBtn').addEventListener('click', () => {
+    if (!navigator.geolocation) { $('locNote').textContent = 'Location is not available on this browser.'; return }
+    $('locNote').textContent = 'Finding location...'
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        state.loc = { lat: +p.coords.latitude.toFixed(5), lng: +p.coords.longitude.toFixed(5), accuracyM: Math.round(p.coords.accuracy) }
+        $('locNote').textContent = 'Location added (within about ' + state.loc.accuracyM + ' m).'
+        $('locBtn').textContent = 'Update location'
+      },
+      () => { $('locNote').textContent = 'Location was not shared. That is fine, it is optional.' },
+      { enableHighAccuracy: true, timeout: 15000 },
+    )
+  })
+
+  // ---------- microphone ----------
+  async function openMic() {
+    if (state.ctx && state.stream) { if (state.ctx.state === 'suspended') await state.ctx.resume(); return }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('This browser cannot use the microphone. Open the page in Safari or Chrome over https.')
+    state.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 } })
+    const AC = window.AudioContext || window.webkitAudioContext
+    state.ctx = new AC()
+    if (state.ctx.state === 'suspended') await state.ctx.resume()
+    const src = state.ctx.createMediaStreamSource(state.stream)
+    state.sink = state.ctx.createGain(); state.sink.gain.value = 0; state.sink.connect(state.ctx.destination)
+    if (state.ctx.audioWorklet) {
+      await state.ctx.audioWorklet.addModule('/tools/room-check/capture-worklet.js')
+      state.node = new AudioWorkletNode(state.ctx, 'ja-capture')
+      state.node.port.onmessage = (e) => onBlock(e.data)
+    } else {
+      state.node = state.ctx.createScriptProcessor(2048, 1, 1)
+      state.node.onaudioprocess = (e) => onBlock(e.inputBuffer.getChannelData(0).slice(0))
+    }
+    src.connect(state.node); state.node.connect(state.sink)
+    const track = state.stream.getAudioTracks()[0]
+    const s = track.getSettings ? track.getSettings() : {}
+    state.processing = { echoCancellation: s.echoCancellation, noiseSuppression: s.noiseSuppression, autoGainControl: s.autoGainControl }
+  }
+  let blockSink = null
+  function onBlock(b) { if (blockSink) blockSink(b) }
+  function micError(err, el) {
+    const m = err && err.name === 'NotAllowedError' ? 'Microphone access was blocked. Allow the microphone for this site in your browser settings, then try again.' : (err && err.message) || 'Could not start the microphone.'
+    el.innerHTML = '<p class="msg bad">' + m + '</p>'
+  }
+
+  // ---------- 2. level ----------
+  function levelsWith(raw) {
+    const o = state.cal
+    return { raw, laeq: raw.laeq + o, l10: raw.l10 + o, l50: raw.l50 + o, l90: raw.l90 + o, lamax: raw.lamax + o, seconds: raw.seconds }
+  }
+  function showLevels() {
+    const a = state.ambient
+    $('lvl').innerHTML = Math.round(a.laeq) + '<small>dBA</small>'
+    $('lvlNote').textContent = (state.calibrated ? 'Calibrated. ' : 'approx. ') + 'Average level (LAeq) over ' + Math.round(a.seconds) + ' s.'
+    $('lvlStats').classList.remove('hidden')
+    $('lvlStats').innerHTML = [['L90', a.l90, 'background'], ['L50', a.l50, 'typical'], ['L10', a.l10, 'peaks'], ['Max', a.lamax, 'loudest']]
+      .map(([k, v, s]) => '<div><b>' + Math.round(v) + '</b><span>' + k + ' ' + s + '</span></div>').join('')
+  }
+  $('lvlBtn').addEventListener('click', async () => {
+    if (state.busy) return
+    try { await openMic() } catch (e) { micError(e, $('lvlMsg')); return }
+    state.busy = true
+    $('lvlMsg').innerHTML = ''; $('lvlBtn').disabled = true; $('clapBtn').disabled = true
+    const fs = state.ctx.sampleRate
+    const meter = D.createLevelMeter(fs)
+    const need = state.duration * fs
+    let got = 0
+    const settle = Math.round(0.5 * fs) // skip the first half second (tap noise, mic start-up)
+    let skipped = 0
+    await new Promise((resolve) => {
+      blockSink = (b) => {
+        if (skipped < settle) { skipped += b.length; return }
+        meter.push(b); got += b.length
+        const c = meter.current()
+        if (c != null) $('lvl').innerHTML = Math.round(c + state.cal) + '<small>dBA</small>'
+        $('lvlBar').style.width = Math.min(100, (got / need) * 100) + '%'
+        $('lvlBtn').textContent = Math.ceil((need - got) / fs) + ' s left'
+        if (got >= need) { blockSink = null; resolve() }
+      }
+    })
+    const raw = meter.result(0)
+    state.lastDbfs = raw.laeq
+    state.ambient = levelsWith(raw)
+    showLevels()
+    const msgs = []
+    if (raw.clippedSamples > 10) msgs.push('The microphone overloaded at times, so the true level may be higher.')
+    if (state.processing && (state.processing.autoGainControl || state.processing.noiseSuppression)) msgs.push('This browser kept some audio processing on, so the level is less reliable than usual.')
+    $('lvlMsg').innerHTML = msgs.map((m) => '<p class="msg">' + m + '</p>').join('')
+    $('lvlBtn').textContent = 'Measure again'; $('lvlBtn').disabled = false; $('clapBtn').disabled = false
+    state.busy = false
+    renderResult()
+  })
+
+  // ---------- 3. clap ----------
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+  $('clapBtn').addEventListener('click', async () => {
+    if (state.busy) return
+    try { await openMic() } catch (e) { micError(e, $('clapMsg')); return }
+    state.busy = true
+    $('clapMsg').innerHTML = ''; $('clapBtn').disabled = true; $('lvlBtn').disabled = true
+    const fs = state.ctx.sampleRate
+    const total = Math.round(6 * fs) // 1.5 s quiet lead-in, clap window, decay
+    const buf = new Float32Array(total)
+    let w = 0
+    for (let i = 3; i >= 1; i--) { $('clapBtn').textContent = 'Get ready... ' + i; await sleep(700) }
+    const done = new Promise((resolve) => {
+      blockSink = (b) => {
+        const n = Math.min(b.length, total - w)
+        buf.set(b.subarray(0, n), w); w += n
+        if (w >= total) { blockSink = null; resolve() }
+      }
+    })
+    await sleep(1200)
+    $('clapBtn').textContent = 'Clap now'
+    await done
+    $('clapBtn').textContent = 'Analysing...'
+    await sleep(20)
+    const r = D.analyseImpulse(buf, fs, { maxSeconds: 4 })
+    if (r.ok) {
+      state.claps.push({ rt60: +r.rt60.toFixed(3), method: r.method, confidence: r.confidence, inr: Math.round(r.inr), bands: r.bands.filter((b) => b.ok).map((b) => ({ hz: b.hz, t20: b.t20 ? +b.t20.rt.toFixed(3) : null, t30: b.t30 ? +b.t30.rt.toFixed(3) : null, edt: b.edt ? +b.edt.rt.toFixed(3) : null })) })
+      $('clapMsg').innerHTML = (r.issues || []).map((m) => '<p class="msg">' + m + '</p>').join('') + (state.claps.length < 3 ? '<p class="msg good">Good clap. ' + (3 - state.claps.length) + ' more for a solid reading.</p>' : '')
+    } else {
+      $('clapMsg').innerHTML = '<p class="msg bad">That clap could not be used. ' + (r.issues || []).join(' ') + '</p>'
+    }
+    renderClaps()
+    $('clapBtn').textContent = 'Record a clap'; $('clapBtn').disabled = false; $('lvlBtn').disabled = false
+    state.busy = false
+    renderResult()
+  })
+  $('clapReset').addEventListener('click', () => { state.claps = []; renderClaps(); renderResult() })
+  function combined() { return D.combineClaps(state.claps.map((c) => ({ ok: true, ...c }))) }
+  const confWord = { high: 'good confidence', medium: 'fair confidence', low: 'low confidence' }
+  function renderClaps() {
+    $('clapList').innerHTML = state.claps.map((c, i) => '<li><span>Clap ' + (i + 1) + '</span><span>' + c.rt60.toFixed(2) + ' s · ' + c.method + ' · ' + confWord[c.confidence] + '</span></li>').join('')
+    $('clapReset').classList.toggle('hidden', !state.claps.length)
+    const c = combined()
+    if (c) {
+      $('rt').innerHTML = c.rt60.toFixed(2) + '<small>s</small>'
+      $('rtNote').textContent = 'RT60 (' + c.method + ', 500 Hz and 1 kHz), median of ' + c.n + ' clap' + (c.n > 1 ? 's' : '') + ', ' + confWord[c.confidence] + '.'
+    } else { $('rt').innerHTML = '--<small>s</small>'; $('rtNote').textContent = 'Time for a clap to fade by 60 dB. Aim for three good claps.' }
+  }
+
+  // ---------- 4. result ----------
+  function feel(space, rt, laeq) {
+    const t = D.TARGETS[space] || D.TARGETS.other
+    const out = []
+    if (rt != null) {
+      if (rt > t.rt[1] * 1.5) out.push('Sound lingers a lot here. Voices blur together and people raise their voices to be heard.')
+      else if (rt > t.rt[1]) out.push('A bit more echo than ideal. Conversation takes some effort when it fills up.')
+      else if (rt < t.rt[0] * 0.7) out.push('Very dry. Speech is clear, though the room may feel a little dead.')
+      else out.push('The echo is in a comfortable range for this kind of space.')
+    }
+    if (laeq != null) {
+      if (laeq > t.laeq + 8) out.push('It is loud for this type of space right now.')
+      else if (laeq > t.laeq) out.push('A little louder than comfortable for this type of space.')
+      else out.push('The noise level is comfortable for this type of space.')
+    }
+    return out.join(' ')
+  }
+  function record() {
+    const c = combined()
+    const space = $('space').value
+    const a = state.ambient
+    return {
+      schema: 'ja-sound-index/1',
+      id: 'm_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      demo: false,
+      venue: { name: $('venue').value.trim(), spaceType: space, location: state.loc },
+      measuredAt: new Date().toISOString(),
+      occupancy: state.occupancy,
+      ambient: a ? { laeq: +a.laeq.toFixed(1), l10: +a.l10.toFixed(1), l50: +a.l50.toFixed(1), l90: +a.l90.toFixed(1), lamax: +a.lamax.toFixed(1), seconds: Math.round(a.seconds), calibrated: state.calibrated, calibrationOffsetDb: state.cal } : null,
+      reverb: c ? { rt60: +c.rt60.toFixed(2), method: c.method, confidence: c.confidence, claps: state.claps } : null,
+      score: D.comfortScore(space, c ? c.rt60 : null, a ? a.laeq : null),
+      notes: $('notes').value.trim(),
+      consent: { publicListing: $('consent').checked },
+      device: { sampleRate: state.ctx ? state.ctx.sampleRate : null, processing: state.processing || null, userAgent: navigator.userAgent },
+    }
+  }
+  function renderResult() {
+    const c = combined(), a = state.ambient
+    const ready = !!(c || a)
+    $('saveBtn').disabled = !ready; $('shareBtn').disabled = !ready
+    if (!ready) return
+    const space = $('space').value, t = D.TARGETS[space] || D.TARGETS.other
+    const s = D.comfortScore(space, c ? c.rt60 : null, a ? a.laeq : null)
+    $('result').innerHTML =
+      '<div class="big">' + s + '<small>/ 100 sound comfort</small></div>' +
+      '<p style="margin-top:10px">' + feel(space, c ? c.rt60 : null, a ? a.laeq : null) + '</p>' +
+      '<div class="stats" style="grid-template-columns:1fr 1fr">' +
+      '<div><b>' + (c ? c.rt60.toFixed(2) + ' s' : '--') + '</b><span>RT60 measured · target ' + t.rt[0] + ' to ' + t.rt[1] + ' s</span></div>' +
+      '<div><b>' + (a ? Math.round(a.laeq) + ' dBA' : '--') + '</b><span>' + (state.calibrated ? '' : 'approx. ') + 'level · comfortable up to ' + t.laeq + '</span></div></div>'
+  }
+
+  // ---------- save / share ----------
+  function saved() { return store.get('ja-rc-saved', []) }
+  function renderSaved() {
+    const s = saved()
+    $('savedList').innerHTML = s.length ? s.slice().reverse().map((r) => '<li><span>' + esc(r.venue.name || 'Unnamed') + '</span><span>' + (r.reverb ? r.reverb.rt60.toFixed(2) + ' s' : '--') + ' · ' + (r.ambient ? Math.round(r.ambient.laeq) + ' dBA' : '--') + '</span></li>').join('') : '<li><span class="note">Nothing saved yet.</span></li>'
+  }
+  const esc = (x) => String(x).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch])
+  $('saveBtn').addEventListener('click', () => {
+    const r = record()
+    if (!r.venue.name) { $('saveMsg').innerHTML = '<p class="msg">Add a venue or room name first.</p>'; $('venue').focus(); return }
+    const s = saved(); s.push(r)
+    $('saveMsg').innerHTML = store.set('ja-rc-saved', s) ? '<p class="msg good">Saved on this phone.</p>' : '<p class="msg bad">This browser blocked saving. Use Share or export instead.</p>'
+    renderSaved()
+  })
+  async function shareJson(data, name) {
+    const text = JSON.stringify(data, null, 2)
+    const file = typeof File !== 'undefined' ? new File([text], name, { type: 'application/json' }) : null
+    try {
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: name }); return }
+    } catch (e) { if (e && e.name === 'AbortError') return }
+    const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }))
+    const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 2000)
+  }
+  const slug = (s) => (s || 'room').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40)
+  $('shareBtn').addEventListener('click', () => { const r = record(); shareJson(r, 'room-check-' + slug(r.venue.name) + '.json') })
+  $('exportAll').addEventListener('click', () => shareJson({ schema: 'ja-sound-index/1', exportedAt: new Date().toISOString(), measurements: saved() }, 'room-checks-' + new Date().toISOString().slice(0, 10) + '.json'))
+  renderSaved()
+})()
+</script>
+</body>
+</html>

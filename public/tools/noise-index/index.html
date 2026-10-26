@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Singapore Sound Index | Just Acoustics</title>
+<meta name="description" content="The best-sounding cafés, restaurants and quiet-friendly spots in Singapore, measured for echo (RT60) and noise level.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tools/ja-tools.css">
+<style>
+  .map { width: 100%; height: auto; display: block; }
+  .map .land { fill: #f3efe8; stroke: #e2d9cb; stroke-width: 1.5; }
+  .map .dot { fill: var(--orange); stroke: #fff; stroke-width: 2; cursor: pointer; }
+  .map .dot.demo { fill: #c9c1b4; }
+  .map .dot[aria-current='true'] { stroke: var(--ink); }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+  .filters button { border: 1px solid #ddd; background: #fff; border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 14px; font-weight: 600; color: var(--body); cursor: pointer; }
+  .filters button[aria-pressed='true'] { border-color: var(--ink); color: var(--ink); }
+  .venue { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .venue:last-child { border-bottom: 0; }
+  .venue .score { font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 30px; color: var(--ink); line-height: 1; text-align: right; }
+  .venue .score span { display: block; font-size: 12px; font-weight: 500; color: var(--muted); font-family: Manrope, sans-serif; margin-top: 4px; }
+  .venue .meta { font-size: 14px; color: var(--muted); }
+  .venue .sample { color: var(--orange-ink); font-weight: 600; }
+  .empty { text-align: center; padding: 18px 6px; }
+  .empty h3 { margin-bottom: 6px; }
+  .grid2 { display: grid; gap: 18px; }
+  @media (min-width: 860px) { .grid2 { grid-template-columns: 1.1fr 1fr; align-items: start; } }
+</style>
+</head>
+<body>
+<main class="wrap wide">
+  <div class="top">
+    <a href="/"><img src="/assets/webflow/69635d202eb00a587d5f2386_Just%20Acoustics%201600x900%20(1).svg" alt="Just Acoustics"></a>
+    <a class="small" href="/tools/room-check">Measure a room</a>
+  </div>
+
+  <h1>Singapore sound index</h1>
+  <p class="lead">Places where you can actually hear each other. We measure echo (RT60) and noise level with venues' permission, and list the spaces that get it right.</p>
+
+  <div class="grid2">
+    <section class="glass">
+      <svg class="map" id="map" viewBox="0 0 600 370" role="img" aria-label="Map of Singapore with measured venues">
+        <path class="land" d="M10,226 L53,282 L133,245 L187,282 L267,288 L307,294 L347,276 L373,258 L427,245 L480,233 L533,220 L573,183 L560,134 L493,128 L427,104 L373,91 L307,18 L253,31 L213,31 L160,55 L107,79 L67,104 L27,141 Z"/>
+        <g id="dots"></g>
+      </svg>
+      <p class="note">Map outline is approximate. Tap a dot to jump to the venue.</p>
+    </section>
+
+    <section class="glass">
+      <h2 id="listTitle">Best-sounding spaces</h2>
+      <div class="filters" id="filters"></div>
+      <div id="sampleNote"></div>
+      <div id="list"></div>
+    </section>
+  </div>
+
+  <section class="glass">
+    <h2>How the score works</h2>
+    <p style="margin-top:10px">Each space gets up to 50 points for echo and 50 for noise level, compared with a comfortable target for that type of space. A restaurant scores full marks for echo with an RT60 of 0.6 to 0.8 seconds, which is the range where you can talk across the table without raising your voice.</p>
+    <details>
+      <summary>Targets by type of space</summary>
+      <ul id="targets"></ul>
+    </details>
+    <details>
+      <summary>Is your venue on the list? Want it measured?</summary>
+      <p style="margin-top:10px">Venues are only listed with the owner's or manager's agreement, and you can ask to be removed at any time. To have your space measured, <a href="/contact">get in touch</a>, or <a href="/tools/room-check">measure it yourself</a> with your phone.</p>
+    </details>
+  </section>
+
+  <p class="foot">Measurements are taken with phone microphones for guidance and are not a certified acoustic survey. Noise levels are approximate; echo times are averaged over several claps.</p>
+</main>
+
+<script src="/tools/room-check/dsp.js"></script>
+<script>
+(function () {
+  'use strict'
+  const D = window.JADSP
+  const $ = (id) => document.getElementById(id)
+  const esc = (x) => String(x).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
+  const HEAD = { all: 'Best-sounding spaces', cafe: 'Best-sounding cafés', restaurant: 'Best-sounding restaurants', bar: 'Bars where you can still talk', library: 'Quiet-friendly spots', office: 'Calm workspaces', meeting: 'Calm meeting rooms', classroom: 'Clear-sounding classrooms', gym: 'Comfortable studios', worship: 'Clear-sounding places of worship', other: 'Other good-sounding spaces' }
+  const word = (s) => (s >= 85 ? 'Easy conversation' : s >= 70 ? 'Comfortable' : 'Good')
+  const proj = (lat, lng) => [((lng - 103.6) / 0.45) * 600, ((1.475 - lat) / 0.275) * 370]
+  let filter = 'all', venues = [], hasReal = false
+
+  for (const [k, t] of Object.entries(D.TARGETS)) {
+    if (k === 'home') continue
+    const li = document.createElement('li')
+    li.textContent = t.label + ': echo ' + t.rt[0] + ' to ' + t.rt[1] + ' s, comfortable up to about ' + t.laeq + ' dBA'
+    $('targets').appendChild(li)
+  }
+
+  function summarise(v) {
+    const m = v.measurements || []
+    const rts = m.map((x) => x.rt60).filter((x) => x != null).sort((a, b) => a - b)
+    const lv = m.filter((x) => x.laeq != null)
+    // Use the busiest measured occupancy for the level, which is the fair test for a venue.
+    const order = { busy: 3, half: 2, empty: 1 }
+    lv.sort((a, b) => (order[b.occupancy] || 0) - (order[a.occupancy] || 0))
+    const rt = rts.length ? rts[Math.floor(rts.length / 2)] : null
+    const laeq = lv.length ? lv[0].laeq : null
+    return { ...v, rt, laeq, occ: lv.length ? lv[0].occupancy : null, score: D.comfortScore(v.spaceType, rt, laeq) }
+  }
+
+  fetch('/tools/noise-index/venues.json', { cache: 'no-cache' })
+    .then((r) => r.json())
+    .then((data) => {
+      const min = data.minPublicScore || 60
+      const all = (data.venues || []).filter((v) => v.consent && v.consent.publicListing === true && v.spaceType !== 'home').map(summarise).filter((v) => v.score != null && v.score >= min)
+      hasReal = all.some((v) => !v.demo)
+      venues = hasReal ? all.filter((v) => !v.demo) : all
+      render()
+    })
+    .catch(() => { $('list').innerHTML = '<p class="msg bad">The list could not be loaded. Please refresh.</p>' })
+
+  function render() {
+    const types = ['all', ...new Set(venues.map((v) => v.spaceType))]
+    $('filters').innerHTML = types.length > 2 ? types.map((t) => '<button type="button" data-t="' + t + '" aria-pressed="' + (t === filter) + '">' + (t === 'all' ? 'All' : esc((D.TARGETS[t] || D.TARGETS.other).label)) + '</button>').join('') : ''
+    $('listTitle').textContent = HEAD[filter] || HEAD.all
+    $('sampleNote').innerHTML = !hasReal && venues.length ? '<p class="msg">No venues are listed yet. The rows below are <b>sample data</b> to show how the index will look. They are not real places.</p>' : ''
+    const shown = venues.filter((v) => filter === 'all' || v.spaceType === filter).sort((a, b) => b.score - a.score)
+    if (!shown.length) {
+      $('list').innerHTML = '<div class="empty"><h3>No venues yet</h3><p class="note">The first measurements are on their way. <a href="/tools/room-check">Measure a space</a> to see how it works.</p></div>'
+    } else {
+      $('list').innerHTML = shown.map((v) =>
+        '<div class="venue" id="v-' + esc(v.id) + '"><div><h3>' + esc(v.name) + (v.demo ? ' <span class="sample">(sample)</span>' : '') + '</h3>' +
+        '<p class="meta">' + esc((D.TARGETS[v.spaceType] || D.TARGETS.other).label) + ' · ' + word(v.score) + '</p>' +
+        '<p class="meta">Echo ' + (v.rt != null ? v.rt.toFixed(2) + ' s RT60' : 'not measured') + (v.laeq != null ? ' · about ' + Math.round(v.laeq) + ' dBA when ' + ({ busy: 'busy', half: 'half full', empty: 'quiet' }[v.occ] || 'measured') : '') + '</p></div>' +
+        '<div class="score">' + v.score + '<span>out of 100</span></div></div>').join('')
+    }
+    $('dots').innerHTML = shown.filter((v) => v.location && v.location.lat).map((v) => {
+      const [x, y] = proj(v.location.lat, v.location.lng)
+      return '<circle class="dot' + (v.demo ? ' demo' : '') + '" r="9" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" data-id="' + esc(v.id) + '"><title>' + esc(v.name) + '</title></circle>'
+    }).join('')
+  }
+  $('filters').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { filter = b.dataset.t; render() } })
+  $('dots').addEventListener('click', (e) => {
+    const id = e.target.getAttribute('data-id'); if (!id) return
+    for (const d of $('dots').children) d.setAttribute('aria-current', String(d === e.target))
+    const el = document.getElementById('v-' + id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  })
+})()
+</script>
+</body>
+</html>

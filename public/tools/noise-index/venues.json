@@ -1,0 +1,41 @@
+{
+  "schema": "ja-sound-index/1",
+  "updated": "2026-10-26",
+  "about": "Public Singapore sound index. Only venues that agreed to be listed (consent.publicListing true) and that score at least minPublicScore appear. Rows with demo: true are made-up samples to show the layout and must be removed before launch.",
+  "minPublicScore": 60,
+  "venues": [
+    {
+      "id": "demo-1",
+      "demo": true,
+      "name": "Sample café A",
+      "spaceType": "cafe",
+      "location": { "lat": 1.2839, "lng": 103.8436 },
+      "consent": { "publicListing": true, "confirmedBy": "demo", "date": null },
+      "measurements": [
+        { "measuredAt": "2026-10-01T10:00:00+08:00", "occupancy": "half", "laeq": 61, "rt60": 0.62, "rtConfidence": "high", "calibrated": false }
+      ]
+    },
+    {
+      "id": "demo-2",
+      "demo": true,
+      "name": "Sample restaurant B",
+      "spaceType": "restaurant",
+      "location": { "lat": 1.3048, "lng": 103.8318 },
+      "consent": { "publicListing": true, "confirmedBy": "demo", "date": null },
+      "measurements": [
+        { "measuredAt": "2026-10-02T19:30:00+08:00", "occupancy": "busy", "laeq": 67, "rt60": 0.71, "rtConfidence": "medium", "calibrated": false }
+      ]
+    },
+    {
+      "id": "demo-3",
+      "demo": true,
+      "name": "Sample library corner C",
+      "spaceType": "library",
+      "location": { "lat": 1.3521, "lng": 103.9447 },
+      "consent": { "publicListing": true, "confirmedBy": "demo", "date": null },
+      "measurements": [
+        { "measuredAt": "2026-10-03T15:00:00+08:00", "occupancy": "half", "laeq": 42, "rt60": 0.55, "rtConfidence": "high", "calibrated": false }
+      ]
+    }
+  ]
+}
