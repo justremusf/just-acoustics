@@ -38,5 +38,6 @@ export const aboutLinks = [
   { label: 'Case Studies', href: '/projects' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Acoustic Education', href: '/blog' },
+  { label: 'For designers & contractors', href: '/trade' },
   { label: 'Contact', href: '/contact' },
 ]

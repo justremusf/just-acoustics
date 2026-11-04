@@ -17,7 +17,7 @@ Ad consent comes from `readAnalyticsConsent() === 'all'` (`lib/analyticsConsent.
 
 | Event | Fires when | Key params | GA4 | Ads label env | Meta | Vercel | 1st-party |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `generate_lead` | Once per Tally submission, on `/thank-you?submitted=tally&submission_id=…` (`LeadConversionTracker`). The Tally `FormSubmitted` message only records the submission and redirects. | `source=tally_form`, `form_name`, `source_page`, `value=1 SGD`, attribution (utm_*, gclid, lead_ref…) | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_LEAD` (`transaction_id` = submission id) | `Lead` (eventID `generate_lead:<id>`) | ✓ | ✓ |
+| `generate_lead` | Once per Tally submission, on `/thank-you?submitted=tally&submission_id=…` or, for the trade desk form (Tally q5LlkG), `/thank-you/trade?…` (`LeadConversionTracker`). The Tally `FormSubmitted` message only records the submission and redirects. | `source=tally_form`, `form_name`, `source_page`, `value=1 SGD`, attribution (utm_*, gclid, lead_ref…) | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_LEAD` (`transaction_id` = submission id) | `Lead` (eventID `generate_lead:<id>`) | ✓ | ✓ |
 | `whatsapp_click` | Any WhatsApp link | `source`, `method=whatsapp`, `link_url`, attribution | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_WHATSAPP` | `Contact` | ✓ | ✓ |
 | `phone_click` | Any `tel:` link | `source`, `method=phone` | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_PHONE` | `Contact` | ✓ | ✓ |
 | `email_click` | Any `mailto:` link | `source`, `method=email` | ✓ | `NEXT_PUBLIC_GOOGLE_ADS_LABEL_EMAIL` | `Contact` | ✓ | ✓ |

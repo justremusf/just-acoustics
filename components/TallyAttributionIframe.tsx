@@ -53,6 +53,8 @@ type TallyAttributionIframeProps = {
   title: string
   className?: string
   style?: CSSProperties
+  /** Where a submission lands; the trade desk has its own page. */
+  thankYouPath?: string
 }
 
 export default function TallyAttributionIframe({
@@ -60,6 +62,7 @@ export default function TallyAttributionIframe({
   title,
   className,
   style,
+  thankYouPath = '/thank-you',
 }: TallyAttributionIframeProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -124,12 +127,12 @@ export default function TallyAttributionIframe({
         submitted: 'tally',
         submission_id: submissionId,
       })
-      router.push(`/thank-you?${thankYouParams.toString()}`)
+      router.push(`${thankYouPath}?${thankYouParams.toString()}`)
     }
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [pathname, router, title])
+  }, [pathname, router, thankYouPath, title])
 
   return (
     <div className="relative">

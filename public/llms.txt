@@ -32,6 +32,14 @@
 - [Church acoustics](https://www.justacoustics.co/church-acoustics): Speech clarity and reverberation control for churches, worship halls and event spaces.
 - [Acoustic panel calculator](https://www.justacoustics.co/acoustic-panel-calculator): Estimate how many acoustic panels a room needs and the installed price.
 
+## For interior designers, architects and main contractors
+Just Acoustics is a Singapore acoustic panel supplier and installer that works with design practices and main contractors. Send a floor plan, RCP, elevation or site photos and we return a panel layout, a render, a spec sheet and a trade quote with the RT60 before and after treatment. Trade prices are sent on request.
+- [Trade desk](https://www.justacoustics.co/trade): Products, test data, fixing methods, lead times, spec sheets, CAD blocks and a request form.
+- [For interior designers](https://www.justacoustics.co/trade/interior-designers): Layouts and renders from your plan, 39 fabric colours, custom print, trade quotes to your company.
+- [For architects](https://www.justacoustics.co/trade/architects): NRC, fire and emissions data, RT60 targets by space, spec sheets and DXF blocks.
+- [For main contractors](https://www.justacoustics.co/trade/main-contractors): Supply and install subcontract, lead times, after-hours work and submittal documents.
+- Flexi fabric wrapped panel: 96 kg/m3 glass fibre core; NRC 0.80 at 25 mm and 1.00 at 50 mm (ASTM C423, mounting A); weighted absorption 0.90 (EN ISO 11654); core Class A1 to EN 13501-1; standard sizes 600 x 600, 1200 x 600 and 1800 x 600 mm; 39 fabric colours; bevel or straight edges. Lead time about 4 to 6 weeks from deposit to installed.
+
 ## Typical installed prices (SGD, supply + installation)
 Room sizes: small under 15 m², medium 15–40 m², large 40–100 m², very large 100 m²+. Final price is confirmed after reviewing the room; very large rooms usually need a site visit.
 - Office / meeting room: small S$1,000–2,000; medium S$2,500–4,000; large S$4,000–8,000; very large from S$8,000.

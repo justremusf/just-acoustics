@@ -8,9 +8,9 @@
  },
  "INTRO": {
   "title": "Acoustic panels for interior designers and architects",
-  "lede": "Just Acoustics designs, supplies and installs fabric wrapped acoustic panels across Singapore. Send us a plan and we send back a spec sheet, a render and a trade quote, usually within the hour.",
+  "lede": "Just Acoustics designs, supplies and installs fabric wrapped acoustic panels across Singapore. Send us a plan and we send back a spec sheet, a render and a trade quote.",
   "who": [
-   "We are a Singapore acoustic treatment company. We plan the layout, supply the panels and install them with our own team, so you deal with one party from drawing to handover.",
+   "We are a Singapore acoustic treatment company. We plan the layout, supply the panels and install them with our team, so you deal with one party from drawing to handover.",
    "Our work covers offices, restaurants and cafés, studios, schools, churches, clinics and homes. Most rooms are installed in a few hours to two days, and we can work after hours or on weekends around your site programme.",
    "We do acoustic treatment: making a room sound clearer and calmer by controlling echo. We are not a soundproofing contractor, and we will tell you early if a brief really needs sound isolation instead."
   ],
@@ -21,7 +21,7 @@
    ],
    [
     "Your brand on it",
-    "Proposals can carry your logo, with our name kept small, so you present one scheme to your client."
+    "Proposals can carry your logo, so you present one scheme to your client."
    ],
    [
     "Real numbers",
@@ -46,8 +46,8 @@
     "Custom sizes on request"
    ],
    "thickness": "25 mm or 50 mm",
-   "acoustic": "NRC 1.00 at 50 mm, NRC 0.80 at 25 mm (supplier data, lab report [check]). Weighted αw 0.90 (EN ISO 354 / EN ISO 11654, core test, SGS report)",
-   "core": "High-density semi-rigid glass fibre, 96 kg/m³, resin-hardened edges, glass tissue micro-mesh backing",
+   "acoustic": "NRC 1.00 at 50 mm, NRC 0.80 at 25 mm (ASTM C423, mounting A). Weighted αw 0.90 (EN ISO 354 / EN ISO 11654, core test, SGS report)",
+   "core": "Formed semi-rigid inorganic glass fibre, 96 kg/m³, resin-hardened edges, glass tissue micro-mesh backing. Up to 51% recycled content",
    "face": "Acoustically transparent polyester fabric, 39 standard colours; or paintable white glass fibre tissue face",
    "edges": "Bevel edged (standard) or straight edged",
    "weight": "About 4 kg for 1200 × 600 × 50 mm",
@@ -64,7 +64,7 @@
     "Custom sizes on request"
    ],
    "thickness": "50 mm",
-   "acoustic": "NRC 1.00 at 50 mm (supplier data, lab report [check]). Suspended clouds absorb on both faces",
+   "acoustic": "NRC 1.00 at 50 mm (ASTM C423, mounting A). Suspended clouds absorb on both faces",
    "core": "As the wall panel: 96 kg/m³ glass fibre core, resin-hardened edges",
    "face": "Acoustically transparent polyester fabric, 39 standard colours",
    "edges": "Bevel edged (standard) or straight edged",
@@ -81,11 +81,11 @@
     "1200 × 600 mm"
    ],
    "thickness": "100 mm",
-   "acoustic": "No published test data yet [check]. We count it as a 50 mm panel in RT60 estimates, so our figures are conservative",
-   "core": "Glass fibre core, 100 mm [check build-up with supplier]",
+   "acoustic": "No published test data yet. We count it as a 50 mm panel in RT60 estimates, so our figures are conservative",
+   "core": "Glass fibre core, 100 mm",
    "face": "Acoustically transparent polyester fabric, 39 standard colours",
    "edges": "Bevel edged or straight edged",
-   "weight": "About 8 kg [check]",
+   "weight": "About 8 kg",
    "fixing": "Wall, wall-to-ceiling corner, or flush to ceiling",
    "use": "Home cinemas, music rooms, studios, living rooms with boomy bass"
   },
@@ -98,11 +98,11 @@
     "Made to the wall or ceiling, priced per m²"
    ],
    "thickness": "25 mm",
-   "acoustic": "NRC 0.80 to 0.90 (supplier data [check]; some past quotes state 0.75)",
-   "core": "Absorbent infill behind a perimeter track [check infill spec]",
-   "face": "Acoustically transparent fabric from the system catalogue [check range]",
+   "acoustic": "Test data on request",
+   "core": "Absorbent infill behind a perimeter track",
+   "face": "Acoustically transparent fabric from the system catalogue",
    "edges": "Concealed track, no visible panel joints",
-   "weight": "[check]",
+   "weight": "On request",
    "fixing": "Track fixed to existing partition or concrete wall",
    "use": "Full feature walls, boardrooms, meeting rooms, ceilings where a seamless look matters"
   },
@@ -115,11 +115,11 @@
     "1200 × 600 mm"
    ],
    "thickness": "50 mm",
-   "acoustic": "No verified test data on file [check]. Counted conservatively in our RT60 estimates",
-   "core": "Melamine foam [check density and fire classification with supplier]",
+   "acoustic": "No verified test data on file. Counted conservatively in our RT60 estimates",
+   "core": "Melamine foam",
    "face": "White",
-   "edges": "[check]",
-   "weight": "Very light [check]",
+   "edges": "On request",
+   "weight": "Very light",
    "fixing": "Fixed flush to the ceiling",
    "use": "Homes with white ceilings: living rooms, corridors, piano and music rooms"
   },
@@ -133,10 +133,10 @@
     "Custom sizes after artwork review"
    ],
    "thickness": "25 mm or 50 mm",
-   "acoustic": "Printed synthetic face over the Flexi core. Absorption of the printed face [check]",
+   "acoustic": "Printed synthetic face over the Flexi core. Absorption data for the printed face on request",
    "core": "High-density absorptive core, as Flexi",
    "face": "Custom-printed synthetic face; wipeable, more moisture resistant than fabric, not waterproof",
-   "edges": "[check]",
+   "edges": "On request",
    "weight": "As Flexi of the same size",
    "fixing": "As the Flexi wall panel",
    "use": "Brand walls in offices, artwork walls in restaurants and hotels"
@@ -170,8 +170,8 @@
   ],
   [
    "Thermal conductivity (EN 12664)",
-   "0.033 W/(m·K)",
-   "SGS report XMIN180901795CCM"
+   "0.033 to 0.035 W/(m·K)",
+   "SGS report XMIN180901795CCM; Flexi™ catalogue"
   ],
   [
    "Fabric: UK Furniture and Furnishings (Fire) (Safety) Regulations 1988, Sch. 4 Part I and Sch. 5 Part I",
@@ -179,19 +179,29 @@
    "SGS report SDHL1803005038FB, 30 Mar 2018"
   ],
   [
-   "NRC 1.00 at 50 mm (ASTM C423)",
-   "Supplier data",
-   "[check] lab report not on file"
+   "Sound absorption (ASTM C423, mounting A)",
+   "NRC 0.80 at 25 mm, 1.00 at 50 mm",
+   "Flexi™ catalogue"
   ],
   [
    "BS 476 Part 4 and ASTM E136 non-combustibility",
-   "Stated in supplier data",
-   "[check] report not on file"
+   "Pass",
+   "Flexi™ catalogue"
+  ],
+  [
+   "Fabric: BS 5852 Part 1:1979",
+   "Pass",
+   "Flexi™ catalogue"
+  ],
+  [
+   "TVOC emission; toxicity",
+   "Not detected; non-toxic",
+   "Flexi™ catalogue"
   ],
   [
    "Singapore Green Label or SGBC certification",
    "None on file",
-   "[check]"
+   "Not applicable"
   ]
  ],
  "CERT_NOTE": "Reports cover the Flexi™ core and fabric and are available on request. Fire-safety acceptance of an installation rests with the project's QP and the relevant authority.",
@@ -285,15 +295,15 @@
  "LEAD_TIMES": [
   [
    "Proposal",
-   "Spec sheet, render and trade quote within an hour of a usable plan in working hours."
+   "Spec sheet, render and trade quote, quickly once we have a usable plan."
   ],
   [
    "Production",
-   "About 15 working days after the deposit. Nothing is cut before the deposit is received."
+   "About 15 working days on our production schedule after the deposit. Nothing is cut before the deposit is received."
   ],
   [
-   "Shipping",
-   "Sea freight 14 to 18 days, or express air freight in a few days at extra cost."
+   "Delivery",
+   "About 2 to 3 weeks after production. A faster delivery option is available at extra cost when the programme is tight."
   ],
   [
    "Install",
@@ -327,27 +337,27 @@
   },
   {
    "space": "Open offices",
-   "target": "0.5 to 0.7 s [check]",
+   "target": "0.5 to 0.7 s",
    "src": "guide"
   },
   {
    "space": "Clinics and consult rooms",
-   "target": "0.4 to 0.6 s [check]",
+   "target": "0.4 to 0.6 s",
    "src": "guide"
   },
   {
    "space": "Pilates, dance and fitness studios",
-   "target": "0.6 to 0.9 s [check]",
+   "target": "0.6 to 0.9 s",
    "src": "guide"
   },
   {
    "space": "Living rooms and home cinemas",
-   "target": "0.3 to 0.5 s [check]",
+   "target": "0.3 to 0.5 s",
    "src": "guide"
   },
   {
    "space": "Home and recording studios",
-   "target": "0.2 to 0.4 s [check]",
+   "target": "0.2 to 0.4 s",
    "src": "guide"
   }
  ],
@@ -418,7 +428,7 @@
    "image": "case-restaurant.jpg",
    "brief": "A busy Italian dining room with a hard ceiling and long banquette walls. Conversations were getting lost by mid-service.",
    "work": "9 fabric wrapped panels, bevel edged, 50 mm, made to fit above the banquettes: custom widths from 1,204 to 1,748 mm at 510 mm high. A top-up to an earlier ceiling treatment.",
-   "rt60": "[check] not modelled",
+   "rt60": "",
    "src": "INV-000213"
   },
   {
@@ -427,7 +437,7 @@
    "image": "case-meeting.jpg",
    "brief": "Video-call rooms with glass, hard walls and a lot of speech. Calls sounded hollow at both ends.",
    "work": "30 m² of the Flexi™ fabric wall system, 25 mm, on a perimeter track, in fabric colour Champagne, wall to wall behind the screens.",
-   "rt60": "[check] not modelled",
+   "rt60": "",
    "src": "INV-000227"
   },
   {
@@ -436,7 +446,7 @@
    "image": "case-office.jpg",
    "brief": "A fresh fit-out with bare white walls and a glass front. The meeting rooms rang.",
    "work": "14 Flexi™ fabric wrapped panels, bevel edged, 1200 × 600 × 50 mm, in grey, mounted vertically on the solid walls.",
-   "rt60": "[check] not modelled",
+   "rt60": "",
    "src": "INV-000206"
   },
   {
@@ -445,7 +455,7 @@
    "image": "case-pilates.jpg",
    "brief": "A high, hard ceiling over a full reformer floor. Instructors had to shout over the music.",
    "work": "22 Flexi™ ceiling panels, 1200 × 600 × 50 mm, in a colour chosen by the client, set in a grid with the lighting, above 3 m.",
-   "rt60": "[check] not modelled",
+   "rt60": "",
    "src": "INV-000212"
   },
   {
@@ -454,7 +464,7 @@
    "image": "case-home.jpg",
    "brief": "A grand piano in an open living and dining room. Notes rang on and the room felt harsh.",
    "work": "6 white ceiling panels fixed flush (2 at 1000 × 1000, 4 at 1200 × 1000 × 50 mm) and 4 wall panels in Beige 01 (1 at 1600 × 1000, 3 at 1000 × 700 × 50 mm).",
-   "rt60": "[check] not modelled",
+   "rt60": "",
    "src": "INV-000208"
   }
  ],
@@ -464,12 +474,12 @@
    "Upload a floor plan, RCP or elevation (PDF, DWG or a photo), with ceiling height, finishes and the client's brief. Photos of the site help."
   ],
   [
-   "Within the hour",
+   "We send it back",
    "We send back a panel layout, a render in your chosen colours, a one-page spec sheet and a trade quote with the RT60 before and after."
   ],
   [
    "Present it your way",
-   "Choose our branding or yours. White-label proposals carry your logo, with Just Acoustics kept small."
+   "Choose our branding, or put your logo on the proposal."
   ],
   [
    "We build it",
@@ -489,5 +499,161 @@
    "Colour chart",
    "39 standard Flexi™ fabric colours"
   ]
+ ],
+ "FLEXI_SPEC": [
+  [
+   "flame",
+   "Fire rating",
+   [
+    [
+     "EN 13501-1",
+     "Class A1"
+    ],
+    [
+     "BS 476 Part 4",
+     "Pass"
+    ],
+    [
+     "ASTM E136",
+     "Pass"
+    ],
+    [
+     "BS 5852 Part 1",
+     "Pass"
+    ]
+   ]
+  ],
+  [
+   "leaf",
+   "Health rating",
+   [
+    [
+     "TVOC emission",
+     "Not detected"
+    ],
+    [
+     "Formaldehyde",
+     "Not detected"
+    ],
+    [
+     "Asbestos",
+     "Negative"
+    ],
+    [
+     "SVHC (hazardous substances)",
+     "Pass"
+    ],
+    [
+     "Toxicity",
+     "Non-toxic"
+    ],
+    [
+     "Thermal conductivity",
+     "0.035 W/(m·K)"
+    ]
+   ]
+  ],
+  [
+   "audio",
+   "Sound absorption",
+   [
+    [
+     "NRC, 25 mm",
+     "0.80"
+    ],
+    [
+     "NRC, 50 mm",
+     "1.00"
+    ],
+    [
+     "Test",
+     "ASTM C423, mounting A"
+    ],
+    [
+     "αw, core",
+     "0.90 (EN ISO 11654)"
+    ]
+   ]
+  ],
+  [
+   "ruler",
+   "Dimensions",
+   [
+    [
+     "Thickness",
+     "25 mm, 50 mm, 100 mm (bass)"
+    ],
+    [
+     "Standard sizes",
+     "600 × 600, 1200 × 600, 1800 × 600 mm"
+    ],
+    [
+     "Custom",
+     "Cut to your layout, up to 2400 × 1200 mm"
+    ]
+   ]
+  ],
+  [
+   "layers",
+   "Material construct",
+   [
+    [
+     "Core",
+     "Formed semi-rigid inorganic glass fibre, 96 kg/m³"
+    ],
+    [
+     "Face",
+     "Acoustically transparent polyester fabric, or paintable white tissue"
+    ],
+    [
+     "Backing",
+     "Glass wool tissue micro-mesh"
+    ],
+    [
+     "Edges",
+     "Resin sealed and hardened, bevel or straight"
+    ],
+    [
+     "Recycled content",
+     "Up to 51%"
+    ]
+   ]
+  ]
+ ],
+ "CUTAWAY": [
+  [
+   "Formed, high-density, semi-rigid glass wool core for maximum absorption",
+   0.3
+  ],
+  [
+   "Polyester fabric, or a paintable face for an exact paint match",
+   0.45
+  ],
+  [
+   "Micro-mesh tissue layer encapsulates the fibres",
+   0.58
+  ],
+  [
+   "Bevel edged or straight edged",
+   0.71
+  ],
+  [
+   "Hardened resin edge for clean architectural lines",
+   0.84
+  ]
+ ],
+ "FEATURES": [
+  {
+   "image": "cat-office-director.jpg",
+   "client": "Tabernacle of Joy",
+   "space": "Directors' office and podcast room",
+   "work": "Tall Flexi™ panels in a warm grey, set in an even rhythm along both walls"
+  },
+  {
+   "image": "cat-meeting.jpg",
+   "client": "Capital Asia Investments",
+   "space": "Corporate office and meeting rooms",
+   "work": "Flexi™ panels in a pale blue, tight-butted wall to wall in the boardroom"
+  }
  ]
 }
