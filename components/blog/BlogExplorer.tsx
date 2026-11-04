@@ -187,22 +187,34 @@ function ArticleCard({ post, terms = [], index = 0, className = '' }: { post: Ex
 
 interface Props {
   posts: ExplorerPost[]
-  initialTopic?: string
-  initialType?: string
-  initialSearch?: string
 }
 
-export default function BlogExplorer({ posts, initialTopic = '', initialType = '', initialSearch = '' }: Props) {
-  const [topic, setTopic] = useState(initialTopic)
-  const [type, setType] = useState(initialType)
-  const [search, setSearch] = useState(initialSearch)
+export default function BlogExplorer({ posts }: Props) {
+  const [topic, setTopic] = useState('')
+  const [type, setType] = useState('')
+  const [search, setSearch] = useState('')
   const [sort, setSort] = useState<SortValue>('newest')
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const searchRef = useRef<HTMLInputElement | null>(null)
   const deferredSearch = useDeferredValue(search)
 
+  // The page is cached without its filters, so a shared link's filters are read here.
+  const urlRead = useRef(false)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const urlTopic = params.get('topic')
+    const urlType = params.get('type')
+    if (RESOURCE_TOPICS.some((item) => item.value === urlTopic)) setTopic(urlTopic ?? '')
+    if (CONTENT_TYPES.some((item) => item.value === urlType)) setType(urlType ?? '')
+    setSearch(params.get('search')?.trim() ?? '')
+  }, [])
+
   // Keep the URL shareable without triggering a server round-trip.
   useEffect(() => {
+    if (!urlRead.current) {
+      urlRead.current = true
+      return
+    }
     const params = new URLSearchParams()
     if (topic) params.set('topic', topic)
     if (type) params.set('type', type)
