@@ -5,6 +5,7 @@ import { getAllProjects } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import type { Project } from '@/lib/types'
 import FAQ from '@/components/sections/FAQ'
+import ListingFilter from '@/components/sections/ListingFilter'
 import type { FaqItem } from '@/components/sections/FAQ'
 import { canonicalPath } from '@/lib/seo'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/imagePlaceholder'
@@ -34,14 +35,10 @@ const PROJECTS_FAQS: FaqItem[] = [
 
 export const revalidate = 86400
 
-export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
-  const { category } = await searchParams
-  return {
-    title: 'Projects',
-    description: 'View our portfolio of completed acoustic panel installations across offices, restaurants, churches and more in Singapore.',
-    alternates: { canonical: canonicalPath('/projects') },
-    robots: category ? { index: false, follow: true } : undefined,
-  }
+export const metadata: Metadata = {
+  title: 'Projects',
+  description: 'View our portfolio of completed acoustic panel installations across offices, restaurants, churches and more in Singapore.',
+  alternates: { canonical: canonicalPath('/projects') },
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -54,10 +51,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   cinema: 'Cinema',
 }
 
-export default async function ProjectsPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
-  const { category } = await searchParams
+export default async function ProjectsPage() {
   const allProjects: Project[] = await getAllProjects().catch(() => [])
-  const filtered = category ? allProjects.filter((p) => p.category === category) : allProjects
 
   return (
     <div className="page-wrap page-stack">
@@ -70,25 +65,33 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
       </section>
 
       <section className="home-shell page-hero-shell overflow-hidden">
-        <div className="no-scrollbar flex gap-3 overflow-x-auto overflow-y-hidden pb-1 md:flex-wrap md:pb-0">
-          <Link href="/projects" className={`page-filter whitespace-nowrap ${!category ? 'active' : ''}`}>All</Link>
-          {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-            <Link key={value} href={'/projects?category=' + value} className={`page-filter whitespace-nowrap ${category === value ? 'active' : ''}`}>
-              {label}
-            </Link>
-          ))}
-        </div>
+        <ListingFilter
+          basePath="/projects"
+          allLabel="All"
+          ariaLabel="Project categories"
+          options={Object.entries(CATEGORY_LABELS).map(([value, label]) => ({
+            value,
+            label,
+            empty: !allProjects.some((project) => project.category === value),
+          }))}
+          className="no-scrollbar flex gap-3 overflow-x-auto overflow-y-hidden pb-1 md:flex-wrap md:pb-0"
+          linkClassName="page-filter whitespace-nowrap"
+          activeClassName="active"
+          inactiveClassName=""
+        />
       </section>
 
-      {filtered.length === 0 ? (
-        <section className="glass-card page-hero-shell">
-          <p className="page-card-copy">No projects yet. Check back soon.</p>
-        </section>
-      ) : (
+      <section data-listing-empty style={allProjects.length > 0 ? { display: 'none' } : undefined} className="glass-card page-hero-shell">
+        <p className="page-card-copy">No projects yet. Check back soon.</p>
+      </section>
+
+      {allProjects.length > 0 ? (
         <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {filtered.map((project) => (
+          {allProjects.map((project) => (
             <Link
               key={project._id}
+              data-listing-item
+              data-category={project.category}
               href={'/projects/' + project.slug.current}
               className="deferred-card group relative isolate aspect-[4/3] overflow-hidden rounded-[24px] bg-[#171717] no-underline shadow-[0_18px_48px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_68px_rgba(0,0,0,0.16)]"
             >
@@ -120,7 +123,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
             </Link>
           ))}
         </section>
-      )}
+      ) : null}
 
       <FAQ items={PROJECTS_FAQS} title="Project Questions" subtitle="What to expect from a Just Acoustics installation." />
     </div>

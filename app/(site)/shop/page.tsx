@@ -10,7 +10,7 @@ import FAQ from "@/components/sections/FAQ";
 import type { FaqItem } from "@/components/sections/FAQ";
 import { pageMetadata } from "@/lib/seo";
 import { getShopPriceLabel } from "@/lib/shopDisplay";
-import ShopFilters from "@/components/sections/ShopFilters";
+import ListingFilter from "@/components/sections/ListingFilter";
 import { ArrowRight } from "lucide-react";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/imagePlaceholder";
 
@@ -35,20 +35,12 @@ const SHOP_FAQS: FaqItem[] = [
 
 export const revalidate = 86400
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string }>;
-}): Promise<Metadata> {
-  const { category } = await searchParams;
-  return pageMetadata({
-    title: "Buy Acoustic Panels Online Singapore",
-    description:
-      "Shop acoustic wall panels, ceiling panels, bass traps and accessories online from Just Acoustics, with optional installation across Singapore.",
-    path: "/shop",
-    noindex: Boolean(category),
-  });
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Buy Acoustic Panels Online Singapore",
+  description:
+    "Shop acoustic wall panels, ceiling panels, bass traps and accessories online from Just Acoustics, with optional installation across Singapore.",
+  path: "/shop",
+});
 
 const CATEGORY_LABELS: Record<string, string> = {
   "acoustic-panels": "Acoustic Panels",
@@ -86,12 +78,7 @@ function getShopCategory(item: ShopItem) {
 
 
 
-export default async function ShopPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string }>;
-}) {
-  const { category } = await searchParams;
+export default async function ShopPage() {
   const [allItems, settings]: [
     ShopItem[],
     Awaited<ReturnType<typeof getSiteSettings>>,
@@ -110,9 +97,6 @@ export default async function ShopPage({
       );
     return a.title.localeCompare(b.title);
   });
-  const filtered = category
-    ? orderedItems.filter((item) => getShopCategory(item) === category)
-    : orderedItems;
   const populatedCategories = Object.entries(CATEGORY_LABELS).filter(
     ([value]) => orderedItems.some((item) => getShopCategory(item) === value),
   );
@@ -151,22 +135,28 @@ export default async function ShopPage({
 
       <section className="site-container mt-8 sm:mt-10">
         <div className="rounded-[28px] border border-black/7 bg-white/72 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.07),0_1px_0_rgba(255,255,255,0.9)_inset] backdrop-blur-xl sm:p-6">
-          <ShopFilters
-            category={category}
-            categories={populatedCategories.map(([value, label]) => ({
+          <ListingFilter
+            basePath="/shop"
+            allLabel="All Products"
+            ariaLabel="Shop categories"
+            options={populatedCategories.map(([value, label]) => ({
               value,
               label,
             }))}
+            className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[14px] font-semibold sm:gap-x-5 sm:text-[15px]"
+            linkClassName="no-underline"
+            activeClassName="text-[#171717]"
+            inactiveClassName="text-black/42 hover:text-[#171717]"
           />
         </div>
 
-        {filtered.length === 0 ? (
+        {orderedItems.length === 0 ? (
           <p className="m-0 py-16 text-center text-[var(--color-gray-100)]">
             No products in this category yet.
           </p>
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
-            {filtered.flatMap((item, index) => {
+            {orderedItems.flatMap((item, index) => {
               const primaryImage =
                 item.mainImage ||
                 (item.category ? categoryImages.get(item.category) : undefined);
@@ -193,6 +183,8 @@ export default async function ShopPage({
               const productCard = (
                 <article
                   key={item._id}
+                  data-listing-item
+                  data-category={getShopCategory(item)}
                   className="deferred-card group overflow-hidden rounded-[26px] border border-white/80 bg-white/82 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_1px_0_rgba(255,255,255,0.96)_inset] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-white hover:shadow-[0_30px_72px_rgba(0,0,0,0.13),0_1px_0_rgba(255,255,255,1)_inset]"
                 >
                   <Link
@@ -307,6 +299,7 @@ export default async function ShopPage({
                 productCard,
                 <Link
                   key="consultation-card"
+                  data-listing-promo
                   href="/contact"
                   className="group relative isolate min-h-[420px] overflow-hidden rounded-[26px] border border-white/60 bg-white/30 p-6 text-white no-underline shadow-[0_18px_46px_rgba(0,0,0,0.10)] backdrop-blur-xl sm:min-h-0"
                 >
