@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1880 855" width="470mm" height="214mm">
+<title>JA-FLEXI-1800x600x25 (scale 1:4, units mm)</title>
+<g fill="none" stroke="#010101" stroke-width="3">
+<rect x="40" y="40" width="1800" height="600"/>
+<rect x="50" y="50" width="1780" height="580" stroke="#6a6a6a" stroke-dasharray="12 8" stroke-width="2"/>
+<rect x="40" y="720" width="1800" height="25" fill="#e9e9e9"/>
+</g>
+<text x="40" y="795" font-family="Manrope, Arial, sans-serif" font-size="30" fill="#4a4a4a">1800 × 600 × 25 mm · fabric wrapped panel, bevel edged</text>
+</svg>

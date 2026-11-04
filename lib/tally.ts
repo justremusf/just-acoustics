@@ -2,6 +2,9 @@
 export const TALLY_CONSULTATION_FORM_URL =
   'https://tally.so/embed/NppZoQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1'
 
+export const TALLY_TRADE_FORM_URL =
+  'https://tally.so/embed/q5LlkG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1'
+
 /** Session key holding the visitor's form URL (attribution included), computed once while warming up. */
 export const TALLY_URL_STORAGE_KEY = 'ja_tally_url'
 /** Session key set once the form has been preloaded in the background this visit. */

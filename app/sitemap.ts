@@ -33,6 +33,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/church-acoustics`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/school-acoustic-treatment`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/acoustic-panel-calculator`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/trade`, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/trade/interior-designers`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/trade/architects`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/trade/main-contractors`, changeFrequency: 'monthly', priority: 0.8 },
   ]
 
   const posts = postSlugs.map((s: { slug: string; _updatedAt?: string }) => ({

@@ -28,6 +28,7 @@ const navGroups = [
     title: 'Company',
     links: [
       { label: 'About', href: '/about' },
+      { label: 'For Designers & Contractors', href: '/trade' },
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Cookie Policy', href: '/cookie-policy' },
