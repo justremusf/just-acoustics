@@ -36,7 +36,6 @@ const PAGE_SPACES: Record<string, SpaceKey> = {
   '/office-acoustic-treatment': 'office',
   '/restaurant-echo-reduction': 'restaurant',
   '/school-acoustic-treatment': 'school',
-  '/acoustic-panels-singapore': 'home',
   '/church-acoustics': 'church',
   '/studio-acoustic-treatment': 'home-studio',
 }

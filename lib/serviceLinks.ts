@@ -27,7 +27,7 @@ export const SERVICE_PAGES = {
 
 export type ServiceKey = keyof typeof SERVICE_PAGES
 
-/** Footer "Services" group, in won-revenue order (the panels page now targets homes). */
+/** Footer "Services" group, in won-revenue order. */
 export const FOOTER_SERVICE_LINKS: ServiceLink[] = [
   { href: SERVICE_PAGES.studio.href, label: 'Studio Acoustics' },
   { href: SERVICE_PAGES.office.href, label: 'Office Acoustics' },
@@ -81,6 +81,9 @@ const SERVICE_BY_TOPIC: Record<string, ServiceKey> = {
   'worship-spaces': 'church',
 }
 
+/** Articles on the panels head term; they get a prominent link to /acoustic-panels-singapore near the top. */
+export const PANELS_HEAD_TERM = /acoustic-panels?-singapore|sound-absorbing-panels?|acoustic-panels?-price/
+
 /** Slug keywords take precedence over the broad topic so e.g. a classroom guide links to schools. */
 const SERVICE_BY_SLUG_KEYWORD: Array<[RegExp, ServiceKey]> = [
   [/church|worship|sanctuar/, 'church'],
@@ -89,6 +92,9 @@ const SERVICE_BY_SLUG_KEYWORD: Array<[RegExp, ServiceKey]> = [
   [/classroom|school|tuition|training-room/, 'school'],
   [/restaurant|cafe|f-and-b|bar-/, 'restaurant'],
   [/office|meeting-room|conference/, 'office'],
+  // Head-term articles ("acoustic panels singapore price", "sound absorbing panels singapore") point at
+  // the panels page so Google sees one page for the head term, not three competing ones.
+  [PANELS_HEAD_TERM, 'panels'],
 ]
 
 /** The one commercial page a blog article should point to. */
