@@ -4,6 +4,8 @@ import { track as vercelTrack } from '@vercel/analytics'
 import { readAnalyticsConsent } from '@/lib/analyticsConsent'
 import { trackFirstPartyEvent, type InsightProperties } from '@/lib/insights/client'
 import { recordProductView } from '@/lib/whatsappContext'
+import { sendMetaServerEvent } from '@/lib/metaCapi/client'
+import type { MetaCapiEventName } from '@/lib/metaCapi/shared'
 
 /**
  * One event, every destination. See docs/TRACKING.md for the full taxonomy.
@@ -13,6 +15,7 @@ import { recordProductView } from '@/lib/whatsappContext'
  * - First-party insights          once the visitor is not in an undecided opt-in region
  * - Google Ads conversion         only when ad cookies are allowed and a label env var is set
  * - Meta pixel                    only when ad cookies are allowed
+ * - Meta Conversions API          standard Meta events, same rule and same event_id as the pixel (/api/meta-capi)
  * - Microsoft Clarity             whenever Clarity has loaded (it only loads with analytics consent)
  */
 
@@ -33,7 +36,7 @@ const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID
 const CLARITY_CONVERSIONS = new Set(['generate_lead', 'whatsapp_click', 'phone_click', 'email_click', 'purchase'])
 // Clarity tags are session-level strings; these are the ones worth filtering recordings by.
 const CLARITY_TAGS = ['source', 'method', 'space', 'size', 'cta', 'calculator', 'product_slug']
-const META_STANDARD_EVENTS: Partial<Record<string, string>> = {
+const META_STANDARD_EVENTS: Partial<Record<string, MetaCapiEventName>> = {
   generate_lead: 'Lead',
   whatsapp_click: 'Contact',
   phone_click: 'Contact',
@@ -104,6 +107,11 @@ function flatProps(params: EventParams, keys?: string[]) {
     else if (typeof value === 'number' || typeof value === 'boolean' || value === null) out[key] = value
   })
   return out
+}
+
+function metaEventId() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID()
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`
 }
 
 function adsAllowed() {
@@ -180,10 +188,13 @@ export function trackEvent(eventName: string, params: object = {}, deliveryOptio
   if (!googleOnly && metaPixelId && typeof window.fbq === 'function' && adsAllowed()) {
     const metaParams = flatProps(eventParams, ['source', 'method', 'space', 'size', 'value', 'currency', 'content_name', 'product_slug', 'product_name', 'price_low', 'price_high', 'cta', 'calculator'])
     if (eventParams.product_name && !metaParams.content_name) metaParams.content_name = String(eventParams.product_name)
-    const options = dedupeId ? { eventID: `${eventName}:${dedupeId}` } : undefined
+    // Every Meta event gets an eventID; the server copy (Conversions API) reuses it so Meta keeps one.
+    const options = { eventID: `${eventName}:${dedupeId || metaEventId()}` }
     const standard = META_STANDARD_EVENTS[eventName]
-    if (standard) window.fbq('track', standard, metaParams, ...(options ? [options] : []))
-    else if (META_CUSTOM_EVENTS.has(eventName)) window.fbq('trackCustom', eventName, metaParams, ...(options ? [options] : []))
+    if (standard) {
+      window.fbq('track', standard, metaParams, options)
+      sendMetaServerEvent(standard, options.eventID, metaParams)
+    } else if (META_CUSTOM_EVENTS.has(eventName)) window.fbq('trackCustom', eventName, metaParams, options)
   }
 
   return gaAccepted
