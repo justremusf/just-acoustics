@@ -89,7 +89,18 @@ function ArticleEstimator({ defaultSpace }: { defaultSpace?: string }) {
   )
 }
 
-export default function ArticleDetail({ article, nav, serviceLink }: { article: ArticleView; nav: ArticleNavView; serviceLink?: ServicePage }) {
+export default function ArticleDetail({
+  article,
+  nav,
+  serviceLink,
+  leadServiceLink,
+}: {
+  article: ArticleView
+  nav: ArticleNavView
+  serviceLink?: ServicePage
+  /** Set on head-term articles: a link to the service page right under the header, so readers and Google both see which page sells it. */
+  leadServiceLink?: ServicePage
+}) {
   const { headings, byBlock } = extractHeadings(article.body)
   const showToc = headings.length >= 3
   const components = bodyComponents(byBlock)
@@ -138,6 +149,15 @@ export default function ArticleDetail({ article, nav, serviceLink }: { article: 
               </span>
             </p>
           </header>
+          {leadServiceLink ? (
+            <p className="not-prose m-0 rounded-[18px] border border-black/8 bg-[var(--color-white-200)] px-5 py-4 text-[15px] leading-relaxed text-[var(--color-dark-100)]">
+              Looking for prices and installation?{' '}
+              <Link href={leadServiceLink.href} className="font-semibold underline underline-offset-4 hover:text-[var(--color-brand-orange)]">
+                {leadServiceLink.label}
+              </Link>
+              : supplied and installed from S$185 per panel.
+            </p>
+          ) : null}
 
           <PriceTeaser />
 

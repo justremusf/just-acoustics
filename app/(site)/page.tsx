@@ -24,9 +24,11 @@ const FAQ = dynamic(() => import('@/components/sections/FAQ'))
 export const revalidate = 86400
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Just Acoustics | Acoustic Panels & Treatment Singapore',
+  // The homepage leads with "acoustic treatment" (ranks ~2nd); "acoustic panels singapore" belongs to
+  // /acoustic-panels-singapore so the two pages stop splitting the same query.
+  title: 'Acoustic Treatment Singapore, Installed from S$185 | Just Acoustics',
   description:
-    'Acoustic panels supplied and installed across Singapore for offices, restaurants, churches, schools, studios and homes. Free consultation, reply within 1 hour.',
+    'Echo in your office, studio, restaurant or home? We supply and install acoustic panels across Singapore from S$185 each. Free quote, reply within 1 hour.',
   path: '/',
   absoluteTitle: true,
 })

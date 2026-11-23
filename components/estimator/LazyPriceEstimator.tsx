@@ -36,13 +36,23 @@ export default function LazyPriceEstimator(props: PriceEstimatorProps) {
     return () => observer.disconnect()
   }, [show])
 
-  if (show) return <PriceEstimator {...props} />
+  // The box keeps its height while the estimator's code downloads (dynamic() renders nothing
+  // until then), so the sections below never jump up and back down (pricing page CLS 0.58 → 0).
+  const minHeight = props.defaultSpace ? 'min-h-[420px]' : 'min-h-[580px]'
+
+  if (show) {
+    return (
+      <div className={minHeight}>
+        <PriceEstimator {...props} />
+      </div>
+    )
+  }
 
   return (
     <div
       ref={ref}
       id={props.id}
-      className={`scroll-mt-28 rounded-[24px] bg-black/[0.03] ${props.defaultSpace ? 'min-h-[420px]' : 'min-h-[560px]'}`}
+      className={`scroll-mt-28 rounded-[24px] bg-black/[0.03] ${minHeight}`}
       aria-hidden="true"
     />
   )

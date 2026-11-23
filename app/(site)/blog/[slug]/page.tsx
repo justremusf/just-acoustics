@@ -4,7 +4,7 @@ import { getAllPosts, getPostBySlug, getAllPostSlugs } from '@/sanity/lib/querie
 import { urlFor } from '@/sanity/lib/image'
 import { toArticleView, toExplorerPost } from '@/sanity/lib/views'
 import { absoluteUrl, breadcrumbJsonLd as buildBreadcrumbJsonLd, canonicalPath, ORGANIZATION_ID, pageMetadata, serializeJsonLd, SITE_PREVIEW_IMAGE, SITE_URL, stripBrand } from '@/lib/seo'
-import { serviceForArticle } from '@/lib/serviceLinks'
+import { PANELS_HEAD_TERM, SERVICE_PAGES, serviceForArticle } from '@/lib/serviceLinks'
 import { buildArticleNav } from '@/lib/contentView'
 import type { Post } from '@/lib/types'
 import ArticleDetail from '@/components/blog/ArticleDetail'
@@ -79,7 +79,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <PageEngagementTracker pageType="blog" contentName={slug} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
-      <ArticleDetail article={article} nav={nav} serviceLink={serviceLink} />
+      <ArticleDetail
+        article={article}
+        nav={nav}
+        serviceLink={serviceLink}
+        leadServiceLink={PANELS_HEAD_TERM.test(slug) ? SERVICE_PAGES.panels : undefined}
+      />
     </>
   )
 }

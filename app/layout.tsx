@@ -129,7 +129,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   </Script>
                   <Script
                     src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-                    strategy="afterInteractive"
+                    // Events queue in dataLayer from first paint (gtag-init), so loading the library
+                    // after the page is done loses nothing and keeps ~100 KB off the critical path.
+                    strategy="lazyOnload"
                   />
                 </>
               )}
